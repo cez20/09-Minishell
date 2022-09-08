@@ -1,0 +1,33 @@
+
+[] Afficher un prompt en l’attente d’une nouvelle commande.
+[] Historique fonctionnel
+[] chercher et lancer le bon exécutable (PATH environnement, absolu ou relatif)
+[] ne pas interprèter de quotes non fermés ou de caractère spéciaux non préciser comme \ ou ;
+[] gérer simple quotes
+[] gérer double quotes
+
+
+[] redirections 
+	[] "< doit rediriger l'entrée"
+	[] > doit rediriger la sortie 
+	[] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
+	[] >> doit rediriger la sortie en mode append.
+
+
+[] implémenter les pipes ( | )
+[] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
+[] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
+
+
+[] signaux
+	[] ctrl-C
+	[] ctrl-D
+	[] ctrl-\
+[] Builtins
+	[] echo et l'option -n
+	[]
+	[]
+	[]
+	[]
+	[]
+	[]

@@ -1,6 +1,6 @@
 NAME = Minishell
 
-# SRC = 
+SRC = main.c
 
 CC = @gcc
 CFLAGS = -Werror -Wall -Wextra -g
@@ -17,7 +17,7 @@ NAME_SUBMODULE ?= $(shell bash -c 'read -p "Name of the submodule: " name_submod
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(MAKE) -rmC ./Libft
+	@$(MAKE) -C ./Libft
 	@$(CC) $(CFLAGS) $(OBJS) ./Libft/libft.a -o $(NAME)
 	@echo "$(GREEN)Everything is top shape tiguidou 🐥"
 
@@ -32,7 +32,7 @@ fclean: clean
 re: fclean all
 
 add:
-	@git add *.c *.h Makefile
+	@git add *.c *.h Makefile TODO
 	@git status
 
 b:
