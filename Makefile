@@ -9,7 +9,7 @@ OBJS = $(SRC:.c=.o)
 
 GREEN = \033[1;32m
 
-BRANCH ?= $(shell bash -c 'read -p "Branch: " branch; echo $$branch')
+BRANCH = $(shell bash -c 'read -p "Branch: " branch; echo $$branch')
 COMMIT ?= $(shell bash -c 'read -p "Commit: " commit; echo $$commit')
 PATH_SUBMODULE ?= $(shell bash -c 'read -p "Adress of the submodule: " path_submodule; echo $$path_submodule')
 NAME_SUBMODULE ?= $(shell bash -c 'read -p "Name of the submodule: " name_submodule; echo $$name_submodule')
