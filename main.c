@@ -129,6 +129,7 @@ int main(int argc, char **argv) // char **envp)
 	while(1 && argc && argv)
 	{
 		line = readline("Minishell$>");
+		add_history(line);
 		rl_redisplay();
 		// printf("token = %s", line);
 		tab_token = split_token(line);
