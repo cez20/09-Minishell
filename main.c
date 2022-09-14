@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <editline/readline.h>
 
 void	print_tab(char **tab)
 {
@@ -85,13 +86,37 @@ void	echo(char **tab_token)
 	
 }
 
-void token_manager(char **tab_token)
+char	*search_line(char **tab, char *search)
+{
+	while(*tab)
+	{
+		if (ft_strnstr(*tab, search, ft_strlen(search)))
+			return(*tab);
+		tab++;
+	}
+	return (NULL);
+}
+
+
+void	pwd(char **envp)
+{
+	char *pwd;
+
+	pwd = search_line(envp, "PWD=");
+	pwd = ft_strchr(pwd, '=');
+	printf("%s\n", ++pwd);
+}
+
+void token_manager(char **tab_token, char **envp)
 {
 	// printf("tab_token[0] = %s\n", tab_token[0]);
 	// printf("tab_token[1] = %s\n", tab_token[1]);
 	// printf("len = %zu\n", ft_strlen(tab_token[0]));
 	if (!ft_strncmp(tab_token[0], "echo", 4))
 		echo(tab_token);
+	if (!ft_strncmp(tab_token[0], "pwd", 3))
+		pwd(envp);
+
 }
 
 char simple_or_double(char *token)
@@ -118,13 +143,14 @@ char	**split_token(char *token)
 	return (tab);
 }
 
-int main(int argc, char **argv) // char **envp)
+int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	char **tab_token;
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
+	// rl_replace_line();
 	
 	while(1 && argc && argv)
 	{
@@ -134,8 +160,9 @@ int main(int argc, char **argv) // char **envp)
 		// printf("token = %s", line);
 		tab_token = split_token(line);
 
-		token_manager(tab_token);
+		token_manager(tab_token, envp);
 		// command_exeggutor(line, envp);
 		free(line);
 	}
+	return (0);
 }
