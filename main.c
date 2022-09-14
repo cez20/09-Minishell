@@ -6,14 +6,7 @@ void	print_tab(char **tab)
 	{
 		printf("str = %s\n", *tab);
 		tab++;
-
-
-
 	}
-
-
-
-
 }
 
 
@@ -76,7 +69,15 @@ void	command_exeggutor(char *argv, char **envp)
 
 void	echo(char **tab_token)
 {
-	printf("%s\n", tab_token[1]);
+	int i;
+
+	i = 1;
+
+	while(tab_token[i])
+	{
+		printf("%s", tab_token[i++]);
+	}
+	printf("\n");
 }
 
 void token_manager(char **tab_token)
@@ -88,11 +89,26 @@ void token_manager(char **tab_token)
 		echo(tab_token);
 }
 
+char simple_or_double(char *token)
+{
+	while(*token)
+	{
+		// printf("char = %d\n", *token);
+		if (*token == 34|| *token == 39)
+			return (*token);
+		token++;
+	}
+	return (0);
+}
+
 char	**split_token(char *token)
 {
 	char	**tab;
 
-	tab = ft_split(token, ' ');
+	if (simple_or_double(token))
+		tab = ft_split(token, simple_or_double(token));
+	else
+		tab = ft_split(token, ' ');
 
 	return (tab);
 }
