@@ -71,13 +71,18 @@ void	echo(char **tab_token)
 {
 	int i;
 
-	i = 1;
+	if (!ft_strncmp(tab_token[1], "-n", 2))
+		i = 2;
+	else
+		i = 1;
 
 	while(tab_token[i])
 	{
 		printf("%s", tab_token[i++]);
 	}
-	printf("\n");
+	if (ft_strncmp(tab_token[1], "-n", 2))
+		printf("\n");
+	
 }
 
 void token_manager(char **tab_token)
