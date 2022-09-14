@@ -2,13 +2,13 @@ NAME = Minishell
 
 SRC = main.c
 
-CC = @gcc
+CC = @gcc 
 CFLAGS = -Werror -Wall -Wextra -g
 
 OBJS = $(SRC:.c=.o)
 
 GREEN = \033[1;32m
-
+READLINE = -lreadline -I /usr/local/opt/readline/include -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 BRANCH ?= $(shell bash -c 'read -p "Branch: " branch; echo $$branch')
 COMMIT ?= $(shell bash -c 'read -p "Commit: " commit; echo $$commit')
 PATH_SUBMODULE ?= $(shell bash -c 'read -p "Adress of the submodule: " path_submodule; echo $$path_submodule')
@@ -18,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./Libft
-	@$(CC) $(CFLAGS) $(OBJS) ./Libft/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(READLINE) ./Libft/libft.a -o $(NAME)
 	@echo "$(GREEN)Everything is top shape tiguidou 🐥"
 
 clean:
@@ -58,9 +58,9 @@ del_sub:
 	@git commit -m "Removed submodule"
 	@rm -rf $(NAME_SUBMODULE)
 
-init:
-	@git remote add origin https://github.com/Steven1659139/Minishell.git
-	# git remote intra 
+# init:
+	# @git remote add origin https://github.com/Steven1659139/Minishell.git
+	# @git remote add intra git@vogsphere.42quebec.com:vogsphere/intra-uuid-76d7a526-3984-47ce-bf43-5082004a1aca-4391329-slavoie
 
 p: add
 	git commit -m $(COMMIT)
@@ -69,7 +69,7 @@ p: add
 merge:
 	@git checkout master
 	@git fetch
-	@git pull
+	@git pull origin $(BRANCH)
 	@git merge $(BRANCH)
 
 go:
