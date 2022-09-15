@@ -42,6 +42,7 @@ b:
 update:
 	@git fetch
 	@git pull origin $(BRANCH)
+	@./clone_branch.sh
 
 sub:
 	@git submodule update --init --recursive
