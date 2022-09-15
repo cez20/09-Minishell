@@ -2,7 +2,7 @@ NAME = Minishell
 
 SRC = main.c
 
-CC = @gcc 
+CC = @gcc -I /usr/local/opt/readline/include -I ~/.brew/opt/readline/include
 CFLAGS = -Werror -Wall -Wextra -g
 READLINE = -lreadline -I /usr/local/opt/readline/include -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 
@@ -18,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./Libft
-	@$(CC) $(CFLAGS) $(OBJS) $(READLINE) ./Libft/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
 	@echo "$(GREEN)Everything is top shape tiguidou 🐥"
 
 clean:

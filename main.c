@@ -150,7 +150,7 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	// rl_replace_line();
+	rl_replace_line("", 0);
 	
 	while(1 && argc && argv)
 	{
