@@ -142,6 +142,18 @@ char	**split_token(char *token)
 	return (tab);
 }
 
+void    sig_handler(int signum)
+{
+    
+	if (signum == SIGINT) // SIGINT signal is equivalent to Ctrl +C 
+    {
+        printf("\n"); //prints a newline
+		rl_on_new_line();
+        rl_replace_line("", 0); //Replace the contents of rl_line_buffer with text. The point and mark are preserved, if possible. If clear_undo is non-zero, the undo list associated with the current line is cleared. 
+        rl_redisplay(); //Change what's displayed on the screen to reflect the current contents of rl_line_buffer. 
+    }
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
@@ -149,10 +161,10 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	rl_replace_line("", 0);
-	
+	signal(SIGINT, sig_handler);
 	while(1 && argc && argv)
 	{
+
 		line = readline("Minishell$>");
 		add_history(line);
 		rl_redisplay();

@@ -2,13 +2,16 @@ NAME = Minishell
 
 SRC = main.c
 
-CC = @gcc -I /usr/local/opt/readline/include -I ~/.brew/opt/readline/include
+CC = @gcc -I.
 CFLAGS = -Werror -Wall -Wextra -g
-READLINE = -lreadline -I /usr/local/opt/readline/include -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 
+#READLINE = lib/libreadline.a lib/libhistory.a -lcurses
+#READLINE = -L /Users/cemenjiv/sgoinfre/Perso/cemenjiv/.brew/opt/readline/lib -lhistory -lreadline
+READLINE =  -L lib -lreadline -lhistory -lcurses
 OBJS = $(SRC:.c=.o)
 
 GREEN = \033[1;32m
+RESET = \033[0m
 BRANCH ?= $(shell bash -c 'read -p "Branch: " branch; echo $$branch')
 COMMIT ?= $(shell bash -c 'read -p "Commit: " commit; echo $$commit')
 PATH_SUBMODULE ?= $(shell bash -c 'read -p "Adress of the submodule: " path_submodule; echo $$path_submodule')
@@ -19,7 +22,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./Libft
 	@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
-	@echo "$(GREEN)Everything is top shape tiguidou 🐥"
+	@echo "$(GREEN)Everything is top shape tiguidou 🐥$(RESET)"
 
 clean:
 	@echo "Cleaning 🌪 🔥🌊"

@@ -3,3 +3,4 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <editline/readline.h>
+#include <signal.h>
