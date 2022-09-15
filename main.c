@@ -78,7 +78,7 @@ void	echo(char **tab_token)
 
 	while(tab_token[i])
 	{
-		printf("%s", tab_token[i++]);
+		printf("%s ", tab_token[i++]);
 	}
 	if (ft_strncmp(tab_token[1], "-n", 2))
 		printf("\n");
@@ -129,6 +129,8 @@ char simple_or_double(char *token)
 	}
 	return (0);
 }
+
+
 
 char	**split_token(char *token)
 {

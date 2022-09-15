@@ -31,7 +31,7 @@ fclean: clean
 
 re: fclean all
 
-add:
+add: fclean
 	@git add *.c *.h Makefile TODO
 	@git status
 
