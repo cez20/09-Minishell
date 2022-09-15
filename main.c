@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <editline/readline.h>
 
 void	print_tab(char **tab)
 {
