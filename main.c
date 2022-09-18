@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/16 09:10:42 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/09/16 17:15:25 by cemenjiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_tab(char **tab)
@@ -8,8 +20,6 @@ void	print_tab(char **tab)
 		tab++;
 	}
 }
-
-
 
 char	*get_path(char *command, char **envp)
 {
@@ -130,8 +140,6 @@ char simple_or_double(char *token)
 	return (0);
 }
 
-
-
 char	**split_token(char *token)
 {
 	char	**tab;
@@ -151,10 +159,10 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	rl_replace_line("", 0);
-	
+	signal_modified();
 	while(1 && argc && argv)
 	{
+
 		line = readline("Minishell$>");
 		add_history(line);
 		rl_redisplay();
