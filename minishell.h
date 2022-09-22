@@ -5,12 +5,12 @@
 #include "Libft/libft.h"
 #include "readline/readline.h"
 #include "readline/history.h"
+#include <termios.h>
 
 typedef struct s_info
 {
 	char **envp;
 	char **token;
-
 }		t_info;
 
 //*** MAIN.C ***
@@ -26,5 +26,7 @@ char	**split_token(char *token);
 int 	main(int argc, char **argv, char **envp);
 
 //*** SIGNAL.C ***
+void	exit_terminal();
 void    sig_handler(int signum);
 void    signal_modified();
+void 	disable_echo();

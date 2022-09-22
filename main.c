@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:42 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/09/16 17:15:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:05:41 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,15 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	signal_modified();
+	//disable_echo();
 	while(1 && argc && argv)
 	{
-
+		signal_modified();
 		line = readline("Minishell$>");
-		add_history(line);
+		if (line)
+			add_history(line);
+		else 
+			exit_terminal();
 		rl_redisplay();
 		// printf("token = %s", line);
 		tab_token = split_token(line);
