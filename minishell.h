@@ -4,9 +4,9 @@
 #include <readline/history.h>
 #include <editline/readline.h>
 
-typedef struct info
+typedef struct s_info
 {
 	char **envp;
 	char **token;
 
-};
+}				t_info;

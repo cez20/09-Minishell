@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
+/*   Updated: 2022/09/15 14:50:30 by slavoie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_tab(char **tab)
@@ -129,8 +141,75 @@ char simple_or_double(char *token)
 	}
 	return (0);
 }
+int	tab_length(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char	**tab_join(char **tab, char *line)
+{
+	int		len;
+	char	**new_tab;
+	int		i;
+
+	i = 0;
+	if (!tab)
+	{
+		new_tab = ft_calloc(2, sizeof (char *));
+		new_tab[i++] = ft_strdup(line);
+		new_tab[i] = NULL;
+		return (new_tab);
+	}
+	len = tab_length(tab);
+	new_tab = ft_calloc ((len + 2), sizeof(char *));
+	while (i < len)
+	{
+		new_tab[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	new_tab[i++] = ft_strdup(line);
+	new_tab[i] = 0;
+	table_flip(tab);
+	return (new_tab);
+}
+
+void	add_token(t_info *info, char *token)
+{
+	tab_join(info->token, token);
+}
 
 
+char	*search_another_one(char *str, char c, t_info *info)
+{
+	char *token;
+	int i;
+
+	i = 0;
+
+	token = malloc(sizeof(char) * ft_strlen(str));
+
+	while(*str++)
+	{
+		if(*str == c)
+			return(str);
+		
+		
+
+
+
+
+	}
+
+
+
+
+
+}
 
 char	**split_token(char *token)
 {
@@ -144,10 +223,21 @@ char	**split_token(char *token)
 	return (tab);
 }
 
+void	init(t_info *info, char **envp)
+{
+	info->envp = envp;
+	info->token = NULL;
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	char **tab_token;
+	t_info	info;
+
+	info = malloc(sizeof(t_info));
+
+
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
