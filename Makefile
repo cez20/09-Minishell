@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = main.c signal.c
+SRC = main.c signal.c builtins.c
 
 CC = @gcc 
 CFLAGS = -Werror -Wall -Wextra -g

@@ -6,6 +6,7 @@
 #include "readline/readline.h"
 #include "readline/history.h"
 #include <termios.h>
+#include <string.h>
 
 typedef struct s_info
 {
@@ -30,3 +31,8 @@ void	exit_terminal();
 void    sig_handler(int signum);
 void    signal_modified();
 void 	disable_echo();
+
+//Builtins
+
+void	pwd(char **envp);
+void	echo(char **tab_token);

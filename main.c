@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/09/23 10:51:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/09/23 11:15:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,23 @@ void	command_exeggutor(char *argv, char **envp)
 }
 
 
-void	echo(char **tab_token)
-{
-	int i;
+// void	echo(char **tab_token)
+// {
+// 	int i;
 
-	if (!ft_strncmp(tab_token[1], "-n", 2))
-		i = 2;
-	else
-		i = 1;
+// 	if (!ft_strncmp(tab_token[1], "-n", 2))
+// 		i = 2;
+// 	else
+// 		i = 1;
 
-	while(tab_token[i])
-	{
-		printf("%s ", tab_token[i++]);
-	}
-	if (ft_strncmp(tab_token[1], "-n", 2))
-		printf("\n");
+// 	while(tab_token[i])
+// 	{
+// 		printf("%s ", tab_token[i++]);
+// 	}
+// 	if (ft_strncmp(tab_token[1], "-n", 2))
+// 		printf("\n");
 	
-}
+// }
 
 char	*search_line(char **tab, char *search)
 {
@@ -106,15 +106,14 @@ char	*search_line(char **tab, char *search)
 	return (NULL);
 }
 
+// void	pwd(char **envp)
+// {
+// 	char *pwd;
 
-void	pwd(char **envp)
-{
-	char *pwd;
-
-	pwd = search_line(envp, "PWD=");
-	pwd = ft_strchr(pwd, '=');
-	printf("%s\n", ++pwd);
-}
+// 	pwd = search_line(envp, "PWD=");
+// 	pwd = ft_strchr(pwd, '=');
+// 	printf("%s\n", ++pwd);
+// }
 
 void token_manager(char **tab_token, char **envp)
 {
@@ -125,6 +124,8 @@ void token_manager(char **tab_token, char **envp)
 		echo(tab_token);
 	if (!ft_strncmp(tab_token[0], "pwd", 3))
 		pwd(envp);
+	if (!ft_strncmp(tab_token[0], "env", 3))
+		print_tab(envp);
 
 }
 
@@ -182,32 +183,21 @@ void	add_token(t_info *info, char *token)
 }
 
 
-char	*search_another_one(char *str, char c, t_info *info)
-{
-	char *token;
-	int i;
+// char	*search_another_one(char *str, char c, t_info *info)
+// {
+// 	char *token;
+// 	int i;
 
-	i = 0;
+// 	i = 0;
 
-	token = malloc(sizeof(char) * ft_strlen(str));
+// 	token = malloc(sizeof(char) * ft_strlen(str));
 
-	while(*str++)
-	{
-		if(*str == c)
-			return(str);
-		
-		
-
-
-
-
-	}
-
-
-
-
-
-}
+// 	while(*str++)
+// 	{
+// 		if(*str == c)
+// 			return(str);
+// 	}
+// }
 
 char	**split_token(char *token)
 {
@@ -231,7 +221,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	char **tab_token;
-	t_info	info;
+	t_info	*info;
 
 	info = malloc(sizeof(t_info));
 
@@ -239,7 +229,7 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	//disable_echo();
+	disable_echo();
 	while(1 && argc && argv)
 	{
 		signal_modified();
