@@ -1,11 +1,10 @@
-NAME = Minishell
+NAME = minishell
 
-SRC = main.c
+SRC = main.c signal.c
 
-CC = @gcc -I /usr/local/opt/readline/include -I ~/.brew/opt/readline/include
+CC = @gcc 
 CFLAGS = -Werror -Wall -Wextra -g
-READLINE = -lreadline -I /usr/local/opt/readline/include -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
-
+READLINE = -lcurses lib/libhistory.a lib/libreadline.a 
 OBJS = $(SRC:.c=.o)
 
 GREEN = \033[1;32m

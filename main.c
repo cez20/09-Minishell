@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/09/15 14:50:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/09/23 10:51:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	print_tab(char **tab)
 		tab++;
 	}
 }
-
-
 
 char	*get_path(char *command, char **envp)
 {
@@ -241,12 +239,15 @@ int main(int argc, char **argv, char **envp)
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	rl_replace_line("", 0);
-	
+	//disable_echo();
 	while(1 && argc && argv)
 	{
+		signal_modified();
 		line = readline("Minishell$>");
-		add_history(line);
+		if (line)
+			add_history(line);
+		else 
+			exit_terminal();
 		rl_redisplay();
 		// printf("token = %s", line);
 		tab_token = split_token(line);
