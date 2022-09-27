@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/09/23 11:15:57 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/09/25 12:56:21 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,30 +219,30 @@ void	init(t_info *info, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	char *line;
-	char **tab_token;
-	t_info	*info;
+	char 	*line; // Contient ce qui se trouve dans le readline 
+	char 	**tab_token; // Tableau 2D, chaque entrre contient un string qui contient le token 
+	t_info	*info;  // Pointeur vers la struct de type info qui contient envp et token 
 
-	info = malloc(sizeof(t_info));
+	info = malloc(sizeof(t_info)); // malloc une fois le size de la struct 
 
 
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	disable_echo();
-	while(1 && argc && argv)
+	disable_echo(); // Enleve l'option de echo tous les echoctl comme ^C. Pensez qu'il faut le remettre une fois dans exec
+	while(1 && argc && argv) // Loop qui permet de 
 	{
 		signal_modified();
-		line = readline("Minishell$>");
-		if (line)
-			add_history(line);
-		else 
+		line = readline("Minishell$>"); // Readline lit le conteu de la ligne. Assigne suffisament memoir sur heap pour contenir l'entree
+		if (line) // Si contenu est insere 
+			add_history(line); //Utilise une fonction add_history pour avoir historique
+		else // A travailler 
 			exit_terminal();
-		rl_redisplay();
+		rl_redisplay(); // Cette ligne ne semble pas necessaire.
 		// printf("token = %s", line);
-		tab_token = split_token(line);
+		tab_token = split_token(line); // Split toutes la ligne en token
 
-		token_manager(tab_token, envp);
+		token_manager(tab_token, envp); // Si token[0] == un des builts in echo, pwd, env 
 		// command_exeggutor(line, envp);
 		free(line);
 	}
