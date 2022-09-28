@@ -12,6 +12,7 @@ typedef struct s_info
 {
 	char **envp;
 	char **token;
+	char *last_position;
 }		t_info;
 
 //*** MAIN.C ***
@@ -23,7 +24,7 @@ char	*search_line(char **tab, char *search);
 void	pwd(char **envp);
 void 	token_manager(char **tab_token, char **envp);
 char 	simple_or_double(char *token);
-char	**split_token(char *token);
+void	split_token(char *token, t_info *info);
 int 	main(int argc, char **argv, char **envp);
 
 //*** SIGNAL.C ***
