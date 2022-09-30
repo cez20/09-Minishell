@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/09/28 15:10:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/09/30 11:09:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,19 +227,19 @@ char	*search_another_one(char *str, char c, int start, t_info *info)
 
 // }
 
-char *get_token(t_info *info)
-{
-	int	i;
+// char *get_token(t_info *info)
+// {
+// 	int	i;
 
-	i = 0;
-	skip_space(info);
-	if (*info->last_position != 39 && *info->last_position != 34)
+// 	i = 0;
+// 	skip_space(info);
+// 	if (*info->last_position != 39 && *info->last_position != 34)
 		
 
 
 
 
-}
+// }
 
 void	split_token(char *token, t_info *info)
 {
