@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/09/27 16:34:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:34:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,21 @@ void token_manager(char **tab_token, char **envp)
 
 char simple_or_double(char *token)
 {
-	while(*token)
-	{
-		// printf("char = %d\n", *token);
-		if (*token == 34|| *token == 39)
-			return (*token);
-		token++;
-	}
-	return (0);
+	if (*token == 34 || *token == 39)
+		return (*token);
+	return (32);
+
+
+
+
+	// while(*token)
+	// {
+	// 	// printf("char = %d\n", *token);
+	// 	if (*token == 34 || *token == 39)
+	// 		return (*token);
+	// 	token++;
+	// }
+	// return (0);
 }
 // int	tab_length(char **tab)
 // {
@@ -189,35 +196,67 @@ void skip_space(t_info *info)
 	printf("position = %c\n", *info->last_position);
 }
 
-char	*search_another_one(char *str, char c, int start, t_info *info)
+char	*search_another_one(char *str, char c, t_info *info)
 {
-	char *token;
-	int	end;
-	int len;
+	char	*token;
+	char	*start;
+	int		len;
 
-	end = start;
+	start = str;
 	len = 0;
-	// printf("first = %c\n", *str);
-	while (str[start])
+
+	str++;
+	len++;
+	while (*str != c)
 	{
-		if (str[start] == c)
+		str++;
+		len++;
+		if (str == NULL)
 		{
-			start++;
-			// printf("start = %c\n", str[start]);
-			while(str[end++ + 1] != c)
-				len++;
-			// printf("end = %c\n", str[end]);
-			// printf("%d\n", end);
-			// printf("%d\n", start);
-			info->last_position = &str[end];
-			token = ft_substr(str, start, len);
-			// printf("token = %s\n", token);
+			token = ft_substr(start, 0, len);
 			return (token);
 		}
-		start++;
-		end++;
+		printf("char = %c\n", *str);
 	}
-	return (NULL);
+	len++;
+	info->last_position = str;
+	token = ft_substr(start, 0, len);
+	printf("token = %s\n", token);
+	return (token);
+
+	// char *token;
+	// char *begin;
+	// int	end;
+	// int len;
+
+	// end = start;
+	// len = 0;
+	// // printf("first = %c\n", *str);
+	// while (begin)
+	// {
+	// 	if (str[start] == c)
+	// 	{
+	// 		// start++;
+	// 		end++;
+	// 		// printf("start = %c\n", str[start]);
+	// 		while(str[end++] != c)
+	// 		{
+	// 			printf("str[end] = %c\n", str[end]);
+	// 			// end++;
+	// 			len++;
+	// 		}
+	// 		// printf("end = %c\n", str[end]);
+	// 		// printf("%d\n", end);
+	// 		// printf("%d\n", start);
+	// 		info->last_position = &str[end];
+	// 		token = ft_substr(str, start, len);
+	// 		// printf("token = %s\n", token);
+	// 		return (token);
+	// 	}
+	// 	start++;
+	// 	end++;
+	// }
+	// return (NULL);
 }
 
 // char	*get_command(char *token)
@@ -227,44 +266,46 @@ char	*search_another_one(char *str, char c, int start, t_info *info)
 
 // }
 
-char *get_token(t_info *info)
-{
-	int	i;
+// char *get_token(t_info *info)
+// {
+// 	int	i;
 
-	i = 0;
-	skip_space(info);
-	if (*info->last_position != 39 && *info->last_position != 34)
+// 	i = 0;
+// 	skip_space(info);
+// 	if (*info->last_position != 39 && *info->last_position != 34)
 		
 
 
 
 
-}
+// }
 
 void	split_token(char *token, t_info *info)
 {
 	int i;
-	int len;
+	// int len;
 
 	i = 0;
-	len = 0;
+	// len = 0;
 	info->last_position = token;
 	info->token = tab_join(info->token, ft_substr(token, 0, 4));
+
+	info->last_position = &token[4];
 	// printf("token %d = %s\n", i, info->token[i]);
-	len +=  ft_strlen(info->token[i++]);
+	// len +=  ft_strlen(info->token[i++]);
 	// printf("len token 1 = %i\n", len);
-	// skip_space(info);
-	info->token = tab_join(info->token, search_another_one(info->last_position, 34, len, info));
+	skip_space(info);
+	info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 	// printf("token %d = %s\n", i, info->token[i]);
 
-	len +=  ft_strlen(info->token[i++]);
+	// len +=  ft_strlen(info->token[i++]);
 	// printf("len token 2 = %i\n", len);
 
 	
-	info->token = tab_join(info->token, search_another_one(info->last_position, 39, len, info));
+	// info->token = tab_join(info->token, search_another_one(info->last_position, 39, info));
 	// printf("token %d = %s\n", i, info->token[i]);
 
-	len +=  ft_strlen(info->token[i++]);
+	// len +=  ft_strlen(info->token[i++]);
 	// printf("len token 3 = %i\n", len);
 
 
@@ -303,7 +344,7 @@ int main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
 	disable_echo();
-	while(1 && argc && argv)
+	while(1 && argc && argv && envp)
 	{
 		signal_modified();
 		line = readline("Minishell$>");
@@ -312,10 +353,10 @@ int main(int argc, char **argv, char **envp)
 		else 
 			exit_terminal();
 		rl_redisplay();
-		// printf("token = %s", line);
+		// printf("token = %s\n", line);
 		split_token(line, info);
 
-		token_manager(info->token, envp);
+		// token_manager(info->token, envp);
 		// command_exeggutor(line, envp);
 		free(line);
 	}

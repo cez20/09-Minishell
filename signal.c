@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/09/23 11:03:34 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:25:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	exit_terminal()
 { 
 	printf(" exit\n");
+    exit (0);
 }
 
 /*sig_handler() function enumerated the different actions
