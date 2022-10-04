@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/04 14:34:10 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/04 15:34:44 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void skip_space(t_info *info)
 {
 	while(is_white_space(*info->last_position))
 		info->last_position++;
-	printf("position = %c\n", *info->last_position);
+	// printf("position = %c\n", *info->last_position);
 }
 
 char	*search_another_one(char *str, char c, t_info *info)
@@ -211,17 +211,18 @@ char	*search_another_one(char *str, char c, t_info *info)
 	{
 		str++;
 		len++;
-		if (str == NULL)
+		if (*str == '\0')
 		{
+			info->last_position = str;
 			token = ft_substr(start, 0, len);
 			return (token);
 		}
-		printf("char = %c\n", *str);
+		// printf("char = %c\n", *str);
 	}
 	len++;
-	info->last_position = str;
+	info->last_position = ++str;
 	token = ft_substr(start, 0, len);
-	printf("token = %s\n", token);
+	// printf("token = %s\n", token);
 	return (token);
 
 	// char *token;
@@ -294,8 +295,17 @@ void	split_token(char *token, t_info *info)
 	// printf("token %d = %s\n", i, info->token[i]);
 	// len +=  ft_strlen(info->token[i++]);
 	// printf("len token 1 = %i\n", len);
-	skip_space(info);
-	info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
+	// info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
+
+	while (*info->last_position)
+	{
+		skip_space(info);
+		info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
+		skip_space(info);
+		// info->last_position++;
+		// printf("last_position = %s\n", info->last_position);
+		// print_tab(info->token);
+	}
 	// printf("token %d = %s\n", i, info->token[i]);
 
 	// len +=  ft_strlen(info->token[i++]);
@@ -356,7 +366,7 @@ int main(int argc, char **argv, char **envp)
 		// printf("token = %s\n", line);
 		split_token(line, info);
 
-		// token_manager(info->token, envp);
+		token_manager(info->token, envp);
 		// command_exeggutor(line, envp);
 		free(line);
 	}
