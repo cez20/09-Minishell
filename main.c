@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/04 15:34:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/05 15:32:24 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,20 @@ void	command_exeggutor(char *argv, char **envp)
 }
 
 
-// void	echo(char **tab_token)
+// void	echo(char **info->token)
 // {
 // 	int i;
 
-// 	if (!ft_strncmp(tab_token[1], "-n", 2))
+// 	if (!ft_strncmp(info->token[1], "-n", 2))
 // 		i = 2;
 // 	else
 // 		i = 1;
 
-// 	while(tab_token[i])
+// 	while(info->token[i])
 // 	{
-// 		printf("%s ", tab_token[i++]);
+// 		printf("%s ", info->token[i++]);
 // 	}
-// 	if (ft_strncmp(tab_token[1], "-n", 2))
+// 	if (ft_strncmp(info->token[1], "-n", 2))
 // 		printf("\n");
 	
 // }
@@ -115,17 +115,17 @@ char	*search_line(char **tab, char *search)
 // 	printf("%s\n", ++pwd);
 // }
 
-void token_manager(char **tab_token, char **envp)
+void token_manager(t_info *info)
 {
-	// printf("tab_token[0] = %s\n", tab_token[0]);
-	// printf("tab_token[1] = %s\n", tab_token[1]);
-	// printf("len = %zu\n", ft_strlen(tab_token[0]));
-	if (!ft_strncmp(tab_token[0], "echo", 4))
-		echo(tab_token);
-	if (!ft_strncmp(tab_token[0], "pwd", 3))
-		pwd(envp);
-	if (!ft_strncmp(tab_token[0], "env", 3))
-		print_tab(envp);
+	// printf("info->token[0] = %s\n", info->token[0]);
+	// printf("info->token[1] = %s\n", info->token[1]);
+	// printf("len = %zu\n", ft_strlen(info->token[0]));
+	if (!ft_strncmp(info->token[0], "echo", 4))
+		echo(info);
+	if (!ft_strncmp(info->token[0], "pwd", 3))
+		pwd(info);
+	if (!ft_strncmp(info->token[0], "env", 3))
+		print_tab(info->envp);
 
 }
 
@@ -289,9 +289,9 @@ void	split_token(char *token, t_info *info)
 	i = 0;
 	// len = 0;
 	info->last_position = token;
-	info->token = tab_join(info->token, ft_substr(token, 0, 4));
+	// info->token = tab_join(info->token, ft_substr(token, 0, 4));
 
-	info->last_position = &token[4];
+	// info->last_position = &token[4];
 	// printf("token %d = %s\n", i, info->token[i]);
 	// len +=  ft_strlen(info->token[i++]);
 	// printf("len token 1 = %i\n", len);
@@ -319,9 +319,9 @@ void	split_token(char *token, t_info *info)
 	// printf("len token 3 = %i\n", len);
 
 
-	print_tab(info->token);
-	free(info->token);
-	info->token = ft_calloc(sizeof(char **), 1);
+	// print_tab(info->token);
+	// free(info->token);
+	// info->token = ft_calloc(sizeof(char **), 1);
 
 
 
@@ -350,6 +350,7 @@ int main(int argc, char **argv, char **envp)
 	t_info	*info;
 
 	info = malloc(sizeof(t_info));
+	init(info, envp);
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
@@ -366,9 +367,11 @@ int main(int argc, char **argv, char **envp)
 		// printf("token = %s\n", line);
 		split_token(line, info);
 
-		token_manager(info->token, envp);
+		token_manager(info);
 		// command_exeggutor(line, envp);
 		free(line);
+		free(info->token);
+		info->token = ft_calloc(sizeof(char **), 1);
 	}
 	return (0);
 }
