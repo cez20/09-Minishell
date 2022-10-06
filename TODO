@@ -20,14 +20,25 @@
 
 
 [] signaux
-	[] ctrl-C
+	[X] ctrl-C
 	[] ctrl-D
 	[] ctrl-\
 [] Builtins
 	[X] echo et "l'option -n"
 	[] cd uniquement avec un chemin relatif ou absolu
-	[] pwd sans aucune option
+	[X] pwd sans aucune option
 	[] export sans aucune option
 	[] unset sans aucune option
-	[] env sans aucune option ni argument
+	[X] env sans aucune option ni argument
 	[] exit sans aucune option
+
+
+
+
+Struct
+	[X] char **environnement
+	[X] char **token
+
+
+
+

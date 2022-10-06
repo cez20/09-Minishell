@@ -1,15 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
+/*   Updated: 2022/09/30 11:09:45 by cemenjiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	print_tab(char **tab)
-{
-	while (*tab)
-	{
-		printf("str = %s\n", *tab);
-		tab++;
-	}
-}
-
-
+// void	print_tab(char **tab)
+// {
+// 	while (*tab)
+// 	{
+// 		printf("str = %s\n", *tab);
+// 		tab++;
+// 	}
+// }
 
 char	*get_path(char *command, char **envp)
 {
@@ -67,23 +77,23 @@ void	command_exeggutor(char *argv, char **envp)
 }
 
 
-void	echo(char **tab_token)
-{
-	int i;
+// void	echo(char **tab_token)
+// {
+// 	int i;
 
-	if (!ft_strncmp(tab_token[1], "-n", 2))
-		i = 2;
-	else
-		i = 1;
+// 	if (!ft_strncmp(tab_token[1], "-n", 2))
+// 		i = 2;
+// 	else
+// 		i = 1;
 
-	while(tab_token[i])
-	{
-		printf("%s", tab_token[i++]);
-	}
-	if (ft_strncmp(tab_token[1], "-n", 2))
-		printf("\n");
+// 	while(tab_token[i])
+// 	{
+// 		printf("%s ", tab_token[i++]);
+// 	}
+// 	if (ft_strncmp(tab_token[1], "-n", 2))
+// 		printf("\n");
 	
-}
+// }
 
 char	*search_line(char **tab, char *search)
 {
@@ -96,15 +106,14 @@ char	*search_line(char **tab, char *search)
 	return (NULL);
 }
 
+// void	pwd(char **envp)
+// {
+// 	char *pwd;
 
-void	pwd(char **envp)
-{
-	char *pwd;
-
-	pwd = search_line(envp, "PWD=");
-	pwd = ft_strchr(pwd, '=');
-	printf("%s\n", ++pwd);
-}
+// 	pwd = search_line(envp, "PWD=");
+// 	pwd = ft_strchr(pwd, '=');
+// 	printf("%s\n", ++pwd);
+// }
 
 void token_manager(char **tab_token, char **envp)
 {
@@ -115,6 +124,8 @@ void token_manager(char **tab_token, char **envp)
 		echo(tab_token);
 	if (!ft_strncmp(tab_token[0], "pwd", 3))
 		pwd(envp);
+	if (!ft_strncmp(tab_token[0], "env", 3))
+		print_tab(envp);
 
 }
 
@@ -129,37 +140,182 @@ char simple_or_double(char *token)
 	}
 	return (0);
 }
+// int	tab_length(char **tab)
+// {
+// 	int	i;
 
-char	**split_token(char *token)
+// 	i = 0;
+// 	while (tab[i])
+// 		i++;
+// 	return (i);
+// }
+
+// char	**tab_join(char **tab, char *line)
+// {
+// 	int		len;
+// 	char	**new_tab;
+// 	int		i;
+
+// 	i = 0;
+// 	if (!tab)
+// 	{
+// 		new_tab = ft_calloc(2, sizeof (char *));
+// 		new_tab[i++] = ft_strdup(line);
+// 		new_tab[i] = NULL;
+// 		return (new_tab);
+// 	}
+// 	len = tab_length(tab);
+// 	new_tab = ft_calloc ((len + 2), sizeof(char *));
+// 	while (i < len)
+// 	{
+// 		new_tab[i] = ft_strdup(tab[i]);
+// 		i++;
+// 	}
+// 	new_tab[i++] = ft_strdup(line);
+// 	new_tab[i] = 0;
+// 	table_flip(tab);
+// 	return (new_tab);
+// }
+
+void	add_token(t_info *info, char *token)
 {
-	char	**tab;
+	tab_join(info->token, token);
+}
 
-	if (simple_or_double(token))
-		tab = ft_split(token, simple_or_double(token));
-	else
-		tab = ft_split(token, ' ');
+void skip_space(t_info *info)
+{
+	while(is_white_space(*info->last_position))
+		info->last_position++;
+	printf("position = %c\n", *info->last_position);
+}
 
-	return (tab);
+char	*search_another_one(char *str, char c, int start, t_info *info)
+{
+	char *token;
+	int	end;
+	int len;
+
+	end = start;
+	len = 0;
+	// printf("first = %c\n", *str);
+	while (str[start])
+	{
+		if (str[start] == c)
+		{
+			start++;
+			// printf("start = %c\n", str[start]);
+			while(str[end++ + 1] != c)
+				len++;
+			// printf("end = %c\n", str[end]);
+			// printf("%d\n", end);
+			// printf("%d\n", start);
+			info->last_position = &str[end];
+			token = ft_substr(str, start, len);
+			// printf("token = %s\n", token);
+			return (token);
+		}
+		start++;
+		end++;
+	}
+	return (NULL);
+}
+
+// char	*get_command(char *token)
+// {
+
+
+
+// }
+
+// char *get_token(t_info *info)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	skip_space(info);
+// 	if (*info->last_position != 39 && *info->last_position != 34)
+		
+
+
+
+
+// }
+
+void	split_token(char *token, t_info *info)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = 0;
+	info->last_position = token;
+	info->token = tab_join(info->token, ft_substr(token, 0, 4));
+	// printf("token %d = %s\n", i, info->token[i]);
+	len +=  ft_strlen(info->token[i++]);
+	// printf("len token 1 = %i\n", len);
+	// skip_space(info);
+	info->token = tab_join(info->token, search_another_one(info->last_position, 34, len, info));
+	// printf("token %d = %s\n", i, info->token[i]);
+
+	len +=  ft_strlen(info->token[i++]);
+	// printf("len token 2 = %i\n", len);
+
+	
+	info->token = tab_join(info->token, search_another_one(info->last_position, 39, len, info));
+	// printf("token %d = %s\n", i, info->token[i]);
+
+	len +=  ft_strlen(info->token[i++]);
+	// printf("len token 3 = %i\n", len);
+
+
+	print_tab(info->token);
+	free(info->token);
+	info->token = ft_calloc(sizeof(char **), 1);
+
+
+
+
+
+
+
+
+	// if (simple_or_double(token))
+	// 	tab = ft_split(token, simple_or_double(token));
+	// else
+	// 	tab = ft_split(token, ' ');
+
+	// return (tab);
+}
+
+void	init(t_info *info, char **envp)
+{
+	info->envp = envp;
+	info->token = NULL;
 }
 
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
-	char **tab_token;
+	t_info	*info;
+
+	info = malloc(sizeof(t_info)); // malloc une fois le size de la struct 
 
 	printf("Let's go ça part !\n");
 	// print_tab(envp);
-	rl_replace_line("", 0);
-	
-	while(1 && argc && argv)
+	disable_echo(); // Enleve l'option de echo tous les echoctl comme ^C. Pensez qu'il faut le remettre une fois dans exec
+	while(1 && argc && argv) // Loop qui permet de 
 	{
-		line = readline("Minishell$>");
-		add_history(line);
-		rl_redisplay();
+		signal_modified();
+		line = readline("Minishell$>"); // Readline lit le conteu de la ligne. Assigne suffisament memoir sur heap pour contenir l'entree
+		if (line) // Si contenu est insere 
+			add_history(line); //Utilise une fonction add_history pour avoir historique
+		else // A travailler 
+			exit_terminal();
+		rl_redisplay(); // Cette ligne ne semble pas necessaire.
 		// printf("token = %s", line);
-		tab_token = split_token(line);
+		split_token(line, info);
 
-		token_manager(tab_token, envp);
+		token_manager(info->token, envp);
 		// command_exeggutor(line, envp);
 		free(line);
 	}
