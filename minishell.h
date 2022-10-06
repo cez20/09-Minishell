@@ -19,10 +19,10 @@ typedef struct s_info
 void	print_tab(char **tab);
 char	*get_path(char *command, char **envp);
 void	command_exeggutor(char *argv, char **envp);
-void	echo(char **tab_token);
+void	echo(t_info *info);
 char	*search_line(char **tab, char *search);
-void	pwd(char **envp);
-void 	token_manager(char **tab_token, char **envp);
+void	pwd(t_info *info);
+void 	token_manager(t_info *info);
 char 	simple_or_double(char *token);
 void	split_token(char *token, t_info *info);
 int 	main(int argc, char **argv, char **envp);
@@ -35,5 +35,5 @@ void 	disable_echo();
 
 //Builtins
 
-void	pwd(char **envp);
-void	echo(char **tab_token);
+// void	pwd(char **envp);
+// void	echo(char **tab_token);

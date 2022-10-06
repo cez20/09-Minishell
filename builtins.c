@@ -1,27 +1,27 @@
 #include "minishell.h"
 
-void	pwd(char **envp)
+void	pwd(t_info *info)
 {
 	char *pwd;
 
-	pwd = search_line(envp, "PWD=");
+	pwd = search_line(info->envp, "PWD=");
 	pwd = ft_strchr(pwd, '=');
 	printf("%s\n", ++pwd);
 }
 
-void	echo(char **tab_token)
+void	echo(t_info *info)
 {
 	int i;
 
-	if (!ft_strncmp(tab_token[1], "-n", 2))
+	if (!ft_strncmp(info->token[1], "-n", 2))
 		i = 2;
 	else
 		i = 1;
 
-	while(tab_token[i])
+	while(info->token[i])
 	{
-		printf("%s ", tab_token[i++]);
+		printf("%s ", info->token[i++]);
 	}
-	if (ft_strncmp(tab_token[1], "-n", 2))
+	if (ft_strncmp(info->token[1], "-n", 2))
 		printf("\n");
 }
