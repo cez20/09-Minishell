@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 09:58:57 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/03 14:45:10 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:24:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 - Si l'expansion ne se trouve pas dans ENV, output sera RIEN. Ex: echo $ARGS si ARGS n'est pas dans env. Output est rien.
 - Si le contenu est $? = retourner l'exit number. Dans tous les autres cas, ne rien faire.  
 */
+int	ft_isalpha1(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	else
+		return (0);
+}
 
 /* Fonction qui circule dans ENV, et retourn le contenu qui se trouve
 apres le signe (=);*/
@@ -68,11 +75,52 @@ void	find_expansion(char **str, char *str1, char *str2, char **env)
 // 4- On creer une nouvelle string en fusionant str2(ARGS) et "=" 
 //    pour donner "ARGS="
 // 5- J'envoie le tout a la fonction find_expansion qui fera la substition 
+// char	*var_expansion(char **str, char **env)
+// {
+// 	char	*str1;
+// 	char	*str2;
+// 	char	*str3;
+// 	int		i;
+
+// 	i = 0;
+// 	str1 = NULL;
+// 	while ((*str)[i] != '$' && (*str)[i])
+// 		i++;
+// 	if ((*str)[i] == '$')
+// 	{
+// 		if (i > 0)
+// 			str1 = ft_substr(*str, 0, i);
+// 		i++;
+// 		str2 = ft_strdup((*str + i));
+// 		str3 = ft_strjoin(str2, "=");
+// 		find_expansion(str, str1, str3, env);
+// 		free(str1);
+// 		free(str2);
+// 		free(str3);
+// 	}
+// 	return (*str);
+///
+
+char *new_string(char *str, int *i)
+{
+	char *str1;
+	int j;
+
+	j = *i;
+	while (ft_isalpha1(str[*i]) != 0)
+		(*i)++;
+	str1 = ft_substr(str, j, *i - j);
+	printf("The new string is %s\n", str1);
+	return (str1);
+}
+
+
 char	*var_expansion(char **str, char **env)
 {
 	char	*str1;
 	char	*str2;
 	char	*str3;
+	char	*str4;
 	int		i;
 
 	i = 0;
@@ -84,8 +132,9 @@ char	*var_expansion(char **str, char **env)
 		if (i > 0)
 			str1 = ft_substr(*str, 0, i);
 		i++;
-		str2 = ft_strdup((*str + i));
+		str2 = new_string(*str, &i);
 		str3 = ft_strjoin(str2, "=");
+		str4 = ft_strdup(*str + i);
 		find_expansion(str, str1, str3, env);
 		free(str1);
 		free(str2);
@@ -93,6 +142,7 @@ char	*var_expansion(char **str, char **env)
 	}
 	return (*str);
 }
+
 
 /* Petite fonction main temporaire, d'ici le moment ou 
 on trouve ou l'inserer dans notre programme
@@ -107,7 +157,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	str = malloc(10 * sizeof(char));
-	strcpy(str, "echo$ARGS");
+	strcpy(str, "echo'$ARGS'");
 	var_expansion(&str, env);
 	printf("Le token final est: %s\n", str);
 	free(str);

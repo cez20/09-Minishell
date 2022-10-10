@@ -6,7 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/06 14:53:58 by cemenjiv         ###   ########.fr       */
+=======
+/*   Updated: 2022/10/06 10:46:25 by slavoie          ###   ########.fr       */
+>>>>>>> Steven
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +106,7 @@ void token_manager(t_info *info)
 */
 char simple_or_double(char *token)
 {
-	if (*token == 34 || *token == 39)
+	if (*token == 34 || *token == 39 || *token == '<')
 		return (*token);
 	return (32);
 }
@@ -181,6 +185,7 @@ void	split_token(char *token, t_info *info)
 		info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 		skip_space(info);
 	}
+	// print_tab(info->token);
 }
 
 void	init(t_info *info, char **envp)

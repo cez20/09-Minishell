@@ -23,7 +23,7 @@ $(NAME): $(OBJS)
 
 clean:
 	@echo "Cleaning 🌪 🔥🌊"
-	@# @$(MAKE) -C ./Libft fclean
+	@$(MAKE) -C ./Libft fclean
 	@rm -rf $(OBJS)
 
 fclean: clean
