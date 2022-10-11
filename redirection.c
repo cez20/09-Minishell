@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/07 11:19:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:11:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,11 @@ void	append_document(char *outfile)
 //Normally, bash does not create a file that is visible to user. Therefore, might be best to  create a double pointer (tab_join function)
 void	create_heredoc(char *delimiter)
 {
+	char **tab_token;
 	char *line;
-	char *str;
-	int	 tmp;
 	int i;
 	
-	i = 0;
-	str = NULL;
-	tmp = open("heredoc.txt", O_TRUNC | O_CREAT | O_RDWR, 0644);
+	tab_token = NULL;
 	while (1)
 	{
 		line = readline(">");
@@ -84,20 +81,13 @@ void	create_heredoc(char *delimiter)
 			free(line);
 			break;
 		}
-		write(tmp, line, ft_strlen(line));
-		write(tmp, "\n", 1);
+		tab_token = tab_join(tab_token, line);
 		free(line);
 	}
-	close(tmp);
-	tmp = open("heredoc.txt", O_RDWR);
-	str = get_next_line(tmp);
-	while(str) 
-	{
-		printf("%s", str);
-		free(str);
-		str = get_next_line(tmp);
-	}
-	close(tmp);
+	i = 0;
+	while (tab_token[i])
+		printf("%s\n", tab_token[i++]);
+	free_token(tab_token);
 }
 
 int	open_infile(char *token)
@@ -120,8 +110,6 @@ int	open_infile(char *token)
 	return (infile);
 }
 
-// Pour le '>' operator, il s'agit d'ouvrir le document, mais aussi d'envoyer le contenu dedans 
-// Pour le 
 void redirection(char **token, int *infile, int *outfile)
 {
 	int i;

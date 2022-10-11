@@ -35,6 +35,24 @@ void    sig_handler(int signum);
 void    signal_modified();
 void 	disable_echo();
 
+//*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
+int		ft_isalpha1(int c);
+char	*new_expanded_variable(int i, char *str, char **env);
+void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
+char 	*env_variable(char *str, int *i);
+char	*var_expansion(char **str, char **env);
+
+//*** REDIRECTION.C ***
+void	free_token(char **token);
+void	append_document(char *outfile);
+void	create_heredoc(char *delimiter);
+int		open_infile(char *token);
+void 	redirection(char **token, int *infile, int *outfile)
+
+// *** EXECUTION1.C ***    CHANGER LE NOM DE CECI UNE FOIS TERMINE
+void	remove_extra_quote(char **token, char quote);
+
+
 //Builtins
 
 // void	pwd(char **envp);
