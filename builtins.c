@@ -54,9 +54,9 @@ void	echo(t_info *info)
 	while(info->token[i])
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (info->token[i][0] == (34 | 39))
+		if (info->token[i][0] == (34 | 39)) 
 		{
-			// remove_quote(&info->token[i]);
+			remove_quote(&info->token[i]);
 			printf("%s", info->token[i++]);
 		}
 		else

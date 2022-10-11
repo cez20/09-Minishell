@@ -40,5 +40,7 @@ Struct
 	[X] char **token
 
 
-
+TODO: 
+		[] gérer les espaces entre les différents tokens avec des quotes
+		
 

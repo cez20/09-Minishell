@@ -10,6 +10,20 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+typedef struct s_token
+{
+	int	flag_space;
+	int flag_quote;
+	char	type_quote;
+
+	char	*token;
+
+
+
+}			t_token;
+
+
+
 typedef struct s_info
 {
 	char **envp;
