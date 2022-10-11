@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/06 16:21:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/11 11:34:20 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,10 @@ int main(int argc, char **argv, char **envp)
 	while(1 && argc && argv && envp)
 	{
 		signal_modified();
-		line = readline("Minishell$>");
-		if (line)
-			add_history(line);
-		else 
+		line = readline("Minishell$>"); // Readline lit le conteu de la ligne. Assigne suffisament memoir sur heap pour contenir l'entree
+		if (line) // Si contenu est insere 
+			add_history(line); //Utilise une fonction add_history pour avoir historique
+		else // A travailler 
 			exit_terminal();
 		rl_redisplay();
 		// printf("token = %s\n", line);
