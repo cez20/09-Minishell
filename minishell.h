@@ -12,22 +12,21 @@
 
 typedef struct s_token
 {
-	int	flag_space;
-	int flag_quote;
-	char	type_quote;
-
 	char	*token;
+	int		flag_quote;
+	int		space_flag;
 
 
-
-}			t_token;
-
+	struct s_token *next;
+}				t_token;
 
 
 typedef struct s_info
 {
 	char **envp;
 	char **token;
+	t_token	*list_token;
+	int flag_quote;
 	char *last_position;
 }		t_info;
 
@@ -53,3 +52,8 @@ void 	disable_echo();
 
 // void	pwd(char **envp);
 // void	echo(char **tab_token);
+void	ft_lstaddback_token(t_token **alst, t_token *new);
+t_token	*ft_lstnew_token(char *content);
+void lst_print_token(t_token **list);
+void	ft_lstclear_token(t_token **lst, void (*del) (void *));
+

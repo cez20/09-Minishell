@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	remove_quote(char **str)
+void	remove_quote(char **str, t_info	*info)
 {
 	char	*temp;
 	char	chr;
@@ -15,7 +15,11 @@ void	remove_quote(char **str)
 		temp = *str;
 		*str = ft_substr(*str, 1, ft_strlen(*str) - 2);
 		free(temp);
+		info->flag_quote = 1;
 	}
+	else
+		info->flag_quote = 0;
+
 	
 }
 
@@ -46,23 +50,25 @@ void	echo(t_info *info)
 {
 	int i;
 
-	if (!ft_strncmp(info->token[1], "-n", 2))
+	info->flag_quote = 0;
+
+	if (!ft_strncmp(info->list_token->next->token, "-n", 2))
 		i = 2;
 	else
 		i = 1;
 
-	while(info->token[i])
+	while(info->list_token->next)
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (info->token[i][0] == (34 | 39)) 
+		if (info->flag_quote == 1 && info->token[i][0] == simple_or_double(info->token[i])) 
 		{
-			remove_quote(&info->token[i]);
+			remove_quote(&info->token[i], info);
 			printf("%s", info->token[i++]);
 		}
 		else
 		{
-			// remove_quote(&info->token[i]);
-			printf("%s ", info->token[i++]);
+			remove_quote(&info->token[i], info);
+			printf(" %s", info->token[i++]);
 		}
 	}
 	if (ft_strncmp(info->token[1], "-n", 2))

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/11 11:34:20 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/11 16:50:16 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ char	*search_line(char **tab, char *line)
 */
 void token_manager(t_info *info)
 {
-	if (!ft_strncmp(info->token[0], "echo", 4))
+	if (!ft_strncmp(info->list_token->token, "echo", 4))
 		echo(info);
-	if (!ft_strncmp(info->token[0], "pwd", 3))
+	if (!ft_strncmp(info->list_token->token, "pwd", 3))
 		pwd(info);
-	if (!ft_strncmp(info->token[0], "env", 3))
+	if (!ft_strncmp(info->list_token->token, "env", 3))
 		print_tab(info->envp);
 }
 
@@ -178,10 +178,12 @@ void	split_token(char *token, t_info *info)
 	while (*info->last_position)
 	{
 		skip_space(info);
-		info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
+		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
+		// info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 		skip_space(info);
 	}
 	// print_tab(info->token);
+	lst_print_token(&info->list_token);
 }
 
 void	init(t_info *info, char **envp)
@@ -216,8 +218,9 @@ int main(int argc, char **argv, char **envp)
 		token_manager(info);
 		// command_exeggutor(line, envp);
 		free(line);
-		free(info->token);
-		info->token = ft_calloc(sizeof(char **), 1);
+		// free(info->token);
+		ft_lstclear_token(&info->list_token, NULL);
+		// info->token = ft_calloc(sizeof(char **), 1);
 	}
 	return (0);
 }

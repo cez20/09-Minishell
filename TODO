@@ -42,5 +42,7 @@ Struct
 
 TODO: 
 		[] gérer les espaces entre les différents tokens avec des quotes
-		
+		[X] convertir la gestion de token en linked list
+		[] gérer le echo avec la nouvelle façon en linked list
+		[] gérer -n avec autre chose que juste n
 
