@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var_expansion.c                                    :+:      :+:    :+:   */
+/*   var_expansion1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 09:58:57 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/10 12:24:16 by cemenjiv         ###   ########.fr       */
+/*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/10/11 15:01:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Libft/libft.h"
 #include <string.h>
 
-/* Gerer les cas d'erreurs:
-- (FAIT) Si le premier caractere du token n'est pas '$', ne rien faire. Le token, reste tel quel.
-- (FAIT) Si le contenu suivant n'est pas exactement la meme expression (ex: ARG au lieu de ARGS), on retourne le token initial
-- (FAIT) Si le contenu suivant le caractere '$' ne se trouve pas dans l'environnement, ne rien faire et retourner le token initial
-- (FAIT) Si l'expansion est associe a null = ARGS = "", remplacer $ARGS par null;
-- Si l'expansion ne se trouve pas dans ENV, output sera RIEN. Ex: echo $ARGS si ARGS n'est pas dans env. Output est rien.
-- Si le contenu est $? = retourner l'exit number. Dans tous les autres cas, ne rien faire.  
-*/
 int	ft_isalpha1(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
@@ -49,8 +41,9 @@ pour changer l'expansion par son contenu
 	a) S'il y un str1(contenu avec) expansion, str va pointer un string qui joint
 		str1 et le contenu de la variable d'expansion
 	b) Sinon, str va pointer vers le contenu de la variable d'expansion */
-void	find_expansion(char **str, char *str1, char *str2, char **env)
+void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 {
+	char *string;
 	int	i;
 
 	i = 0;
@@ -60,48 +53,24 @@ void	find_expansion(char **str, char *str1, char *str2, char **env)
 	{
 		free(*str);
 		if (str1)
-			*str = ft_strjoin(str1, new_expanded_variable(i, str2, env));
+		{
+			string = ft_strjoin(str1, new_expanded_variable(i, str2, env));
+			*str = ft_strjoin(string, str3);
+			free(string);
+		}
 		else
-			*str = ft_strdup(new_expanded_variable(i, str2, env));
+		{
+			string = ft_strdup(new_expanded_variable(i, str2, env));
+			*str = ft_strjoin(string, str3);
+			free(string);
+		}
 	}
 }
 
-// Fonction qui traire l'expansion avec dollar sign($)
-// 1- On circule dans la string jusqu'a renconter un $. 
-// 2- Si applicable, on copie le contenu de la string anterieur 
-// au dollar sign (ex: echo$ARGS copiera "echo") dans str1
-// 3- On copie le contenu se trouvant apres le dollar sign dans un nouvelle
-// 	string (str2) qui est malloc avec strdup
-// 4- On creer une nouvelle string en fusionant str2(ARGS) et "=" 
-//    pour donner "ARGS="
-// 5- J'envoie le tout a la fonction find_expansion qui fera la substition 
-// char	*var_expansion(char **str, char **env)
-// {
-// 	char	*str1;
-// 	char	*str2;
-// 	char	*str3;
-// 	int		i;
-
-// 	i = 0;
-// 	str1 = NULL;
-// 	while ((*str)[i] != '$' && (*str)[i])
-// 		i++;
-// 	if ((*str)[i] == '$')
-// 	{
-// 		if (i > 0)
-// 			str1 = ft_substr(*str, 0, i);
-// 		i++;
-// 		str2 = ft_strdup((*str + i));
-// 		str3 = ft_strjoin(str2, "=");
-// 		find_expansion(str, str1, str3, env);
-// 		free(str1);
-// 		free(str2);
-// 		free(str3);
-// 	}
-// 	return (*str);
-///
-
-char *new_string(char *str, int *i)
+/*Fonction qui s'assurer de seulement garder la variable
+d'environmement sans metachracteres (EX:"echo'$ARGS'"")
+va seulement garder le ARGS sans le '(simple quote qui se trouve apres)*/
+char *env_variable(char *str, int *i)
 {
 	char *str1;
 	int j;
@@ -110,11 +79,12 @@ char *new_string(char *str, int *i)
 	while (ft_isalpha1(str[*i]) != 0)
 		(*i)++;
 	str1 = ft_substr(str, j, *i - j);
-	printf("The new string is %s\n", str1);
 	return (str1);
 }
 
-
+/*Fonction qui circule dans circule dans token
+pour trouver variable d'environnement et l'expansionne 
+*/
 char	*var_expansion(char **str, char **env)
 {
 	char	*str1;
@@ -132,13 +102,14 @@ char	*var_expansion(char **str, char **env)
 		if (i > 0)
 			str1 = ft_substr(*str, 0, i);
 		i++;
-		str2 = new_string(*str, &i);
+		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
 		str4 = ft_strdup(*str + i);
-		find_expansion(str, str1, str3, env);
+		find_expansion(str, str1, str3, str4, env);
 		free(str1);
 		free(str2);
 		free(str3);
+		free(str4);
 	}
 	return (*str);
 }
@@ -156,7 +127,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	str = malloc(10 * sizeof(char));
+	str = malloc(12 * sizeof(char));
 	strcpy(str, "echo'$ARGS'");
 	var_expansion(&str, env);
 	printf("Le token final est: %s\n", str);
