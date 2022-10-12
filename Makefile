@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = main.c builtins.c execution.c redirection.c signal.c var_expansion.c 
+SRC = main.c builtins.c execution.c redirection.c signal.c utils.c var_expansion.c 
 
 CC = @gcc 
 CFLAGS = -Werror -Wall -Wextra -g

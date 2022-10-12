@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 10:12:10 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:05:44 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,21 @@
 #include <sys/wait.h>
 #include <termios.h>
 
+typedef struct s_token
+{
+	char	*token;
+	int		flag_quote;
+	int		space_flag;
+	struct	s_token *next;
+}				t_token;
+
 typedef struct s_info
 {
 	char 	**envp;
 	char 	**token;
+	t_token	*list_token;
+	int 	flag_quote;
 	char 	*last_position;
-	char 	*cmd;
-	char 	**cmd_args;
 	int 	infile;
 	int 	outfile;
 	int 	nb_of_pipe;
@@ -50,7 +58,7 @@ void	split_token(char *token, t_info *info);
 int 	main(int argc, char **argv, char **envp);
 
 //***BUILTINS.C
-void	remove_quote(char **str);
+void	remove_quote(char **str, t_info	*info);
 void	pwd(t_info *info);
 void	echo(t_info *info);
 
@@ -76,5 +84,11 @@ void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_infile(char *token);
 void 	redirection(char **token, int *infile, int *outfile);
+
+//*** UTILS.C ***
+void	ft_lstaddback_token(t_token **alst, t_token *new);
+t_token	*ft_lstnew_token(char *content);
+void 	lst_print_token(t_token **list);
+void	ft_lstclear_token(t_token **lst, void (*del) (void *));
 
 #endif
