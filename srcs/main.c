@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/12 14:01:44 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:26:11 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ char simple_or_double(char *token)
 void skip_space(t_info *info)
 {
 	while(is_white_space(*info->last_position))
+	{
 		info->last_position++;
+		ft_lstlast_token(info->list_token)->space_flag = 1;
+	}
 }
 
 /*
@@ -132,16 +135,17 @@ char	*search_another_one(char *str, char c, t_info *info)
 	len++;
 	while (*str != c)
 	{
-		str++;
-		len++;
 		if (*str == '\0')
 		{
 			info->last_position = str;
 			token = ft_substr(start, 0, len);
 			return (token);
 		}
+		str++;
+		len++;
 	}
-	len++;
+	if (c != 32)
+		len++;
 	info->last_position = ++str;
 	token = ft_substr(start, 0, len);
 	return (token);

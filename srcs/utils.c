@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/12 15:14:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:26:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_lstsize_token(t_token *lst)
 	size = 0;
 	while (lst)
 	{
-		lst = lst -> next;
+		lst = lst->next;
 		size++;
 	}
 	return (size);
@@ -68,11 +68,12 @@ t_token	*ft_lstnew_token(char *content)
 {
 	t_token	*new;
 
-	new = (t_token *)ft_calloc(1, sizeof(*new));
+	new = (t_token *)malloc(sizeof(*new));
 	if (!new)
-		return (NULL);
+		return (0);
 	new->token = content;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -81,21 +82,23 @@ t_token	*ft_lstlast_token(t_token *lst)
 	if (!lst)
 		return (0);
 	while (lst->next)
-	{
 		lst = lst->next;
-	}
 	return (lst);
 }
 
 void	ft_lstaddback_token(t_token **alst, t_token *new)
 {
 	t_token	*last;
+	t_token	*first;
 
+	first = *alst;
 	if (!*alst)
 	{
 		*alst = new;
 		return ;
 	}
 	last = ft_lstlast_token(*alst);
+	new->prev = last;
 	last->next = new;
+	new->next= NULL;
 }

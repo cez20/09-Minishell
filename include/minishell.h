@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 14:35:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:27:38 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ typedef struct s_token
 	char	*token;
 	int		flag_quote;
 	int		space_flag;
-	struct	s_token *next;
+
+
+	struct s_token *next;
+	struct s_token *prev;
 }				t_token;
 
 typedef struct s_info
@@ -58,7 +61,7 @@ void	split_token(char *token, t_info *info);
 int 	main(int argc, char **argv, char **envp);
 
 //***BUILTINS.C
-void	remove_quote(char **str, t_info	*info);
+void	remove_quote(t_token *token_list);
 void	pwd(t_info *info);
 void	echo(t_info *info);
 
@@ -90,5 +93,6 @@ void	ft_lstaddback_token(t_token **alst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 void 	lst_print_token(t_token **list);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
+t_token	*ft_lstlast_token(t_token *lst);
 
 #endif

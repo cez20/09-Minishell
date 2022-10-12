@@ -12,25 +12,25 @@
 
 #include "minishell.h"
 
-void	remove_quote(char **str, t_info	*info)
+void	remove_quote(t_token *token_list)
 {
 	char	*temp;
 	char	chr;
 
-	chr = simple_or_double(*str);
+	chr = simple_or_double(token_list->token);
 
 	// printf("%c\n", chr);
 	// printf("%c\n", str[0][ft_strlen(*str) - 2]);
 
-	if (str[0][ft_strlen(*str) - 1] == chr && chr != 32)
+	if (token_list->token[ft_strlen(token_list->token) - 1] == chr && chr != 32)
 	{
-		temp = *str;
-		*str = ft_substr(*str, 1, ft_strlen(*str) - 2);
+		temp = token_list->token;
+		token_list->token = ft_substr(token_list->token, 1, ft_strlen(token_list->token) - 2);
 		free(temp);
-		info->flag_quote = 1;
+		token_list->flag_quote = 1;
 	}
 	else
-		info->flag_quote = 0;
+		token_list->flag_quote = 0;
 
 	
 }
@@ -58,30 +58,29 @@ void	pwd(t_info *info)
 
 void	echo(t_info *info)
 {
-	int i;
 	t_token	*token_list;
 
-	token_list = info->list_token;
+	token_list = info->list_token->next;
 	info->flag_quote = 0;
+	if (!ft_strncmp(token_list->token, "-n", 2))
+		token_list = token_list->next;
 
-	if (!ft_strncmp(token_list->next->token, "-n", 2))
-		i = 2;
-	else
-		i = 1;
-
-	while(token_list->token)
+	// printf("allo\n");
+	while(token_list)
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (info->flag_quote == 1 && *token_list->token == simple_or_double(info->token[i])) 
+		if (token_list->prev->space_flag == 1) 
 		{
-			// remove_quote(&info->token[i], info);
-			printf("%s", info->token[i++]);
+			remove_quote(token_list);
+			printf(" %s", token_list->token);
 		}
 		else
 		{
-			// remove_quote(&info->token[i], info);
-			printf(" %s", info->token[i++]);
+			remove_quote(token_list);
+			printf("%s", token_list->token);
+			// printf("%s", token_list->token);
 		}
+		// printf("%s\n", token_list->token);
 		token_list = token_list->next;
 	}
 	if (ft_strncmp(info->list_token->next->token, "-n", 2))
