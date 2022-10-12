@@ -49,28 +49,31 @@ void	pwd(t_info *info)
 void	echo(t_info *info)
 {
 	int i;
+	t_token	*token_list;
 
+	token_list = info->list_token;
 	info->flag_quote = 0;
 
-	if (!ft_strncmp(info->list_token->next->token, "-n", 2))
+	if (!ft_strncmp(token_list->next->token, "-n", 2))
 		i = 2;
 	else
 		i = 1;
 
-	while(info->list_token->next)
+	while(token_list->token)
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (info->flag_quote == 1 && info->token[i][0] == simple_or_double(info->token[i])) 
+		if (info->flag_quote == 1 && *token_list->token == simple_or_double(info->token[i])) 
 		{
-			remove_quote(&info->token[i], info);
+			// remove_quote(&info->token[i], info);
 			printf("%s", info->token[i++]);
 		}
 		else
 		{
-			remove_quote(&info->token[i], info);
+			// remove_quote(&info->token[i], info);
 			printf(" %s", info->token[i++]);
 		}
+		token_list = token_list->next;
 	}
-	if (ft_strncmp(info->token[1], "-n", 2))
+	if (ft_strncmp(info->list_token->next->token, "-n", 2))
 		printf("\n");
 }

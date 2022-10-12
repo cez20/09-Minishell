@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/11 16:50:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:45:03 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,8 @@ int main(int argc, char **argv, char **envp)
 		// printf("token = %s\n", line);
 		split_token(line, info);
 
-		token_manager(info);
+		if (info->list_token)
+			token_manager(info);
 		// command_exeggutor(line, envp);
 		free(line);
 		// free(info->token);
