@@ -6,16 +6,16 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 14:05:44 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:35:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "Libft/libft.h"
-#include "readline/readline.h"
-#include "readline/history.h"
+#include "../Libft/libft.h"
+#include "../readline/readline.h"
+#include "../readline/history.h"
 #include <errno.h>
 #include <dirent.h>
 #include <unistd.h>

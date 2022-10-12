@@ -6,12 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 10:08:02 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:13:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "Libft/libft.h"
 
 // void free_token(char **token)
 // {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/05 15:50:26 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:14:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /*
     I need to free eveything that cause a segfault 

@@ -6,12 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 10:07:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:14:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Libft/libft.h"
-// #include <string.h>
+#include "minishell.h"
 
 int	ft_isalpha1(int c)
 {
