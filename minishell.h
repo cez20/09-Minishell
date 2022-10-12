@@ -18,6 +18,7 @@ typedef struct s_token
 
 
 	struct s_token *next;
+	struct s_token *prev;
 }				t_token;
 
 
@@ -60,7 +61,7 @@ void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_infile(char *token);
-void 	redirection(char **token, int *infile, int *outfile)
+void 	redirection(char **token, int *infile, int *outfile);
 
 // *** EXECUTION1.C ***    CHANGER LE NOM DE CECI UNE FOIS TERMINE
 void	remove_extra_quote(char **token, char quote);
@@ -74,4 +75,5 @@ void	ft_lstaddback_token(t_token **alst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 void lst_print_token(t_token **list);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
+t_token	*ft_lstlast_token(t_token *lst);
 
