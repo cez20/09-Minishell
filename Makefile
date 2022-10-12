@@ -1,7 +1,8 @@
 NAME 			= minishell
 
 SRCS_DIR   		= srcs/
-SRCS 			= srcs/main.c srcs/builtins.c srcs/execution.c srcs/redirection.c srcs/signal.c srcs/utils.c srcs/var_expansion.c 
+SRCS_FILES		= main.c builtins.c execution.c redirection.c signal.c utils.c var_expansion.c 
+SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 CC 				= @gcc 
 CFLAGS 			= -Werror -Wall -Wextra -g
@@ -87,4 +88,4 @@ go:
 	@git checkout $(BRANCH)
 
 objs:
-	mkdir -p objs
+	@mkdir -p objs
