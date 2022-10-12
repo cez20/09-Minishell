@@ -1,36 +1,64 @@
-#include <stdio.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/10/12 10:12:10 by cemenjiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
 #include "Libft/libft.h"
 #include "readline/readline.h"
 #include "readline/history.h"
-#include <termios.h>
+#include <errno.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <termios.h>
 
 typedef struct s_info
 {
-	char **envp;
-	char **token;
-	char *last_position;
+	char 	**envp;
+	char 	**token;
+	char 	*last_position;
+	char 	*cmd;
+	char 	**cmd_args;
+	int 	infile;
+	int 	outfile;
+	int 	nb_of_pipe;
 }		t_info;
 
 //*** MAIN.C ***
 void	print_tab(char **tab);
 char	*get_path(char *command, char **envp);
 void	command_exeggutor(char *argv, char **envp);
-void	echo(t_info *info);
 char	*search_line(char **tab, char *search);
-void	pwd(t_info *info);
 void 	token_manager(t_info *info);
 char 	simple_or_double(char *token);
 void	split_token(char *token, t_info *info);
 int 	main(int argc, char **argv, char **envp);
 
+//***BUILTINS.C
+void	remove_quote(char **str);
+void	pwd(t_info *info);
+void	echo(t_info *info);
+
+// *** EXECUTION.C *** 
+void	remove_extra_quote(char **token, char quote);
+
 //*** SIGNAL.C ***
-void	exit_terminal();
+void	exit_terminal(); // Function to work on. 
 void    sig_handler(int signum);
 void    signal_modified();
 void 	disable_echo();
@@ -47,13 +75,6 @@ void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_infile(char *token);
-void 	redirection(char **token, int *infile, int *outfile)
+void 	redirection(char **token, int *infile, int *outfile);
 
-// *** EXECUTION1.C ***    CHANGER LE NOM DE CECI UNE FOIS TERMINE
-void	remove_extra_quote(char **token, char quote);
-
-
-//Builtins
-
-// void	pwd(char **envp);
-// void	echo(char **tab_token);
+#endif

@@ -6,66 +6,66 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/11 10:44:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:50:42 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_path(char *command, char **envp)
-{
-	char	**path_list;
-	char	*full_path;
-	char	*temp;
-	int		i;
+// char	*get_path(char *command, char **envp)
+// {
+// 	char	**path_list;
+// 	char	*full_path;
+// 	char	*temp;
+// 	int		i;
 
-	i = 0;
-	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	printf("path = %s\n", envp[i]);
-	if (envp[i] == NULL)
-		return (NULL);
-	path_list = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (path_list[i])
-	{
-		temp = ft_strjoin(path_list[i], "/");
-		full_path = ft_strjoin(temp, command);
-		free(temp);
-		printf("full_path = %s\n", full_path);
-		if (access(full_path, F_OK | X_OK) == 0)
-			return (full_path);
-		free(full_path);
-		i++;
-	}
-	table_flip(path_list);
-	return (0);
-}
+// 	i = 0;
+// 	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH=", 5) == 0)
+// 		i++;
+// 	printf("path = %s\n", envp[i]);
+// 	if (envp[i] == NULL)
+// 		return (NULL);
+// 	path_list = ft_split(envp[i] + 5, ':');
+// 	i = 0;
+// 	while (path_list[i])
+// 	{
+// 		temp = ft_strjoin(path_list[i], "/");
+// 		full_path = ft_strjoin(temp, command);
+// 		free(temp);
+// 		printf("full_path = %s\n", full_path);
+// 		if (access(full_path, F_OK | X_OK) == 0)
+// 			return (full_path);
+// 		free(full_path);
+// 		i++;
+// 	}
+// 	table_flip(path_list);
+// 	return (0);
+// }
 
-void	command_exeggutor(char *argv, char **envp)
-{
-	char	**command;
-	char	*full_path;
-	int		i;
+// void	command_exeggutor(char *argv, char **envp)
+// {
+// 	char	**command;
+// 	char	*full_path;
+// 	int		i;
 
-	i = -1;
-	command = ft_split(argv, ' ');
-	print_tab(command);
-	if (access(command[0], F_OK | X_OK) == 0)
-		full_path = command[0];
-	else
-		full_path = get_path(command[0], envp);
-	printf("%s\n", full_path);
-	if (!full_path)
-	{
-		while (command[++i])
-			free(command[i]);
-		free(command);
-		yo_its_wrong("pas de path\n");
-	}
-	if (execve(full_path, command, envp) == -1)
-		yo_its_wrong("echec exec\n");
-}
+// 	i = -1;
+// 	command = ft_split(argv, ' ');
+// 	print_tab(command);
+// 	if (access(command[0], F_OK | X_OK) == 0)
+// 		full_path = command[0];
+// 	else
+// 		full_path = get_path(command[0], envp);
+// 	printf("%s\n", full_path);
+// 	if (!full_path)
+// 	{
+// 		while (command[++i])
+// 			free(command[i]);
+// 		free(command);
+// 		yo_its_wrong("pas de path\n");
+// 	}
+// 	if (execve(full_path, command, envp) == -1)
+// 		yo_its_wrong("echec exec\n");
+// }
 
 /*
 	cherche la ligne (char *line) dans le tableau (char **tab) et la renvoie
@@ -102,7 +102,7 @@ void token_manager(t_info *info)
 */
 char simple_or_double(char *token)
 {
-	if (*token == 34 || *token == 39 || *token == '<')
+	if (*token == 34 || *token == 39)
 		return (*token);
 	return (32);
 }
@@ -199,25 +199,55 @@ int main(int argc, char **argv, char **envp)
 	init(info, envp);
 
 	printf("Let's go ça part !\n");
-	// print_tab(envp);
+	//print_tab(envp); //Prints the whole env command 
 	disable_echo();
 	while(1 && argc && argv && envp)
 	{
 		signal_modified();
-		line = readline("Minishell$>"); // Readline lit le conteu de la ligne. Assigne suffisament memoir sur heap pour contenir l'entree
-		if (line) // Si contenu est insere 
-			add_history(line); //Utilise une fonction add_history pour avoir historique
-		else // A travailler 
+		line = readline("Minishell$> ");
+		if (line)
+			add_history(line); 
+		else 
 			exit_terminal();
-		rl_redisplay();
-		// printf("token = %s\n", line);
 		split_token(line, info);
-
-		token_manager(info);
-		// command_exeggutor(line, envp);
+		print_tab(info->token);
+		//token_manager(info);
 		free(line);
 		free(info->token);
 		info->token = ft_calloc(sizeof(char **), 1);
 	}
 	return (0);
 }
+
+//Initial main function 
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char *line;
+// 	t_info	*info;
+
+// 	info = malloc(sizeof(t_info));
+// 	init(info, envp);
+
+// 	printf("Let's go ça part !\n");
+// 	// print_tab(envp);
+// 	disable_echo();
+// 	while(1 && argc && argv && envp)
+// 	{
+// 		signal_modified();
+// 		line = readline("Minishell$>"); // Readline lit le conteu de la ligne. Assigne suffisament memoir sur heap pour contenir l'entree
+// 		if (line) // Si contenu est insere 
+// 			add_history(line); //Utilise une fonction add_history pour avoir historique
+// 		else // A travailler 
+// 			exit_terminal();
+// 		rl_redisplay();
+// 		// printf("token = %s\n", line);
+// 		split_token(line, info);
+
+// 		token_manager(info);
+// 		// command_exeggutor(line, envp);
+// 		free(line);
+// 		free(info->token);
+// 		info->token = ft_calloc(sizeof(char **), 1);
+// 	}
+// 	return (0);
+// }

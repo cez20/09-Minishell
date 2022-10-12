@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var_expansion1.c                                   :+:      :+:    :+:   */
+/*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/11 15:01:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/12 10:07:32 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Libft/libft.h"
-#include <string.h>
+// #include <string.h>
 
 int	ft_isalpha1(int c)
 {
@@ -115,22 +115,22 @@ char	*var_expansion(char **str, char **env)
 }
 
 
-/* Petite fonction main temporaire, d'ici le moment ou 
-on trouve ou l'inserer dans notre programme
-Je cree un *str qui represente l'equivalent d'un token
-qui contient un variable d'environnement ($). Le "free"
-final sera "normalement" fait lorsqu'on va free tous les 
-tokens. */
-int	main(int argc, char **argv, char **env)
-{
-	char	*str;
+// /* Petite fonction main temporaire, d'ici le moment ou 
+// on trouve ou l'inserer dans notre programme
+// Je cree un *str qui represente l'equivalent d'un token
+// qui contient un variable d'environnement ($). Le "free"
+// final sera "normalement" fait lorsqu'on va free tous les 
+// tokens. */
+// int	main(int argc, char **argv, char **env)
+// {
+// 	char	*str;
 
-	(void)argc;
-	(void)argv;
-	str = malloc(12 * sizeof(char));
-	strcpy(str, "echo'$ARGS'");
-	var_expansion(&str, env);
-	printf("Le token final est: %s\n", str);
-	free(str);
-	return (0);
-}
+// 	(void)argc;
+// 	(void)argv;
+// 	str = malloc(12 * sizeof(char));
+// 	strcpy(str, "echo'$ARGS'");
+// 	var_expansion(&str, env);
+// 	printf("Le token final est: %s\n", str);
+// 	free(str);
+// 	return (0);
+// }

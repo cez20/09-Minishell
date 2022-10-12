@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/10/12 09:45:45 by cemenjiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	remove_quote(char **str)
@@ -38,8 +50,6 @@ void	pwd(t_info *info)
 		ne pas enlever les quotes, mais simplement ne pas les afficher 
 
 */
-
-
 
 
 void	echo(t_info *info)
