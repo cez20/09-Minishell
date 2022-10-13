@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/12 16:26:11 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:59:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ int main(int argc, char **argv, char **envp)
 		split_token(line, info);
 		if (info->list_token)
 			token_manager(info);
+		var_expansion(info->list_token, envp);
+		lst_print_token(&info->list_token);
 		// command_exeggutor(line, envp);
 		free(line);
 		// free(info->token);

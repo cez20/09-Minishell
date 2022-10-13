@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 16:27:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:47:50 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int		ft_isalpha1(int c);
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
 char 	*env_variable(char *str, int *i);
-char	*var_expansion(char **str, char **env);
+void	locate_expansion(char **str, char **env);
+void	var_expansion(t_token *node, char **env);
 
 //*** REDIRECTION.C ***
 void	free_token(char **token);

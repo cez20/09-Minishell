@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 15:14:26 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:57:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 		if (str1)
 		{
 			string = ft_strjoin(str1, new_expanded_variable(i, str2, env));
-			*str = ft_strjoin(string, str3);
+			*str = ft_strjoin(string, str3); //Probleme avec la memoire ici semble etre avec str3 
 			free(string);
 		}
 		else
 		{
 			string = ft_strdup(new_expanded_variable(i, str2, env));
-			*str = ft_strjoin(string, str3);
+			*str = ft_strjoin(string, str3); // Probleme avec la memoire ici 
 			free(string);
 		}
 	}
@@ -81,21 +81,19 @@ char *env_variable(char *str, int *i)
 	return (str1);
 }
 
-/*Fonction qui circule dans circule dans token
-pour trouver variable d'environnement et l'expansionne 
-*/
-char	*var_expansion(char **str, char **env)
+void	locate_expansion(char **str, char **env)
 {
-	char	*str1;
-	char	*str2;
-	char	*str3;
-	char	*str4;
-	int		i;
+	int i;
+	char *str1;
+	char *str2;
+	char *str3;
+	char *str4;
 
 	i = 0;
 	str1 = NULL;
+	//str4 = NULL;
 	while ((*str)[i] != '$' && (*str)[i])
-		i++;
+ 		i++;
 	if ((*str)[i] == '$')
 	{
 		if (i > 0)
@@ -110,26 +108,23 @@ char	*var_expansion(char **str, char **env)
 		free(str3);
 		free(str4);
 	}
-	return (*str);
 }
 
+void	var_expansion(t_token *node, char **env)
+{
+	t_token	*tmp_node;
+	int		i;
+	(void)env;
 
-// /* Petite fonction main temporaire, d'ici le moment ou 
-// on trouve ou l'inserer dans notre programme
-// Je cree un *str qui represente l'equivalent d'un token
-// qui contient un variable d'environnement ($). Le "free"
-// final sera "normalement" fait lorsqu'on va free tous les 
-// tokens. */
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	*str;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	str = malloc(12 * sizeof(char));
-// 	strcpy(str, "echo'$ARGS'");
-// 	var_expansion(&str, env);
-// 	printf("Le token final est: %s\n", str);
-// 	free(str);
-// 	return (0);
-// }
+	i = 0;
+	tmp_node = node;
+	while (tmp_node)
+	{
+		if (ft_strchr(tmp_node->token, '$'))
+		{
+			locate_expansion(&tmp_node->token, env);
+			i++;
+		}
+		tmp_node = tmp_node->next;
+	}
+}
