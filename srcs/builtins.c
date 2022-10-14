@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 09:45:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:49:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,23 @@ void	pwd(t_info *info)
 void	echo(t_info *info)
 {
 	t_token	*token_list;
+	int	i;
+
+	i = 0;
 
 	token_list = info->list_token->next;
-	info->flag_quote = 0;
-	if (!ft_strncmp(token_list->token, "-n", 2))
-		token_list = token_list->next;
+	if (token_list)
+	{
+		if (!ft_strncmp(token_list->token, "-n", 2))
+			token_list = token_list->next;
+	}
 
 	// printf("allo\n");
 	while(token_list)
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (token_list->prev->space_flag == 1) 
+		// printf("\nflag = %d", token_list->space_flag);
+		if (token_list->prev->space_flag == 1 && i > 0) 
 		{
 			remove_quote(token_list);
 			printf(" %s", token_list->token);
@@ -81,8 +87,15 @@ void	echo(t_info *info)
 			// printf("%s", token_list->token);
 		}
 		// printf("%s\n", token_list->token);
+		i++;
 		token_list = token_list->next;
 	}
-	if (ft_strncmp(info->list_token->next->token, "-n", 2))
+	if (token_list)
+	{
+		if (ft_strncmp(info->list_token->next->token, "-n", 2))
+			printf("\n");
+	}
+	else
 		printf("\n");
+		
 }

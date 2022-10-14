@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/12 16:26:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:52:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ void	ft_lstaddback_token(t_token **alst, t_token *new)
 	last = ft_lstlast_token(*alst);
 	new->prev = last;
 	last->next = new;
-	new->next= NULL;
+	new->next = NULL;
 }
