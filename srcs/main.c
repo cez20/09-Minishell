@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/13 16:59:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:45:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 // char	*get_path(char *command, char **envp)
 // {

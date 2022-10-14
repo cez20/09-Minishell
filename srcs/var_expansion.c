@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/13 16:57:16 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:43:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 int	ft_isalpha1(int c)
 {

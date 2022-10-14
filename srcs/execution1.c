@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 19:28:26 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 15:13:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:58:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 int main()
 {

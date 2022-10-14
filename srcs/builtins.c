@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/12 09:45:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:58:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 void	remove_quote(t_token *token_list)
 {

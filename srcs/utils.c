@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/12 16:26:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:58:37 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 int	ft_lstsize_token(t_token *lst)
 {
