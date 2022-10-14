@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/14 14:52:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/14 14:56:51 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 // char	*get_path(char *command, char **envp)
 // {
@@ -227,6 +227,8 @@ int main(int argc, char **argv, char **envp)
 		split_token(line, info);
 		if (info->list_token)
 			token_manager(info);
+		var_expansion(info->list_token, envp);
+		lst_print_token(&info->list_token);
 		// command_exeggutor(line, envp);
 		free(line);
 		// free(info->token);

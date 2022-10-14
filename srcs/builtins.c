@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:49:26 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/14 14:56:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "include/minishell.h"
 
 void	remove_quote(t_token *token_list)
 {
