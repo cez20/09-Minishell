@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:56:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/14 20:37:50 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 void	remove_quote(t_token *token_list)
 {
@@ -35,13 +35,14 @@ void	remove_quote(t_token *token_list)
 	
 }
 
-void	pwd(t_info *info)
+void	pwd()
 {
-	char *pwd;
+	char pwd[4096];
 
-	pwd = search_line(info->envp, "PWD=");
-	pwd = ft_strchr(pwd, '=');
-	printf("%s\n", ++pwd);
+	// pwd = search_line(info->envp, "PWD=");
+	// pwd = ft_strchr(pwd, '=');
+	getcwd(pwd, 4096);
+	printf("%s\n", pwd);
 }
 
 /*
@@ -54,6 +55,21 @@ void	pwd(t_info *info)
 		ne pas enlever les quotes, mais simplement ne pas les afficher 
 
 */
+
+// int	is_all_n(char *token)
+// {
+// 	while (*token)
+// 	{
+// 		token++;
+// 		printf("*token = %c\n", *token);
+// 		if (*token == '\0')
+// 			return (1);
+// 		else if (*token != 'n')
+// 			return (0);
+// 	}
+// 	return (1);
+// }
+
 
 
 void	echo(t_info *info)
@@ -90,7 +106,7 @@ void	echo(t_info *info)
 		i++;
 		token_list = token_list->next;
 	}
-	if (token_list)
+	if (info->list_token->next)
 	{
 		if (ft_strncmp(info->list_token->next->token, "-n", 2))
 			printf("\n");
@@ -98,4 +114,19 @@ void	echo(t_info *info)
 	else
 		printf("\n");
 		
+}
+
+void	cd(t_info *info)
+{
+	char *new_path;
+
+	new_path = info->list_token->next->token;
+
+	chdir(new_path);
+
+
+
+
+
+
 }

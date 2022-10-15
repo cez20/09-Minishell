@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/14 14:56:51 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/14 18:45:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 // char	*get_path(char *command, char **envp)
 // {
@@ -93,6 +93,9 @@ void token_manager(t_info *info)
 		pwd(info);
 	if (!ft_strncmp(info->list_token->token, "env", 3))
 		print_tab(info->envp);
+	if (!ft_strncmp(info->list_token->token, "cd", 2))
+		cd(info);
+
 }
 
 /*
@@ -228,7 +231,8 @@ int main(int argc, char **argv, char **envp)
 		if (info->list_token)
 			token_manager(info);
 		var_expansion(info->list_token, envp);
-		lst_print_token(&info->list_token);
+		// lst_print_token(&info->list_token);
+		// chdir
 		// command_exeggutor(line, envp);
 		free(line);
 		// free(info->token);
