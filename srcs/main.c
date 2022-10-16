@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/16 16:35:21 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:54:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ void token_manager(t_info *info)
 		pwd(info);
 	if (!ft_strncmp(info->list_token->token, "env", 3))
 		print_tab(info->envp);
+	if (!ft_strncmp(info->list_token->token, "cd", 2))
+		cd(info);
+
 }
 
 /*
@@ -108,15 +111,17 @@ char simple_or_double(char *token)
 }
 
 /*
-	Avance le pointeur jusqu'à la prchaine chose à interpréter
+	Avance le pointeur jusqu'à la prochaine chose à interpréter
 */
 void skip_space(t_info *info)
 {
 	while(is_white_space(*info->last_position))
 	{
 		info->last_position++;
-		ft_lstlast_token(info->list_token)->space_flag = 1;
+		if (info->list_token)
+			ft_lstlast_token(info->list_token)->space_flag = 1;
 	}
+	// printf("last_position skip= %c\n", *info->last_position);
 }
 
 /*
@@ -145,8 +150,15 @@ char	*search_another_one(char *str, char c, t_info *info)
 		len++;
 	}
 	if (c != 32)
+	{
+
+		info->last_position = ++str;
 		len++;
-	info->last_position = ++str;
+	}
+	else
+		info->last_position = str;
+	// printf("last_position search = %c\n", *info->last_position);
+
 	token = ft_substr(start, 0, len);
 	return (token);
 }
@@ -187,7 +199,7 @@ void	split_token(char *token, t_info *info)
 		skip_space(info);
 	}
 	// print_tab(info->token);
-	lst_print_token(&info->list_token);
+	// lst_print_token(&info->list_token);
 }
 
 void	init(t_info *info, char **envp)
@@ -219,7 +231,8 @@ int main(int argc, char **argv, char **envp)
 		if (info->list_token)
 			token_manager(info);
 		var_expansion(info->list_token, envp);
-		lst_print_token(&info->list_token);
+		// lst_print_token(&info->list_token);
+		// chdir
 		// command_exeggutor(line, envp);
 		free(line);
 		// free(info->token);

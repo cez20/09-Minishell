@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/13 22:58:01 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/14 20:37:50 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 void	remove_quote(t_token *token_list)
 {
@@ -35,13 +35,14 @@ void	remove_quote(t_token *token_list)
 	
 }
 
-void	pwd(t_info *info)
+void	pwd()
 {
-	char *pwd;
+	char pwd[4096];
 
-	pwd = search_line(info->envp, "PWD=");
-	pwd = ft_strchr(pwd, '=');
-	printf("%s\n", ++pwd);
+	// pwd = search_line(info->envp, "PWD=");
+	// pwd = ft_strchr(pwd, '=');
+	getcwd(pwd, 4096);
+	printf("%s\n", pwd);
 }
 
 /*
@@ -55,21 +56,42 @@ void	pwd(t_info *info)
 
 */
 
+// int	is_all_n(char *token)
+// {
+// 	while (*token)
+// 	{
+// 		token++;
+// 		printf("*token = %c\n", *token);
+// 		if (*token == '\0')
+// 			return (1);
+// 		else if (*token != 'n')
+// 			return (0);
+// 	}
+// 	return (1);
+// }
+
+
 
 void	echo(t_info *info)
 {
 	t_token	*token_list;
+	int	i;
+
+	i = 0;
 
 	token_list = info->list_token->next;
-	info->flag_quote = 0;
-	if (!ft_strncmp(token_list->token, "-n", 2))
-		token_list = token_list->next;
+	if (token_list)
+	{
+		if (!ft_strncmp(token_list->token, "-n", 2))
+			token_list = token_list->next;
+	}
 
 	// printf("allo\n");
 	while(token_list)
 	{
 		// printf("%c\n", info->token[i][0]);
-		if (token_list->prev->space_flag == 1) 
+		// printf("\nflag = %d", token_list->space_flag);
+		if (token_list->prev->space_flag == 1 && i > 0) 
 		{
 			remove_quote(token_list);
 			printf(" %s", token_list->token);
@@ -81,8 +103,30 @@ void	echo(t_info *info)
 			// printf("%s", token_list->token);
 		}
 		// printf("%s\n", token_list->token);
+		i++;
 		token_list = token_list->next;
 	}
-	if (ft_strncmp(info->list_token->next->token, "-n", 2))
+	if (info->list_token->next)
+	{
+		if (ft_strncmp(info->list_token->next->token, "-n", 2))
+			printf("\n");
+	}
+	else
 		printf("\n");
+		
+}
+
+void	cd(t_info *info)
+{
+	char *new_path;
+
+	new_path = info->list_token->next->token;
+
+	chdir(new_path);
+
+
+
+
+
+
 }

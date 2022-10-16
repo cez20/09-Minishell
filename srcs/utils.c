@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/13 22:58:37 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:58:55 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 int	ft_lstsize_token(t_token *lst)
 {
@@ -100,5 +100,5 @@ void	ft_lstaddback_token(t_token **alst, t_token *new)
 	last = ft_lstlast_token(*alst);
 	new->prev = last;
 	last->next = new;
-	new->next= NULL;
+	new->next = NULL;
 }

@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/16 16:35:02 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:54:22 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 int	ft_isalpha1(int c)
 {
@@ -114,7 +114,6 @@ void	var_expansion(t_token *node, char **env)
 {
 	t_token	*tmp_node;
 	int		i;
-	(void)env;
 
 	i = 0;
 	tmp_node = node;

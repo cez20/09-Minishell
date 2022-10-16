@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/13 22:46:00 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:00:13 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int 	main(int argc, char **argv, char **envp);
 void	remove_quote(t_token *token_list);
 void	pwd(t_info *info);
 void	echo(t_info *info);
+void	cd(t_info *info);
 
 // *** EXECUTION.C *** 
 void	remove_extra_quote(char **token, char quote);
