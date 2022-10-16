@@ -6,19 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/16 16:54:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:30:41 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	ft_isalpha1(int c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	else
-		return (0);
-}
 
 /* Fonction qui circule dans ENV, et retourn le contenu qui se trouve
 apres le signe (=);*/
@@ -75,7 +67,7 @@ char *env_variable(char *str, int *i)
 	int j;
 
 	j = *i;
-	while (ft_isalpha1(str[*i]) != 0)
+	while (ft_isalpha(str[*i]) != 0)
 		(*i)++;
 	str1 = ft_substr(str, j, *i - j);
 	return (str1);
@@ -110,6 +102,8 @@ void	locate_expansion(char **str, char **env)
 	}
 }
 
+
+/* A valider si on garde le 2e if qui enleve les quotes */
 void	var_expansion(t_token *node, char **env)
 {
 	t_token	*tmp_node;
@@ -120,10 +114,9 @@ void	var_expansion(t_token *node, char **env)
 	while (tmp_node)
 	{
 		if (ft_strchr(tmp_node->token, '$'))
-		{
 			locate_expansion(&tmp_node->token, env);
-			i++;
-		}
+		if (tmp_node->token[0] == 34 || tmp_node->token[0] == 39)
+ 			remove_extra_quote(&tmp_node->token, tmp_node->token[0]);
 		tmp_node = tmp_node->next;
 	}
 }

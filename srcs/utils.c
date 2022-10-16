@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/14 14:58:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/16 18:50:37 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	del(void *token)
+{
+	char *new_token;
+
+	new_token = (char *)token;
+	free(new_token);
+	new_token = NULL;
+}
+
+void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
+{
+	if (del)
+		del(lst->token);
+	free(lst);
+}
+
+//Autre possibilite, mais si on veut l'utiliser, il faut mettre
+//le 2e argument de ft_lstclar_token a NULL dans le main, ligne 244
+// void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
+// {
+// 	(void)del;
+// 	free(lst->token);
+// 	free(lst);
+// }
 
 int	ft_lstsize_token(t_token *lst)
 {
@@ -23,13 +48,6 @@ int	ft_lstsize_token(t_token *lst)
 		size++;
 	}
 	return (size);
-}
-
-void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
-{
-	if (del)
-		del(lst->token);
-	free(lst);
 }
 
 void	ft_lstclear_token(t_token **lst, void (*del) (void *))
@@ -92,6 +110,7 @@ void	ft_lstaddback_token(t_token **alst, t_token *new)
 	t_token	*first;
 
 	first = *alst;
+	last = NULL;
 	if (!*alst)
 	{
 		*alst = new;

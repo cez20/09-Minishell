@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/16 16:54:34 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:10:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../include/minishell.h"
 
 // char	*get_path(char *command, char **envp)
 // {
@@ -206,6 +206,12 @@ void	init(t_info *info, char **envp)
 {
 	info->envp = envp;
 	info->token = NULL;
+	info->list_token = NULL;
+	info->flag_quote = 0;
+	info->last_position = NULL;
+	info->infile = -1;
+	info->outfile = -1;
+	info->nb_of_pipe = 0;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -231,12 +237,13 @@ int main(int argc, char **argv, char **envp)
 		if (info->list_token)
 			token_manager(info);
 		var_expansion(info->list_token, envp);
-		// lst_print_token(&info->list_token);
+		redirection(info);
 		// chdir
 		// command_exeggutor(line, envp);
 		free(line);
-		// free(info->token);
-		ft_lstclear_token(&info->list_token, NULL);
+		//free(info->token);
+		ft_lstclear_token(&info->list_token, del);
+		free (info); // Liberer le pointeur declare en debut de fonction main.  
 		// info->token = ft_calloc(sizeof(char **), 1);
 	}
 	return (0);

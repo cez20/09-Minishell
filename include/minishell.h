@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 17:00:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/16 19:20:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_infile(char *token);
-void 	redirection(char **token, int *infile, int *outfile);
+//void 	redirection(char **token, int *infile, int *outfile);
+void 	redirection(t_info *info);
 
 //*** UTILS.C ***
+void	del(void *token);
 void	ft_lstaddback_token(t_token **alst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 void 	lst_print_token(t_token **list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:58:49 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/16 19:40:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	append_document(char *outfile)
 		perror(str);
 		free(str);	
 	}
-	write(file, "I am tired!\n", 11);	//This will write I am tired, at the end of file. 
+	write(file, "I am tired!\n", 12);	//This will write I am tired, at the end of file. 
 }
 
 //Verify why there are so many still reachable when doing this type of heredoc 
@@ -95,24 +95,43 @@ int	open_infile(char *token)
 	return (infile);
 }
 
-void redirection(char **token, int *infile, int *outfile)
+void	redirection(t_info *info)
 {
-	int i;
+	t_token	*tmp;
 
-	i = 0;
-	while (token[i]) 
+	tmp = info->list_token;
+	while (tmp) 
 	{
-		if ((ft_strncmp(token[i], "<", 2) == 0) && token[i + 1] != 0)
-			*infile = open_infile(token[i + 1]);
-		else if ((ft_strncmp(token[i], ">", 2) == 0) && token[i + 1] != 0)
-			*outfile = open(token[i + 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
-		else if ((ft_strncmp(token[i], "<<", 2) == 0) && token[i + 1] != 0) 
-			create_heredoc(token[i + 1]);
-		else if ((ft_strncmp(token[i], ">>", 2) == 0) && token[i + 1] != 0)
-			append_document(token[i + 1]);
-		i++;
+		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next->token != NULL)
+			info->infile = open_infile(tmp->next->token);
+		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next->token != NULL)
+			info->outfile = open(tmp->next->token, O_TRUNC | O_CREAT | O_RDWR, 0644);
+		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next->token != NULL) 
+		 	create_heredoc(tmp->next->token);
+		//else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next->token != NULL)
+		 	//append_document(tmp->next->token);
+		tmp = tmp->next;
 	}
 }
+
+// void redirection(char **token, int *infile, int *outfile)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (token[i]) 
+// 	{
+// 		if ((ft_strncmp(token[i], "<", 2) == 0) && token[i + 1] != 0)
+// 			*infile = open_infile(token[i + 1]);
+// 		else if ((ft_strncmp(token[i], ">", 2) == 0) && token[i + 1] != 0)
+// 			*outfile = open(token[i + 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
+// 		else if ((ft_strncmp(token[i], "<<", 2) == 0) && token[i + 1] != 0) 
+// 			create_heredoc(token[i + 1]);
+// 		else if ((ft_strncmp(token[i], ">>", 2) == 0) && token[i + 1] != 0)
+// 			append_document(token[i + 1]);
+// 		i++;
+// 	}
+// }
 
 // int main ()
 // {
