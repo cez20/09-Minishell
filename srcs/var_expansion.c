@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 10:35:34 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:22:32 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	locate_expansion(char **str, char **env)
 
 	i = 0;
 	str1 = NULL;
-	//str4 = NULL;
+	str4 = NULL;
 	while ((*str)[i] != '$' && (*str)[i])
  		i++;
 	if ((*str)[i] == '$')
@@ -116,8 +116,7 @@ void	var_expansion(t_token *node, char **env)
 		if (ft_strchr(tmp_node->token, '$'))
 			locate_expansion(&tmp_node->token, env);
 		if (tmp_node->token[0] == 34 || tmp_node->token[0] == 39)
-			
- 			//remove_extra_quote(&tmp_node->token, tmp_node->token[0]);
+			remove_quote(tmp_node);
 		tmp_node = tmp_node->next;
 	}
 }

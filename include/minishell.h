@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/17 14:04:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:25:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 #include <sys/wait.h>
 #include <termios.h>
 
+# define ERR_PATH "There is no PATH in the ENV\n"
+# define METACHARAC "| & ; ( ) < >" 
+
+
 typedef struct s_token
 {
 	char	*token;
@@ -42,6 +46,7 @@ typedef struct s_info
 {
 	char 	**envp;
 	char 	**token;
+	char	**path;
 	char	*prompt;
 	t_token	*list_token;
 	int 	flag_quote;
@@ -67,8 +72,10 @@ void	pwd(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
 
-// *** EXECUTION.C *** 
-void	remove_extra_quote(char **token, char quote);
+// *** EXECUTION.C ***
+void	split_path(t_info *info);
+int		create_pipes(t_info *info);
+void	execution(t_info *info);
 
 //*** SIGNAL.C ***
 void	exit_terminal(); // Function to work on. 
@@ -88,8 +95,8 @@ void	var_expansion(t_token *node, char **env);
 void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
+int		open_outfile(char *token);
 int		open_infile(char *token);
-//void 	redirection(char **token, int *infile, int *outfile);
 void 	redirection(t_info *info);
 
 //*** UTILS.C ***

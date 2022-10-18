@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/16 19:40:17 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:39:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,24 @@ void	create_heredoc(char *delimiter)
 	free_token(tab_token);
 }
 
+int	open_outfile(char *token)
+{
+	int outfile;
+	
+	outfile = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
+	return (outfile);
+}
+
 int	open_infile(char *token)
 {
-	char *str; 
+	char *str;
 	int infile;
 	
 	str = NULL;
 	infile = open(token, O_RDWR);
 	printf("Je suis dans le infile\n");
 	if (infile == -1) // Le 1er argument de open() est le path ou se trouve le fichier. Il faudrait
-	{
-		//First way of doing it: 
 		printf("bash: %s: %s\n", token, strerror(errno));
-		//Second way of doing message error below:
-		str = ft_strjoin("bash: ", token);
-		perror(str);
-		free(str);	
-	}
 	return (infile);
 }
 
@@ -102,36 +103,19 @@ void	redirection(t_info *info)
 	tmp = info->list_token;
 	while (tmp) 
 	{
-		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next->token != NULL)
+		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
 			info->infile = open_infile(tmp->next->token);
-		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next->token != NULL)
-			info->outfile = open(tmp->next->token, O_TRUNC | O_CREAT | O_RDWR, 0644);
-		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next->token != NULL) 
+		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
+			info->outfile = open_outfile(tmp->next->token); 
+		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
 		 	create_heredoc(tmp->next->token);
-		//else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next->token != NULL)
-		 	//append_document(tmp->next->token);
+		else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
+		 	append_document(tmp->next->token);
+		else if ((ft_strncmp(tmp->token, "|", 2) == 0))
+			info->nb_of_pipe++;
 		tmp = tmp->next;
 	}
 }
-
-// void redirection(char **token, int *infile, int *outfile)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (token[i]) 
-// 	{
-// 		if ((ft_strncmp(token[i], "<", 2) == 0) && token[i + 1] != 0)
-// 			*infile = open_infile(token[i + 1]);
-// 		else if ((ft_strncmp(token[i], ">", 2) == 0) && token[i + 1] != 0)
-// 			*outfile = open(token[i + 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
-// 		else if ((ft_strncmp(token[i], "<<", 2) == 0) && token[i + 1] != 0) 
-// 			create_heredoc(token[i + 1]);
-// 		else if ((ft_strncmp(token[i], ">>", 2) == 0) && token[i + 1] != 0)
-// 			append_document(token[i + 1]);
-// 		i++;
-// 	}
-// }
 
 // int main ()
 // {

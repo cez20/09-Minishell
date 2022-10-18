@@ -3,62 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:58:40 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:03:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/minishell.h" 
 
-void	remove_extra_quote(char **token, char quote)
+// Avancer dans les tokens, sauf si metacracteres, avancer de 2. Si pipe, avancer de 1
+// Quels sont les metacharacteres ‘|’, ‘&’, ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.  
+//1- Il faut que je compte le nombre de pipes et le mettre dans info->nb_of_pipes
+// 2- Executer les commandes et leurs arguments jusqua temps qu'il rencontre un pipe
+// 3- Si (built-in), faire la commande dans le parent, ELSE, fork() et faire execve 
+// 3- Envoyer contenu de la commande dans pipe avec dup2
+// 4- Repeter les memes actions jusqu'a ce qu'il n'y ait plus de pipes 
+
+void	split_path(t_info *info)
 {
-	char *tmp_token;
-
-	tmp_token = ft_strdup(*token);
-	free(*token); 
-	if (quote == 34)
-		*token = ft_strtrim(tmp_token, "\""); 
-	else if (quote == 39)
-		*token = ft_strtrim(tmp_token, "\'");
-	free(tmp_token);
-	tmp_token = NULL;
+	char **env;
+	int		i;
 	
+	env = info->envp;
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH=", 5))
+		{
+			info->path = ft_split(&env[i][5], ':');
+			return ;
+		}
+		i++;
+	}
+	printf("There is not PATH in env!\n");
 }
 
-// int main (int argc, char **argv, char **env)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	char **token;
-// 	char *str = "< $ARGS cat | \"echo'$ALLO'\" | 'wc' -l > test2.txt";
-// 	int infile;
-// 	int outfile; 
-// 	int i;
-
-// 	// Cette partie fait l'expansion des variables d'environnment
-// 	// Et enleve aussi tous les extra quotes, une fois l'expansion faite 
-// 	i = 0;
-// 	token = ft_split(str, ' ');
-// 	while (token[i])
-// 	{
-// 		if (ft_strchr(token[i], '$') && token[i][0] != 39)
-// 			var_expansion(&token[i], env);
-// 		if (token[i][0] == 34 || token[i][0] == 39 )
-// 			remove_extra_quote(&token[i], token[i][0]);
+int	create_pipes(t_info *info)
+{
+	int fd[info->nb_of_pipe][2];
+	int i;
 	
-// 		i++;
-// 	}
+	i = 0;
+	while (i < info->nb_of_pipe)
+	{
+		if (pipe(fd[i]) < 0)
+			return (1); // Mettre un message d'erreur de la commande pipe 
+		//printf("I've opened the pipe\n");
+		i++;
+	}
+	return (0);
+}
 
-// 	//Cette section reimprime les tokens suite apres avoir passe les 2 fonctions. 
-// 	i = 0;
-// 	while(token[i])
-// 		printf("%s\n", token[i++]);
+void	execution(t_info *info)
+{
+	int i;
+	t_token *tmp;
+	char **str;
 
-// 	// Cette section va faire les redirections
-// 	redirection(token, &infile, &outfile);
-	
-// 	free_token(token);
-// }
-
+	i = 0;
+	tmp = info->list_token;
+	create_pipes(info);
+	split_path(info);
+	str = ft_split(METACHARAC, ' ');
+	while (tmp)
+	{
+		if (strncmp(tmp->token, str[i], ft_strlen(str[i])))
+		{
+			printf("I found a match!\n");
+			i++;		
+		}
+		else
+			printf("There is not match!\n");
+		tmp = tmp->next;
+	}
+}
