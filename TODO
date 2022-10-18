@@ -8,36 +8,35 @@
 
 
 [] redirections 
-	[] "< doit rediriger l'entrée"
-	[] > doit rediriger la sortie 
-	[] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
+	[X] "< doit rediriger l'entrée"
+	[X] > doit rediriger la sortie 
+	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
 	[] >> doit rediriger la sortie en mode append.
 
 
 [] implémenter les pipes ( | )
-[] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
+[X] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
 [] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
 
 
 [] signaux
-	[X] ctrl-C
+	[] ctrl-C
 	[] ctrl-D
 	[] ctrl-\
 [] Builtins
 	[X] echo et "l'option -n"
-	[] cd uniquement avec un chemin relatif ou absolu
+	[X] cd uniquement avec un chemin relatif ou absolu
 	[X] pwd sans aucune option
 	[] export sans aucune option
 	[] unset sans aucune option
 	[X] env sans aucune option ni argument
-	[] exit sans aucune option
+	[X] exit sans aucune option
 
 
 
 
 Struct
 	[X] char **environnement
-	[X] char **token
 
 
 TODO: 
@@ -46,7 +45,10 @@ TODO:
 		[X] gérer le echo avec la nouvelle façon en linked list
 		[] gérer -n avec autre chose que juste n
 		[] gérer plusieurs -n 
+		[] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
 
 FIXME:
 		[X] segfault lorsqu'il y a des espaces devant la première commande, viens probablement de skip_space
-		[X segfault echo seul sans argument
+		[X] segfault echo seul sans argument
+		[]	cd avec aucun argument doit ramener à la racine
+		

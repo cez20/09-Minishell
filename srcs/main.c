@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/16 19:10:26 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:51:12 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ void token_manager(t_info *info)
 		print_tab(info->envp);
 	if (!ft_strncmp(info->list_token->token, "cd", 2))
 		cd(info);
+	if (!ft_strncmp(info->list_token->token, "exit", 4))
+		exit_terminal();
+	
 
 }
 
@@ -214,6 +217,27 @@ void	init(t_info *info, char **envp)
 	info->nb_of_pipe = 0;
 }
 
+// char	*create_prompt(t_info *info)
+// {
+// 	char	pwd[4096];
+// 	int	i;
+// 	int	start;
+
+// 	i = 0;
+// 	start = 0;
+// 	getcwd(pwd, ft_strl);
+
+// 	while (pwd[i])
+// 	{
+// 		if (pwd[i] == '/')
+// 			start = i;
+// 		i++;
+// 	}
+// 	info->prompt = ft_substr(pwd, start, i);
+// 	info->prompt = ft_strjoin(info->prompt, " Minishell> ");
+// 	return (info->prompt);
+// }
+
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
@@ -227,6 +251,7 @@ int main(int argc, char **argv, char **envp)
 	disable_echo();
 	while(1 && argc && argv && envp)
 	{
+		
 		signal_modified();
 		line = readline("Minishell$> ");
 		if (line)
@@ -234,17 +259,23 @@ int main(int argc, char **argv, char **envp)
 		else 
 			exit_terminal();
 		split_token(line, info);
+		var_expansion(info->list_token, envp);
 		if (info->list_token)
 			token_manager(info);
-		var_expansion(info->list_token, envp);
+		// lst_print_token(&info->list_token);
+
 		redirection(info);
 		// chdir
 		// command_exeggutor(line, envp);
 		free(line);
-		//free(info->token);
-		ft_lstclear_token(&info->list_token, del);
-		free (info); // Liberer le pointeur declare en debut de fonction main.  
+		// free(info->prompt);
+		// free(info->token);
+		// ft_lstclear_token(&info->list_token, del);
+		ft_lstclear_token(&info->list_token, free);
+
 		// info->token = ft_calloc(sizeof(char **), 1);
 	}
+	// Le free ne peut pas être dans la while, sinon elle créer un segfault à la prochaine itération
+	free (info); // Liberer le pointeur declare en debut de fonction main.  
 	return (0);
 }

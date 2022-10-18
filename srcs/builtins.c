@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 20:37:50 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:47:34 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,11 @@ void	cd(t_info *info)
 {
 	char *new_path;
 
-	new_path = info->list_token->next->token;
-
+	if (info->list_token->next)
+		new_path = info->list_token->next->token;
+	else
+		new_path = getenv("HOME");
+	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
+		printf("cd: %s: No such file or directory\n", new_path);
 	chdir(new_path);
-
-
-
-
-
-
 }
