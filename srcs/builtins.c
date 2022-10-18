@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/17 15:47:34 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:15:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	remove_quote(t_token *token_list)
 	// printf("%c\n", chr);
 	// printf("%c\n", str[0][ft_strlen(*str) - 2]);
 
-	if (token_list->token[ft_strlen(token_list->token) - 1] == chr && chr != 32)
+	if (token_list->token[ft_strlen(token_list->token)] == chr && chr != 32)
 	{
 		temp = token_list->token;
-		token_list->token = ft_substr(token_list->token, 1, ft_strlen(token_list->token) - 2);
+		token_list->token = ft_substr(token_list->token, 1, ft_strlen(token_list->token));
 		free(temp);
 		token_list->flag_quote = 1;
 	}
@@ -127,4 +127,33 @@ void	cd(t_info *info)
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
 		printf("cd: %s: No such file or directory\n", new_path);
 	chdir(new_path);
+}
+
+void	export(t_info *info)
+{
+	int i;
+	int	j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+
+	if (info->list_token->next)
+		info->envp = tab_join(info->envp, info->list_token->next->token);
+	else
+	{
+		while (info->envp[i])
+		{
+			printf("declare -x ");
+			while (info->envp[i][j] != '=' && info->envp[i][j] != '\0')
+			{
+				printf("%c", info->envp[i][j]);
+				j++;
+			}
+			str = ft_strchr(info->envp[i], '=');
+			printf("=\"%s\"\n", ++str);
+			i++;
+			j = 0;
+		}
+	}
 }
