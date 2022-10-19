@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/18 15:37:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:04:34 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void	split_token(char *token, t_info *info)
 void	init(t_info *info, char **envp)
 {
 	info->envp = tabcpy(envp);
+	// info->envp = envp;
 	info->list_token = NULL;
 	info->flag_quote = 0;
 	info->last_position = NULL;

@@ -29,18 +29,23 @@
 		[] gérer plusieurs -n 
 		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
 		[X] gérer "'" '"' dans écho
+		[] gestion d'erreur'
 	[X] cd uniquement avec un chemin relatif ou absolu
 		[X]	cd ..
 		[X]	cd invalid
-		[]	cd ...
-		[]	cd sans argument retour à la racine 
+		[X]	cd ...
+		[X]	cd sans argument retour à la racine 
+		[] gestion d'erreur'
 	[X] pwd sans aucune option
+		[] pas de pwd 
 	[] export sans aucune option
 		[X] export sans argument
 		[] gestion des erreurs
 	[] unset sans aucune option
 	[X] env sans aucune option ni argument
+		[] gestion d'erreur'
 	[X] exit sans aucune option
+		[] gestion d'erreur'
 
 
 
@@ -53,9 +58,11 @@ TODO:
 		[X] gérer les espaces entre les différents tokens avec des quotes
 		[X] convertir la gestion de token en linked list
 		[X] gérer le echo avec la nouvelle façon en linked list
+		[] adapter $ pour qu'il' cherche dans la copie de l'environnement'
+		[] update le PWD dans l'env'
 
 FIXME:
-		[X] segfault lorsqu'il y a des espaces devant la première commande, viens probablement de skip_space
+		[X] segfault lorsqu'il' y a des espaces devant la première commande, viens probablement de skip_space
 		[X] segfault echo seul sans argument
 		[X]	cd avec aucun argument doit ramener à la racine
 		

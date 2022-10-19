@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 16:15:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/19 17:26:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,17 @@ void	remove_quote(t_token *token_list)
 	
 }
 
-void	pwd()
+void	pwd(t_info *info)
 {
-	char pwd[4096];
+	char *pwd;
 
-	// pwd = search_line(info->envp, "PWD=");
-	// pwd = ft_strchr(pwd, '=');
-	getcwd(pwd, 4096);
-	printf("%s\n", pwd);
+	pwd = search_line(info->envp, "PWD=");
+	pwd = ft_strchr(pwd, '=');
+	// getcwd(pwd, 4096);
+	printf("%s\n", ++pwd);
+
+
+	
 }
 
 /*
@@ -116,17 +119,51 @@ void	echo(t_info *info)
 		
 }
 
+// void update_env(t_info *info)
+// {
+
+
+
+
+
+// }
+
+
 void	cd(t_info *info)
 {
 	char *new_path;
+	char pwd[4096];
+	char oldpwd[4096];
+	char *line;
+	// char *temp;
 
+	getcwd(oldpwd, 4096);
 	if (info->list_token->next)
 		new_path = info->list_token->next->token;
 	else
 		new_path = getenv("HOME");
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
 		printf("cd: %s: No such file or directory\n", new_path);
-	chdir(new_path);
+
+	getcwd(pwd, 4096);
+
+	line = search_line(info->envp, "PWD=");
+	// ft_strlcpy(line, pwd, ft_strlen(line));	
+
+	line = ft_strjoin("PWD=", pwd);
+	ft_strlcpy(search_line(info->envp, "PWD="), line, ft_strlen(line) + 1);
+	line = ft_strjoin("OLDPWD=", oldpwd);
+	ft_strlcpy(search_line(info->envp, "OLDPWD="), line, ft_strlen(line) + 1);
+
+
+	printf("line = %s\n", line);
+
+	
+	
+
+	
+	
+	// chdir(new_path);
 }
 
 void	export(t_info *info)

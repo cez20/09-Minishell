@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 15:09:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/19 11:09:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int 	main(int argc, char **argv, char **envp);
 
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
-void	pwd();
+void	pwd(t_info *info);
 void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
