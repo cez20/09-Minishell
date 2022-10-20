@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/19 07:59:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:18:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void token_manager(t_info *info)
 		cd(info);
 	if (!ft_strncmp(info->list_token->token, "exit", 4))
 		exit_terminal();
+	if (!ft_strncmp(info->list_token->token, "export", 6))
+		export(info);
 	
 
 }
@@ -138,12 +140,11 @@ char	*search_another_one(char *str, char c, t_info *info)
 
 	start = str;
 	len = 0;
-
 	str++;
 	len++;
 	while (*str != c)
 	{
-		if (*str == '\0')
+		if (*str == '\0' || (c == 32 && (*str == 34 || *str == 39)))
 		{
 			info->last_position = str;
 			token = ft_substr(start, 0, len);
@@ -154,7 +155,6 @@ char	*search_another_one(char *str, char c, t_info *info)
 	}
 	if (c != 32)
 	{
-
 		info->last_position = ++str;
 		len++;
 	}
@@ -207,8 +207,8 @@ void	split_token(char *token, t_info *info)
 
 void	init(t_info *info, char **envp)
 {
-	info->envp = envp;
-	info->token = NULL;
+	info->envp = tabcpy(envp);
+	// info->envp = envp;
 	info->list_token = NULL;
 	info->flag_quote = 0;
 	info->last_position = NULL;

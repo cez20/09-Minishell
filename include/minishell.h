@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 14:16:39 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:18:52 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_token
 typedef struct s_info
 {
 	char 	**envp;
-	char 	**token;
-	char	**path;
 	char	*prompt;
 	t_token	*list_token;
 	int 	flag_quote;
@@ -71,6 +69,7 @@ int 	main(int argc, char **argv, char **envp);
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
 void	pwd(t_info *info);
+void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
 
