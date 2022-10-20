@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 14:18:52 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:44:08 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 #include <termios.h>
 
 # define ERR_PATH "There is no PATH in the ENV\n"
-# define METACHARACTER "| & ; ( ) < >" 
-
 
 typedef struct s_token
 {
@@ -52,8 +50,7 @@ typedef struct s_info
 	int 	infile;
 	int 	outfile;
 	int 	nb_of_pipe;
-	char	**meta;
-	t_token	*redirection;
+	char	**path;
 }		t_info;
 
 //*** MAIN.C ***

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 14:16:58 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:20:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ void	redirection(t_info *info)
 	while (tmp) 
 	{
 		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
-		{
-			info->redirection = tmp->next->next;
 			info->infile = open_infile(tmp->next->token);
-		}
 		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
 			info->outfile = open_outfile(tmp->next->token); 
 		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 

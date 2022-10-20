@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/19 08:17:20 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:18:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,4 @@ void	execution(t_info *info)
 	tmp = info->list_token;
 	create_pipes(info);
 	split_path(info);
-	
-	
 }
