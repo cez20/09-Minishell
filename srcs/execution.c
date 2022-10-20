@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 15:03:06 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/19 08:17:20 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,11 @@ void	execution(t_info *info)
 {
 	int i;
 	t_token *tmp;
-	char **str;
 
 	i = 0;
 	tmp = info->list_token;
 	create_pipes(info);
 	split_path(info);
-	str = ft_split(METACHARAC, ' ');
-	while (tmp)
-	{
-		if (strncmp(tmp->token, str[i], ft_strlen(str[i])))
-		{
-			printf("I found a match!\n");
-			i++;		
-		}
-		else
-			printf("There is not match!\n");
-		tmp = tmp->next;
-	}
+	
+	
 }

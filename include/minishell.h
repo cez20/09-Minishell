@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 15:25:17 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:16:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #include <termios.h>
 
 # define ERR_PATH "There is no PATH in the ENV\n"
-# define METACHARAC "| & ; ( ) < >" 
+# define METACHARACTER "| & ; ( ) < >" 
 
 
 typedef struct s_token
@@ -54,6 +54,8 @@ typedef struct s_info
 	int 	infile;
 	int 	outfile;
 	int 	nb_of_pipe;
+	char	**meta;
+	t_token	*redirection;
 }		t_info;
 
 //*** MAIN.C ***
@@ -84,7 +86,6 @@ void    signal_modified();
 void 	disable_echo();
 
 //*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
-int		ft_isalpha1(int c);
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
 char 	*env_variable(char *str, int *i);

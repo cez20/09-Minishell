@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 13:22:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:17:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	locate_expansion(char **str, char **env)
 		free(str4);
 	}
 }
-
 
 /* A valider si on garde le 2e if qui enleve les quotes */
 void	var_expansion(t_token *node, char **env)

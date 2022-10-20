@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/18 15:39:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:16:58 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void	redirection(t_info *info)
 	while (tmp) 
 	{
 		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
+		{
+			info->redirection = tmp->next->next;
 			info->infile = open_infile(tmp->next->token);
+		}
 		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
 			info->outfile = open_outfile(tmp->next->token); 
 		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
@@ -116,18 +119,3 @@ void	redirection(t_info *info)
 		tmp = tmp->next;
 	}
 }
-
-// int main ()
-// {
-// 	char **token;
-// 	char *str = "< ../test.txt | wc -l > test1.txt << Cesar >> test2.txt";
-// 	int fd_infile;
-// 	int fd_outfile;
-
-// 	token = ft_split(str, ' ');
-// 	redirection(token, &fd_infile, &fd_outfile);
-// 	free_token(token);
-// 	close(fd_infile);
-// 	close(fd_outfile);
-// 	return (0);
-// }

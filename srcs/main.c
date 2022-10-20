@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/18 13:39:55 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/19 07:59:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,8 @@ void	init(t_info *info, char **envp)
 	info->infile = -1;
 	info->outfile = -1;
 	info->nb_of_pipe = 0;
+	info->meta = ft_split(METACHARACTER, ' ');
+	info->redirection = NULL;
 }
 
 //Fonction qui permet de reinitialiser certaines infos de la struct 
