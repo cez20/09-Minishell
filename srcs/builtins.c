@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/19 17:26:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 09:59:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	cd(t_info *info)
 	ft_strlcpy(search_line(info->envp, "OLDPWD="), line, ft_strlen(line) + 1);
 
 
-	printf("line = %s\n", line);
+	// printf("line = %s\n", line);
 
 	
 	

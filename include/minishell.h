@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/19 11:09:01 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 10:01:35 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,21 @@ typedef struct s_token
 typedef struct s_info
 {
 	char 	**envp;
-	char	*prompt;
+	// char	*prompt;
 	t_token	*list_token;
+	struct s_command_line *command_lines;
 	int 	flag_quote;
 	char 	*last_position;
 	int 	infile;
 	int 	outfile;
 	int 	nb_of_pipe;
 }		t_info;
+
+typedef struct s_command_line
+{
+	t_token *list_token;
+	char	*command;
+}				t_command_line;
 
 //*** MAIN.C ***
 void	print_tab(char **tab);
