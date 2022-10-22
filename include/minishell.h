@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/22 10:01:35 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 10:06:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <termios.h>
+
+# define ERR_PATH "There is no PATH in the ENV\n"
 
 typedef struct s_token
 {
@@ -49,6 +51,7 @@ typedef struct s_info
 	int 	infile;
 	int 	outfile;
 	int 	nb_of_pipe;
+	char	**path;
 }		t_info;
 
 typedef struct s_command_line
@@ -74,8 +77,10 @@ void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
 
-// *** EXECUTION.C *** 
-void	remove_extra_quote(char **token, char quote);
+// *** EXECUTION.C ***
+void	split_path(t_info *info);
+int		create_pipes(t_info *info);
+void	execution(t_info *info);
 
 //*** SIGNAL.C ***
 void	exit_terminal(); // Function to work on. 
@@ -84,7 +89,6 @@ void    signal_modified();
 void 	disable_echo();
 
 //*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
-int		ft_isalpha1(int c);
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
 char 	*env_variable(char *str, int *i);
@@ -95,8 +99,8 @@ void	var_expansion(t_token *node, char **env);
 void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
+int		open_outfile(char *token);
 int		open_infile(char *token);
-//void 	redirection(char **token, int *infile, int *outfile);
 void 	redirection(t_info *info);
 
 //*** UTILS.C ***

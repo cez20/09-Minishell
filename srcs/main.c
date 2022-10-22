@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/22 10:03:50 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 10:07:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,20 @@ void	init(t_info *info, char **envp)
 	info->infile = -1;
 	info->outfile = -1;
 	info->nb_of_pipe = 0;
+	// info->meta = ft_split(METACHARACTER, ' ');
+	// info->redirection = NULL;
 }
+
+//Fonction qui permet de reinitialiser certaines infos de la struct 
+void	reinit(t_info *info)
+{
+	if(info->infile != -1)
+		close(info->infile);
+	if (info->outfile != -1)
+		close(info->outfile);
+	info->nb_of_pipe = 0;
+}
+
 
 // char	*create_prompt(t_info *info)
 // {
@@ -237,6 +250,8 @@ void	init(t_info *info, char **envp)
 // 	info->prompt = ft_strjoin(info->prompt, " Minishell> ");
 // 	return (info->prompt);
 // }
+
+
 
 int main(int argc, char **argv, char **envp)
 {
@@ -262,9 +277,10 @@ int main(int argc, char **argv, char **envp)
 		var_expansion(info->list_token, envp);
 		if (info->list_token)
 			token_manager(info);
-		// lst_print_token(&info->list_token);
+		lst_print_token(&info->list_token);
 
 		redirection(info);
+		execution(info);
 		// chdir
 		// command_exeggutor(line, envp);
 		free(line);
@@ -272,6 +288,7 @@ int main(int argc, char **argv, char **envp)
 		// free(info->token);
 		// ft_lstclear_token(&info->list_token, del);
 		ft_lstclear_token(&info->list_token, free);
+		reinit(info);
 
 		// info->token = ft_calloc(sizeof(char **), 1);
 	}
