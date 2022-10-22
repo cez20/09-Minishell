@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/22 10:56:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:24:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void	split_token(char *token, t_info *info)
 	i = 0;
 	x = 0;
 	info->last_position = token;
-	info->command_lines = malloc(sizeof(t_command_line) * info->nb_of_pipe + 1);
+	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 
 	while (*info->last_position)
 	{
@@ -219,6 +219,9 @@ void	split_token(char *token, t_info *info)
 		if (*info->last_position == '|')
 		{
 			info->command_lines[i].list_token = info->list_token;
+			// lst_print_token(&info->command_lines[i].list_token);
+			
+			// ft_lstlast_token(info->command_lines[i].list_token)->next = NULL;
 			info->list_token = NULL;
 			info->last_position++;
 			i++;
@@ -228,7 +231,9 @@ void	split_token(char *token, t_info *info)
 		skip_space(info);
 	}
 	info->command_lines[i].list_token = info->list_token;
-	// info->list_token = NULL;
+	info->list_token = NULL;
+	// lst_print_token(&info->command_lines[i].list_token);
+
 	x = i;
 	i = 0;
 	while (x >= i)
@@ -293,7 +298,7 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	t_info	*info;
 
-	info = malloc(sizeof(t_info));
+	info = ft_calloc(1, sizeof(t_info));
 	init(info, envp);
 
 	printf("Let's go ça part !\n");

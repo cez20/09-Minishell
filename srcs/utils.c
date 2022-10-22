@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/17 11:03:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:17:22 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_token	*ft_lstnew_token(char *content)
 {
 	t_token	*new;
 
-	new = (t_token *)malloc(sizeof(*new));
+	new = (t_token *)ft_calloc(1, sizeof(*new));
 	if (!new)
 		return (0);
 	new->token = content;
