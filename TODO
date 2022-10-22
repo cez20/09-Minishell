@@ -59,10 +59,13 @@ TODO:
 		[X] convertir la gestion de token en linked list
 		[X] gérer le echo avec la nouvelle façon en linked list
 		[] adapter $ pour qu'il' cherche dans la copie de l'environnement'
-		[] update le PWD dans l'env'
+		[X] update le PWD dans l'env'
 
 FIXME:
 		[X] segfault lorsqu'il' y a des espaces devant la première commande, viens probablement de skip_space
 		[X] segfault echo seul sans argument
 		[X]	cd avec aucun argument doit ramener à la racine
+		[] node fucked up, je comprends rien WTF:
+		
+		
 		

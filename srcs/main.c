@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/22 10:07:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/22 10:56:04 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,20 @@ char simple_or_double(char *token)
 	return (32);
 }
 
+int	how_many(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (*str)
+	{
+		if (*str == c)
+			i++;
+		str++;
+	}
+	return (i);
+}
+
 /*
 	Avance le pointeur jusqu'à la prochaine chose à interpréter
 */
@@ -122,6 +136,8 @@ void skip_space(t_info *info)
 {
 	while(is_white_space(*info->last_position))
 	{
+		if (*info->last_position == '|')
+			return ;
 		info->last_position++;
 		if (info->list_token)
 			ft_lstlast_token(info->list_token)->space_flag = 1;
@@ -190,16 +206,35 @@ char	*search_another_one(char *str, char c, t_info *info)
 void	split_token(char *token, t_info *info)
 {
 	int i;
+	int x;
 
 	i = 0;
+	x = 0;
 	info->last_position = token;
+	info->command_lines = malloc(sizeof(t_command_line) * info->nb_of_pipe + 1);
 
 	while (*info->last_position)
 	{
 		skip_space(info);
+		if (*info->last_position == '|')
+		{
+			info->command_lines[i].list_token = info->list_token;
+			info->list_token = NULL;
+			info->last_position++;
+			i++;
+		}
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
 		// info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 		skip_space(info);
+	}
+	info->command_lines[i].list_token = info->list_token;
+	// info->list_token = NULL;
+	x = i;
+	i = 0;
+	while (x >= i)
+	{
+		printf("i = %d\n", i);
+		lst_print_token(&info->command_lines[i++].list_token);
 	}
 	// print_tab(info->token);
 	// lst_print_token(&info->list_token);
@@ -273,20 +308,21 @@ int main(int argc, char **argv, char **envp)
 			add_history(line); 
 		else 
 			exit_terminal();
+		how_many(line, '|');
 		split_token(line, info);
 		var_expansion(info->list_token, envp);
 		if (info->list_token)
 			token_manager(info);
-		lst_print_token(&info->list_token);
+		// lst_print_token(&info->list_token);
 
 		redirection(info);
 		execution(info);
 		// chdir
 		// command_exeggutor(line, envp);
-		free(line);
 		// free(info->prompt);
 		// free(info->token);
 		// ft_lstclear_token(&info->list_token, del);
+		free(line);
 		ft_lstclear_token(&info->list_token, free);
 		reinit(info);
 
