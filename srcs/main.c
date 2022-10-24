@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/23 09:32:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:19:41 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void	split_token(char *token, t_info *info)
 	i = 0;
 	x = 0;
 	info->last_position = token;
-	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
+	info->command_lines = ft_calloc(info->nb_of_pipe + 2, sizeof(t_command_line));
 
 	while (*info->last_position)
 	{
@@ -225,11 +225,14 @@ void	split_token(char *token, t_info *info)
 			info->list_token = NULL;
 			info->last_position++;
 			i++;
+			printf("i = %d\n", i);
 		}
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
 		// info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 		skip_space(info);
 	}
+	// printf("i = %d\n", i);
+	// i++;
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
 	// lst_print_token(&info->command_lines[i].list_token);
