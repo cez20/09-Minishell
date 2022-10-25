@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/22 10:06:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:01:16 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ typedef struct s_info
 	// char	*prompt;
 	t_token	*list_token;
 	struct s_command_line *command_lines;
-	int 	flag_quote;
+	// int 	flag_quote;
 	char 	*last_position;
 	int 	infile;
 	int 	outfile;
+	int		index;
 	int 	nb_of_pipe;
 	char	**path;
 }		t_info;
@@ -57,7 +58,16 @@ typedef struct s_info
 typedef struct s_command_line
 {
 	t_token *list_token;
+	// merge command et args
+	// char **argv
+	
 	char	*command;
+	char	*args;
+	int		fd_in;
+	int		fd_out;
+	int		error;
+	char	*merge_path_cmd;
+	char 	*paths;
 }				t_command_line;
 
 //*** MAIN.C ***
@@ -110,5 +120,10 @@ t_token	*ft_lstnew_token(char *content);
 void 	lst_print_token(t_token **list);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
 t_token	*ft_lstlast_token(t_token *lst);
+
+int	how_many(char *str, char c);
+void	fill_command_lines(t_info *info);
+void skip_space(t_info *info);
+char	*search_another_one(char *str, char c, t_info *info);
 
 #endif

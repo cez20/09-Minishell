@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/22 17:17:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:54:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_lstclear_token(t_token **lst, void (*del) (void *))
 	}
 }
 
-
 void lst_print_token(t_token **list)
 {
     t_token *node;
@@ -59,6 +58,8 @@ void lst_print_token(t_token **list)
 
     while (node)
     {
+		if (!node)
+			return ;
         printf("node[%d] = %s\n", i, (char *)node->token);
         node = node->next;
         i++;

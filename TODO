@@ -60,12 +60,24 @@ TODO:
 		[X] gérer le echo avec la nouvelle façon en linked list
 		[] adapter $ pour qu'il' cherche dans la copie de l'environnement'
 		[X] update le PWD dans l'env'
+		[] parser les listes et remplir les command_lines
+		[] ne pas compter les pipes entre quotes
+		[] state machine 
+		
+		
 
 FIXME:
 		[X] segfault lorsqu'il' y a des espaces devant la première commande, viens probablement de skip_space
 		[X] segfault echo seul sans argument
 		[X]	cd avec aucun argument doit ramener à la racine
-		[] node fucked up, je comprends rien WTF:
-		
+		[X] node fucked up, je comprends rien WTF:
+		[] refaire fonctionnner les builtins avec la nouvelle structure 
+			[X] cd
+			[X] pwd
+			[] echo
+			[X] env
+			[] exit
+			[] unset
+ 		
 		
 		
