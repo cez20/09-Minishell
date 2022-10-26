@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/25 14:30:35 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/26 14:27:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*get_args(t_token *list_token)
 	while (list_token)
 	{
 		args = ft_strjoin(args, list_token->token);
+		args = ft_strjoin(args, " ");
 		list_token = list_token->next;
 	}
 	return (args);
