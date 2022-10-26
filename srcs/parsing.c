@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 17:51:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:21:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*get_args(t_token *list_token)
 	while (list_token)
 	{
 		args = ft_strjoin(args, list_token->token);
+		args = ft_strjoin(args, " ");
 		list_token = list_token->next;
 	}
 	return (args);

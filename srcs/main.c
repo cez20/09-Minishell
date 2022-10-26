@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 18:04:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:21:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,28 @@ char	*search_line(char **tab, char *line)
 	}
 	return (NULL);
 }
+
+char	**tab_trunc(char **tab, char *str, int len)
+{
+	int		i;
+	char	**new_tab;
+
+	i = 0;
+	new_tab = NULL;
+	if (!tab || !str)
+		return (0);
+	while (tab[i] && ft_strncmp(tab[i], str, len) != 0)
+	{
+		new_tab = tab_join(new_tab, tab[i]);
+		i++;
+	}
+	if (new_tab)
+		new_tab[i] = NULL;
+	table_flip(tab);
+	return (new_tab);
+}
+
+
 
 /*
 	exécute le builtin associer à la première commande
@@ -47,7 +69,11 @@ void token_manager(t_info *info)
 			export(info);
 		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4))
 			echo(info);
-		info->index++;
+		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5))
+			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
+
+	info->index++;
+
 	}
 }
 
@@ -102,8 +128,8 @@ int main(int argc, char **argv, char **envp)
 		split_token(line, info);
 		var_expansion(info->list_token, envp);
 		fill_command_lines(info);
-		// token_manager(info);
-		redirection(info);
+		token_manager(info);
+		// redirection(info);
 		// execution(info);
 		free(line);
 		reinit(info);
