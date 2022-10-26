@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 17:01:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/25 22:45:32 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 #include <sys/wait.h>
 #include <termios.h>
 
-# define ERR_PATH "There is no PATH in the ENV\n"
 
 typedef struct s_token
 {
@@ -42,16 +41,15 @@ typedef struct s_token
 
 typedef struct s_info
 {
-	char 	**envp;
+	char			**envp;
 	// char	*prompt;
-	t_token	*list_token;
+	t_token			*list_token;
 	struct s_command_line *command_lines;
+	//t_command_line	*command_lines;
 	// int 	flag_quote;
-	char 	*last_position;
-	int 	infile;
-	int 	outfile;
+	char	*last_position;
 	int		index;
-	int 	nb_of_pipe;
+	int		nb_of_pipe;
 	char	**path;
 }		t_info;
 
@@ -60,7 +58,6 @@ typedef struct s_command_line
 	t_token *list_token;
 	// merge command et args
 	// char **argv
-	
 	char	*command;
 	char	*args;
 	int		fd_in;
@@ -88,7 +85,6 @@ void	echo(t_info *info);
 void	cd(t_info *info);
 
 // *** EXECUTION.C ***
-void	split_path(t_info *info);
 int		create_pipes(t_info *info);
 void	execution(t_info *info);
 
@@ -111,7 +107,9 @@ void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_outfile(char *token);
 int		open_infile(char *token);
-void 	redirection(t_info *info);
+//void 	redirection(t_info *info);
+//void	redirection(t_command_line *command_lines);
+void	redirection(t_info	*info);
 
 //*** UTILS.C ***
 void	del(void *token);
@@ -121,9 +119,12 @@ void 	lst_print_token(t_token **list);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
 t_token	*ft_lstlast_token(t_token *lst);
 
-int	how_many(char *str, char c);
+
+//*** UTILS_2.C **
+int		how_many(char *str, char c);
 void	fill_command_lines(t_info *info);
-void skip_space(t_info *info);
+void 	skip_space(t_info *info);
 char	*search_another_one(char *str, char c, t_info *info);
+char	**split_path(char **env);
 
 #endif

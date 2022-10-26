@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/25 17:52:35 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/25 22:43:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,9 @@ void	init(t_info *info, char **envp)
 	info->list_token = NULL;
 	// info->flag_quote = 0;
 	info->last_position = NULL;
-	info->infile = -1;
-	info->outfile = -1;
 	info->nb_of_pipe = 0;
 	info->index = 0;
-	// info->meta = ft_split(METACHARACTER, ' ');
-	// info->redirection = NULL;
+	info->path = split_path(envp);
 }
 
 //Fonction qui permet de reinitialiser certaines infos de la struct 
@@ -72,10 +69,6 @@ void	reinit(t_info *info)
 	int	i;
 
 	i = 0;
-	if(info->infile != -1)
-		close(info->infile);
-	if (info->outfile != -1)
-		close(info->outfile);
 	info->nb_of_pipe = 0;
 	while (info->command_lines[i].list_token)
 	{
@@ -90,7 +83,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_info	*info;
-
+ 
 	info = ft_calloc(1, sizeof(t_info));
 	init(info, envp);
 
@@ -110,8 +103,7 @@ int main(int argc, char **argv, char **envp)
 		var_expansion(info->list_token, envp);
 		fill_command_lines(info);
 		// token_manager(info);
-
-		// redirection(info);
+		redirection(info);
 		// execution(info);
 		free(line);
 		reinit(info);

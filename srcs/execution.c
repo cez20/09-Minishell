@@ -6,38 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 17:18:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/25 19:01:03 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-// Avancer dans les tokens, sauf si metacracteres, avancer de 2. Si pipe, avancer de 1
-// Quels sont les metacharacteres ‘|’, ‘&’, ‘;’, ‘(’, ‘)’, ‘<’, or ‘>’.  
-//1- Il faut que je compte le nombre de pipes et le mettre dans info->nb_of_pipes
-// 2- Executer les commandes et leurs arguments jusqua temps qu'il rencontre un pipe
-// 3- Si (built-in), faire la commande dans le parent, ELSE, fork() et faire execve 
-// 3- Envoyer contenu de la commande dans pipe avec dup2
-// 4- Repeter les memes actions jusqu'a ce qu'il n'y ait plus de pipes 
-
-void	split_path(t_info *info)
-{
-	char **env;
-	int		i;
-	
-	env = info->envp;
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strnstr(env[i], "PATH=", 5))
-		{
-			info->path = ft_split(&env[i][5], ':');
-			return ;
-		}
-		i++;
-	}
-	printf("There is not PATH in env!\n");
-}
 
 int	create_pipes(t_info *info)
 {
@@ -63,5 +36,4 @@ void	execution(t_info *info)
 	i = 0;
 	tmp = info->list_token;
 	create_pipes(info);
-	split_path(info);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/25 14:36:05 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:56:23 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,22 @@ void skip_space(t_info *info)
 				ft_lstlast_token(info->list_token)->space_flag = 1;
 		}
 	}
+}
+
+char	**split_path(char **env)
+{
+	char	**str;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH=", 5))
+		{
+			str = ft_split(&env[i][5], ':');
+			return (str);
+		}
+		i++;
+	}
+	return (NULL);
 }
