@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 14:20:34 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:27:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,46 @@ int	open_infile(char *token)
 	return (infile);
 }
 
-void	redirection(t_info *info)
+void	redirection(t_command_line *command_lines)
 {
-	t_token	*tmp;
+	t_command_line	*chunk;
+	int i;
 
-	tmp = info->list_token;
-	while (tmp) 
+	i = 0;
+	chunk = command_lines;
+	while (chunk[i])
 	{
-		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
-			info->infile = open_infile(tmp->next->token);
-		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-			info->outfile = open_outfile(tmp->next->token); 
-		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-		 	create_heredoc(tmp->next->token);
-		else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-		 	append_document(tmp->next->token);
-		else if ((ft_strncmp(tmp->token, "|", 2) == 0))
-			info->nb_of_pipe++;
-		tmp = tmp->next;
+		while (chunk[i].list_token) 
+		{
+			if ((ft_strncmp(chunk[i].list_token->token, "<", 2) == 0) && chunk[i].list_token->next->token != NULL)
+				printf("Je suis en business mon chum!\n");
+				//info->infile = open_infile(tmp->next->token);
+			// else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
+			// 	info->outfile = open_outfile(tmp->next->token); 
+			// else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
+			//  	create_heredoc(tmp->next->token);
+			// else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
+			//  	append_document(tmp->next->token);
+			chunk[i].list_token = chunk[i].list_token->next;
+		}
 	}
 }
+
+// void	redirection(t_info *info)
+// {
+// 	t_token	*tmp;
+
+// 	tmp = info->list_token;
+// 	while (tmp) 
+// 	{
+// 		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
+// 			info->infile = open_infile(tmp->next->token);
+// 		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
+// 			info->outfile = open_outfile(tmp->next->token); 
+// 		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
+// 		 	create_heredoc(tmp->next->token);
+// 		else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
+// 		 	append_document(tmp->next->token);
+// 		tmp = tmp->next;
+// 	}
+// }
