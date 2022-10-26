@@ -40,8 +40,11 @@
 		[] pas de pwd 
 	[] export sans aucune option
 		[X] export sans argument
+		[] gérer plusieurs args
 		[] gestion des erreurs
 	[] unset sans aucune option
+		[] gérer plusieurs args
+		[] gérer les "="
 	[X] env sans aucune option ni argument
 		[] gestion d'erreur'
 	[X] exit sans aucune option
@@ -72,12 +75,19 @@ FIXME:
 		[X]	cd avec aucun argument doit ramener à la racine
 		[X] node fucked up, je comprends rien WTF:
 		[] refaire fonctionnner les builtins avec la nouvelle structure 
-			[X] cd
+			[] cd
+				[] .., trunc l'espace'
 			[X] pwd
 			[] echo
 			[X] env
-			[] exit
+			[X] exit
 			[] unset
+			[X] export
+		[] gérer les caractères après les commandes ex: echos, pwdttre, exite, etc.
+		[] trunc les espaces après
+
+Question: 
+			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"
  		
 		
 		

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 17:04:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/26 15:01:48 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ void	export(t_info *info)
 	i = 0;
 	j = 0;
 
-	if (info->list_token->next)
-		info->envp = tab_join(info->envp, info->list_token->next->token);
+	if (info->command_lines[info->index].args)
+		info->envp = tab_join(info->envp, info->command_lines[info->index].args);
 	else
 	{
 		while (info->envp[i])
