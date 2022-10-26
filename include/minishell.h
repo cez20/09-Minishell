@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 19:47:52 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/25 22:45:32 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <termios.h>
+
 
 typedef struct s_token
 {
@@ -107,7 +108,8 @@ void	create_heredoc(char *delimiter);
 int		open_outfile(char *token);
 int		open_infile(char *token);
 //void 	redirection(t_info *info);
-void	redirection(t_command_line *command_lines);
+//void	redirection(t_command_line *command_lines);
+void	redirection(t_info	*info);
 
 //*** UTILS.C ***
 void	del(void *token);
