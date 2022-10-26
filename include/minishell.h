@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 22:45:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:31:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_info
 	// char	*prompt;
 	t_token			*list_token;
 	struct s_command_line *command_lines;
-	//t_command_line	*command_lines;
+
 	// int 	flag_quote;
 	char	*last_position;
 	int		index;
@@ -106,9 +106,8 @@ void	free_token(char **token);
 void	append_document(char *outfile);
 void	create_heredoc(char *delimiter);
 int		open_outfile(char *token);
-int		open_infile(char *token);
-//void 	redirection(t_info *info);
-//void	redirection(t_command_line *command_lines);
+//int		open_infile(char *token);
+void	open_infile(t_command_line	*command_line, t_token	*token);
 void	redirection(t_info	*info);
 
 //*** UTILS.C ***
@@ -126,5 +125,6 @@ void	fill_command_lines(t_info *info);
 void 	skip_space(t_info *info);
 char	*search_another_one(char *str, char c, t_info *info);
 char	**split_path(char **env);
+void	token_deletion(t_token *list);
 
 #endif

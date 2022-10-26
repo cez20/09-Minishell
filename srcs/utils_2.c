@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/25 18:56:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:03:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,23 @@ char	**split_path(char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+void	token_deletion(t_token *list)
+{	
+	// t_token	 *prev_node;
+	// t_token	 *next_node;
+
+	// prev_node = list->prev;
+	// next_node = list->next;
+
+	// printf("The prev_node address is %p\n", prev_node);
+	// printf("The next_node address is %p\n", next_node);
+	// list->token = NULL;
+	// list->next->token = NULL;
+
+	free(list->token);
+
+	//Soit je prends la chaine intiale info->lis_token au lieu de info->commands[i]->list_token e
+	// et j'enleve les nodes qui s'y trouvent, ou bien sinon je malloc une nouvelle liste auquel j'assigne 
 }

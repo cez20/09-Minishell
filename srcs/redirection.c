@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 23:13:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:38:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,64 +83,36 @@ int	open_outfile(char *token)
 	return (outfile);
 }
 
-int	open_infile(char *token)
+//Lorsqu'il y a un erreur de open(fd), il faut le garder en memoire, avec le fichier de fd?
+// A partir du moment qu'il y a un open fd qui n'est pas bon, il n'y a qu'un message de wrong fd , pas plusieurs 
+// Verifier si nous avons droit a strerror(errno);
+void	open_infile(t_command_line	*cmd_line, t_token	*list_token)
 {
-	char *str;
-	int infile;
-	
-	str = NULL;
-	infile = open(token, O_RDWR);
-	printf("Je suis dans le infile\n");
-	if (infile == -1) // Le 1er argument de open() est le path ou se trouve le fichier. Il faudrait
-		printf("bash: %s: %s\n", token, strerror(errno));
-	return (infile);
+	cmd_line->fd_in = open(list_token->next->token, O_RDWR);
+	if (cmd_line->fd_in == -1 && !(cmd_line->error))
+	{
+		printf("bash: %s: %s\n", list_token->next->token, strerror(errno));
+		cmd_line->error = 1;
+	}
+	token_deletion(list_token);
 }
-
-// void	redirection(t_command_line *command_lines)
-// {
-// 	t_command_line	*chunk;
-// 	int i;
-
-// 	i = 0;
-// 	chunk = command_lines;
-// 	while (chunk[i].list_token) 
-// 	{
-// 			if ((ft_strncmp(chunk[i].list_token->token, "<", 2) == 0) && chunk[i].list_token->next->token != NULL)
-// 				printf("Je suis en business mon chum!\n");
-// 					info->infile = open_infile(tmp->next->token);
-// 				else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-// 					info->outfile = open_outfile(tmp->next->token); 
-// 				else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-// 				 	create_heredoc(tmp->next->token);
-// 				else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-// 				 	append_document(tmp->next->token);
-// 			printf("%s\n", chunk[i].list_token->token);
-// 			chunk[i].list_token = chunk[i].list_token->next;
-// 	}
-// }
 
 void	redirection(t_info	*info)
 {
 	t_command_line	*chunk;
-	int i;
+	t_token			*list;
+	int	i;
 
 	i = 0;
-	chunk = info->command_lines;
 	while(i <= info->nb_of_pipe)
 	{
-		while (chunk[i].list_token) 
+		chunk = &info->command_lines[i];
+		list = info->command_lines[i].list_token;
+		while (list) 
 		{
-			if ((ft_strncmp(chunk[i].list_token->token, "<", 2) == 0) && chunk[i].list_token->next != NULL)
-				printf("Je suis en business mon chum!\n");
-					//info->infile = open_infile(tmp->next->token);
-				// else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-				// 	info->outfile = open_outfile(tmp->next->token); 
-				// else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-				//  	create_heredoc(tmp->next->token);
-				// else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-				//  	append_document(tmp->next->token);
-			printf("%s\n", chunk[i].list_token->token);
-			chunk[i].list_token = chunk[i].list_token->next;
+			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next != NULL)
+				open_infile(chunk, list);
+			list = list->next;
 		}
 		i++;
 	}
