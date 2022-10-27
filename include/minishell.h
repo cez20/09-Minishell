@@ -6,27 +6,26 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/26 17:31:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:25:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../Libft/libft.h"
-#include "../readline/readline.h"
-#include "../readline/history.h"
-#include <errno.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <signal.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <termios.h>
-
+# include "../Libft/libft.h"
+# include "../readline/readline.h"
+# include "../readline/history.h"
+# include <errno.h>
+# include <dirent.h>
+# include <unistd.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <termios.h>
 
 typedef struct s_token
 {
@@ -62,7 +61,7 @@ typedef struct s_command_line
 	char	*args;
 	int		fd_in;
 	int		fd_out;
-	int		error;
+	char	*error_infile;
 	char	*merge_path_cmd;
 	char 	*paths;
 }				t_command_line;
@@ -103,10 +102,9 @@ void	var_expansion(t_token *node, char **env);
 
 //*** REDIRECTION.C ***
 void	free_token(char **token);
-void	append_document(char *outfile);
-void	create_heredoc(char *delimiter);
-int		open_outfile(char *token);
-//int		open_infile(char *token);
+void	append_document(t_command_line *chunk, char *outfile);
+void	open_outfile(t_command_line *chunk, char *token);
+void	create_heredoc(t_command_line *chunk, char *delimiter);
 void	open_infile(t_command_line	*command_line, t_token	*token);
 void	redirection(t_info	*info);
 
@@ -125,6 +123,10 @@ void	fill_command_lines(t_info *info);
 void 	skip_space(t_info *info);
 char	*search_another_one(char *str, char c, t_info *info);
 char	**split_path(char **env);
-void	token_deletion(t_token *list);
+//void	token_deletion(t_token *list);
+void	token_deletion(t_token **list);
+void	init_struct(t_command_line *cmd_line, t_info *info);
+void	print_struct(t_command_line *cmd_line, t_info *info);
+
 
 #endif

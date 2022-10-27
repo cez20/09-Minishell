@@ -6,11 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 18:21:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:26:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	split_token(char *token, t_info *info)
 {
@@ -21,7 +21,7 @@ void	split_token(char *token, t_info *info)
 	x = 0;
 	info->last_position = token;
 	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
-
+	init_struct(info->command_lines, info);
 	while (*info->last_position)
 	{
 		skip_space(info);
@@ -64,7 +64,7 @@ char	*get_command(t_token *list_token)
 	return(list_token->token);
 }
 
-char	*get_args(t_token *list_token)
+char	*get_args(t_token	*list_token)
 {
 	char *args;
 

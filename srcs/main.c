@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 18:21:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:55:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ char	**tab_trunc(char **tab, char *str, int len)
 	table_flip(tab);
 	return (new_tab);
 }
-
-
 
 /*
 	exécute le builtin associer à la première commande
@@ -129,7 +127,7 @@ int main(int argc, char **argv, char **envp)
 		var_expansion(info->list_token, envp);
 		fill_command_lines(info);
 		token_manager(info);
-		// redirection(info);
+		redirection(info);
 		// execution(info);
 		free(line);
 		reinit(info);
