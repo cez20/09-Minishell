@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/27 14:25:06 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:29:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 	char	*token;
 	int		flag_quote;
 	int		space_flag;
+	int		redirection;
 
 
 	struct s_token *next;
@@ -107,6 +108,10 @@ void	open_outfile(t_command_line *chunk, char *token);
 void	create_heredoc(t_command_line *chunk, char *delimiter);
 void	open_infile(t_command_line	*command_line, t_token	*token);
 void	redirection(t_info	*info);
+void	delete_redirection_tokens(t_token *list_token, t_token **lis);
+//void	delete_redirection_tokens(t_token *list_token);
+void	delete_tokens(t_token **list);
+int		is_redirection_operator(t_token	*list);
 
 //*** UTILS.C ***
 void	del(void *token);
@@ -123,8 +128,6 @@ void	fill_command_lines(t_info *info);
 void 	skip_space(t_info *info);
 char	*search_another_one(char *str, char c, t_info *info);
 char	**split_path(char **env);
-//void	token_deletion(t_token *list);
-void	token_deletion(t_token **list);
 void	init_struct(t_command_line *cmd_line, t_info *info);
 void	print_struct(t_command_line *cmd_line, t_info *info);
 
