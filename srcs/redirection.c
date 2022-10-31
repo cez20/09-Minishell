@@ -6,58 +6,41 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 23:13:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:21:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void free_token(char **token)
+// Qu'arrive-til si le fichier est deja cree? On ne veut pas remplacer le fd? 
+void	append_document(t_command_line *chunk, char *outfile)
 {
-	int i;
-
-	i = 0;
-	while (token[i])
+	if (chunk->fd_out != 1)
+		close(chunk->fd_out);
+	chunk->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (chunk->fd_in == -1)
 	{
-		free(token[i]);
-		i++;
-	}
-	free(token);
-}
-
-//See about opendir(), readdir(), closedir() functions
-//If an outfile is already open, a fd has already been associated to it
-//Another open() function will open another fd and won't cause any trouble. 
-void	append_document(char *outfile)
-{
-	char *str;
-	int file;
- 
-	file = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (file == -1)
-	{
-		//First way of doing it: 
 		printf("bash: %s: %s\n", outfile, strerror(errno));
-		//Second way of doing message error below:
-		str = ft_strjoin("bash: ", outfile);
-		perror(str);
-		free(str);	
 	}
-	write(file, "I am tired!\n", 12);	//This will write I am tired, at the end of file. 
+	printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
 }
 
-//Verify why there are so many still reachable when doing this type of heredoc 
-//Use rl_clear_history which is different than clear_history to remove still reachable??
-//Print content only if followed cat command 
-//If a pipe directly after heredoc (ex: << Cesar | wc ), input of heredoc is denied. Following command is executed with no correct input
-//Normally, bash does not create a file that is visible to user. Therefore, might be best to  create a double pointer (tab_join function)
-void	create_heredoc(char *delimiter)
+void	open_outfile(t_command_line *chunk, char *token)
+{	
+	if (chunk->fd_out != 1)
+		close(chunk->fd_out);
+	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
+	printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
+}
+
+// Si j'ai plusieurs heredoc comment leur donner des noms differents? 
+void	create_heredoc(t_command_line *chunk, char *delimiter)
 {
-	char **tab_token;
-	char *line;
-	int i;
+	char	*line;
 	
-	tab_token = NULL;
+	if (chunk->fd_in != 0)
+		close(chunk->fd_in);
+	chunk->fd_in = open("heredoc.txt", O_TRUNC | O_CREAT | O_RDWR, 0644);
 	while (1)
 	{
 		line = readline(">");
@@ -66,101 +49,101 @@ void	create_heredoc(char *delimiter)
 			free(line);
 			break;
 		}
-		tab_token = tab_join(tab_token, line);
+		write(chunk->fd_in, line, ft_strlen(line));
+		write(chunk->fd_in, "\n", 1);
 		free(line);
 	}
-	i = 0;
-	while (tab_token[i])
-		printf("%s\n", tab_token[i++]);
-	free_token(tab_token);
 }
 
-int	open_outfile(char *token)
+void	open_infile(t_command_line *cmd_line, t_token *list_token)
 {
-	int outfile;
-	
-	outfile = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
-	return (outfile);
+	cmd_line->fd_in = open(list_token->next->token, O_RDWR);
+	if (cmd_line->fd_in == -1 && !(cmd_line->error_infile))
+		cmd_line->error_infile = list_token->next->token;
 }
 
-int	open_infile(char *token)
+int	is_redirection_operator(t_token	*list)
 {
-	char *str;
-	int infile;
-	
-	str = NULL;
-	infile = open(token, O_RDWR);
-	printf("Je suis dans le infile\n");
-	if (infile == -1) // Le 1er argument de open() est le path ou se trouve le fichier. Il faudrait
-		printf("bash: %s: %s\n", token, strerror(errno));
-	return (infile);
+	if ((ft_strncmp(list->token, "<", 2) == 0) || ft_strncmp(list->token, "<<", 2) == 0 || 
+		(ft_strncmp(list->token, ">", 2) == 0) || ft_strncmp(list->token, ">>", 2) == 0)
+		return (1);
+	else
+		return (0);
 }
 
-// void	redirection(t_command_line *command_lines)
-// {
-// 	t_command_line	*chunk;
-// 	int i;
-
-// 	i = 0;
-// 	chunk = command_lines;
-// 	while (chunk[i].list_token) 
-// 	{
-// 			if ((ft_strncmp(chunk[i].list_token->token, "<", 2) == 0) && chunk[i].list_token->next->token != NULL)
-// 				printf("Je suis en business mon chum!\n");
-// 					info->infile = open_infile(tmp->next->token);
-// 				else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-// 					info->outfile = open_outfile(tmp->next->token); 
-// 				else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-// 				 	create_heredoc(tmp->next->token);
-// 				else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-// 				 	append_document(tmp->next->token);
-// 			printf("%s\n", chunk[i].list_token->token);
-// 			chunk[i].list_token = chunk[i].list_token->next;
-// 	}
-// }
-
-void	redirection(t_info	*info)
+void	delete_tokens(t_token **list)
 {
-	t_command_line	*chunk;
-	int i;
+	t_token	*temp;
+	t_token	*prev;
+	int 	i;
+	int		nodes_to_erase;
 
 	i = 0;
-	chunk = info->command_lines;
-	while(i <= info->nb_of_pipe)
+	nodes_to_erase = 0;
+	if ((*list)->next)
+		nodes_to_erase = 1;
+	while (i <= nodes_to_erase)
 	{
-		while (chunk[i].list_token) 
-		{
-			if ((ft_strncmp(chunk[i].list_token->token, "<", 2) == 0) && chunk[i].list_token->next != NULL)
-				printf("Je suis en business mon chum!\n");
-					//info->infile = open_infile(tmp->next->token);
-				// else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-				// 	info->outfile = open_outfile(tmp->next->token); 
-				// else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-				//  	create_heredoc(tmp->next->token);
-				// else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-				//  	append_document(tmp->next->token);
-			printf("%s\n", chunk[i].list_token->token);
-			chunk[i].list_token = chunk[i].list_token->next;
-		}
+		temp = *list;
+		prev = (*list)->prev;
+		*list = (*list)->next;
+		free (temp);
+		temp = NULL;
+		if (*list)
+			(*list)->prev = prev;
+		if (prev)
+			prev->next = *list;
 		i++;
 	}
 }
 
-// void	redirection(t_info *info)
-// {
-// 	t_token	*tmp;
+void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
+{
+	t_token *list;
+	t_token	*tmp;
+	
+	list = list_token;
+	tmp = NULL;
+	while (list)
+	{
+		if (is_redirection_operator(list) == 1 && list->prev)
+			delete_tokens(&list);
+		else if (is_redirection_operator(list) == 1 && !list->prev)
+		{
+			delete_tokens(&list);
+			*list_addr = list;
+		}
+		if (list)
+			list = list->next; // Des que je viens ici cela change, list et list token pour la meme chose. 
+	}
+}
 
-// 	tmp = info->list_token;
-// 	while (tmp) 
-// 	{
-// 		if ((ft_strncmp(tmp->token, "<", 2) == 0) && tmp->next != NULL)
-// 			info->infile = open_infile(tmp->next->token);
-// 		else if ((ft_strncmp(tmp->token, ">", 2) == 0) && tmp->next != NULL)
-// 			info->outfile = open_outfile(tmp->next->token); 
-// 		else if ((ft_strncmp(tmp->token, "<<", 2) == 0) && tmp->next != NULL) 
-// 		 	create_heredoc(tmp->next->token);
-// 		else if ((ft_strncmp(tmp->token, ">>", 2) == 0) && tmp->next != NULL)
-// 		 	append_document(tmp->next->token);
-// 		tmp = tmp->next;
-// 	}
-// }
+void	redirection(t_info	*info)
+{
+	t_command_line	*chunk;
+	t_token			*list;
+	int	i;
+
+	i = 0;
+	lst_print_token(&info->command_lines[i].list_token);
+	while(i <= info->nb_of_pipe)
+	{
+		chunk = &info->command_lines[i];
+		list = info->command_lines[i].list_token;
+		while (list) 
+		{
+			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
+				open_infile(chunk, list);
+			else if ((ft_strncmp(list->token, "<<", 2) == 0) && list->next)
+				create_heredoc(chunk, list->next->token);
+			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
+				open_outfile(chunk, list->next->token);
+			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)
+				append_document(chunk, list->next->token);
+			list = list->next;
+		}
+		delete_redirection_tokens(info->command_lines[i].list_token, &info->command_lines[i].list_token);
+		i++;
+	}
+	lst_print_token(&info->command_lines[0].list_token);
+}

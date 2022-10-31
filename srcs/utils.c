@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 18:07:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:37:08 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void lst_print_token(t_token **list)
 
     node = *list;
     i = 0;
-
+	if (!node)
+		printf("node[0] is NULL\n");	
     while (node)
     {
 		if (!node)
 			return ;
         printf("node[%d] = %s\n", i, (char *)node->token);
-        node = node->next;
+        node = node->next;		
         i++;
     }
 }
@@ -78,6 +79,7 @@ t_token	*ft_lstnew_token(char *content)
 	new->token = content;
 	new->next = NULL;
 	new->prev = NULL;
+	new->redirection = 0;
 	return (new);
 }
 

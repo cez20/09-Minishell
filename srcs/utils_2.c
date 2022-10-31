@@ -6,11 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 13:43:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:31:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*
 	Vérifier la valeur du char à l'adresse du char pointeur "token"
@@ -93,4 +93,57 @@ char	**split_path(char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+void	token_deletion(t_token **list)
+{	
+	t_token	 *prev_node;
+	t_token	 *next_node;
+
+	printf("The address of initial list node is %p\n", *list);
+	prev_node = (*list)->prev;
+	next_node = (*list)->next;
+	free(*list);
+	*list = next_node;
+	(*list)->prev = prev_node;
+	if (prev_node) //Pcq si jamais le prev->node est NULL. On ne peut rien assigne a NULL, meme pas un next/ 
+		prev_node->next = *list;
+	printf("The address of new list node is %p\n", *list);
+}
+
+void	print_struct(t_command_line *cmd_line, t_info *info)
+{
+	int i;
+
+	i = 0;
+	while (i < (info->nb_of_pipe + 1))
+	{
+		printf("%p\n", cmd_line[i].list_token);
+		printf("%s\n", cmd_line[i].command);
+		printf("%s\n", cmd_line[i].args);
+		printf("%d\n", cmd_line[i].fd_in);
+		printf("%d\n", cmd_line[i].fd_out);
+		printf("%s\n", cmd_line[i].error_infile);
+		printf("%s\n", cmd_line[i].merge_path_cmd);
+		i++;
+	}
+}
+
+void	init_struct(t_command_line *cmd_line, t_info *info)
+{
+	int i;
+	
+	i = 0;
+	while (i < (info->nb_of_pipe + 1))
+	{
+		cmd_line[i].list_token = NULL;
+		cmd_line[i].command = NULL;
+		cmd_line[i].args = NULL;
+		cmd_line[i].builtin = 0;
+		cmd_line[i].fd_in = 0;
+		cmd_line[i].fd_out = 1;
+		cmd_line[i].error_infile = NULL;
+		cmd_line[i].merge_path_cmd = NULL;
+		i++;
+	}
 }
