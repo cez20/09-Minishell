@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 13:16:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:15:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	init_struct(t_command_line *cmd_line, t_info *info)
 	while (i < (info->nb_of_pipe + 1))
 	{
 		cmd_line[i].list_token = NULL;
+		cmd_line[i].cmd_and_args = NULL;
 		cmd_line[i].command = NULL;
 		cmd_line[i].args = NULL;
 		cmd_line[i].builtin = 0;

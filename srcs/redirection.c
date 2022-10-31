@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/31 14:21:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:06:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	redirection(t_info	*info)
 	int	i;
 
 	i = 0;
-	lst_print_token(&info->command_lines[i].list_token);
+	//lst_print_token(&info->command_lines[i].list_token);
 	while(i <= info->nb_of_pipe)
 	{
 		chunk = &info->command_lines[i];
@@ -143,7 +143,7 @@ void	redirection(t_info	*info)
 			list = list->next;
 		}
 		delete_redirection_tokens(info->command_lines[i].list_token, &info->command_lines[i].list_token);
+		lst_print_token(&info->command_lines[i].list_token);
 		i++;
 	}
-	lst_print_token(&info->command_lines[0].list_token);
 }

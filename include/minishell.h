@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/31 13:33:43 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:18:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_command_line
 	t_token *list_token;
 	// merge command et args
 	// char **argv
+	char	**cmd_and_args;
 	char	*command; // Je pense ne plus en avoir besoin! 
 	char	*args; // Je penser ne plus en avoir besoin!
 	int		builtin;
@@ -79,6 +80,7 @@ int 	main(int argc, char **argv, char **envp);
 void	is_builtin(t_info *info); // A mettre ailleurs 
 void	prepare_data_for_execution(t_info *info); // A mettre ailleurs
 void	fill_cmd(t_info *info); // A mettre ailleurs 
+void	create_exec_argv(t_info	*info); // A mettre ailleurs 
 
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
@@ -116,12 +118,13 @@ void	delete_tokens(t_token **list);
 int		is_redirection_operator(t_token	*list);
 
 //*** UTILS.C ***
-void	del(void *token);
-void	ft_lstaddback_token(t_token **alst, t_token *new);
-t_token	*ft_lstnew_token(char *content);
-void 	lst_print_token(t_token **list);
+void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
+int		ft_lstsize_token(t_token *lst);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
+void 	lst_print_token(t_token **list);
+t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
+void	ft_lstaddback_token(t_token **alst, t_token *new);
 
 
 //*** UTILS_2.C **

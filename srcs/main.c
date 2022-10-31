@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 14:28:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:23:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ void fill_cmd(t_info *info)
 	int		j;
 	
 	i = 0;
-	j = 0;
 	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
 	{
+		j = 0;
 		while (info->path[j])
 		{
 			path = ft_strjoin(info->path[j], "/");
@@ -155,10 +155,54 @@ void fill_cmd(t_info *info)
 	}
 }
 
+void	print_double_pointer(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		printf("The value of str[%d] is %s\n", i, str[i]);
+		i++;
+	}	
+}
+
+void	create_exec_argv(t_info	*info)
+{
+	t_token	*list;
+	char	**str;
+	int 	i;
+	int		j;
+
+	i = 0;
+	str = NULL;
+	list = info->command_lines[i].list_token;
+	if (!list)
+		return ;
+	while (i < (info->nb_of_pipe + 1))
+	{
+		j = 0;
+		list = info->command_lines[i].list_token;
+		info->command_lines[i].cmd_and_args = malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
+		str = info->command_lines[i].cmd_and_args;
+		while (list) 
+		{
+			str[j] = malloc((ft_strlen(list->token) + 1) * sizeof(char));
+			ft_strlcpy(str[j], list->token, ft_strlen(list->token) + 1);
+			list = list->next;
+			j++;
+		}
+		str[j] = 0;
+		print_double_pointer(str);
+		i++;
+	}
+}
+
 void	prepare_data_for_execution(t_info *info)
 {
 	is_builtin(info);
-	fill_cmd(info); // Il faut que je change pour l'adresse car sinon l'info ne suit pas
+	fill_cmd(info);
+	create_exec_argv(info);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -188,7 +232,7 @@ int main(int argc, char **argv, char **envp)
 		//fill_command_lines(info);
 		//token_manager(info);
 		redirection(info);
-		//prepare_data_for_execution(info);
+		prepare_data_for_execution(info);
 		//fill_command_lines(info);
 		//execution(info, info->command_lines);
 		free(line);
