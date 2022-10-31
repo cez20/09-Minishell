@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/25 22:45:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:52:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <termios.h>
+
+#define TEXT 32
+#define S_QUOTE 39
+#define D_QUOTE 34
 
 
 typedef struct s_token
@@ -49,6 +53,9 @@ typedef struct s_info
 	// int 	flag_quote;
 	char	*last_position;
 	int		index;
+	int		len;
+	int 	state;
+	// int		type_quote;
 	int		nb_of_pipe;
 	char	**path;
 }		t_info;
@@ -121,7 +128,7 @@ t_token	*ft_lstlast_token(t_token *lst);
 
 
 //*** UTILS_2.C **
-int		how_many(char *str, char c);
+int		how_many(t_info *info, char *str, char c);
 void	fill_command_lines(t_info *info);
 void 	skip_space(t_info *info);
 char	*search_another_one(char *str, char c, t_info *info);

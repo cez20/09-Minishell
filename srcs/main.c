@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/26 16:43:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:27:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	init(t_info *info, char **envp)
 	info->nb_of_pipe = 0;
 	info->index = 0;
 	info->path = split_path(envp);
+	info->state = TEXT;
 }
 
 //Fonction qui permet de reinitialiser certaines infos de la struct 
@@ -103,6 +104,42 @@ void	reinit(t_info *info)
 	free(info->command_lines);
 	info->index = 0;
 	// free(info->list_token);
+}
+
+int	close_quote_checker(t_info *info, char *str)
+{
+	while(*str)
+	{
+		if (*str == D_QUOTE)
+		{
+			info->state = D_QUOTE;
+			str++;
+			while(*str != D_QUOTE && *str)
+			{
+				str++;
+				if (*str == D_QUOTE)
+					info->state = TEXT;
+			}
+			str++;
+		}
+		if (*str == S_QUOTE)
+		{
+			info->state = S_QUOTE;
+			str++;
+			while(*str != S_QUOTE && *str)
+			{
+				str++;
+				if (*str == S_QUOTE)
+					info->state = TEXT;
+			}
+			str++;
+		}
+		str++;
+	}
+	if (info->state == TEXT)
+		return (1);
+	else
+		return (0);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -124,7 +161,12 @@ int main(int argc, char **argv, char **envp)
 			add_history(line); 
 		else 
 			exit_terminal();
-		info->nb_of_pipe = how_many(line, '|');
+		if (close_quote_checker(info, line))
+			printf("Les quotes sont tous fermé.\n");
+		else
+			printf("Les quotes ne sont pas fermés.\n");
+		info->nb_of_pipe = how_many(info, line, '|');
+		// printf("nb_pipe = %d\n", info->nb_of_pipe);
 		split_token(line, info);
 		var_expansion(info->list_token, envp);
 		fill_command_lines(info);

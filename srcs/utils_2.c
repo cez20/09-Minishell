@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/25 18:56:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:43:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,29 @@ char simple_or_double(char *token)
 /*
     compte le nombre d'élément correspondant au char c dans la string
 */
-int	how_many(char *str, char c)
+int	how_many(t_info *info, char *str, char c)
 {
 	int i;
 
 	i = 0;
 	while (*str)
 	{
+		if (*str == D_QUOTE)
+		{
+			info->state = D_QUOTE;
+			str++;
+			while(*str != D_QUOTE)
+				str++;
+			str++;
+		}
+		if (*str == S_QUOTE)
+		{
+			info->state = S_QUOTE;
+			str++;
+			while(*str != S_QUOTE)
+				str++;
+			str++;
+		}
 		if (*str == c)
 			i++;
 		str++;
@@ -54,6 +70,7 @@ void skip_space(t_info *info)
 			if (*info->last_position == '|')
 				return ;
 			info->last_position++;
+			info->len++;
 			if (info->list_token)
 				ft_lstlast_token(info->list_token)->space_flag = 1;
 		}

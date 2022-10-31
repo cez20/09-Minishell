@@ -89,5 +89,11 @@ FIXME:
 Question: 
 			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"
  		
-		
+LOG:
+	Steven	31 octobre:	- gérer les différents cas des pipes aves espaces
+						- trunquer les espaces devant les commandes suivant les pipes
+						- ne pas interprèter les pipes entre quotes
+						- state machine 
+						- ne pas interprèter les quotes non-fermés
+																										
 		
