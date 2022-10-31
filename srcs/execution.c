@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/27 19:04:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 11:55:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@
 // 	return (0);
 // }
 
-// void    find_nb_pipe(t_info *info)
-// {
-//     t_token    *list;
-
-//     list = info->list_token;
-//     while (list)
-//     {
-//         if (ft_strncmp(list->token, "|", 2) == 0)
-//             info->nb_of_pipe++;
-//         list = list->next;
-//     }
-// }
-
-
 //Verifier si c'est toujours le 1er element de la node qui constitue la commande
 // void	fill_chunk(t_command_line *chunk, t_info *info)
 // {
@@ -52,28 +38,14 @@
 // 	chunk->error = 0;
 // }
 
-// void	print_init_chunk(t_command_line *chunk)
-// {	
-// 	printf("The value of chunk->node is %s\n", (char *)chunk->node);
-// 	printf("The value of chunk->builtin is %d\n", chunk->builtin);
-// 	printf("The value of chunk->cmd is %s\n", chunk->command);
-// 	printf("The value of chunk->fd_in is %d\n", chunk->fd_in);
-// 	printf("The value of chunk->fd_out %d\n", chunk->fd_out);
-// 	printf("The value of chunk->error is %d\n", chunk->error);
-// }
-
-
-// void	execution(t_info *info)
+// void	execution(t_info *info, t_command_line *line)
 // {
-// 	t_command_line	*chunk;
-// 	int				pid; //Inserer dans une struct existante ou nouvelle
+// 	t_command_line	chunk;
+// 	int				i;
+// 	int 			pid;
 
-// 	//This part is to assign memory to chunk and fill it out
-// 	chunk = malloc(sizeof(chunk));
-// 	fill_chunk(chunk, info);
-
-// 	// This part will focus on execution of one command
-// 	find_nb_pipe(info);
+// 	i = 0;
+// 	chunk = line[i];
 // 	if (info->nb_of_pipe == 0)
 // 	{
 // 		pid = fork();
@@ -81,16 +53,17 @@
 // 			printf("There is a mistake");
 // 		if (pid == 0) //No need to close fds
 // 		{
-// 			if (chunk->fd_in != 0)
+// 			if (chunk.fd_in != 0)
 // 			{
-// 				dup2(chunk->fd_in, STDIN_FILENO);
-// 				close(chunk->fd_in);
+// 				dup2(chunk.fd_in, STDIN_FILENO);
+// 				close(chunk.fd_in);
 // 			}
-// 			if (chunk->fd_out != 1)
+// 			if (chunk.fd_out != 1)
 // 			{
-// 				dup2(chunk->fd_out, STDOUT_FILENO);
-// 				close(chunk->fd_out);
+// 				dup2(chunk.fd_out, STDOUT_FILENO);
+// 				close(chunk.fd_out);
 // 			}
+// 			if (chunk.builtin == 1)
 // 			// Generer un path_exe et un double pointeur, env)
 // 			if (pipex->path_exe1 != NULL && chunk->builtin != 1)
 // 				execve(pipex->path_exe1, pipex->cmd1, info->envp);

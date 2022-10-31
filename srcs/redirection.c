@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/28 14:39:13 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:21:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	delete_tokens(t_token **list)
 	}
 }
 
-void	delete_redirection_tokens(t_token *list_token, t_token **lis)
+void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 {
 	t_token *list;
 	t_token	*tmp;
@@ -111,7 +111,7 @@ void	delete_redirection_tokens(t_token *list_token, t_token **lis)
 		else if (is_redirection_operator(list) == 1 && !list->prev)
 		{
 			delete_tokens(&list);
-			*lis = list;
+			*list_addr = list;
 		}
 		if (list)
 			list = list->next; // Des que je viens ici cela change, list et list token pour la meme chose. 

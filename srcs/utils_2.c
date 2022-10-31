@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/27 14:24:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:16:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	print_struct(t_command_line *cmd_line, t_info *info)
 		printf("%d\n", cmd_line[i].fd_out);
 		printf("%s\n", cmd_line[i].error_infile);
 		printf("%s\n", cmd_line[i].merge_path_cmd);
-		printf("%s\n", cmd_line[i].paths);
 		i++;
 	}
 }
@@ -123,11 +122,11 @@ void	init_struct(t_command_line *cmd_line, t_info *info)
 		cmd_line[i].list_token = NULL;
 		cmd_line[i].command = NULL;
 		cmd_line[i].args = NULL;
+		cmd_line[i].builtin = 0;
 		cmd_line[i].fd_in = 0;
 		cmd_line[i].fd_out = 1;
 		cmd_line[i].error_infile = NULL;
 		cmd_line[i].merge_path_cmd = NULL;
-		cmd_line[i].paths = NULL;
 		i++;
 	}
 }

@@ -11,7 +11,16 @@
 	[X] "< doit rediriger l'entrée"
 	[X] > doit rediriger la sortie 
 	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
-	[] >> doit rediriger la sortie en mode append.
+	[X] >> doit rediriger la sortie en mode append.
+
+[] execution
+	[] 1 ligne de commande avec builtin
+	[] 1 ligne de commande avec commande
+	[] Tester
+	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
+	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
+	[] Cas d'erreur!. 
+
 
 
 [] implémenter les pipes ( | )

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/28 14:39:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:28:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void token_manager(t_info *info)
 			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
 
 	info->index++;
-
 	}
 }
 
@@ -103,11 +102,72 @@ void	reinit(t_info *info)
 	// free(info->list_token);
 }
 
+void	is_builtin(t_info *info)
+{
+	int i;
+
+	i = 0;
+	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
+	{
+		if (ft_strncmp(info->command_lines[i].list_token->token, "pwd", 3) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "env", 3) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "cd", 2) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "exit", 4) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "export", 6) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "echo", 4) == 0)
+			info->command_lines[i].builtin = 1;
+		else if (ft_strncmp(info->command_lines[i].list_token->token, "unset", 5) == 0)
+			info->command_lines[i].builtin = 1;
+		i++;
+	}
+}
+
+void fill_cmd(t_info *info)
+{
+	char	*path;
+	char	*cmd_exe;
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
+	{
+		while (info->path[j])
+		{
+			path = ft_strjoin(info->path[j], "/");
+			cmd_exe = ft_strjoin(path, info->command_lines[i].list_token->token);
+			free(path);
+			if (access(cmd_exe, X_OK) != -1)
+			{
+				info->command_lines[i].merge_path_cmd = cmd_exe;
+				break ;
+			}
+			free(cmd_exe);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	prepare_data_for_execution(t_info *info)
+{
+	is_builtin(info);
+	fill_cmd(info); // Il faut que je change pour l'adresse car sinon l'info ne suit pas
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_info	*info;
+	int i;
  
+	i = 0; 
 	info = ft_calloc(1, sizeof(t_info));
 	init(info, envp);
 
@@ -125,11 +185,12 @@ int main(int argc, char **argv, char **envp)
 		info->nb_of_pipe = how_many(line, '|');
 		split_token(line, info);
 		var_expansion(info->list_token, envp);
-		fill_command_lines(info);
-		token_manager(info);
+		//fill_command_lines(info);
+		//token_manager(info);
 		redirection(info);
-		//lst_print_token(&info->command_lines[0].list_token);
-		// execution(info);
+		//prepare_data_for_execution(info);
+		//fill_command_lines(info);
+		//execution(info, info->command_lines);
 		free(line);
 		reinit(info);
 	}
