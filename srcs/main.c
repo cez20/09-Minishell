@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 18:23:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:12:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,109 +102,6 @@ void	reinit(t_info *info)
 	// free(info->list_token);
 }
 
-void	is_builtin(t_info *info)
-{
-	int i;
-
-	i = 0;
-	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
-	{
-		if (ft_strncmp(info->command_lines[i].list_token->token, "pwd", 3) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "env", 3) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "cd", 2) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "exit", 4) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "export", 6) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "echo", 4) == 0)
-			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(info->command_lines[i].list_token->token, "unset", 5) == 0)
-			info->command_lines[i].builtin = 1;
-		i++;
-	}
-}
-
-void fill_cmd(t_info *info)
-{
-	char	*path;
-	char	*cmd_exe;
-	int		i;
-	int		j;
-	
-	i = 0;
-	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
-	{
-		j = 0;
-		while (info->path[j])
-		{
-			path = ft_strjoin(info->path[j], "/");
-			cmd_exe = ft_strjoin(path, info->command_lines[i].list_token->token);
-			free(path);
-			if (access(cmd_exe, X_OK) != -1)
-			{
-				info->command_lines[i].merge_path_cmd = cmd_exe;
-				break ;
-			}
-			free(cmd_exe);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	print_double_pointer(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		printf("The value of str[%d] is %s\n", i, str[i]);
-		i++;
-	}	
-}
-
-void	create_exec_argv(t_info	*info)
-{
-	t_token	*list;
-	char	**str;
-	int 	i;
-	int		j;
-
-	i = 0;
-	str = NULL;
-	list = info->command_lines[i].list_token;
-	if (!list)
-		return ;
-	while (i < (info->nb_of_pipe + 1))
-	{
-		j = 0;
-		list = info->command_lines[i].list_token;
-		info->command_lines[i].cmd_and_args = malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
-		str = info->command_lines[i].cmd_and_args;
-		while (list) 
-		{
-			str[j] = malloc((ft_strlen(list->token) + 1) * sizeof(char));
-			ft_strlcpy(str[j], list->token, ft_strlen(list->token) + 1);
-			list = list->next;
-			j++;
-		}
-		str[j] = 0;
-		print_double_pointer(str);
-		i++;
-	}
-}
-
-void	prepare_data_for_execution(t_info *info)
-{
-	is_builtin(info);
-	fill_cmd(info);
-	create_exec_argv(info);
-}
-
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
@@ -228,17 +125,17 @@ int main(int argc, char **argv, char **envp)
 			exit_terminal();
 		info->nb_of_pipe = how_many(line, '|');
 		split_token(line, info);
-		var_expansion(info->list_token, envp);
+		//var_expansion(info->list_token, envp);
+		var_expansion(info->command_lines, info);
 		//fill_command_lines(info);
 		//token_manager(info);
 		redirection(info);
 		prepare_data_for_execution(info);
-		//fill_command_lines(info);
 		//execution(info, info->command_lines);
 		free(line);
-		reinit(info);
+		free_cmd(info); // Je viens de rajouter ceci 
+		reinit(info); // Cela free deja les list_token. 
 	}
-	// Le free ne peut pas être dans la while, sinon elle créer un segfault à la prochaine itération
 	free (info); // Liberer le pointeur declare en debut de fonction main.  
 	return (0);
 }

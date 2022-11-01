@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 15:15:39 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:24:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,6 @@ char	**split_path(char **env)
 		i++;
 	}
 	return (NULL);
-}
-
-void	token_deletion(t_token **list)
-{	
-	t_token	 *prev_node;
-	t_token	 *next_node;
-
-	printf("The address of initial list node is %p\n", *list);
-	prev_node = (*list)->prev;
-	next_node = (*list)->next;
-	free(*list);
-	*list = next_node;
-	(*list)->prev = prev_node;
-	if (prev_node) //Pcq si jamais le prev->node est NULL. On ne peut rien assigne a NULL, meme pas un next/ 
-		prev_node->next = *list;
-	printf("The address of new list node is %p\n", *list);
 }
 
 void	print_struct(t_command_line *cmd_line, t_info *info)

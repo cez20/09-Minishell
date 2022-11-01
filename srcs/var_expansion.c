@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/20 14:17:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:03:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 apres le signe (=);*/
 char	*new_expanded_variable(int i, char *str, char **env)
 {
+	char	*str1;
 	int	j;
 
 	j = 0;
-	while (env[i][j] == str[j] && str[j])
+	while ((env[i][j] == str[j]) && str[j])
 		j++;
-	str = &env[i][j];
-	return (str);
+	str1 = &env[i][j];
+	return (str1);
 }
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
@@ -43,8 +44,10 @@ void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 	if (env[i])
 	{
 		free(*str);
+		*str = NULL;
 		if (str1)
 		{
+			free(*str);
 			string = ft_strjoin(str1, new_expanded_variable(i, str2, env));
 			*str = ft_strjoin(string, str3); //Probleme avec la memoire ici semble etre avec str3 
 			free(string);
@@ -103,19 +106,44 @@ void	locate_expansion(char **str, char **env)
 }
 
 /* A valider si on garde le 2e if qui enleve les quotes */
-void	var_expansion(t_token *node, char **env)
+void	var_expansion(t_command_line *cmd_line, t_info	*info)
 {
-	t_token	*tmp_node;
+	t_token			*list;
 	int		i;
 
 	i = 0;
-	tmp_node = node;
-	while (tmp_node)
+	
+	while (i < (info->nb_of_pipe + 1))
 	{
-		if (ft_strchr(tmp_node->token, '$'))
-			locate_expansion(&tmp_node->token, env);
-		if (tmp_node->token[0] == 34 || tmp_node->token[0] == 39)
-			remove_quote(tmp_node);
-		tmp_node = tmp_node->next;
+		list = cmd_line[i].list_token;
+		while (list)
+		{
+			if (ft_strchr(list->token, '$'))
+				locate_expansion(&list->token, info->envp);
+			if (list->token[0] == 34 || list->token[0] == 39)
+				remove_quote(list);
+			printf("%s\n", list->token);
+			list = list->next;
+		}
+		i++;
 	}
 }
+
+
+/* A valider si on garde le 2e if qui enleve les quotes */
+// void	var_expansion(t_token *node, char **env)
+// {
+// 	t_token	*tmp_node;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp_node = node;
+// 	while (tmp_node)
+// 	{
+// 		if (ft_strchr(tmp_node->token, '$'))
+// 			locate_expansion(&tmp_node->token, env);
+// 		if (tmp_node->token[0] == 34 || tmp_node->token[0] == 39)
+// 			remove_quote(tmp_node);
+// 		tmp_node = tmp_node->next;
+// 	}
+// }
