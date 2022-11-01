@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 14:31:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/31 15:13:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,9 +226,9 @@ int main(int argc, char **argv, char **envp)
 		// printf("nb_pipe = %d\n", info->nb_of_pipe);
 		split_token(line, info);
 		var_expansion(info->list_token, envp);
-		//fill_command_lines(info);
-		//token_manager(info);
 		redirection(info);
+		fill_command_lines(info);
+		token_manager(info);
 		//prepare_data_for_execution(info);
 		//fill_command_lines(info);
 		//execution(info, info->command_lines);

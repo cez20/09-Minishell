@@ -19,7 +19,7 @@
 	[] Tester
 	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
-	[] Cas d'erreur!. 
+	[] Cas d'erreur!.' 
 
 
 
@@ -72,9 +72,10 @@ TODO:
 		[X] gérer le echo avec la nouvelle façon en linked list
 		[] adapter $ pour qu'il' cherche dans la copie de l'environnement'
 		[X] update le PWD dans l'env'
-		[] parser les listes et remplir les command_lines
-		[] ne pas compter les pipes entre quotes
-		[] state machine 
+		[X] parser les listes et remplir les command_lines
+		[X] ne pas compter les pipes entre quotes
+		[X] state machine 
+		[] fix echo
 		
 		
 
@@ -104,5 +105,7 @@ LOG:
 						- ne pas interprèter les pipes entre quotes
 						- state machine 
 						- ne pas interprèter les quotes non-fermés
+						- fix cd ..
+						- fix remove_quote
 																										
 		

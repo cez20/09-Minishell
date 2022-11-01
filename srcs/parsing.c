@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 14:30:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/31 15:45:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	split_token(char *token, t_info *info)
 	x = 0;
 	info->last_position = token;
 	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
-	init_struct(info->command_lines, info);
+	// init_struct(info->command_lines, info);
 	while (*info->last_position)
 	{
 		skip_space(info);
@@ -48,11 +48,11 @@ void	split_token(char *token, t_info *info)
 
 	x = i;
 	i = 0;
-	while (x >= i)
-	{
-		printf("i = %d\n", i);
-		lst_print_token(&info->command_lines[i++].list_token);
-	}
+	// while (x >= i)
+	// {
+	// 	printf("i = %d\n", i);
+	// 	lst_print_token(&info->command_lines[i++].list_token);
+	// }
 	// // print_tab(info->token);
 	// lst_print_token(&info->list_token);
 }
@@ -74,7 +74,7 @@ char	*get_args(t_token	*list_token)
 	while (list_token)
 	{
 		args = ft_strjoin(args, list_token->token);
-		args = ft_strjoin(args, " ");
+		// args = ft_strjoin(args, " ");
 		list_token = list_token->next;
 	}
 	return (args);
@@ -89,9 +89,9 @@ void	fill_command_lines(t_info *info)
 	while (i <= info->nb_of_pipe)
 	{
 		info->command_lines[i].command = get_command(info->command_lines[i].list_token);
-		// printf("command [%d] = %s\n", i, info->command_lines[i].command);
+		printf("command [%d] = %s\n", i, info->command_lines[i].command);
 		info->command_lines[i].args = get_args(info->command_lines[i].list_token);
-		// printf("args [%d] = %s\n", i, info->command_lines[i].args);
+		printf("args [%d] = %s\n", i, info->command_lines[i].args);
 		i++;
 	}
 	//info->command_lines[i].command = get_command(info->list_token);
