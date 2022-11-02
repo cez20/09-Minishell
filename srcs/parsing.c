@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 14:57:01 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:14:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	fill_command_lines(t_info *info)
 	while (i <= info->nb_of_pipe)
 	{
 		info->command_lines[i].command = get_command(info->command_lines[i].list_token);
-		printf("command [%d] = %s\n", i, info->command_lines[i].command);
+		// printf("command [%d] = %s\n", i, info->command_lines[i].command);
 		info->command_lines[i].args = get_args(info->command_lines[i].list_token);
-		printf("args [%d] = %s\n", i, info->command_lines[i].args);
+		// printf("args [%d] = %s\n", i, info->command_lines[i].args);
 		i++;
 	}
 	//info->command_lines[i].command = get_command(info->list_token);

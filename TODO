@@ -75,7 +75,8 @@ TODO:
 		[X] parser les listes et remplir les command_lines
 		[X] ne pas compter les pipes entre quotes
 		[X] state machine 
-		[] fix echo
+		[X] fix echo
+		[] fix les cas de "$USER" "'$USER'" '$USER'
 		
 		
 
@@ -108,4 +109,6 @@ LOG:
 						- fix cd ..
 						- fix remove_quote
 																										
-		
+	Steven 2 novembre:	- fix double free in reinit
+						- revenir au début si les quotes ne sont pas fermés
+						- 

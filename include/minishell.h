@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 14:49:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:51:03 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
 void	delete_tokens(t_token **list);
+void	redirection(t_info	*info);
 
 //*** UTILS_1.C ***
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));

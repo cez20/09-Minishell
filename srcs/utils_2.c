@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 15:02:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:21:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	how_many(t_info *info, char *str, char c)
 		{
 			info->state = D_QUOTE;
 			str++;
-			while (*str != D_QUOTE)
+			while (*str && *str != D_QUOTE)
 				str++;
 			str++;
 		}
@@ -46,7 +46,7 @@ int	how_many(t_info *info, char *str, char c)
 		{
 			info->state = S_QUOTE;
 			str++;
-			while (*str != S_QUOTE)
+			while (*str && *str != S_QUOTE)
 				str++;
 			str++;
 		}

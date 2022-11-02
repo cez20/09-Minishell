@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 14:53:02 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:55:18 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	echo(t_info *info)
 	t_token	*token_list;
 	int		i;
 
-	printf("IN ECHO\n");
+	// printf("IN ECHO\n");
 	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
 	if (token_list)

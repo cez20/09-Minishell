@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 14:44:50 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:29:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void token_manager(t_info *info)
 
 int	close_quote_checker(t_info *info, char *str)
 {
+	info->state = TEXT;
+
 	while(*str)
 	{
 		if (*str == D_QUOTE)
@@ -134,16 +136,19 @@ int main(int argc, char **argv, char **envp)
 		if (close_quote_checker(info, line))
 			printf("Les quotes sont tous fermé.\n");
 		else
+		{
 			printf("Les quotes ne sont pas fermés.\n");
+			continue ;
+		}
 		info->nb_of_pipe = how_many(info, line, '|');
 		// printf("nb_pipe = %d\n", info->nb_of_pipe);
 		split_token(line, info);
 		var_expansion(info->command_lines, info);
 		fill_command_lines(info);
-		//token_manager(info);
-		//redirection(info);
-		prepare_data_for_execution(info);
-		//execution(info, info->command_lines);
+		token_manager(info);
+		// redirection(info);
+		// prepare_data_for_execution(info);
+		// execution(info, info->command_lines);
 		free(line);
 		free_struct_command_line(info); // Je viens de rajouter ceci 
 		reinit(info); //

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 14:55:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:26:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	reinit(t_info *info)
 		i++;
 	}
 	free(info->command_lines);
-	free_double_pointers(info->path);
+	// free_double_pointers(info->path);
+	table_flip(info->path);
+	info->path = split_path(info->envp);
 	info->index = 0;
 	// free(info->list_token);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 13:29:02 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:33:51 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 				locate_expansion(&list->token, info->envp);
 			if (list->token[0] == 34 || list->token[0] == 39)
 				remove_quote(list);
-			printf("%s\n", list->token);
+			// printf("%s\n", list->token);
 			list = list->next;
 		}
 		i++;
