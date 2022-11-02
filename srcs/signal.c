@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:58:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/02 13:38:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*
-    I need to free eveything that cause a segfault 
-*/
-void	exit_terminal()
-{ 
+//I need to free eveything that cause a segfault 
+int	exit_terminal(void)
+{
 	printf(" exit\n");
-    exit (0);
+	exit (EXIT_SUCCESS);
 }
 
 /*
@@ -38,15 +36,15 @@ void	exit_terminal()
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
-void    sig_handler(int signum)
+void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
-    {
-        printf("\n"); 
-		rl_on_new_line(); 
-        rl_replace_line("", 0); 
-        rl_redisplay(); 
-    }
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 /* 
@@ -54,26 +52,22 @@ void    sig_handler(int signum)
     The signal() function defines a particular action to be realized
     when a signal is encountered. For example, when Ctrl+C is pressed
     The function sig_handler is immediately called whereas with the other
-    signal, it is ignored
-*/
-void    signal_modified()
+    signal, it is ignored*/
+void	signal_modified(void)
 {
-	
 	signal(SIGINT, &sig_handler);
 	//signal(SIGQUIT, SIG_IGN);
 }
 
-/* 
-    This function essentially disable the ECHOCTL function
-    that normally prints out ^C when Ctrl+C signal is entered on
-    keyboard. We take current terminal setting with tcgetattr and 
-    then modify the attributes c_lflag to disable ECHOCTL and then
-    apply change with tcsetattr().
-*/ 
-void disable_echo()
+// This function essentially disable the ECHOCTL function
+// that normally prints out ^C when Ctrl+C signal is entered on
+// keyboard. We take current terminal setting with tcgetattr and
+// then modify the attributes c_lflag to disable ECHOCTL and then
+// apply change with tcgetattr
+void	disable_echo(void)
 {
-	struct termios attributes;
-	
+	struct termios	attributes;
+
 	tcgetattr(STDIN_FILENO, &attributes);
 	attributes.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &attributes);

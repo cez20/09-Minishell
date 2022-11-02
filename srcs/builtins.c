@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/26 15:01:48 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:55:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	remove_quote(t_token *token_list)
 
 	chr = simple_or_double(token_list->token);
 
-	if (token_list->token[ft_strlen(token_list->token)] == chr && chr != 32)
+	if (chr != 32)
 	{
 		temp = token_list->token;
-		token_list->token = ft_substr(token_list->token, 1, ft_strlen(token_list->token));
+		token_list->token = ft_substr(token_list->token, 1, ft_strlen(token_list->token) - 2);
 		free(temp);
 		token_list->flag_quote = 1;
 	}
@@ -53,6 +53,18 @@ void	pwd(t_info *info)
 // 	return (1);
 // }
 
+char	*is_n(t_token *node)
+{
+	if (node->token[0] == '-' && node->token[1] == 'n')
+	{
+		node->token++;
+		node->token++;
+		while (*node->token == 'n')
+			node->token++;
+	}
+	return (node->token);
+}
+
 void	echo(t_info *info)
 {
 	printf("IN ECHO\n");
@@ -62,7 +74,7 @@ void	echo(t_info *info)
 
 	i = 0;
 
-	token_list = info->list_token->next;
+	token_list = info->command_lines[info->index].list_token->next;
 	if (token_list)
 	{
 		if (!ft_strncmp(token_list->token, "-n", 2))
@@ -70,7 +82,7 @@ void	echo(t_info *info)
 	}
 	while(token_list)
 	{
-		if (token_list->prev->space_flag == 1 && i > 0) 
+		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0) 
 		{
 			remove_quote(token_list);
 			printf(" %s", token_list->token);
@@ -83,9 +95,9 @@ void	echo(t_info *info)
 		i++;
 		token_list = token_list->next;
 	}
-	if (info->list_token->next)
+	if (info->command_lines[info->index].list_token->next)
 	{
-		if (ft_strncmp(info->list_token->next->token, "-n", 2))
+		if (ft_strncmp(info->command_lines[info->index].list_token->next->token, "-n", 2))
 			printf("\n");
 	}
 	else

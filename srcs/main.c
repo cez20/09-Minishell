@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/01 14:12:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:37:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,32 +74,40 @@ void token_manager(t_info *info)
 	}
 }
 
-void	init(t_info *info, char **envp)
+int	close_quote_checker(t_info *info, char *str)
 {
-	info->envp = tabcpy(envp);
-	// info->envp = envp;
-	info->list_token = NULL;
-	// info->flag_quote = 0;
-	info->last_position = NULL;
-	info->nb_of_pipe = 0;
-	info->index = 0;
-	info->path = split_path(envp);
-}
-
-//Fonction qui permet de reinitialiser certaines infos de la struct 
-void	reinit(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	info->nb_of_pipe = 0;
-	while (info->command_lines[i].list_token)
+	while(*str)
 	{
-		ft_lstclear_token(&info->command_lines->list_token, free);
+		if (*str == D_QUOTE)
+		{
+			info->state = D_QUOTE;
+			str++;
+			while(*str != D_QUOTE && *str)
+			{
+				str++;
+				if (*str == D_QUOTE)
+					info->state = TEXT;
+			}
+			str++;
+		}
+		if (*str == S_QUOTE)
+		{
+			info->state = S_QUOTE;
+			str++;
+			while(*str != S_QUOTE && *str)
+			{
+				str++;
+				if (*str == S_QUOTE)
+					info->state = TEXT;
+			}
+			str++;
+		}
+		str++;
 	}
-	free(info->command_lines);
-	info->index = 0;
-	// free(info->list_token);
+	if (info->state == TEXT)
+		return (1);
+	else
+		return (0);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -110,7 +118,7 @@ int main(int argc, char **argv, char **envp)
  
 	i = 0; 
 	info = ft_calloc(1, sizeof(t_info));
-	init(info, envp);
+	init_info(info, envp);
 
 	printf("Let's go ça part !\n");
 	disable_echo();
@@ -123,18 +131,23 @@ int main(int argc, char **argv, char **envp)
 			add_history(line); 
 		else 
 			exit_terminal();
-		info->nb_of_pipe = how_many(line, '|');
+		if (close_quote_checker(info, line))
+			printf("Les quotes sont tous fermé.\n");
+		else
+			printf("Les quotes ne sont pas fermés.\n");
+		info->nb_of_pipe = how_many(info, line, '|');
+		// printf("nb_pipe = %d\n", info->nb_of_pipe);
 		split_token(line, info);
-		//var_expansion(info->list_token, envp);
 		var_expansion(info->command_lines, info);
-		//fill_command_lines(info);
+		fill_command_lines(info);
 		//token_manager(info);
-		redirection(info);
+		//redirection(info);
+		//lst_print_token(&info->command_lines[0].list_token);
 		prepare_data_for_execution(info);
 		//execution(info, info->command_lines);
 		free(line);
-		free_cmd(info); // Je viens de rajouter ceci 
-		reinit(info); // Cela free deja les list_token. 
+		free_struct_command_line(info); // Je viens de rajouter ceci 
+		reinit(info); //
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  
 	return (0);
