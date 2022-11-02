@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 14:23:51 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:57:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	split_token(char *token, t_info *info)
 {
-	int i;
-	int x;
+	int	i;
+	int	x;
 
 	i = 0;
 	x = 0;
@@ -31,7 +31,6 @@ void	split_token(char *token, t_info *info)
 		{
 			info->command_lines[i].list_token = info->list_token;
 			// lst_print_token(&info->command_lines[i].list_token);
-			
 			// ft_lstlast_token(info->command_lines[i].list_token)->next = NULL;
 			info->list_token = NULL;
 			info->last_position++;
@@ -45,7 +44,7 @@ void	split_token(char *token, t_info *info)
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
 	// lst_print_token(&info->command_lines[i].list_token);
-
+	
 	x = i;
 	i = 0;
 	// while (x >= i)
@@ -61,12 +60,12 @@ char	*get_command(t_token *list_token)
 {
 	if (!list_token)
 		return (NULL);
-	return(list_token->token);
+	return (list_token->token);
 }
 
 char	*get_args(t_token	*list_token)
 {
-	char *args;
+	char	*args;
 
 	args = NULL;
 	if (list_token)
@@ -85,7 +84,6 @@ void	fill_command_lines(t_info *info)
 	int	i;
 
 	i = 0;
-
 	while (i <= info->nb_of_pipe)
 	{
 		info->command_lines[i].command = get_command(info->command_lines[i].list_token);
@@ -97,12 +95,8 @@ void	fill_command_lines(t_info *info)
 	//info->command_lines[i].command = get_command(info->list_token);
 	//printf("command [%d] = %s\n", i, info->command_lines[i].command);
 
-
 	// info->command_lines[i].args = get_args(info->list_token);
 	// printf("args [%d] = %s\n", i, info->command_lines[i].args);
-
-
-	
 }
 
 /*

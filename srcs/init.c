@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 14:23:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:55:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_command_lines(t_command_line *cmd_line, t_info *info)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < (info->nb_of_pipe + 1))
 	{
@@ -45,23 +45,6 @@ void	init_info(t_info *info, char **envp)
 	info->state = TEXT;
 }
 
-//Fonction qui permet de reinitialiser certaines infos de la struct 
-// void	reinit(t_info *info)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	info->nb_of_pipe = 0;
-// 	while (info->command_lines[i].list_token)
-// 	{
-// 		ft_lstclear_token(&info->command_lines->list_token, free);
-// 	}
-// 	free(info->command_lines);
-// 	free_dpointers(info->path);
-// 	info->index = 0;
-// 	// free(info->list_token);
-// }
-
 void	reinit(t_info *info)
 {
 	int	i;
@@ -78,6 +61,23 @@ void	reinit(t_info *info)
 	info->index = 0;
 	// free(info->list_token);
 }
+
+//Fonction qui permet de reinitialiser certaines infos de la struct 
+// void	reinit(t_info *info)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	info->nb_of_pipe = 0;
+// 	while (info->command_lines[i].list_token)
+// 	{
+// 		ft_lstclear_token(&info->command_lines->list_token, free);
+// 	}
+// 	free(info->command_lines);
+// 	free_dpointers(info->path);
+// 	info->index = 0;
+// 	// free(info->list_token);
+// }
 
 // void	reinit(t_info *info)
 // {

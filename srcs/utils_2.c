@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 14:23:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:02:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	renvoie la valeur du char si c'est '' ou ""
 	sinon renvoie la valeur de l'espace soit '32' 
 */
-char simple_or_double(char *token)
+char	simple_or_double(char *token)
 {
 	if (*token == 34 || *token == 39)
 		return (*token);
@@ -29,7 +29,7 @@ char simple_or_double(char *token)
 */
 int	how_many(t_info *info, char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*str)
@@ -38,7 +38,7 @@ int	how_many(t_info *info, char *str, char c)
 		{
 			info->state = D_QUOTE;
 			str++;
-			while(*str != D_QUOTE)
+			while (*str != D_QUOTE)
 				str++;
 			str++;
 		}
@@ -46,7 +46,7 @@ int	how_many(t_info *info, char *str, char c)
 		{
 			info->state = S_QUOTE;
 			str++;
-			while(*str != S_QUOTE)
+			while (*str != S_QUOTE)
 				str++;
 			str++;
 		}
@@ -60,12 +60,11 @@ int	how_many(t_info *info, char *str, char c)
 /*
 	Avance le pointeur jusqu'à la prochaine chose à interpréter
 */
-void skip_space(t_info *info)
+void	skip_space(t_info *info)
 {
 	if (*info->last_position)
 	{
-
-		while(is_white_space(*info->last_position))
+		while (is_white_space(*info->last_position))
 		{
 			if (*info->last_position == '|')
 				return ;
@@ -97,7 +96,7 @@ char	**split_path(char **env)
 
 void	print_struct(t_command_line *cmd_line, t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (info->nb_of_pipe + 1))

@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 16:10:51 by slavoie           #+#    #+#             */
-/*   Updated: 2022/10/31 16:17:32 by cemenjiv         ###   ########.fr       */
+/*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/11/02 15:00:43 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 {
@@ -50,23 +49,23 @@ void	ft_lstclear_token(t_token **lst, void (*del) (void *))
 	}
 }
 
-void lst_print_token(t_token **list)
+void	lst_print_token(t_token **list)
 {
-    t_token *node;
-    int i;
+	t_token	*node;
+	int		i;
 
-    node = *list;
-    i = 0;
+	node = *list;
+	i = 0;
 	if (!node)
-		printf("node[0] is NULL\n");	
-    while (node)
-    {
+		printf("node[0] is NULL\n");
+	while (node)
+	{
 		if (!node)
 			return ;
-        printf("node[%d] = %s\n", i, (char *)node->token);
-        node = node->next;		
-        i++;
-    }
+		printf("node[%d] = %s\n", i, (char *)node->token);
+		node = node->next;
+		i++;
+	}
 }
 
 t_token	*ft_lstnew_token(char *content)

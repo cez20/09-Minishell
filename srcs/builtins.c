@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/31 16:55:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/02 14:53:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	remove_quote(t_token *token_list)
 	char	chr;
 
 	chr = simple_or_double(token_list->token);
-
 	if (chr != 32)
 	{
 		temp = token_list->token;
@@ -32,7 +31,7 @@ void	remove_quote(t_token *token_list)
 
 void	pwd(t_info *info)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = search_line(info->envp, "PWD=");
 	pwd = ft_strchr(pwd, '=');
@@ -67,22 +66,20 @@ char	*is_n(t_token *node)
 
 void	echo(t_info *info)
 {
-	printf("IN ECHO\n");
-
 	t_token	*token_list;
-	int	i;
+	int		i;
 
+	printf("IN ECHO\n");
 	i = 0;
-
 	token_list = info->command_lines[info->index].list_token->next;
 	if (token_list)
 	{
 		if (!ft_strncmp(token_list->token, "-n", 2))
 			token_list = token_list->next;
 	}
-	while(token_list)
+	while (token_list)
 	{
-		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0) 
+		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0)
 		{
 			remove_quote(token_list);
 			printf(" %s", token_list->token);
@@ -106,10 +103,10 @@ void	echo(t_info *info)
 
 void	cd(t_info *info)
 {
-	char *new_path;
-	char pwd[4096];
-	char oldpwd[4096];
-	char *line;
+	char	*new_path;
+	char	pwd[4096];
+	char	oldpwd[4096];
+	char	*line;
 
 	getcwd(oldpwd, 4096);
 	if (info->command_lines[info->index].args)
@@ -128,13 +125,12 @@ void	cd(t_info *info)
 
 void	export(t_info *info)
 {
-	int i;
-	int	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	i = 0;
 	j = 0;
-
 	if (info->command_lines[info->index].args)
 		info->envp = tab_join(info->envp, info->command_lines[info->index].args);
 	else

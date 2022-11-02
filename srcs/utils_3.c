@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 13:53:04 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:02:51 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,3 @@ void	prepare_data_for_execution(t_info *info)
 	fill_cmd(info);
 	create_exec_argv(info);
 }
-
-
