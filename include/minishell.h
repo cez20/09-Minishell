@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 16:51:03 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:03:43 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <string.h>
 # include "../Libft/libft.h"
 # include "../readline/readline.h"
 # include "../readline/history.h"
@@ -20,8 +22,6 @@
 # include <dirent.h>
 # include <unistd.h>
 # include <signal.h>
-# include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -124,6 +124,7 @@ void	heredoc_redirection(t_command_line *chunk, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
+//void	delete_redirection_tokens(t_token **list_addr);
 void	delete_tokens(t_token **list);
 void	redirection(t_info	*info);
 

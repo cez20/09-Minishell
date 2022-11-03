@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 16:33:51 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/02 23:21:03 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 		*str = NULL;
 		if (str1)
 		{
-			free(*str);
 			string = ft_strjoin(str1, new_expanded_variable(i, str2, env));
 			*str = ft_strjoin(string, str3);
 			free(string);
@@ -50,7 +49,10 @@ void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 		else
 		{
 			string = ft_strdup(new_expanded_variable(i, str2, env));
-			*str = ft_strjoin(string, str3);
+			if (str3)//CEci a ete ajoute
+				*str = ft_strjoin(string, str3);
+			else// Ceci a ete ajoute
+				*str = ft_strdup(string); //Ceci a ete ajoute
 			free(string);
 		}
 	}
@@ -80,8 +82,10 @@ void	locate_expansion(char **str, char **env)
 	char	*str4;
 
 	i = 0;
-	str1 = NULL;
-	str4 = NULL;
+	str1 = NULL; // Pas olbige
+	str2 = NULL; // Pas olbige
+	str3 = NULL; // Pas olbige
+	str4 = NULL; // Pas olbige
 	while ((*str)[i] != '$' && (*str)[i])
 		i++;
 	if ((*str)[i] == '$')
@@ -91,7 +95,9 @@ void	locate_expansion(char **str, char **env)
 		i++;
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
-		str4 = ft_strdup(*str + i);
+		//if (*(str + i))
+			//str4 = ft_strdup(*(str + i));
+		//str4 = ft_strdup(*(str + i));
 		find_expansion(str, str1, str3, str4, env);
 		free(str1);
 		free(str2);
@@ -115,8 +121,8 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 		{
 			if (ft_strchr(list->token, '$'))
 				locate_expansion(&list->token, info->envp);
-			if (list->token[0] == 34 || list->token[0] == 39)
-				remove_quote(list);
+			//if (list->token[0] == 34 || list->token[0] == 39)
+				//remove_quote(list);
 			// printf("%s\n", list->token);
 			list = list->next;
 		}

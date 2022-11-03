@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 17:29:36 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:19:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_info	*info;
-	int i;
- 
-	i = 0; 
+
 	info = ft_calloc(1, sizeof(t_info));
 	init_info(info, envp);
 
@@ -126,7 +124,6 @@ int main(int argc, char **argv, char **envp)
 	disable_echo();
 	while(1 && argc && argv && envp)
 	{
-		
 		signal_modified();
 		line = readline("Minishell$> ");
 		if (line)
@@ -146,11 +143,11 @@ int main(int argc, char **argv, char **envp)
 		var_expansion(info->command_lines, info);
 		fill_command_lines(info);
 		token_manager(info);
-		// redirection(info);
-		// prepare_data_for_execution(info);
+		redirection(info);
+		prepare_data_for_execution(info);
 		// execution(info, info->command_lines);
 		free(line);
-		free_struct_command_line(info); // Je viens de rajouter ceci 
+		free_struct_command_line(info);
 		reinit(info); //
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  
