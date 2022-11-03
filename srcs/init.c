@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 16:26:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/03 11:26:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	reinit(t_info *info)
 
 	i = 0;
 	info->nb_of_pipe = 0;
-	while (i < (info->nb_of_pipe + 1))
+	while (i <= info->nb_of_pipe)
 	{
 		ft_lstclear_token(&info->command_lines[i].list_token, free);
 		i++;
 	}
 	free(info->command_lines);
-	// free_double_pointers(info->path);
+	//free_double_pointers(info->path);
 	table_flip(info->path);
 	info->path = split_path(info->envp);
 	info->index = 0;

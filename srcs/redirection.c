@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 14:25:21 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:21:27 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	delete_tokens(t_token **list)
 	int		nodes_to_erase;
 
 	i = 0;
+	temp = NULL;
+	prev = NULL;
 	nodes_to_erase = 0;
 	if ((*list)->next)
 		nodes_to_erase = 1;
@@ -97,6 +99,25 @@ void	delete_tokens(t_token **list)
 	}
 }
 
+// void	delete_redirection_tokens(t_token **list)
+// {
+// 	t_token	*lst;
+	
+// 	lst = *list;
+// 	while (lst)
+// 	{
+// 		if (is_redirection(lst) == 1 && lst->prev)
+// 			delete_tokens(&lst);
+// 		else if (is_redirection(lst) == 1 && !lst->prev)
+// 		{
+// 			delete_tokens(list);
+// 			lst = *list;
+// 		}
+// 		if (lst && is_redirection(lst) == 0)
+// 			lst = lst->next;
+// 	}
+// }
+
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 {
 	t_token	*list;
@@ -111,7 +132,7 @@ void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 			delete_tokens(&list);
 			*list_addr = list;
 		}
-		if (list)
+		if (list && is_redirection(list) == 0)
 			list = list->next;
 	}
 }
@@ -141,6 +162,7 @@ void	redirection(t_info	*info)
 			list = list->next;
 		}
 		delete_redirection_tokens(info->command_lines[i].list_token, &info->command_lines[i].list_token);
+		//delete_redirection_tokens(&info->command_lines[i].list_token);
 		lst_print_token(&info->command_lines[i].list_token);
 		i++;
 	}
