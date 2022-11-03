@@ -94,9 +94,9 @@ t_token	*ft_lstlast_token(t_token *lst)
 void	ft_lstaddback_token(t_token **alst, t_token *new)
 {
 	t_token	*last;
-	t_token	*first;
+	// t_token	*first;
 
-	first = *alst;
+	// first = *alst;
 	last = NULL;
 	if (!*alst)
 	{

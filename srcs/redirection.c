@@ -100,10 +100,8 @@ void	delete_tokens(t_token **list)
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 {
 	t_token	*list;
-	t_token	*tmp;
 
 	list = list_token;
-	tmp = NULL;
 	while (list)
 	{
 		if (is_redirection(list) == 1 && list->prev)

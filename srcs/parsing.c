@@ -15,10 +15,10 @@
 void	split_token(char *token, t_info *info)
 {
 	int	i;
-	int	x;
+	// int	x;
 
 	i = 0;
-	x = 0;
+	// x = 0;
 	info->last_position = token;
 	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
@@ -45,7 +45,7 @@ void	split_token(char *token, t_info *info)
 	info->list_token = NULL;
 	// lst_print_token(&info->command_lines[i].list_token);
 	
-	x = i;
+	// x = i;
 	i = 0;
 	// while (x >= i)
 	// {

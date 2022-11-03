@@ -5,10 +5,10 @@ SRCS_FILES		= main.c builtins.c execution.c redirection.c signal.c utils_1.c var
 				  free.c init.c
 SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
-CC 				= @gcc 
+CC 				= @gcc
 CFLAGS 			= -Werror -Wall -Wextra -g
-READLINE 		= -lcurses lib/libhistory.a lib/libreadline.a 
-
+READLINE 		=  -L/usr/local/lib/ -lreadline -I/usr/local/include
+# READLINE		= $(LDFLAGS) #$(CPPFLAGS)
 OBJS_DIR		= objs/
 OBJS 			= $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
 

@@ -116,9 +116,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_info	*info;
-	int i;
- 
-	i = 0; 
+
 	info = ft_calloc(1, sizeof(t_info));
 	init_info(info, envp);
 
