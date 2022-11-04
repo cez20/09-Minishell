@@ -20,7 +20,9 @@
 	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
 	[] Cas d'erreur!.' 
+	[] gérer les paths absolu
 
+	FIXME: [] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
 
 [] implémenter les pipes ( | )

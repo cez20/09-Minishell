@@ -105,7 +105,7 @@ void	create_exec_argv(t_info	*info)
 			j++;
 		}
 		str[j] = 0;
-		print_double_pointer(str);
+		// print_double_pointer(str);
 		i++;
 	}
 }

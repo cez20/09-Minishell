@@ -147,7 +147,7 @@ int main(int argc, char **argv, char **envp)
 		prepare_data_for_execution(info);
 		execution(info, info->command_lines);
 		free(line);
-		free_struct_command_line(info);
+		// free_struct_command_line(info);
 		reinit(info); //
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  

@@ -144,7 +144,7 @@ void	redirection(t_info	*info)
 	int				i;
 
 	i = 0;
-	lst_print_token(&info->command_lines[i].list_token);
+	// lst_print_token(&info->command_lines[i].list_token);
 	while (i <= info->nb_of_pipe)
 	{
 		chunk = &info->command_lines[i];
@@ -163,7 +163,7 @@ void	redirection(t_info	*info)
 		}
 		delete_redirection_tokens(info->command_lines[i].list_token, &info->command_lines[i].list_token);
 		//delete_redirection_tokens(&info->command_lines[i].list_token);
-		lst_print_token(&info->command_lines[i].list_token);
+		// lst_print_token(&info->command_lines[i].list_token);
 		i++;
 	}
 }
