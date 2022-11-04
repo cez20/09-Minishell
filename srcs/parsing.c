@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 22:06:41 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:16:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	split_token(char *token, t_info *info)
 {
 	int	i;
-	int	x;
+	//int	x;
 
 	i = 0;
-	x = 0;
+	//x = 0;
 	info->last_position = token;
 	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
@@ -45,7 +45,7 @@ void	split_token(char *token, t_info *info)
 	info->list_token = NULL;
 	// lst_print_token(&info->command_lines[i].list_token);
 	
-	x = i;
+	//x = i;
 	i = 0;
 	// while (x >= i)
 	// {

@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   execution1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 19:28:26 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/10/14 14:58:43 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:01:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	create_pipes(t_info *info)
+{
+	int fd[info->nb_of_pipe][2];
+	int i;
+	
+	i = 0;
+	while (i < info->nb_of_pipe)
+	{
+		if (pipe(fd[i]) < 0)
+			return (1); // Mettre un message d'erreur de la commande pipe 
+		//printf("I've opened the pipe\n");
+		i++;
+	}
+	return (0);
+}
 
 int main()
 {
