@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/04 14:52:14 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 12:05:51 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ typedef struct s_info
 	int						nb_of_pipe;
 	int						initial_stdin;
 	int						initial_stdout;
+	pid_t					pid1;
+	pid_t					pid2;
+	int						fd[2];
 	char					**path;
 }		t_info;
 
