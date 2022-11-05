@@ -21,6 +21,7 @@
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
 	[] Cas d'erreur!.' 
 	[] gérer les paths absolu
+	[] exécutable
 
 	FIXME: [] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
@@ -98,6 +99,8 @@ FIXME:
 			[X] export
 		[] gérer les caractères après les commandes ex: echos, pwdttre, exite, etc.
 		[] trunc les espaces après
+		[] segfault ligne 46 var_expansion.c str3 est NULL quand on call strjoin, arrive lorsqu'on' appelle l'expension' avec des quote ex: "$USER"
+
 
 Question: 
 			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"
@@ -113,4 +116,4 @@ LOG:
 																										
 	Steven 2 novembre:	- fix double free in reinit
 						- revenir au début si les quotes ne sont pas fermés
-						- 
+	

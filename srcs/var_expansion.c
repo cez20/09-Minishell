@@ -92,6 +92,7 @@ void	locate_expansion(char **str, char **env)
 	{
 		if (i > 0)
 			str1 = ft_substr(*str, 0, i);
+		printf("str1 = %s\n", str1);
 		i++;
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
