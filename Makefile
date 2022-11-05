@@ -7,7 +7,7 @@ SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 CC 				= @gcc
 CFLAGS 			= -Werror -Wall -Wextra -g
-READLINE 		=  -L/usr/local/lib/ -lreadline -I/usr/local/include
+READLINE 		=  -lcurses readline/libreadline.a  readline/libhistory.a
 # READLINE		= $(LDFLAGS) #$(CPPFLAGS)
 OBJS_DIR		= objs/
 OBJS 			= $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
