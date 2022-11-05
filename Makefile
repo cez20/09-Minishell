@@ -28,12 +28,14 @@ all: 			objs $(NAME)
 
 $(NAME): 		$(OBJS)
 				@$(MAKE) -C ./Libft
+				@$(MAKE) -C ./readline everything
 				@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
 				@echo "$(GREEN)Everything is top shape tiguidou 🐥$(RESET_COLOR)"
 
 clean:
 				@echo "Cleaning 🌪 🔥🌊"
 				@$(MAKE) -C ./Libft fclean
+				@$(MAKE) -C ./readline clean
 				@rm -rf $(OBJS)
 				@rm -rf $(OBJS_DIR)
 
