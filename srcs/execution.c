@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 14:08:15 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:58:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,48 +73,66 @@ void	dup_redirection(t_command_line cmd_line, t_info *info)
 	}
 }
 
-void	first_child(t_command_line cmd_line, t_info *info)
+// void	create_pipe(t_info *info, int fd[][2], int i)
+// {
+// 	if (pipe(fd[i]) == -1)
+// 		return ; // Mettre un message d'erreur de la commande pipe 
+// 	printf("I've created pipe %d\n", i);
+// }
+
+void	create_child(t_command_line cmd_line, t_info *info)
 {
-	info->pid1 = fork();
-	if (info->pid1 == -1)
+	int 	fd[2];
+	pid_t	pid;
+	
+	if (pipe(fd) == -1)
 		return ;
-	if (info->pid1 == 0)
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
 	{
-		close (info->fd[0]);
-		dup2(info->fd[1], STDOUT_FILENO);
-		close(info->fd[1]);
+		printf("Je suis dans le modulo pair\n");
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]); // Il est mis dans le parent process juste ici bas. 
 		if (cmd_line.merge_path_cmd != NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		//free_memory(*pipex);
+		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
-	put_back_default_std(cmd_line, info);
+	//close(fd[1]);  // Je ferme le write end of pipe 
+	dup2(fd[0], STDIN_FILENO);  //  On revient dans le parent. On change le STDIN pour le read-end of pipe avant de fork() de nouveau 
+	waitpid(pid, NULL, 0); // Attends pour le pid. 
+
 }
 
-
-void	second_child(t_command_line cmd_line, t_info *info)
+void	last_cmd_line(t_command_line cmd_line, t_info *info)
 {
-	info->pid2 = fork();
-	if (info->pid2 == -1)
+	int 	fd[2];
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid == -1)
 		return ;
-	if (info->pid2 == 0)
+	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
 	{
-		close (info->fd[1]); // Close write end of pipe 
-		dup2(info->fd[0], STDIN_FILENO); // Change le STDIN qui sera utilise pour le 2e process par le read end of pipe.  
-		close(info->fd[0]); // Close the read end of pipe 
+		close(fd[1]); // Close write end of pipe 
+		dup2(fd[0], STDIN_FILENO); // Change le STDIN qui sera utilise pour le 2e process par le read end of pipe.  
+		close(fd[0]); // Close the read end of pipe 
 		if (cmd_line.merge_path_cmd != NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		//free_memory(*pipex);
+		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
 }
-
 
 void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	cmd_line;
 	int				i;
-	
 	
 	i = 0;
 	if (info->nb_of_pipe == 0)
@@ -126,20 +144,15 @@ void	execution(t_info *info, t_command_line *line)
 		else if (cmd_line.builtin == 0)
 			exec_one_command(cmd_line, info);
 	}
-	// else
-	// {
-	// 	cmd_line = line[i];
-	// 	if (pipe(info->fd) == -1) 
-	// 		return ;
-	// 	dup_redirection(cmd_line, info);
-	// 	first_child(cmd_line, info);
-	// 	i++;
-	// 	cmd_line = line[i];
-	// 	dup_redirection(cmd_line, info);// dup redirection here is not necessary. 
-	// 	second_child(cmd_line, info);
-	// 	close(info->fd[0]); // Si je ne ferme pas le pipe, ca ne fonctionne pas. 
-	// 	close(info->fd[1]); // Si je ne ferme pas le pipe, ca ne foncitonne pas.  
-	// 	waitpid(info->pid1, NULL, 0);
-	// 	waitpid(info->pid2, NULL, 0);
-	// }
+	else 
+	{
+		while (i < info->nb_of_pipe)
+		{
+			cmd_line = line[i];
+			create_child(cmd_line, info);
+			i++;
+		}
+		cmd_line = line[i];
+		last_cmd_line(cmd_line, info);
+	}
 }

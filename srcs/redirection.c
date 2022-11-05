@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 13:52:57 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:39:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	delete_tokens(t_token **list)
 		temp = *list;
 		prev = (*list)->prev;
 		*list = (*list)->next;
-		free (temp);
+		ft_lstdelone_token(temp, free);
 		temp = NULL;
 		if (*list)
 			(*list)->prev = prev;

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 13:40:34 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:51:08 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	fill_cmd(t_info *info)
 	int		i;
 	int		j;
 
+	if (!info->path)
+		return ;
 	i = 0;
 	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
 	{

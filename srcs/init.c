@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 12:20:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:55:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	init_info(t_info *info, char **envp)
 	info->initial_stdin = 0;
 	info->initial_stdout = 1;
 	info->path = split_path(envp);
-	info->pid1 = 0;
-	info->pid2 = 0;
 	info->state = TEXT;
 }
 

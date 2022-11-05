@@ -6,11 +6,51 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 19:28:26 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 12:36:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 16:55:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+while (i <= info->nb_of_pipe)
+		waitpid(info->pid[i], NULL, 0);
+
+// void	first_child(t_command_line cmd_line, t_info *info)
+// {
+// 	info->pid1 = fork();
+// 	if (info->pid1 == -1)
+// 		return ;
+// 	if (info->pid1 == 0)
+// 	{
+// 		close (info->fd[0]);
+// 		dup2(info->fd[1], STDOUT_FILENO);
+// 		close(info->fd[1]);
+// 		if (cmd_line.merge_path_cmd != NULL)
+// 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+// 		//free_memory(*pipex);
+// 		exit (EXIT_FAILURE);
+// 	}
+// 	put_back_default_std(cmd_line, info);
+// }
+
+
+// void	second_child(t_command_line cmd_line, t_info *info)
+// {
+// 	info->pid2 = fork();
+// 	if (info->pid2 == -1)
+// 		return ;
+// 	if (info->pid2 == 0)
+// 	{
+// 		close (info->fd[1]); // Close write end of pipe 
+// 		dup2(info->fd[0], STDIN_FILENO); // Change le STDIN qui sera utilise pour le 2e process par le read end of pipe.  
+// 		close(info->fd[0]); // Close the read end of pipe 
+// 		if (cmd_line.merge_path_cmd != NULL)
+// 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+// 		//free_memory(*pipex);
+// 		exit (EXIT_FAILURE);
+// 	}
+// }
+
 
 int	create_pipes(t_info *info)
 {
@@ -21,7 +61,7 @@ int	create_pipes(t_info *info)
 	while (i < info->nb_of_pipe)
 	{
 		if (pipe(fd[i]) < 0)
-			return (1); // Mettre un message d'erreur de la commande pipe 
+			return (1); 
 		//printf("I've opened the pipe\n");
 		i++;
 	}
