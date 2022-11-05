@@ -37,8 +37,8 @@
 	[] ctrl-\
 [] Builtins
 	[] echo et "l'option -n"
-		[] gérer -n avec autre chose que juste n
-		[] gérer plusieurs -n 
+		[X] gérer -n avec autre chose que juste n
+		[X] gérer plusieurs -n 
 		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
 		[X] gérer "'" '"' dans écho
 		[] gestion d'erreur'

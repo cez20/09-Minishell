@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 16:55:18 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 16:36:41 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,50 @@ void	pwd(t_info *info)
 // 	return (1);
 // }
 
-char	*is_n(t_token *node)
+int	is_n(t_token *node)
 {
-	if (node->token[0] == '-' && node->token[1] == 'n')
+	int	i;
+
+	i = 2;
+
+	if (node)
 	{
-		node->token++;
-		node->token++;
-		while (*node->token == 'n')
-			node->token++;
+		if (ft_strlen(node->token) == 2 && !ft_strncmp(node->token, "-n", 2))
+			return (1);
+		while (node->token[i])
+		{
+			if (!(node->token[i] == 'n'))
+				return (0);
+			i++;
+		}
+		return (1);
 	}
-	return (node->token);
+	return (0);
 }
 
 void	echo(t_info *info)
 {
 	t_token	*token_list;
 	int		i;
+	int		n;
 
 	// printf("IN ECHO\n");
+	
+	n = 0;
 	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
 	if (token_list)
 	{
-		if (!ft_strncmp(token_list->token, "-n", 2))
+		while (is_n(token_list))
+		{
 			token_list = token_list->next;
+			n++;
+		}
+	}
+	else
+	{
+		printf("\n");
+		return ;
 	}
 	while (token_list)
 	{
@@ -92,12 +112,7 @@ void	echo(t_info *info)
 		i++;
 		token_list = token_list->next;
 	}
-	if (info->command_lines[info->index].list_token->next)
-	{
-		if (ft_strncmp(info->command_lines[info->index].list_token->next->token, "-n", 2))
-			printf("\n");
-	}
-	else
+	if (!n)
 		printf("\n");
 }
 

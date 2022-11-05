@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/05 14:16:23 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 16:26:42 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@ void token_manager(t_info *info)
 
 	while (info->index < info->nb_of_pipe + 1)
 	{
-		if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3))
+		if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
 			pwd(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "env", 3))
+		if (!ft_strncmp(info->command_lines[info->index].command, "env", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
 			print_tab(info->envp);
-		if (!ft_strncmp(info->command_lines[info->index].command, "cd", 2))
+		if (!ft_strncmp(info->command_lines[info->index].command, "cd", 2) && ft_strlen(info->command_lines[info->index].command) == 2)
 			cd(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4))
+		if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
 			exit_terminal();
-		if (!ft_strncmp(info->command_lines[info->index].command, "export", 6))
+		if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) && ft_strlen(info->command_lines[info->index].command) == 6)
 			export(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4))
+		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
 			echo(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5))
+		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
 			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
 
 	info->index++;
@@ -148,7 +148,7 @@ int main(int argc, char **argv, char **envp)
 		// execution(info, info->command_lines);
 		free(line);
 		free_struct_command_line(info);
-		reinit(info); //
+		reinit(info); 
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  
 	return (0);
