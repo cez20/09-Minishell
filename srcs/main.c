@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/03 11:35:04 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:16:23 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ int main(int argc, char **argv, char **envp)
 		token_manager(info);
 		redirection(info);
 		prepare_data_for_execution(info);
-		execution(info, info->command_lines);
+		// execution(info, info->command_lines);
 		free(line);
-		// free_struct_command_line(info);
+		free_struct_command_line(info);
 		reinit(info); //
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  

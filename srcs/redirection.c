@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/03 11:21:27 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:33:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	delete_tokens(t_token **list)
 		temp = *list;
 		prev = (*list)->prev;
 		*list = (*list)->next;
-		free (temp);
+		ft_lstdelone_token(temp, free);
 		temp = NULL;
 		if (*list)
 			(*list)->prev = prev;

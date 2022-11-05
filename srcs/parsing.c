@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/02 22:06:41 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:21:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,16 @@ char	*get_command(t_token *list_token)
 char	*get_args(t_token *list_token)
 {
 	char	*args;
+	char	*tmp;
 
 	args = NULL;
 	if (list_token)
 		list_token = list_token->next;
 	while (list_token)
 	{
+		tmp = args;
 		args = ft_strjoin(args, list_token->token);
+		free(tmp);
 		// args = ft_strjoin(args, " ");
 		list_token = list_token->next;
 	}
