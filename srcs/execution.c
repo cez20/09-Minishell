@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 12:17:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 12:30:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void	execution(t_info *info, t_command_line *line)
 		first_child(cmd_line, info);
 		i++;
 		cmd_line = line[i];
+		dup_redirection(cmd_line, info);// dup redirection here is not necessary. 
 		second_child(cmd_line, info);
 		close(info->fd[0]); // Si je ne ferme pas le pipe, ca ne fonctionne pas. 
 		close(info->fd[1]); // Si je ne ferme pas le pipe, ca ne foncitonne pas.  

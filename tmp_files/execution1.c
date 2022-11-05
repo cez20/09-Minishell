@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 19:28:26 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/04 15:01:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 12:36:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	create_pipes(t_info *info)
 
 int main()
 {
-	int fd[3][2]; // 3 represent the number of 
+	int fd[3][2]; // 3 represent the number of process there is 
 	int i;
 	for (i = 0; i < 3; i++)
 	{
@@ -39,6 +39,7 @@ int main()
 			return 1; // pipe() function creates 3 pipes all at the same time. 
 		}
 	}
+
 	
 	//fork duplicates the fd, which are currently at 3
 	int pid1 = fork(); //After this fork(), we have 3 more fds 
