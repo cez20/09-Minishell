@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 13:02:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:40:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	locate_expansion(char **str, char **env)
 	if ((*str)[i] == '$')
 	{
 		if (i > 0)
-			str1 = ft_substr(*str, 0, i); // Double quote 
+			str1 = ft_substr(*str, 0, i);
 		i++;
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");

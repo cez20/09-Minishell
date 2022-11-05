@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 12:30:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 14:08:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,28 +73,6 @@ void	dup_redirection(t_command_line cmd_line, t_info *info)
 	}
 }
 
-// void	exec_multiple_commands(t_command_line cmd_line, t_info *info, int i)
-// {
-// 	int	fd_pipe[2];
-// 	pid_t pid;
-
-// 	if (pipe(fd_pipe) == -1) // Creates a pipe 
-// 		return ;
-// 	pid = fork();
-// 	if (pid == -1) 
-// 		return ;
-// 	if (pid == 0 && (i % 2 == 0)) // We want to use the read end of pipe 
-// 	{
-// 		close (fd_pipe[0]); // Closing the read end of pipe 
-// 		dup2(fd_pipe[1], STDOUT_FILENO); // Standard output va aller dans le pipe 
-// 		if (cmd_line.merge_path_cmd != NULL)
-// 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-// 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-// 		//free_memory(*pipex);
-// 		exit (127);
-// 	}
-// }
-
 void	first_child(t_command_line cmd_line, t_info *info)
 {
 	info->pid1 = fork();
@@ -148,20 +126,20 @@ void	execution(t_info *info, t_command_line *line)
 		else if (cmd_line.builtin == 0)
 			exec_one_command(cmd_line, info);
 	}
-	else
-	{
-		cmd_line = line[i];
-		if (pipe(info->fd) == -1) 
-			return ;
-		dup_redirection(cmd_line, info);
-		first_child(cmd_line, info);
-		i++;
-		cmd_line = line[i];
-		dup_redirection(cmd_line, info);// dup redirection here is not necessary. 
-		second_child(cmd_line, info);
-		close(info->fd[0]); // Si je ne ferme pas le pipe, ca ne fonctionne pas. 
-		close(info->fd[1]); // Si je ne ferme pas le pipe, ca ne foncitonne pas.  
-		waitpid(info->pid1, NULL, 0);
-		waitpid(info->pid2, NULL, 0);
-	}
+	// else
+	// {
+	// 	cmd_line = line[i];
+	// 	if (pipe(info->fd) == -1) 
+	// 		return ;
+	// 	dup_redirection(cmd_line, info);
+	// 	first_child(cmd_line, info);
+	// 	i++;
+	// 	cmd_line = line[i];
+	// 	dup_redirection(cmd_line, info);// dup redirection here is not necessary. 
+	// 	second_child(cmd_line, info);
+	// 	close(info->fd[0]); // Si je ne ferme pas le pipe, ca ne fonctionne pas. 
+	// 	close(info->fd[1]); // Si je ne ferme pas le pipe, ca ne foncitonne pas.  
+	// 	waitpid(info->pid1, NULL, 0);
+	// 	waitpid(info->pid2, NULL, 0);
+	// }
 }

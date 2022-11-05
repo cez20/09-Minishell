@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/03 16:16:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:50:22 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ t_token	*ft_lstlast_token(t_token *lst)
 void	ft_lstaddback_token(t_token **alst, t_token *new)
 {
 	t_token	*last;
+	// t_token	*first;
 
+	// first = *alst;
 	last = NULL;
 	if (!*alst)
 	{
