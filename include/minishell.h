@@ -6,7 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/05 17:58:43 by slavoie          ###   ########.fr       */
+=======
+/*   Updated: 2022/11/05 17:11:29 by cemenjiv         ###   ########.fr       */
+>>>>>>> f09507c1977da9fd60176acb994e57e6d68b234d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +59,8 @@ typedef struct s_info
 	int						state;
 	// int		type_quote;
 	int						nb_of_pipe;
+	int						initial_stdin;
+	int						initial_stdout;
 	char					**path;
 }		t_info;
 
@@ -86,7 +92,6 @@ void	echo(t_info *info);
 void	cd(t_info *info);
 
 // *** EXECUTION.C ***
-int		create_pipes(t_info *info);
 void	execution(t_info *info, t_command_line *line);
 
 //*** FREE.C ***

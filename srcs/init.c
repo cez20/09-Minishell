@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 20:21:09 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 21:02:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_info(t_info *info, char **envp)
 	info->last_position = NULL;
 	info->nb_of_pipe = 0;
 	info->index = 0;
+	info->initial_stdin = 0;
+	info->initial_stdout = 1;
 	info->path = split_path(envp);
 	info->state = TEXT;
 }

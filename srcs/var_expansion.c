@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 23:21:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:40:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
 		else
 		{
 			string = ft_strdup(new_expanded_variable(i, str2, env));
-			if (str3)//CEci a ete ajoute
-				*str = ft_strjoin(string, str3);
-			else// Ceci a ete ajoute
-				*str = ft_strdup(string); //Ceci a ete ajoute
+			*str = ft_strjoin(string, str3);
 			free(string);
 		}
 	}
@@ -92,13 +89,10 @@ void	locate_expansion(char **str, char **env)
 	{
 		if (i > 0)
 			str1 = ft_substr(*str, 0, i);
-		printf("str1 = %s\n", str1);
 		i++;
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
-		//if (*(str + i))
-			//str4 = ft_strdup(*(str + i));
-		//str4 = ft_strdup(*(str + i));
+		str4 = ft_strdup(*str + i);
 		find_expansion(str, str1, str3, str4, env);
 		free(str1);
 		free(str2);
@@ -122,9 +116,7 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 		{
 			if (ft_strchr(list->token, '$'))
 				locate_expansion(&list->token, info->envp);
-			//if (list->token[0] == 34 || list->token[0] == 39)
-				//remove_quote(list);
-			// printf("%s\n", list->token);
+			//printf("%s\n", list->token);
 			list = list->next;
 		}
 		i++;

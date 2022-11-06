@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 14:13:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 14:40:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	free_double_pointers(char **args)
-{
-	int	i;
-
-	i = 0;
-	if (!args)
-		return ;
-	while (args[i])
-		free(args[i++]);
-	free (args);
-}
 
 void	free_struct_command_line(t_info *info)
 {
