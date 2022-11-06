@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/05 17:58:43 by slavoie          ###   ########.fr       */
-=======
-/*   Updated: 2022/11/05 17:11:29 by cemenjiv         ###   ########.fr       */
->>>>>>> f09507c1977da9fd60176acb994e57e6d68b234d
+/*   Updated: 2022/11/06 15:42:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +126,6 @@ void	heredoc_redirection(t_command_line *chunk, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
-//void	delete_redirection_tokens(t_token **list_addr);
 void	delete_tokens(t_token **list);
 void	redirection(t_info	*info);
 
@@ -152,9 +147,9 @@ void	print_struct(t_command_line *cmd_line, t_info *info);
 
 //*** UTILS_3.C **
 void	is_builtin(t_info *info);
-void	fill_cmd(t_info *info);
+void	find_path_of_command(t_info *info);
 void	print_double_pointer(char **str);
-void	create_exec_argv(t_info	*info);
+void	create_execve_args_list(t_info	*info);
 void	prepare_data_for_execution(t_info *info);
 
 #endif

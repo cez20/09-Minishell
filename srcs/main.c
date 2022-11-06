@@ -6,11 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/05 19:59:18 by slavoie          ###   ########.fr       */
-=======
-/*   Updated: 2022/11/05 14:43:27 by cemenjiv         ###   ########.fr       */
->>>>>>> f09507c1977da9fd60176acb994e57e6d68b234d
+/*   Updated: 2022/11/06 15:41:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +148,7 @@ int main(int argc, char **argv, char **envp)
 			token_manager(info);
 			redirection(info);
 			prepare_data_for_execution(info);
-			// execution(info, info->command_lines);
+			execution(info, info->command_lines);
 			free(line);
 			free_struct_command_line(info);
 		}
