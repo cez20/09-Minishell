@@ -36,20 +36,20 @@
 	[] ctrl-D
 	[] ctrl-\
 [] Builtins
-	[] echo et "l'option -n"
+	[X] echo et "l'option -n"
 		[X] gérer -n avec autre chose que juste n
 		[X] gérer plusieurs -n 
 		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
 		[X] gérer "'" '"' dans écho
-		[] gestion d'erreur'
+		[X] gestion d'erreur'
 	[X] cd uniquement avec un chemin relatif ou absolu
 		[X]	cd ..
 		[X]	cd invalid
 		[X]	cd ...
 		[X]	cd sans argument retour à la racine 
-		[] gestion d'erreur'
+		[X] gestion d'erreur'
 	[X] pwd sans aucune option
-		[] pas de pwd 
+		[X] pas de pwd 
 	[] export sans aucune option
 		[X] export sans argument
 		[] gérer plusieurs args
@@ -70,36 +70,16 @@ Struct
 
 
 TODO: 
-		[X] gérer les espaces entre les différents tokens avec des quotes
-		[X] convertir la gestion de token en linked list
-		[X] gérer le echo avec la nouvelle façon en linked list
-		[] adapter $ pour qu'il' cherche dans la copie de l'environnement'
-		[X] update le PWD dans l'env'
-		[X] parser les listes et remplir les command_lines
-		[X] ne pas compter les pipes entre quotes
-		[X] state machine 
-		[X] fix echo
 		[] fix les cas de "$USER" "'$USER'" '$USER'
 		
 		
 
 FIXME:
-		[X] segfault lorsqu'il' y a des espaces devant la première commande, viens probablement de skip_space
-		[X] segfault echo seul sans argument
-		[X]	cd avec aucun argument doit ramener à la racine
-		[X] node fucked up, je comprends rien WTF:
-		[] refaire fonctionnner les builtins avec la nouvelle structure 
-			[] cd
-				[] .., trunc l'espace'
-			[X] pwd
-			[] echo
-			[X] env
-			[X] exit
-			[] unset
-			[X] export
-		[] gérer les caractères après les commandes ex: echos, pwdttre, exite, etc.
+		[] unset
 		[] trunc les espaces après
-		[] segfault ligne 46 var_expansion.c str3 est NULL quand on call strjoin, arrive lorsqu'on' appelle l'expension' avec des quote ex: "$USER"
+		[] unset PATH fait segfault fill_cmd
+
+
 
 
 Question: 
@@ -117,3 +97,33 @@ LOG:
 	Steven 2 novembre:	- fix double free in reinit
 						- revenir au début si les quotes ne sont pas fermés
 	
+	Steven 5 novembre: 	- set readline 
+						- fix -n multiple -ndasfsgd -nnnnnnnn
+						- fix commande avec suivis d'autre' caractère ex: echo123
+						- plus de leaks dans la redirection pour le moment
+						- cd ..
+						- cd gestion d'erreur'
+						- nouvelle façon de gérer pwd
+						- fix unset pwd
+						
+test redirection:
+					- <>		bash = bash: syntax error near unexpected token 'newline'
+					- <\>		bash = bash: >: No such file or directory
+
+test général:
+				- vérifier comment se comporte le code lorsque l'on' unset une variables importantes, ex: PATH ou PWD
+				- sleep(2) | sleep(2) | sleep(2	)
+				- dev/urandom
+
+
+test echo:
+			- echo <|>					bash = bash: syntax error near unexpected token '|'								
+			- echo allo			OK
+			- echo "allo" 		OK 
+			- echo 'allo' 		OK
+			- echo "'allo'" 	OK
+			- echo '"allo"' 	OK
+			- echo '"a"ll"o"' 	OK
+			- echo '"a"ll"o"' 	OK
+			- echo				
+

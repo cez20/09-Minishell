@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 16:36:41 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 20:58:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ void	remove_quote(t_token *token_list)
 
 void	pwd(t_info *info)
 {
-	char	*pwd;
-
-	pwd = search_line(info->envp, "PWD=");
-	pwd = ft_strchr(pwd, '=');
-	printf("%s\n", ++pwd);
+	printf("%s\n", getcwd(info->pwd, 4096));
 }
 
 // int	is_all_n(char *token)
@@ -134,7 +130,9 @@ void	cd(t_info *info)
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", pwd);
 	ft_strlcpy(search_line(info->envp, "PWD="), line, ft_strlen(line) + 1);
+	free(line);
 	line = ft_strjoin("OLDPWD=", oldpwd);
+	free(line);
 	ft_strlcpy(search_line(info->envp, "OLDPWD="), line, ft_strlen(line) + 1);
 }
 
@@ -146,6 +144,8 @@ void	export(t_info *info)
 
 	i = 0;
 	j = 0;
+
+	
 	if (info->command_lines[info->index].args)
 		info->envp = tab_join(info->envp, info->command_lines[info->index].args);
 	else

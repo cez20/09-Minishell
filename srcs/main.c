@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/05 16:26:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/05 19:59:18 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ char	**tab_trunc(char **tab, char *str, int len)
 	new_tab = NULL;
 	if (!tab || !str)
 		return (0);
-	while (tab[i] && ft_strncmp(tab[i], str, len) != 0)
+	while (tab[i])
 	{
-		new_tab = tab_join(new_tab, tab[i]);
+
+		if (ft_strncmp(tab[i], str, len) != 0)
+			new_tab = tab_join(new_tab, tab[i]);
 		i++;
 	}
 	if (new_tab)
@@ -52,7 +54,6 @@ char	**tab_trunc(char **tab, char *str, int len)
 */
 void token_manager(t_info *info)
 {
-
 	while (info->index < info->nb_of_pipe + 1)
 	{
 		if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
@@ -69,7 +70,6 @@ void token_manager(t_info *info)
 			echo(info);
 		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
 			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
-
 	info->index++;
 	}
 }
@@ -140,14 +140,18 @@ int main(int argc, char **argv, char **envp)
 		info->nb_of_pipe = how_many(info, line, '|');
 		// printf("nb_pipe = %d\n", info->nb_of_pipe);
 		split_token(line, info);
-		var_expansion(info->command_lines, info);
-		fill_command_lines(info);
-		token_manager(info);
-		redirection(info);
-		prepare_data_for_execution(info);
-		// execution(info, info->command_lines);
-		free(line);
-		free_struct_command_line(info);
+		if (info->command_lines->list_token)
+		{
+			
+			var_expansion(info->command_lines, info);
+			fill_command_lines(info);
+			token_manager(info);
+			redirection(info);
+			prepare_data_for_execution(info);
+			// execution(info, info->command_lines);
+			free(line);
+			free_struct_command_line(info);
+		}
 		reinit(info); 
 	}
 	free (info); // Liberer le pointeur declare en debut de fonction main.  
