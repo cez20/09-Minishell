@@ -24,6 +24,9 @@
 	[] Cas d'erreur!.' 
 	[] gérer les paths absolu
 	[] exécutable
+	[] gerer les cas ou jai des builtin melange avec des commands dans ma longue ligne de commande
+	[] changer la facon dont les waitpid fonctionne et les regrouper tous en dehors de la fonction create_child
+	[] gerer le cas  cat > test.txt | wc
 
 	FIXME: [] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 

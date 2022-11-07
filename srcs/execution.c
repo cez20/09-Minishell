@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/06 17:56:08 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/06 21:27:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ void exec_one_builtin(t_command_line cmd_line)
 //CHILD process. I need to keep initial STDIN and STDOUT in memoru for later 
 void	dup_redirection(t_command_line cmd_line, t_info *info)
 {
-	info->initial_stdin = dup(STDIN_FILENO);
-	info->initial_stdout = dup(STDOUT_FILENO);
+	(void)info;
 	if (cmd_line.fd_in != 0)
 	{
+		printf("The fd associated with cmd_line.fd_in is %d\n", cmd_line.fd_in);
 		dup2(cmd_line.fd_in, STDIN_FILENO);
+		printf("The fd associated with stdin is %d\n", STDIN_FILENO);
 		close(cmd_line.fd_in);
 	}
 	if (cmd_line.fd_out != 1)
 	{
+		printf("The fd associated with cmd_line.fd_out is %d\n", cmd_line.fd_out);
 		dup2(cmd_line.fd_out, STDOUT_FILENO);
 		close(cmd_line.fd_out);
 	}
@@ -102,11 +104,37 @@ void	create_child(t_command_line cmd_line, t_info *info)
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
-	close(fd[1]); 
-	dup2(fd[0], STDIN_FILENO); // Je dois remettre le stdin a son dossier original  = 0; 
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO); //?? 
 	close (fd[0]);
 	waitpid(pid, NULL, 0);
 }
+
+// void	create_child1(t_command_line cmd_line, t_info *info)
+// {
+// 	int 	fd[2]; // Les fd qui seront associe 
+// 	pid_t	pid;
+	
+// 	if (pipe(fd) == -1) // Creer le pipe() 
+// 		return ;
+// 	pid = fork(); // Creer un fork qui cree un child et un parent process 
+// 	if (pid == -1)
+// 		return ;
+// 	if (pid == 0) // Je rentre dans le child process 
+// 	{
+// 		close(fd[0]); // Je ferme le read-end of pipe, car je veux write dans le child 
+// 		dup2(fd[1], STDOUT_FILENO); // Le resultat de la command cat qui s'affiche normalemnt dans STDOUT sera envoye dans pipe 
+// 		close(fd[1]); // En faisant ceci fd[0] et fd[1] sont ferme dans le child  
+// 		if (cmd_line.merge_path_cmd != NULL)
+// 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+// 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
+// 		exit (EXIT_FAILURE);
+// 	}
+// 	close(fd[1]); 
+// 	dup2(fd[0], STDIN_FILENO); // Je dois remettre le stdin a son dossier original  = 0; 
+// 	close (fd[0]);
+// 	waitpid(pid, NULL, 0);
+// }
 
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
@@ -150,13 +178,12 @@ void	execution(t_info *info, t_command_line *line)
 	}
 	else 
 	{
-		//dup_redirection(cmd_line, info); // Faire des validations comme quoi c'est correct!// One le garder en suspens pour l'instant. 
 		info->initial_stdin = dup(STDIN_FILENO);
 		info->initial_stdout = dup(STDOUT_FILENO);
 		while (i < info->nb_of_pipe)
 		{
 			cmd_line = line[i];
-	
+			dup_redirection(cmd_line, info);
 			create_child(cmd_line, info);
 			i++;
 		}
