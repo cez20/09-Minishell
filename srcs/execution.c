@@ -6,25 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 11:44:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:59:38 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-// void	put_back_default_std(t_command_line cmd_line, t_info	*info)
-// {
-// 	if (cmd_line.fd_in != 0)
-// 	{
-// 		dup2(info->initial_stdin, STDIN_FILENO);
-// 		close(info->initial_stdin);
-// 	}
-// 	if (cmd_line.fd_out != 1)
-// 	{
-// 		dup2(info->initial_stdout, STDOUT_FILENO);
-// 		close(info->initial_stdout);
-// 	}
-// }
 
 void	put_back_default_std(t_command_line cmd_line, t_info	*info)
 {
@@ -57,11 +43,10 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 }
 
 // Fonction qui execute un builtin dans le PARENT quand il n'y aucun PIPE 
-void exec_one_builtin(t_command_line cmd_line)
+void exec_one_builtin(t_command_line cmd_line, t_info *info)
 {
 	(void)cmd_line;
-	//token_manager();
-	//put_back_default_std(cmd_line, info);
+	token_manager(info);
 }
 
 //Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
@@ -118,12 +103,17 @@ void	last_cmd_line(t_command_line cmd_line, t_info *info)
 		return ;
 	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
 	{
+		if (cmd_line.builtin == 1)
+		{
+			token_manager(info);
+			exit (EXIT_FAILURE);
+		}
 		if (cmd_line.merge_path_cmd != NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
-	dup2(info->initial_stdin, STDIN_FILENO); // Dans la 
+	//dup2(info->initial_stdin, STDIN_FILENO); // Je crois non necessaire, car traite dans 
 	waitpid(pid, NULL, 0);
 }
 
@@ -143,7 +133,7 @@ void	execution(t_info *info, t_command_line *line)
 		cmd_line = line[i];
 		dup_redirection(cmd_line, info);
 		if (cmd_line.builtin == 1)
-			exec_one_builtin(cmd_line);
+			exec_one_builtin(cmd_line, info);
 		else if (cmd_line.builtin == 0)
 			exec_one_command(cmd_line, info);
 	}

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/06 15:04:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:26:47 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	print_struct(t_command_line *cmd_line, t_info *info)
 		//print_double_pointer(cmd_line[i].cmd_and_args);
 		printf("%s\n", cmd_line[i].command);
 		printf("%s\n", cmd_line[i].args);
-		printf("%d\n", cmd_line[i].builtin);
+		printf("Builint is: %d\n", cmd_line[i].builtin);
 		printf("%d\n", cmd_line[i].fd_in);
 		printf("%d\n", cmd_line[i].fd_out);
 		printf("%s\n", cmd_line[i].error_infile);
