@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/06 21:27:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:44:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,11 @@ void	dup_redirection(t_command_line cmd_line, t_info *info)
 	(void)info;
 	if (cmd_line.fd_in != 0)
 	{
-		printf("The fd associated with cmd_line.fd_in is %d\n", cmd_line.fd_in);
 		dup2(cmd_line.fd_in, STDIN_FILENO);
-		printf("The fd associated with stdin is %d\n", STDIN_FILENO);
 		close(cmd_line.fd_in);
 	}
 	if (cmd_line.fd_out != 1)
 	{
-		printf("The fd associated with cmd_line.fd_out is %d\n", cmd_line.fd_out);
 		dup2(cmd_line.fd_out, STDOUT_FILENO);
 		close(cmd_line.fd_out);
 	}
@@ -98,7 +95,7 @@ void	create_child(t_command_line cmd_line, t_info *info)
 	{
 		close(fd[0]); // Je ferme le read-end of pipe, car je veux write dans le child 
 		dup2(fd[1], STDOUT_FILENO); // Le resultat de la command cat qui s'affiche normalemnt dans STDOUT sera envoye dans pipe 
-		close(fd[1]); // En faisant ceci fd[0] et fd[1] sont ferme dans le child  
+		//close(fd[1]); // Pas besoin de close (fd1, car dup2 s'en occupe si je ne me trompe )
 		if (cmd_line.merge_path_cmd != NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
@@ -106,35 +103,9 @@ void	create_child(t_command_line cmd_line, t_info *info)
 	}
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO); //?? 
-	close (fd[0]);
+	//close (fd[0]);
 	waitpid(pid, NULL, 0);
 }
-
-// void	create_child1(t_command_line cmd_line, t_info *info)
-// {
-// 	int 	fd[2]; // Les fd qui seront associe 
-// 	pid_t	pid;
-	
-// 	if (pipe(fd) == -1) // Creer le pipe() 
-// 		return ;
-// 	pid = fork(); // Creer un fork qui cree un child et un parent process 
-// 	if (pid == -1)
-// 		return ;
-// 	if (pid == 0) // Je rentre dans le child process 
-// 	{
-// 		close(fd[0]); // Je ferme le read-end of pipe, car je veux write dans le child 
-// 		dup2(fd[1], STDOUT_FILENO); // Le resultat de la command cat qui s'affiche normalemnt dans STDOUT sera envoye dans pipe 
-// 		close(fd[1]); // En faisant ceci fd[0] et fd[1] sont ferme dans le child  
-// 		if (cmd_line.merge_path_cmd != NULL)
-// 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-// 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-// 		exit (EXIT_FAILURE);
-// 	}
-// 	close(fd[1]); 
-// 	dup2(fd[0], STDIN_FILENO); // Je dois remettre le stdin a son dossier original  = 0; 
-// 	close (fd[0]);
-// 	waitpid(pid, NULL, 0);
-// }
 
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
@@ -165,7 +136,8 @@ void	execution(t_info *info, t_command_line *line)
 	int				i;
 	
 	i = 0;
-	
+	info->initial_stdin = dup(STDIN_FILENO);
+	info->initial_stdout = dup(STDOUT_FILENO);
 	if (info->nb_of_pipe == 0)
 	{
 		cmd_line = line[i];
@@ -174,21 +146,19 @@ void	execution(t_info *info, t_command_line *line)
 			exec_one_builtin(cmd_line);
 		else if (cmd_line.builtin == 0)
 			exec_one_command(cmd_line, info);
-		put_back_default_std(cmd_line, info);
 	}
 	else 
 	{
-		info->initial_stdin = dup(STDIN_FILENO);
-		info->initial_stdout = dup(STDOUT_FILENO);
 		while (i < info->nb_of_pipe)
 		{
 			cmd_line = line[i];
-			dup_redirection(cmd_line, info);
+			dup_redirection(cmd_line, info); // dup_redirection cause probleme quand redirection dans commandes du milieu
 			create_child(cmd_line, info);
 			i++;
 		}
 		cmd_line = line[i];
+		dup_redirection(cmd_line, info);
 		last_cmd_line(cmd_line, info); // Je pourrais reutiliser mon exec_one_command ou exec_one_builtin;
-		put_back_default_std(cmd_line, info);  
 	}
+	put_back_default_std(cmd_line, info);  
 }
