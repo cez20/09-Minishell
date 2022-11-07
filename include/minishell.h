@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 13:35:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/07 14:55:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define TEXT 32
 # define S_QUOTE 39
 # define D_QUOTE 34
+# define NB_PROCESS info->nb_of_pipe + 1
 
 typedef struct s_token
 {
@@ -126,7 +127,6 @@ void	heredoc_redirection(t_command_line *chunk, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
-//void	delete_redirection_tokens(t_token **list_addr);
 void	delete_tokens(t_token **list);
 void	redirection(t_info	*info);
 
@@ -148,9 +148,9 @@ void	print_struct(t_command_line *cmd_line, t_info *info);
 
 //*** UTILS_3.C **
 void	is_builtin(t_info *info);
-void	fill_cmd(t_info *info);
+void	find_path_of_command(t_info *info);
 void	print_double_pointer(char **str);
-void	create_exec_argv(t_info	*info);
+void	create_execve_args_list(t_info	*info);
 void	prepare_data_for_execution(t_info *info);
 
 #endif

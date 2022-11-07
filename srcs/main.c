@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/07 14:02:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/07 14:55:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int main(int argc, char **argv, char **envp)
 			token_manager(info);
 			redirection(info);
 			prepare_data_for_execution(info);
-			// execution(info, info->command_lines);
+			execution(info, info->command_lines);
 			free(line);
 			free_struct_command_line(info);
 		}

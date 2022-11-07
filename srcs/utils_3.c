@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 17:51:08 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:42:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	is_builtin(t_info *info)
 	}
 }
 
-void	fill_cmd(t_info *info)
+void	find_path_of_command(t_info *info)
 {
 	char	*path;
 	char	*cmd_exe;
@@ -54,6 +54,12 @@ void	fill_cmd(t_info *info)
 		j = 0;
 		while (info->path[j])
 		{
+			if (access(info->command_lines[i].list_token->token, X_OK) != -1)
+			{
+				cmd_exe = ft_strdup(info->command_lines[i].list_token->token);
+				info->command_lines[i].merge_path_cmd = cmd_exe;
+				break;
+			}	
 			path = ft_strjoin(info->path[j], "/");
 			cmd_exe = ft_strjoin(path, info->command_lines[i].list_token->token);
 			free(path);
@@ -81,7 +87,7 @@ void	print_double_pointer(char **str)
 	}	
 }
 
-void	create_exec_argv(t_info	*info)
+void	create_execve_args_list(t_info	*info)
 {
 	t_token	*list;
 	char	**str;
@@ -115,6 +121,6 @@ void	create_exec_argv(t_info	*info)
 void	prepare_data_for_execution(t_info *info)
 {
 	is_builtin(info);
-	fill_cmd(info);
-	create_exec_argv(info);
+	find_path_of_command(info);
+	create_execve_args_list(info);
 }

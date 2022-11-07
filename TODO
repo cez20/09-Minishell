@@ -14,14 +14,20 @@
 	[X] >> doit rediriger la sortie en mode append.
 
 [] execution
-	[] 1 ligne de commande avec builtin
-	[] 1 ligne de commande avec commande
+	[X] Fonction find_path_for command. Ajoute le fin que si la comande est deja un executable, le garder tel quel. 
+	[] Si jai un error_infile pcq infile nexiste pas, ne pas creer de child et simplement afficher sur STDERR le message
+	[] 1 ligne de commande avec builtin (manque seulement que les builtin soient finis pour les tester)
+	[X] 1 ligne de commande avec commande
 	[] Tester
 	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
 	[] Cas d'erreur!.' 
 	[] gérer les paths absolu
 	[] exécutable
+	[] changer la facon dont les waitpid fonctionne et les regrouper tous en dehors de la fonction create_child
+	[] gerer le cas  cat > test.txt | wc
+	[] valider que tous les fds sont bien ferme (est ce que je dois regarder dans les childs aussi)
+	[] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
 
 	FIXME: [] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
@@ -127,3 +133,8 @@ test echo:
 			- echo '"a"ll"o"' 	OK
 			- echo				
 
+
+LOG:
+	Cesar	31 octobre:	- gerer le cas lorsque le tokend donne est deja le binary (ex: /bin/ls) 
+						- trunquer les espaces devant les commandes suivant les pipes
+	
