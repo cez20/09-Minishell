@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/07 18:30:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:28:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ int main(int argc, char **argv, char **envp)
 			
 			var_expansion(info->command_lines, info);
 			fill_command_lines(info);
-			token_manager(info);
 			redirection(info);
 			prepare_data_for_execution(info);
+			// token_manager(info);
 			execution(info, info->command_lines);
 			free(line);
 			free_struct_command_line(info);

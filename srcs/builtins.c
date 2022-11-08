@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 15:17:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:25:35 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,22 @@ void	cd(t_info *info)
 	ft_strlcpy(search_line(info->envp, "OLDPWD="), line, ft_strlen(line) + 1);
 }
 
+int	check_arg_export(char *arg)
+{
+	int	i;
+
+	i = 0;
+
+	while (arg[i])
+	{
+		if (arg[i] == '=')
+			return (1);
+	}
+	return (0);
+}
+
+
+
 void	export(t_info *info)
 {
 	int		i;
@@ -149,8 +165,22 @@ void	export(t_info *info)
 	j = 0;
 
 	
-	if (info->command_lines[info->index].args)
-		info->envp = tab_join(info->envp, info->command_lines[info->index].args);
+	// while (info->command_lines[info->index].cmd_and_args[i + 1])
+	// {
+	// 	if (check_arg_export(info->command_lines[info->index].cmd_and_args[i + 1]))
+	// 		info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
+	// 	i++;
+	// }
+
+	if (info->command_lines[info->index].cmd_and_args[i + 1])
+	{
+		while (info->command_lines[info->index].cmd_and_args[i + 1])
+		{
+			if (check_arg_export(info->command_lines[info->index].cmd_and_args[i + 1]))
+				info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
+			i++;
+		}
+	}
 	else
 	{
 		while (info->envp[i])
