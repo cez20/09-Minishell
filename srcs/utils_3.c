@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 14:52:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:28:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	print_double_pointer(char **str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		printf("The value of str[%d] is %s\n", i, str[i]);
@@ -129,7 +131,7 @@ void	create_execve_args_list(t_info	*info)
 	i = 0;
 	str = NULL;
 	list = info->command_lines[i].list_token;
-	if (!list)
+	if (!info->command_lines)
 		return ;
 	while (i < (info->nb_of_pipe + 1))
 	{
