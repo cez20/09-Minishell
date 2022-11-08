@@ -6,41 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 13:59:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:49:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-void	put_back_default_std(t_command_line cmd_line, t_info	*info)
-{
-	(void)cmd_line;
-	dup2(info->initial_stdin, STDIN_FILENO);
-	close(info->initial_stdin);
-	dup2(info->initial_stdout, STDOUT_FILENO);
-	close(info->initial_stdout);
-}
-
-//Fonction qui execute une commande avec execve() dans un CHILD
-//lorsqu'il n'y a aucun PIPE()
-void	exec_one_command(t_command_line cmd_line, t_info *info)
-{
-	pid_t	pid;
-	
-	pid = fork();
-	if (pid == -1)
-		return ; 
-	if (pid == 0)
-	{
-		if (cmd_line.merge_path_cmd != NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		//free_memory(*pipex);
-		exit (127);
-	}
-	//put_back_default_std(cmd_line, info);
-	waitpid(pid, NULL, 0);
-}
 
 // Fonction qui execute un builtin dans le PARENT quand il n'y aucun PIPE 
 void exec_one_builtin(t_command_line cmd_line, t_info *info)
@@ -49,11 +19,37 @@ void exec_one_builtin(t_command_line cmd_line, t_info *info)
 	token_manager(info);
 }
 
+void	put_back_default_std(t_info *info)
+{
+	dup2(info->initial_stdin, STDIN_FILENO);
+	close(info->initial_stdin);
+	dup2(info->initial_stdout, STDOUT_FILENO);
+	close(info->initial_stdout);
+}
+
+//If command is not valid. Verify that something needs to be freed or not? 
+void exec_one_command(t_command_line cmd_line, t_info *info)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return ; 
+	if (pid == 0)
+	{
+		if (cmd_line.merge_path_cmd != NULL)
+			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
+		exit (EXIT_FAILURE);
+	}
+	else
+		waitpid(pid, NULL, 0);	
+}
+
 //Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
 //CHILD process. I need to keep initial STDIN and STDOUT in memoru for later 
-void	dup_redirection(t_command_line cmd_line, t_info *info)
+void	dup_redirection(t_command_line cmd_line)
 {
-	(void)info;
 	if (cmd_line.fd_in != 0)
 	{
 		dup2(cmd_line.fd_in, STDIN_FILENO);
@@ -66,10 +62,21 @@ void	dup_redirection(t_command_line cmd_line, t_info *info)
 	}
 }
 
-void	create_child(t_command_line cmd_line, t_info *info)
+//Fonction qui execute une commande avec execve() dans un CHILD
+//lorsqu'il n'y a aucun PIPE()
+void	one_command_or_builtin(t_command_line cmd_line, t_info *info)
+{
+	dup_redirection(cmd_line);
+	if (cmd_line.builtin == 1)
+		token_manager(info); 
+	else
+		exec_one_command(cmd_line, info);
+}
+
+void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 {
 	int 	fd[2]; // Les fd qui seront associe 
-	pid_t	pid;
+	//pid_t	pid;
 	
 	if (pipe(fd) == -1) // Creer le pipe() 
 		return ;
@@ -80,23 +87,26 @@ void	create_child(t_command_line cmd_line, t_info *info)
 	{
 		close(fd[0]); // Je ferme le read-end of pipe, car je veux write dans le child 
 		dup2(fd[1], STDOUT_FILENO); // Le resultat de la command cat qui s'affiche normalemnt dans STDOUT sera envoye dans pipe 
-		//close(fd[1]); // Pas besoin de close (fd1, car dup2 s'en occupe si je ne me trompe )
+		close(fd[1]); // Pas besoin de close (fd1, car dup2 s'en 
 		if (cmd_line.merge_path_cmd != NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO); //?? 
-	//close (fd[0]);
-	waitpid(pid, NULL, 0);
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO); //?? 
+		close (fd[0]); //Not necessary because dup2 closes it??
+	//waitpid(pid, NULL, 0);
+	}
 }
 
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
-void	last_cmd_line(t_command_line cmd_line, t_info *info)
+void	last_cmd_line(t_command_line cmd_line, t_info *info, pid_t pid)
 {
-	pid_t	pid;
+	//pid_t	pid;
 	
 	pid = fork();
 	if (pid == -1)
@@ -113,7 +123,6 @@ void	last_cmd_line(t_command_line cmd_line, t_info *info)
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
 	}
-	//dup2(info->initial_stdin, STDIN_FILENO); // Je crois non necessaire, car traite dans 
 	waitpid(pid, NULL, 0);
 }
 
@@ -123,32 +132,30 @@ void	last_cmd_line(t_command_line cmd_line, t_info *info)
 void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	cmd_line;
+	pid_t			pid[NB_PROCESS];
 	int				i;
 	
 	i = 0;
+	cmd_line = line[i];
 	info->initial_stdin = dup(STDIN_FILENO);
 	info->initial_stdout = dup(STDOUT_FILENO);
 	if (info->nb_of_pipe == 0)
-	{
-		cmd_line = line[i];
-		dup_redirection(cmd_line, info);
-		if (cmd_line.builtin == 1)
-			exec_one_builtin(cmd_line, info);
-		else if (cmd_line.builtin == 0)
-			exec_one_command(cmd_line, info);
-	}
+		one_command_or_builtin(cmd_line, info);
 	else 
 	{
 		while (i < info->nb_of_pipe)
 		{
 			cmd_line = line[i];
-			dup_redirection(cmd_line, info); // dup_redirection cause probleme quand redirection dans commandes du milieu
-			create_child(cmd_line, info);
+			dup_redirection(cmd_line); // dup_redirection cause probleme quand redirection dans commandes du milieu
+			create_child(cmd_line, info, pid[i]);
 			i++;
 		}
+		i = 0;
+		while (i < info->nb_of_pipe)
+			waitpid(pid[i++], NULL, 0);
 		cmd_line = line[i];
-		dup_redirection(cmd_line, info);
-		last_cmd_line(cmd_line, info); // Je pourrais reutiliser mon exec_one_command ou exec_one_builtin;
+		dup_redirection(cmd_line);
+		last_cmd_line(cmd_line, info, pid[i]);	
 	}
-	put_back_default_std(cmd_line, info);  
+	put_back_default_std(info);  
 }

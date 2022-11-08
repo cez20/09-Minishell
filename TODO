@@ -132,9 +132,3 @@ test echo:
 			- echo '"a"ll"o"' 	OK
 			- echo '"a"ll"o"' 	OK
 			- echo				
-
-
-LOG:
-	Cesar	31 octobre:	- gerer le cas lorsque le tokend donne est deja le binary (ex: /bin/ls) 
-						- trunquer les espaces devant les commandes suivant les pipes
-	
