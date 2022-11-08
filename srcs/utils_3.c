@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 14:05:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:52:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	find_path_of_command(t_info *info)
 	if (!info->path)
 		return ;
 	i = 0;
-	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
+	while ((i <= info->nb_of_pipe))
 	{
 		j = 0;
-		while (info->path[j] && info->command_lines[i].builtin != 1)
+		while (info->path[j] && info->command_lines[i].builtin != 1 && (info->command_lines[i].list_token))
 		{
 			if (access(info->command_lines[i].list_token->token, X_OK) != -1)
 			{
