@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/02 13:38:15 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 23:25:14 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //I need to free eveything that cause a segfault 
 int	exit_terminal(void)
 {
-	printf(" exit\n");
+    printf(" exit\n");
 	exit (EXIT_SUCCESS);
 }
 

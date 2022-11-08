@@ -6,18 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 22:32:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 22:58:40 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-// Fonction qui execute un builtin dans le PARENT quand il n'y aucun PIPE 
-void exec_one_builtin(t_command_line cmd_line, t_info *info)
-{
-	(void)cmd_line;
-	token_manager(info);
-}
 
 void	put_back_default_std(t_info *info)
 {
@@ -25,6 +18,22 @@ void	put_back_default_std(t_info *info)
 	close(info->initial_stdin);
 	dup2(info->initial_stdout, STDOUT_FILENO);
 	close(info->initial_stdout);
+}
+
+//Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
+//CHILD process. I need to keep initial STDIN and STDOUT in memoru for later 
+void	do_redirection(t_command_line cmd_line)
+{
+	if (cmd_line.fd_in != 0)
+	{
+		dup2(cmd_line.fd_in, STDIN_FILENO);
+		close(cmd_line.fd_in);
+	}
+	if (cmd_line.fd_out != 1)
+	{
+		dup2(cmd_line.fd_out, STDOUT_FILENO);
+		close(cmd_line.fd_out);
+	}
 }
 
 //If command is not valid. Verify that something needs to be freed or not? 
@@ -46,37 +55,23 @@ void exec_one_command(t_command_line cmd_line, t_info *info)
 		waitpid(pid, NULL, 0);	
 }
 
-//Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
-//CHILD process. I need to keep initial STDIN and STDOUT in memoru for later 
-void	dup_redirection(t_command_line cmd_line)
-{
-	if (cmd_line.fd_in != 0)
-	{
-		dup2(cmd_line.fd_in, STDIN_FILENO);
-		close(cmd_line.fd_in);
-	}
-	if (cmd_line.fd_out != 1)
-	{
-		dup2(cmd_line.fd_out, STDOUT_FILENO);
-		close(cmd_line.fd_out);
-	}
-}
-
 //Fonction qui execute une commande avec execve() dans un CHILD
 //lorsqu'il n'y a aucun PIPE()
-void	one_command_or_builtin(t_command_line cmd_line, t_info *info)
+void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 {
-	dup_redirection(cmd_line);
-	if (cmd_line.builtin == 1)
+	int i;
+	
+	i = 0;
+	do_redirection(cmd_line[i]);
+	if (cmd_line[i].builtin == 1)
 		token_manager(info); 
 	else
-		exec_one_command(cmd_line, info);
+		exec_one_command(cmd_line[i], info);
 }
 
 void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 {
-	int 	fd[2]; // Les fd qui seront associe 
-	//pid_t	pid;
+	int 	fd[2]; // Les fd qui seront associe
 	
 	if (pipe(fd) == -1) // Creer le pipe() 
 		return ;
@@ -103,10 +98,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
-void	last_cmd_line(t_command_line cmd_line, t_info *info, pid_t pid)
+void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 {
-	//pid_t	pid;
-	
 	pid = fork();
 	if (pid == -1)
 		return ;
@@ -125,32 +118,36 @@ void	last_cmd_line(t_command_line cmd_line, t_info *info, pid_t pid)
 	waitpid(pid, NULL, 0);
 }
 
+void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
+{
+	pid_t	pid[NB_PROCESS]; // La macro est dans le fichier .h
+	int		i;
+	
+	i = 0;
+	while (i < info->nb_of_pipe)
+	{
+		do_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
+		create_child(cmd_line[i], info, pid[i]);
+		i++;
+	}
+	i = 0;
+	while (i < info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
+		waitpid(pid[i++], NULL, 0);
+	do_redirection(cmd_line[i]);
+	last_cmd_or_builtin(cmd_line[i], info, pid[i]);	
+}
+
 // 1- Pourquoi lorsque je change le STDIN pour le fd[0], je ne suis pas oblige de devoir remettre le STDIN original?? 
 // 	  ou bien je dois mettre ls STDIN original dans la derniere serie de commande seulement a la TOUTE FIN? 
 // 2-- Lorsque j'arrive a la derniere serie de commande, quand il y a eu au moins 1 pipe, est-ce que j'execute dans parent ou child? 
 void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	*cmd_line;
-	pid_t			pid[NB_PROCESS];
-	int				i;
-	
-	i = 0;
+
 	cmd_line = line;
 	if (info->nb_of_pipe == 0)
-		one_command_or_builtin(cmd_line[i], info);
+		one_command_or_builtin(cmd_line, info);
 	else 
-	{
-		while (i < info->nb_of_pipe)
-		{
-			dup_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
-			create_child(cmd_line[i], info, pid[i]);
-			i++;
-		}
-		i = 0;
-		while (i < info->nb_of_pipe)
-			waitpid(pid[i++], NULL, 0);
-		dup_redirection(cmd_line[i]);
-		last_cmd_line(cmd_line[i], info, pid[i]);	
-	}
+		multiple_commands_or_builtins(cmd_line, info);
 	put_back_default_std(info);  
 }
