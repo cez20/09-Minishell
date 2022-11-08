@@ -28,8 +28,9 @@
 	[] gerer le cas  cat > test.txt | wc
 	[] valider que tous les fds sont bien ferme (est ce que je dois regarder dans les childs aussi)
 	[] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
+	[] ./minishell | 
 
-	FIXME: [] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
+	FIXME: [X] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
 
 [] implémenter les pipes ( | )
@@ -42,12 +43,12 @@
 	[] ctrl-D
 	[] ctrl-\
 [] Builtins
-	[X] echo et "l'option -n"
-		[X] gérer -n avec autre chose que juste n
-		[X] gérer plusieurs -n 
-		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
-		[X] gérer "'" '"' dans écho
-		[X] gestion d'erreur'
+	[] echo et "l'option -n"
+		[] gérer -n avec autre chose que juste n
+		[] gérer plusieurs -n 
+		[] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
+		[] gérer "'" '"' dans écho
+		[] gestion d'erreur'
 	[X] cd uniquement avec un chemin relatif ou absolu
 		[X]	cd ..
 		[X]	cd invalid
@@ -57,33 +58,51 @@
 	[X] pwd sans aucune option
 		[X] pas de pwd 
 	[] export sans aucune option
-		[X] export sans argument
+		[] export sans argument
 		[] gérer plusieurs args
+		[] pas de "="
 		[] gestion des erreurs
 	[] unset sans aucune option
 		[] gérer plusieurs args
 		[] gérer les "="
-	[X] env sans aucune option ni argument
+		[] sans argument
+	[] env sans aucune option ni argument
 		[] gestion d'erreur'
-	[X] exit sans aucune option
+	[] exit sans aucune option
+		[] errno
 		[] gestion d'erreur'
 
 
+[] gérer le $
+	[] "$U'SE'R" doit supprimer $U	
+	[] supprimer tous les $
+	[] fix les cas de "$USER" "'$USER'" '$USER'
+	
+[] Heredocs
+	[] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	[] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
+	[] heredoc ferme si le delim se retrouve au debut de la ligne 
+		ex:	$> cat << hello
+			>	hello my name is
+			$>
+	[] heredoc ne fonctionne pas avec les fonctions execve
 
+[] gérer le errno
 
 Struct
 	[X] char **environnement
 
 
 TODO: 
-		[] fix les cas de "$USER" "'$USER'" '$USER'
-		
+	
+	
 		
 
 FIXME:
-		[] unset
-		[] trunc les espaces après
-		[] unset PATH fait segfault fill_cmd
+		[X] unset
+		[X] trunc les espaces après
+		[X] unset PATH fait segfault fill_cmd
+		[] double le prompt quand ctrl-C lorsque que le minishell hang
 
 
 
@@ -112,6 +131,15 @@ LOG:
 						- nouvelle façon de gérer pwd
 						- fix unset pwd
 						
+
+	Steven 7 novembre:	- fix edge case pwd 
+						- fix segfault unset sans argument
+						- 
+
+
+
+
+
 test redirection:
 					- <>		bash = bash: syntax error near unexpected token 'newline'
 					- <\>		bash = bash: >: No such file or directory

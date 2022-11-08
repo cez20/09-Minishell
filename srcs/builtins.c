@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 20:58:14 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/07 15:17:42 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	remove_quote(t_token *token_list)
 
 void	pwd(t_info *info)
 {
-	printf("%s\n", getcwd(info->pwd, 4096));
+	if (getcwd(info->pwd, 4096))
+		printf("%s\n", getcwd(info->pwd, 4096));
+	else
+		printf("%s\n", info->pwd);
 }
 
 // int	is_all_n(char *token)

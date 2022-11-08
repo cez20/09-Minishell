@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 21:02:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/07 15:14:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info)
 
 void	init_info(t_info *info, char **envp)
 {
-	// info->pwd = ft_strdup(getcwd(buffer, 4096));
+	info->pwd = ft_strdup(getcwd(info->pwd, 4096));
 	info->envp = tabcpy(envp);
 	// info->envp = envp;
 	info->list_token = NULL;
