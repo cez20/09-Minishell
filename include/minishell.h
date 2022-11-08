@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 14:55:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:51:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	pwd(t_info *info);
 void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
+void	unset(t_info *info);
 
 // *** EXECUTION.C ***
 void	execution(t_info *info, t_command_line *line);

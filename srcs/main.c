@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/08 14:31:05 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:52:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void token_manager(t_info *info)
 		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
 			echo(info);
 		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
-			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
+			unset(info);
 	info->index++;
 	}
 }

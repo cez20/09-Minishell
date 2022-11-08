@@ -58,15 +58,17 @@
 	[X] pwd sans aucune option
 		[X] pas de pwd 
 	[] export sans aucune option
-		[] export sans argument
-		[] gérer plusieurs args
-		[] pas de "="
-		[] gestion des erreurs
+		[X] export sans argument
+		[X] gérer plusieurs args
+		[X] pas de "="
+		[] vérifier si la variable existe déjà
+		[X] gestion des erreurs
 	[] unset sans aucune option
-		[] gérer plusieurs args
-		[] gérer les "="
-		[] sans argument
+		[X] gérer plusieurs args
+		[X] gérer les "="
+		[X] sans argument
 	[] env sans aucune option ni argument
+		[] renvoyer une erreur s'il' il des arguments ?
 		[] gestion d'erreur'
 	[] exit sans aucune option
 		[] errno
@@ -103,12 +105,13 @@ FIXME:
 		[X] trunc les espaces après
 		[X] unset PATH fait segfault fill_cmd
 		[] double le prompt quand ctrl-C lorsque que le minishell hang
+		[] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 
 
 
 
 Question: 
-			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"
+			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"       Réponse: non 
  		
 LOG:
 	Steven	31 octobre:	- gérer les différents cas des pipes aves espaces
@@ -136,6 +139,12 @@ LOG:
 						- fix segfault unset sans argument
 						- 
 
+	Steven 8 novembre:	- fix export plusieurs argument
+						- fix export sans "="
+						- gestion d'erreur' export
+						- fix unset sans argument 
+						- unset avec plusieurs args
+						- fix unset avec "=" 
 
 
 
