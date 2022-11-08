@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 22:58:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:50:27 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,74 @@ void	do_redirection(t_command_line cmd_line)
 	}
 }
 
+//1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
+// le STDIN original
+void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
+{
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
+	{
+		if (cmd_line.builtin == 1)
+		{
+			token_manager(info);
+			exit (EXIT_FAILURE);
+		}
+		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
+		exit (EXIT_FAILURE);
+	}
+	waitpid(pid, NULL, 0);
+}
+
+void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
+{
+	int 	fd[2]; // Les fd qui seront associe
+	
+	if (pipe(fd) == -1) // Creer le pipe() 
+		return ;
+	pid = fork(); // Creer un fork qui cree un child et un parent process 
+	if (pid == -1)
+		return ;
+	if (pid == 0) // Je rentre dans le child process 
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
+		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+		//printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
+		exit (EXIT_FAILURE);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+	}
+}
+
+void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
+{
+	pid_t	pid[NB_PROCESS]; // La macro est dans le fichier .h
+	int		i;
+	
+	i = 0;
+	while (i < info->nb_of_pipe)
+	{
+		do_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
+		create_child(cmd_line[i], info, pid[i]);
+		i++;
+	}
+	i = 0;
+	while (i < info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
+		waitpid(pid[i++], NULL, 0);
+	do_redirection(cmd_line[i]);
+	last_cmd_or_builtin(cmd_line[i], info, pid[i]);	
+}
+
 //If command is not valid. Verify that something needs to be freed or not? 
 void exec_one_command(t_command_line cmd_line, t_info *info)
 {
@@ -46,7 +114,7 @@ void exec_one_command(t_command_line cmd_line, t_info *info)
 		return ; 
 	if (pid == 0)
 	{
-		if (cmd_line.merge_path_cmd != NULL)
+		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
 		exit (EXIT_FAILURE);
@@ -67,74 +135,6 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 		token_manager(info); 
 	else
 		exec_one_command(cmd_line[i], info);
-}
-
-void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
-{
-	int 	fd[2]; // Les fd qui seront associe
-	
-	if (pipe(fd) == -1) // Creer le pipe() 
-		return ;
-	pid = fork(); // Creer un fork qui cree un child et un parent process 
-	if (pid == -1)
-		return ;
-	if (pid == 0) // Je rentre dans le child process 
-	{
-		close(fd[0]); // Je ferme le read-end of pipe, car je veux write dans le child 
-		dup2(fd[1], STDOUT_FILENO); // Le resultat de la command cat qui s'affiche normalemnt dans STDOUT sera envoye dans pipe 
-		close(fd[1]); // Pas besoin de close (fd1, car dup2 s'en 
-		if (cmd_line.merge_path_cmd != NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		exit (EXIT_FAILURE);
-	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
-}
-
-//1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
-// le STDIN original
-void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
-{
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
-	{
-		if (cmd_line.builtin == 1)
-		{
-			token_manager(info);
-			exit (EXIT_FAILURE);
-		}
-		if (cmd_line.merge_path_cmd != NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		exit (EXIT_FAILURE);
-	}
-	waitpid(pid, NULL, 0);
-}
-
-void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
-{
-	pid_t	pid[NB_PROCESS]; // La macro est dans le fichier .h
-	int		i;
-	
-	i = 0;
-	while (i < info->nb_of_pipe)
-	{
-		do_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
-		create_child(cmd_line[i], info, pid[i]);
-		i++;
-	}
-	i = 0;
-	while (i < info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
-		waitpid(pid[i++], NULL, 0);
-	do_redirection(cmd_line[i]);
-	last_cmd_or_builtin(cmd_line[i], info, pid[i]);	
 }
 
 // 1- Pourquoi lorsque je change le STDIN pour le fd[0], je ne suis pas oblige de devoir remettre le STDIN original?? 
