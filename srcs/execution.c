@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 21:49:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 22:32:48 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO); //?? 
-		close (fd[0]); //Not necessary because dup2 closes it??
-	//waitpid(pid, NULL, 0);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 	}
 }
 
@@ -131,31 +130,27 @@ void	last_cmd_line(t_command_line cmd_line, t_info *info, pid_t pid)
 // 2-- Lorsque j'arrive a la derniere serie de commande, quand il y a eu au moins 1 pipe, est-ce que j'execute dans parent ou child? 
 void	execution(t_info *info, t_command_line *line)
 {
-	t_command_line	cmd_line;
+	t_command_line	*cmd_line;
 	pid_t			pid[NB_PROCESS];
 	int				i;
 	
 	i = 0;
-	cmd_line = line[i];
-	info->initial_stdin = dup(STDIN_FILENO);
-	info->initial_stdout = dup(STDOUT_FILENO);
+	cmd_line = line;
 	if (info->nb_of_pipe == 0)
-		one_command_or_builtin(cmd_line, info);
+		one_command_or_builtin(cmd_line[i], info);
 	else 
 	{
 		while (i < info->nb_of_pipe)
 		{
-			cmd_line = line[i];
-			dup_redirection(cmd_line); // dup_redirection cause probleme quand redirection dans commandes du milieu
-			create_child(cmd_line, info, pid[i]);
+			dup_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
+			create_child(cmd_line[i], info, pid[i]);
 			i++;
 		}
 		i = 0;
 		while (i < info->nb_of_pipe)
 			waitpid(pid[i++], NULL, 0);
-		cmd_line = line[i];
-		dup_redirection(cmd_line);
-		last_cmd_line(cmd_line, info, pid[i]);	
+		dup_redirection(cmd_line[i]);
+		last_cmd_line(cmd_line[i], info, pid[i]);	
 	}
 	put_back_default_std(info);  
 }
