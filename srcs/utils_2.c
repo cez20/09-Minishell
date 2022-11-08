@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/06 15:04:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 10:56:43 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,15 @@ void	print_struct(t_command_line *cmd_line, t_info *info)
 	i = 0;
 	while (i <= info->nb_of_pipe)
 	{
-		printf("%p\n", cmd_line[i].list_token);
+		printf("Address of list_token is: %p\n", cmd_line[i].list_token);
 		//print_double_pointer(cmd_line[i].cmd_and_args);
-		printf("%s\n", cmd_line[i].command);
-		printf("%s\n", cmd_line[i].args);
-		printf("%d\n", cmd_line[i].builtin);
-		printf("%d\n", cmd_line[i].fd_in);
-		printf("%d\n", cmd_line[i].fd_out);
-		printf("%s\n", cmd_line[i].error_infile);
-		printf("%s\n", cmd_line[i].merge_path_cmd);
+		printf("Command is :%s\n", cmd_line[i].command);
+		printf("Args is: %s\n", cmd_line[i].args);
+		printf("Builtin number is: %d\n", cmd_line[i].builtin);
+		printf("fd_in is:%d\n", cmd_line[i].fd_in);
+		printf("fd_out is :%d\n", cmd_line[i].fd_out);
+		printf("Error infile is: %s\n", cmd_line[i].error_infile);
+		printf("Merge path_cmd is :%s\n", cmd_line[i].merge_path_cmd);
 		i++;
 	}
 }

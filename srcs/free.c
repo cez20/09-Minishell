@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 14:40:06 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 10:59:53 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_struct_command_line(t_info *info)
 			close (info->command_lines[i].fd_in);
 		if (info->command_lines[i].fd_out != 1)
 			close (info->command_lines[i].fd_out);
+		free(info->command_lines[i].error_infile);
 		i++;
 	}	
 }

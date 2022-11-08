@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 15:14:54 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:30:32 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_info(t_info *info, char **envp)
 	info->initial_stdout = 1;
 	info->path = split_path(envp);
 	info->state = TEXT;
+	info->initial_stdin = dup(STDIN_FILENO);
+	info->initial_stdout = dup(STDOUT_FILENO);
 }
 
 void	reinit(t_info *info)
@@ -64,6 +66,8 @@ void	reinit(t_info *info)
 	table_flip(info->path);
 	info->path = split_path(info->envp);
 	info->index = 0;
+	info->initial_stdin = dup(STDIN_FILENO);
+	info->initial_stdout = dup(STDOUT_FILENO);
 	// free(info->list_token);
 }
 

@@ -6,21 +6,24 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/06 15:42:15 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:30:38 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+// Avec l'ancienne fonction, ca ne fait que verifier que le 1ere commande est un builtin.  
 void	is_builtin(t_info *info)
 {
 	t_token	*list;
 	int		i;
 
+	if (!info->command_lines)
+		return ;
 	i = 0;
-	list = info->command_lines[i].list_token;
-	while ((i <= info->nb_of_pipe) && list)
+	while ((i <= info->nb_of_pipe))
 	{
+		list = info->command_lines[i].list_token;
 		if (ft_strncmp(list->token, "pwd", 3) == 0)
 			info->command_lines[i].builtin = 1;
 		else if (ft_strncmp(list->token, "env", 3) == 0)
@@ -39,6 +42,35 @@ void	is_builtin(t_info *info)
 	}
 }
 
+// void	is_builtin(t_info *info)
+// {
+// 	t_token	*list;
+// 	int		i;
+
+// 	if (!info->command_lines[i].list_token)
+// 		return ;
+// 	i = 0;
+// 	while ((i <= info->nb_of_pipe))
+// 	{
+// 		list = info->command_lines[i].list_token;
+// 		if (ft_strncmp(list->token, "pwd", 3) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "env", 3) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "cd", 2) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "exit", 4) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "export", 6) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "echo", 4) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		else if (ft_strncmp(list->token, "unset", 5) == 0)
+// 			info->command_lines[i].builtin = 1;
+// 		i++;
+// 	}
+// }
+
 void	find_path_of_command(t_info *info)
 {
 	char	*path;
@@ -52,7 +84,7 @@ void	find_path_of_command(t_info *info)
 	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
 	{
 		j = 0;
-		while (info->path[j])
+		while (info->path[j] && info->command_lines[i].builtin != 1)
 		{
 			if (access(info->command_lines[i].list_token->token, X_OK) != -1)
 			{
