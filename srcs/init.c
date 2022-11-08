@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 21:59:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:30:32 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info)
 
 void	init_info(t_info *info, char **envp)
 {
-	// info->pwd = ft_strdup(getcwd(buffer, 4096));
+	info->pwd = ft_strdup(getcwd(info->pwd, 4096));
 	info->envp = tabcpy(envp);
 	// info->envp = envp;
 	info->list_token = NULL;

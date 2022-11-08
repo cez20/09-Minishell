@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/08 14:55:58 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:07:14 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**tab_trunc(char **tab, char *str, int len)
 	i = 0;
 	new_tab = NULL;
 	if (!tab || !str)
-		return (0);
+		return (tab);
 	while (tab[i])
 	{
 
@@ -130,8 +130,8 @@ int main(int argc, char **argv, char **envp)
 			add_history(line); 
 		else 
 			exit_terminal();
-		if (close_quote_checker(info, line))
-			printf("Les quotes sont tous fermé.\n");
+		if (close_quote_checker(info, line));
+			// printf("Les quotes sont tous fermé.\n");
 		else
 		{
 			printf("Les quotes ne sont pas fermés.\n");
