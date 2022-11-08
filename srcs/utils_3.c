@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 13:30:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:05:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	is_builtin(t_info *info)
 	if (!info->command_lines)
 		return ;
 	i = 0;
-	while ((i <= info->nb_of_pipe))
+	while ((i <= info->nb_of_pipe) && info->command_lines[i].list_token)
 	{
 		list = info->command_lines[i].list_token;
 		if (ft_strncmp(list->token, "pwd", 3) == 0)

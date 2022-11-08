@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 12:46:51 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:00:53 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,25 +101,6 @@ void	delete_tokens(t_token **list)
 		i++;
 	}
 }
-
-// void	delete_redirection_tokens(t_token **list)
-// {
-// 	t_token	*lst;
-	
-// 	lst = *list;
-// 	while (lst)
-// 	{
-// 		if (is_redirection(lst) == 1 && lst->prev)
-// 			delete_tokens(&lst);
-// 		else if (is_redirection(lst) == 1 && !lst->prev)
-// 		{
-// 			delete_tokens(list);
-// 			lst = *list;
-// 		}
-// 		if (lst && is_redirection(lst) == 0)
-// 			lst = lst->next;
-// 	}
-// }
 
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 {
