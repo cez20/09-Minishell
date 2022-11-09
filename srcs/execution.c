@@ -6,11 +6,30 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 11:50:27 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:43:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
+
+void	exec_error_management(t_command_line cmd_line)
+{
+	if (cmd_line.cmd_and_args)
+	{
+		if (cmd_line.error_infile != NULL)
+		{
+			write(2, "bash: ", 6);
+			write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
+			write(2, ": No such file or directory\n", 28);
+		}
+		else if (cmd_line.merge_path_cmd == NULL)
+		{
+			write(2, "bash: ", 6);
+			write(2, cmd_line.cmd_and_args[0], ft_strlen(cmd_line.cmd_and_args[0]));
+			write(2, ": command not found\n", 20);
+		}
+	}
+}
 
 void	put_back_default_std(t_info *info)
 {
@@ -52,8 +71,8 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 		}
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		exit (EXIT_FAILURE);
+		exec_error_management(cmd_line);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
 }
@@ -74,8 +93,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 		close(fd[0]);
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		//printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		exit (EXIT_FAILURE);
+		exec_error_management(cmd_line);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -105,7 +124,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 }
 
 //If command is not valid. Verify that something needs to be freed or not? 
-void exec_one_command(t_command_line cmd_line, t_info *info)
+void	exec_one_command(t_command_line cmd_line, t_info *info)
 {
 	pid_t	pid;
 
@@ -116,8 +135,8 @@ void exec_one_command(t_command_line cmd_line, t_info *info)
 	{
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		printf("bash: %s: command not found\n", cmd_line.cmd_and_args[0]);
-		exit (EXIT_FAILURE);
+		exec_error_management(cmd_line);
+		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, NULL, 0);	
@@ -131,8 +150,10 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 	
 	i = 0;
 	do_redirection(cmd_line[i]);
-	if (cmd_line[i].builtin == 1)
-		token_manager(info); 
+	if (cmd_line[i].builtin == 1 && cmd_line->error_infile) 
+		exec_error_management(cmd_line[i]);
+	else if (cmd_line[i].builtin == 1)
+		token_manager(info);
 	else
 		exec_one_command(cmd_line[i], info);
 }

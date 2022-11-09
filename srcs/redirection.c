@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 11:02:13 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:00:53 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,9 @@ void	heredoc_redirection(t_command_line *chunk, char *delimiter)
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)
 {
 	cmd_line->fd_in = open(list_token->next->token, O_RDWR);
-	// if (cmd_line->fd_in == -1 && !(cmd_line->error_infile))
-	// 	cmd_line->error_infile = list_token->next->token;
 	if (cmd_line->fd_in == -1 && !(cmd_line->error_infile))
 	{
 		cmd_line->error_infile = ft_strdup(list_token->next->token);
-		write(2, "bash: ", 6);
-		write(2, list_token->next->token, ft_strlen(list_token->next->token));
-		write(2, ": No such file or directory\n", 28);
 		cmd_line->fd_in = 0;
 	}
 }
@@ -106,25 +101,6 @@ void	delete_tokens(t_token **list)
 		i++;
 	}
 }
-
-// void	delete_redirection_tokens(t_token **list)
-// {
-// 	t_token	*lst;
-	
-// 	lst = *list;
-// 	while (lst)
-// 	{
-// 		if (is_redirection(lst) == 1 && lst->prev)
-// 			delete_tokens(&lst);
-// 		else if (is_redirection(lst) == 1 && !lst->prev)
-// 		{
-// 			delete_tokens(list);
-// 			lst = *list;
-// 		}
-// 		if (lst && is_redirection(lst) == 0)
-// 			lst = lst->next;
-// 	}
-// }
 
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 {

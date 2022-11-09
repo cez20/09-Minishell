@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/08 10:56:43 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:20:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	print_struct(t_command_line *cmd_line, t_info *info)
 	while (i <= info->nb_of_pipe)
 	{
 		printf("Address of list_token is: %p\n", cmd_line[i].list_token);
-		//print_double_pointer(cmd_line[i].cmd_and_args);
+		print_double_pointer(cmd_line[i].cmd_and_args);
 		printf("Command is :%s\n", cmd_line[i].command);
 		printf("Args is: %s\n", cmd_line[i].args);
 		printf("Builtin number is: %d\n", cmd_line[i].builtin);

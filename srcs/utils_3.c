@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 13:30:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:28:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	is_builtin(t_info *info)
 	if (!info->command_lines)
 		return ;
 	i = 0;
-	while ((i <= info->nb_of_pipe))
+	while ((i <= info->nb_of_pipe) && info->command_lines[i].list_token)
 	{
 		list = info->command_lines[i].list_token;
 		if (ft_strncmp(list->token, "pwd", 3) == 0)
@@ -81,10 +81,10 @@ void	find_path_of_command(t_info *info)
 	if (!info->path)
 		return ;
 	i = 0;
-	while ((i <= info->nb_of_pipe) && (info->command_lines[i].list_token))
+	while ((i <= info->nb_of_pipe))
 	{
 		j = 0;
-		while (info->path[j] && info->command_lines[i].builtin != 1)
+		while (info->path[j] && info->command_lines[i].builtin != 1 && (info->command_lines[i].list_token))
 		{
 			if (access(info->command_lines[i].list_token->token, X_OK) != -1)
 			{
@@ -112,6 +112,8 @@ void	print_double_pointer(char **str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		printf("The value of str[%d] is %s\n", i, str[i]);
@@ -129,7 +131,7 @@ void	create_execve_args_list(t_info	*info)
 	i = 0;
 	str = NULL;
 	list = info->command_lines[i].list_token;
-	if (!list)
+	if (!info->command_lines)
 		return ;
 	while (i < (info->nb_of_pipe + 1))
 	{
