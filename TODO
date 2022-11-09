@@ -33,7 +33,7 @@
 	FIXME: [X] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
 
-[] implémenter les pipes ( | )
+[<] implémenter les pipes ( | )
 [X] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
 [] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
 
@@ -44,10 +44,11 @@
 	[] ctrl-\
 [] Builtins
 	[] echo et "l'option -n"
-		[] gérer -n avec autre chose que juste n
-		[] gérer plusieurs -n 
-		[] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
-		[] gérer "'" '"' dans écho
+		[] echo "" ''
+		[X] gérer -n avec autre chose que juste n
+		[X] gérer plusieurs -n 
+		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
+		[X] gérer "'" '"' dans écho
 		[] gestion d'erreur'
 	[X] cd uniquement avec un chemin relatif ou absolu
 		[X]	cd ..
@@ -146,6 +147,8 @@ LOG:
 						- unset avec plusieurs args
 						- fix unset avec "=" 
 
+	Steven 9 novembre:	- fix quotes fermés quand elles sont vides ex: "" ou ''
+						-
 
 
 

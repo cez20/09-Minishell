@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 17:57:52 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/09 15:02:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,46 @@ int	is_n(t_token *node)
 				return (0);
 			i++;
 		}
+		if (!(*node->token))
+			return (0);
 		return (1);
 	}
 	return (0);
 }
+
+void	del_empty_node(t_token *token)
+{
+	t_token *prev_token;
+	t_token *next_token;
+
+	prev_token = token->prev;
+	next_token = token->next;
+
+	if (!(*token->token))
+	{
+		ft_lstdelone_token(token, free);
+		prev_token->next = next_token;
+		if (next_token)
+			next_token->prev = prev_token;
+	}
+}
+
+void	quote_remover(t_info *info)
+{
+	t_token *token;
+
+	token = info->command_lines[info->index].list_token;
+
+	while (token)
+	{
+		remove_quote(token);
+		del_empty_node(token);
+		token = token->next;
+	}
+	lst_print_token(&info->command_lines[info->index].list_token);
+}
+
+
 
 void	echo(t_info *info)
 {
@@ -78,11 +114,11 @@ void	echo(t_info *info)
 	int		i;
 	int		n;
 
-	// printf("IN ECHO\n");
 	
 	n = 0;
 	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
+	quote_remover(info);
 	if (token_list)
 	{
 		while (is_n(token_list))
@@ -96,16 +132,17 @@ void	echo(t_info *info)
 		printf("\n");
 		return ;
 	}
+	
 	while (token_list)
 	{
 		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0)
 		{
-			remove_quote(token_list);
+			// remove_quote(token_list);
 			printf(" %s", token_list->token);
 		}
 		else
 		{
-			remove_quote(token_list);
+			// remove_quote(token_list);
 			printf("%s", token_list->token);
 		}
 		i++;
