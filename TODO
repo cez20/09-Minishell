@@ -84,7 +84,7 @@
 [] Heredocs
 	[] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	[] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
-	[] heredoc ferme si le delim se retrouve au debut de la ligne 
+	[X] heredoc ferme si le delim se retrouve au debut de la ligne 
 		ex:	$> cat << hello
 			>	hello my name is
 			$>
@@ -106,7 +106,7 @@ FIXME:
 		[X] trunc les espaces après
 		[X] unset PATH fait segfault fill_cmd
 		[] double le prompt quand ctrl-C lorsque que le minishell hang
-		[] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
+		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 
 
 
@@ -148,7 +148,8 @@ LOG:
 						- fix unset avec "=" 
 
 	Steven 9 novembre:	- fix quotes fermés quand elles sont vides ex: "" ou ''
-						-
+						- fix echo "" et ''
+						- fonction qui supprime les tokens vides
 
 
 
