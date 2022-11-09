@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 15:28:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 16:59:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,24 +130,27 @@ void	create_execve_args_list(t_info	*info)
 
 	i = 0;
 	str = NULL;
-	list = info->command_lines[i].list_token;
 	if (!info->command_lines)
 		return ;
-	while (i < (info->nb_of_pipe + 1))
+	while (i <= info->nb_of_pipe)
 	{
 		j = 0;
 		list = info->command_lines[i].list_token;
-		info->command_lines[i].cmd_and_args = malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
-		str = info->command_lines[i].cmd_and_args;
-		while (list)
+		if (list)
 		{
-			str[j] = malloc((ft_strlen(list->token) + 1) * sizeof(char));
-			ft_strlcpy(str[j], list->token, ft_strlen(list->token) + 1);
-			list = list->next;
-			j++;
+			info->command_lines[i].cmd_and_args = malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
+			str = info->command_lines[i].cmd_and_args;
+			while (list)
+			{
+				str[j] = malloc((ft_strlen(list->token) + 1) * sizeof(char));
+				ft_strlcpy(str[j], list->token, ft_strlen(list->token) + 1);
+				list = list->next;
+				j++;
+			}
+			str[j] = 0;
 		}
-		str[j] = 0;
-		// print_double_pointer(str);
+		else
+			str = NULL;
 		i++;
 	}
 }
