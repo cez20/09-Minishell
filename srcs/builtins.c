@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/09 15:02:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/09 18:08:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	echo(t_info *info)
 	int		i;
 	int		n;
 
-	
 	n = 0;
 	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
@@ -132,19 +131,12 @@ void	echo(t_info *info)
 		printf("\n");
 		return ;
 	}
-	
 	while (token_list)
 	{
 		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0)
-		{
-			// remove_quote(token_list);
 			printf(" %s", token_list->token);
-		}
 		else
-		{
-			// remove_quote(token_list);
 			printf("%s", token_list->token);
-		}
 		i++;
 		token_list = token_list->next;
 	}
@@ -197,24 +189,33 @@ int	check_arg_export(char *arg)
 	return (0);
 }
 
+char *until_chr(char *str, char c)
+{
+	int i;
+	char *line;
 
+	i = 0;
+	line = NULL;
+
+	while (str[i] != c)
+		i++;
+	if (str[i])
+	{
+		line = ft_substr(str, 0, i);
+		return (line);
+	}
+	return (line);
+}
 
 void	export(t_info *info)
 {
 	int		i;
 	int		j;
 	char	*str;
+	char 	*line;
 
 	i = 0;
 	j = 0;
-
-	
-	// while (info->command_lines[info->index].cmd_and_args[i + 1])
-	// {
-	// 	if (check_arg_export(info->command_lines[info->index].cmd_and_args[i + 1]))
-	// 		info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
-	// 	i++;
-	// }
 
 	if (info->command_lines[info->index].cmd_and_args[i + 1])
 	{
@@ -222,8 +223,15 @@ void	export(t_info *info)
 		{
 			if (check_arg_export(info->command_lines[info->index].cmd_and_args[i + 1]))
 			{
-				// demander à Cesar s'il à déjà fait une fonction pour des cas et voir si elle est utilisable ici
-				info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
+				str = until_chr(info->command_lines[info->index].cmd_and_args[i + 1], '=');
+				line = search_line(info->envp, str);
+				if (line)
+				{
+					free(str);
+					ft_strlcpy(line, info->command_lines[info->index].cmd_and_args[i + 1], ft_strlen(line) + 1);
+				}
+				else
+					info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
 			}
 			i++;
 		}

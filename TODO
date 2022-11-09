@@ -97,6 +97,8 @@ Struct
 
 
 TODO: 
+		[] fonction update state baser sur deux flag D_quote et S_quote déterminant quoi faire avec le contenue d'une expansion
+		[] fix l'espace de la destination de export
 	
 	
 		
@@ -150,6 +152,7 @@ LOG:
 	Steven 9 novembre:	- fix quotes fermés quand elles sont vides ex: "" ou ''
 						- fix echo "" et ''
 						- fonction qui supprime les tokens vides
+						- fix espaces et doubles chevrons ex: >>allo ou <<allo
 
 
 
