@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/08 15:40:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:32:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void token_manager(t_info *info)
 		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
 			echo(info);
 		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
-			info->envp = tab_trunc(info->envp, info->command_lines[info->index].args, ft_strlen(info->command_lines[info->index].args));
+			unset(info);
 	info->index++;
 	}
 }
@@ -147,7 +147,7 @@ int main(int argc, char **argv, char **envp)
 			//token_manager(info);
 			redirection(info);
 			prepare_data_for_execution(info);
-			print_struct(info->command_lines, info);
+			//print_struct(info->command_lines, info);
 			execution(info, info->command_lines);
 			free(line);
 			free_struct_command_line(info);

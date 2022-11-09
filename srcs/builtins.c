@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 14:25:35 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:57:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,17 @@ int	check_arg_export(char *arg)
 
 	i = 0;
 
+	if (arg[i] == '=')
+	{
+		printf("bash: export: '%s': not a valid identifier\n", arg);
+		return (0);
+	}
+
 	while (arg[i])
 	{
 		if (arg[i] == '=')
 			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -177,7 +184,10 @@ void	export(t_info *info)
 		while (info->command_lines[info->index].cmd_and_args[i + 1])
 		{
 			if (check_arg_export(info->command_lines[info->index].cmd_and_args[i + 1]))
+			{
+				// demander à Cesar s'il à déjà fait une fonction pour des cas et voir si elle est utilisable ici
 				info->envp = tab_join(info->envp, info->command_lines[info->index].cmd_and_args[i + 1]);
+			}
 			i++;
 		}
 	}
@@ -197,4 +207,42 @@ void	export(t_info *info)
 			j = 0;
 		}
 	}
+}
+
+int	check_arg_unset(char *arg)
+{
+	int	i;
+
+	i = 0;
+
+	while (arg[i])
+	{
+		if (arg[i] == '=')
+		{
+			printf("bash: unset: '%s': not a valid identifier\n", arg);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	unset(t_info *info)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	
+	while (info->command_lines[info->index].cmd_and_args[i + 1])
+	{
+		if (check_arg_unset(info->command_lines[info->index].cmd_and_args[i + 1]))
+		{
+			str = ft_strjoin(info->command_lines[info->index].cmd_and_args[i + 1], "=");
+			info->envp = tab_trunc(info->envp, str, ft_strlen(str));
+			free(str);
+		}
+		i++;
+	}
+
 }

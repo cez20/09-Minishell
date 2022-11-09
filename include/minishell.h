@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 14:55:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/09 15:07:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	pwd(t_info *info);
 void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
+void	unset(t_info *info);
 
 // *** EXECUTION.C ***
 void	execution(t_info *info, t_command_line *line);
@@ -123,7 +124,7 @@ void	var_expansion(t_command_line *cmd_line, t_info *info);
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *chunk, char *delimiter);
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);

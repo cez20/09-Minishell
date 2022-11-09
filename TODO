@@ -8,6 +8,7 @@
 
 
 [] redirections 
+	[] Modifer fonction heredoc pour pipe au lieu de fichier.
 	[X] "< doit rediriger l'entrée"
 	[X] > doit rediriger la sortie 
 	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
@@ -21,6 +22,8 @@
 		[] Gerer les path relatifs?
 		[] Tous les FDS fermes dans parent (et aussi child?).
 		[] gerer le cas  cat > test.txt | wc
+	[X] Infile error : affichesur stderr durant letape execution (Nouvelle fonction: exec_error_manangement )
+	[X] Cmd error : afficher sur stderr durant execiton (Nouvelle fonction: exec_error_manangement )
 	[X] Fonction find_path_for command. Ajoute le fin que si la comande est deja un executable, le garder tel quel. 
 	[X] 1 ligne de commande avec builtin (manque seulement que les builtin soient finis pour les tester)
 	[X] 1 ligne de commande avec commande
@@ -55,15 +58,17 @@
 	[X] pwd sans aucune option
 		[X] pas de pwd 
 	[] export sans aucune option
-		[] export sans argument
-		[] gérer plusieurs args
-		[] pas de "="
-		[] gestion des erreurs
+		[X] export sans argument
+		[X] gérer plusieurs args
+		[X] pas de "="
+		[] vérifier si la variable existe déjà
+		[X] gestion des erreurs
 	[] unset sans aucune option
-		[] gérer plusieurs args
-		[] gérer les "="
-		[] sans argument
+		[X] gérer plusieurs args
+		[X] gérer les "="
+		[X] sans argument
 	[] env sans aucune option ni argument
+		[] renvoyer une erreur s'il' il des arguments ?
 		[] gestion d'erreur'
 	[] exit sans aucune option
 		[] errno
@@ -101,12 +106,13 @@ FIXME:
 		[X] trunc les espaces après
 		[X] unset PATH fait segfault fill_cmd
 		[] double le prompt quand ctrl-C lorsque que le minishell hang
+		[] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 
 
 
 
 Question: 
-			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"
+			- est-ce qu'on' laisse passé les args d'export' avec des espaces ex: "export allo = 12345"       Réponse: non 
  		
 LOG:
 	Steven	31 octobre:	- gérer les différents cas des pipes aves espaces
@@ -134,7 +140,14 @@ LOG:
 						- fix segfault unset sans argument
 						- 
 
+	Steven 8 novembre:	- fix export plusieurs argument
+						- fix export sans "="
+						- gestion d'erreur' export
+						- fix unset sans argument 
+						- unset avec plusieurs args
+						- fix unset avec "=" 
 
+	Cesar 9 novembre    - Modifier fonction heredoc pour un pipe. 
 
 
 
