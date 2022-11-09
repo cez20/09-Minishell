@@ -87,8 +87,6 @@ merge:
 	@git pull origin $(BRANCH)
 	@git merge $(BRANCH)
 
-go:
-	@git checkout $(BRANCH)
 
 objs:
 	@mkdir -p objs
