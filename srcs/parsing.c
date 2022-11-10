@@ -3,57 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/05 14:39:41 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:03:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void check_chevron(t_info *info)
+{
+	int i;
+
+	i = 0;
+
+	if (info->last_position[i] == '<' && info->last_position[i + 1] == '<')
+	{
+		if (info->last_position[i + 2] == '<')
+			printf("bash: syntax error near unexpected token '<'\n");
+		else
+		{
+			ft_lstaddback_token(&info->list_token, ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+			info->last_position++;
+			info->last_position++;
+		}
+	}
+	else if (info->last_position[i] == '>' && info->last_position[i + 1] == '>')
+	{
+		if (info->last_position[i + 2] == '>')
+			printf("bash: syntax error near unexpected token '>'\n");
+		else
+		{
+			ft_lstaddback_token(&info->list_token, ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+			info->last_position++;
+			info->last_position++;
+		}
+	}
+}
+
 void	split_token(char *token, t_info *info)
 {
 	int	i;
-	// int	x;
 
 	i = 0;
-	// x = 0;
 	info->last_position = token;
 	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
 	while (*info->last_position)
 	{
 		skip_space(info);
+		check_chevron(info);
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
 		skip_space(info);
 		if (*info->last_position == '|')
 		{
 			info->command_lines[i].list_token = info->list_token;
-			// lst_print_token(&info->command_lines[i].list_token);
-			// ft_lstlast_token(info->command_lines[i].list_token)->next = NULL;
 			info->list_token = NULL;
 			info->last_position++;
 			i++;
-			// printf("i = %d\n", i);
 		}
-		// info->token = tab_join(info->token, search_another_one(info->last_position, simple_or_double(info->last_position), info));
 	}
-	// printf("i = %d\n", i);
-	// i++;
 	info->command_lines[i].list_token = info->list_token;
+	lst_print_token(&info->list_token);
 	info->list_token = NULL;
-	// lst_print_token(&info->command_lines[i].list_token);
-	
-	// x = i;
-	i = 0;
-	// while (x >= i)
-	// {
-	// 	printf("i = %d\n", i);
-	// 	lst_print_token(&info->command_lines[i++].list_token);
-	// }
-	// // print_tab(info->token);
-	// lst_print_token(&info->list_token);
 }
 
 char	*get_command(t_token *list_token)
@@ -143,7 +156,6 @@ char	*search_another_one(char *str, char c, t_info *info)
 	}
 	else
 		info->last_position = str;
-	// printf("last_position search = %c\n", *info->last_position);
 
 	token = ft_substr(start, 0, info->len);
 	return (token);
