@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/10 15:52:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:01:12 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,21 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 		if (cmd_line.builtin == 1)
 		{
 			token_manager(info);
-			exit (EXIT_FAILURE);
+			exit (EXIT_SUCCESS);
 		}
-		if (cmd_line.merge_path_cmd != NULL || cmd_line.error_infile == NULL)
+		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(pid, NULL, 0);
+	//else
+		//waitpid(pid, NULL, 0);
 }
 
 void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 {
 	int 	fd[2]; // Les fd qui seront associe
 	
-	//printf("The address of cmd_and_args is %p\n", &cmd_line.cmd_and_args);
-	//printf("The address of cmd_and_args is %p\n", cmd_line.cmd_and_args);
 	if (pipe(fd) == -1) // Creer le pipe() 
 		return ;
 	pid = fork(); // Creer un fork qui cree un child et un parent process 
@@ -93,9 +92,12 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		if (cmd_line.merge_path_cmd != NULL || cmd_line.error_infile == NULL)
+		if (cmd_line.builtin == 1)
 		{
-			// printf("execution %s\n", cmd_line.merge_path_cmd );
+			token_manager(info);
+			exit (EXIT_SUCCESS);
+		}
+		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		}
 		exec_error_management(cmd_line);
@@ -121,11 +123,11 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		create_child(cmd_line[i], info, pid[i]);
 		i++;
 	}
-	i = 0;
-	while (i < info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
-		waitpid(pid[i++], NULL, 0);
 	do_redirection(cmd_line[i]);
-	last_cmd_or_builtin(cmd_line[i], info, pid[i]);	
+	last_cmd_or_builtin(cmd_line[i], info, pid[i]);
+	i = 0;
+	while (i <= info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
+		waitpid(pid[i++], NULL, 0);
 }
 
 //If command is not valid. Verify that something needs to be freed or not? 
