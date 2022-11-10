@@ -62,6 +62,7 @@
 		[X] export sans argument
 		[X] gérer plusieurs args
 		[X] pas de "="
+		[] var1, var111111111
 		[] vérifier si la variable existe déjà
 		[X] gestion des erreurs
 	[] unset sans aucune option

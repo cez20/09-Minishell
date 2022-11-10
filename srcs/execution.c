@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/09 17:07:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:52:44 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 		close(fd[1]);
 		close(fd[0]);
 		if (cmd_line.merge_path_cmd != NULL || cmd_line.error_infile == NULL)
+		{
+			// printf("execution %s\n", cmd_line.merge_path_cmd );
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+		}
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
