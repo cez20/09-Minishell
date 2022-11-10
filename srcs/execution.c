@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/10 15:50:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:30:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	//else
-		//waitpid(pid, NULL, 0);
+	else
+		waitpid(pid, NULL, 0);
 }
 
 void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
@@ -118,14 +118,14 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	i = 0;
 	while (i < info->nb_of_pipe)
 	{
-		do_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
+		do_redirection(cmd_line[i]);
 		create_child(cmd_line[i], info, pid[i]);
 		i++;
 	}
 	do_redirection(cmd_line[i]);
 	last_cmd_or_builtin(cmd_line[i], info, pid[i]);
 	i = 0;
-	while (i <= info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
+	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], NULL, 0);
 }
 
@@ -144,8 +144,8 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	else
-		waitpid(pid, NULL, 0);	
+	//else
+		//waitpid(pid, NULL, 0);	
 }
 
 //Fonction qui execute une commande avec execve() dans un CHILD
