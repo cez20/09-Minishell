@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/09 18:08:56 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/10 14:08:52 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	quote_remover(t_info *info)
 		del_empty_node(token);
 		token = token->next;
 	}
-	lst_print_token(&info->command_lines[info->index].list_token);
+	//lst_print_token(&info->command_lines[info->index].list_token);
 }
 
 
