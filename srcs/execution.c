@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/10 16:01:12 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:25:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	//else
-		//waitpid(pid, NULL, 0);
+	else
+		waitpid(pid, NULL, 0);
 }
 
 void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
@@ -99,7 +99,6 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 		}
 		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		}
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
