@@ -162,7 +162,7 @@ test redirection:
 
 test général:
 				- vérifier comment se comporte le code lorsque l'on' unset une variables importantes, ex: PATH ou PWD
-				- sleep(2) | sleep(2) | sleep(2	)
+				- sleep(2) | sleep(2) | sleep(2)
 				- dev/urandom
 
 
