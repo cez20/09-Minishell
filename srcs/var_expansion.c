@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/05 13:40:16 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:04:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	locate_expansion(char **str, char **env)
 		i++;
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
-		str4 = ft_strdup(*str + i);
+		if (*str + 1)
+			str4 = ft_strdup(*str + i);
 		find_expansion(str, str1, str3, str4, env);
 		free(str1);
 		free(str2);

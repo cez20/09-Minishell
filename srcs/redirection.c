@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 14:00:53 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:15:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	append_output_redirection(t_command_line *chunk, char *outfile)
 	{
 		printf("bash: %s: %s\n", outfile, strerror(errno));
 	}
-	printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
+	//printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
 }
 
 void	output_redirection(t_command_line *chunk, char *token)
@@ -30,29 +30,33 @@ void	output_redirection(t_command_line *chunk, char *token)
 	if (chunk->fd_out != 1)
 		close(chunk->fd_out);
 	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
-	printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
+	//printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
-void	heredoc_redirection(t_command_line *chunk, char *delimiter)
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
 	char	*line;
-
-	if (chunk->fd_in != 0)
-		close(chunk->fd_in);
-	chunk->fd_in = open("heredoc.txt", O_TRUNC | O_CREAT | O_RDWR, 0644);
+	int	  	fd[2];
+	
+	if (cmd_line->fd_in != 0)
+		close(cmd_line->fd_in);
+	if (pipe(fd) == -1)
+		return ;
 	while (1)
 	{
 		line = readline(">");
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && (ft_strlen(delimiter) == ft_strlen(line)))
 		{
 			free(line);
 			break ;
 		}
-		write(chunk->fd_in, line, ft_strlen(line));
-		write(chunk->fd_in, "\n", 1);
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
+	close (fd[1]);
+	cmd_line->fd_in = fd[0]; 
 }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)
@@ -137,7 +141,7 @@ void	redirection(t_info	*info)
 		{
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list);
-			else if ((ft_strncmp(list->token, "<<", 2) == 0) && list->next)
+			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
 				heredoc_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);

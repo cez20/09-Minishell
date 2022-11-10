@@ -8,27 +8,28 @@
 
 
 [] redirections 
+	[] Modifer fonction heredoc pour pipe au lieu de fichier.
 	[X] "< doit rediriger l'entrée"
 	[X] > doit rediriger la sortie 
 	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
 	[X] >> doit rediriger la sortie en mode append.
 
 [] execution
-	[X] Fonction find_path_for command. Ajoute le fin que si la comande est deja un executable, le garder tel quel. 
-	[] Si jai un error_infile pcq infile nexiste pas, ne pas creer de child et simplement afficher sur STDERR le message
-	[] 1 ligne de commande avec builtin (manque seulement que les builtin soient finis pour les tester)
-	[X] 1 ligne de commande avec commande
-	[] Tester
 	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
-	[] Cas d'erreur!.' 
-	[] gérer les paths absolu
-	[] exécutable
-	[] changer la facon dont les waitpid fonctionne et les regrouper tous en dehors de la fonction create_child
-	[] gerer le cas  cat > test.txt | wc
-	[] valider que tous les fds sont bien ferme (est ce que je dois regarder dans les childs aussi)
 	[] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
-	[] ./minishell | 
+	[] Cas specifique a gerer 
+		[] Gerer les path relatifs?
+		[] Tous les FDS fermes dans parent (et aussi child?).
+		[] gerer le cas  cat > test.txt | wc
+	[X] Infile error : affichesur stderr durant letape execution (Nouvelle fonction: exec_error_manangement )
+	[X] Cmd error : afficher sur stderr durant execiton (Nouvelle fonction: exec_error_manangement )
+	[X] Fonction find_path_for command. Ajoute le fin que si la comande est deja un executable, le garder tel quel. 
+	[X] 1 ligne de commande avec builtin (manque seulement que les builtin soient finis pour les tester)
+	[X] 1 ligne de commande avec commande
+	[X] Gerer les executables dont donne le path complet (ex: /bin/ls)
+	[X] ./minishell |
+	[X] Execution en simultaneeO (waitpid en dehors de la fonction create_child)
 
 	FIXME: [X] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
@@ -36,7 +37,6 @@
 [<] implémenter les pipes ( | )
 [X] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
 [] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
-
 
 [] signaux
 	[] ctrl-C
@@ -82,6 +82,7 @@
 	[] fix les cas de "$USER" "'$USER'" '$USER'
 	
 [] Heredocs
+	[] Changer heredoc pour utiliser un pipe au lieu de fichier 
 	[] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	[] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
 	[X] heredoc ferme si le delim se retrouve au debut de la ligne 
@@ -154,6 +155,10 @@ LOG:
 						- fonction qui supprime les tokens vides
 						- fix espaces et doubles chevrons ex: >>allo ou <<allo
 
+	Cesar 9 novembre    - Modifier fonction heredoc pour un pipe.
+						- Changer strncmp dans fonction redirection pour strncmp(<<, 3) et strncmp(< , 2)
+						- Cas suivant fonctionne : < test.txt | wc   OU  << cat (Modification fonction create_execve_args_list)
+						- Expansion inexistante dans envp devrait afficher un retour a la ligne.  
 
 
 test redirection:

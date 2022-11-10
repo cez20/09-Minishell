@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 15:43:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:07:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exec_error_management(t_command_line cmd_line)
 {
-	if (cmd_line.cmd_and_args)
+	if (cmd_line.cmd_and_args != NULL)
 	{
 		if (cmd_line.error_infile != NULL)
 		{
@@ -69,7 +69,7 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 			token_manager(info);
 			exit (EXIT_FAILURE);
 		}
-		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+		if (cmd_line.merge_path_cmd != NULL || cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
@@ -81,6 +81,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 {
 	int 	fd[2]; // Les fd qui seront associe
 	
+	//printf("The address of cmd_and_args is %p\n", &cmd_line.cmd_and_args);
+	//printf("The address of cmd_and_args is %p\n", cmd_line.cmd_and_args);
 	if (pipe(fd) == -1) // Creer le pipe() 
 		return ;
 	pid = fork(); // Creer un fork qui cree un child et un parent process 
@@ -91,7 +93,7 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+		if (cmd_line.merge_path_cmd != NULL || cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
