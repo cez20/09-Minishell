@@ -34,7 +34,7 @@
 	FIXME: [X] les builtins sont exécutée puis renvoie l'erreur' command not found ex: bash: echo: command not found
 
 
-[<] implémenter les pipes ( | )
+[X] implémenter les pipes ( | )
 [X] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
 [] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
 
@@ -62,8 +62,8 @@
 		[X] export sans argument
 		[X] gérer plusieurs args
 		[X] pas de "="
-		[] var1, var111111111
-		[] vérifier si la variable existe déjà
+		[X] var1, var111111111
+		[X] vérifier si la variable existe déjà
 		[X] gestion des erreurs
 	[] unset sans aucune option
 		[X] gérer plusieurs args

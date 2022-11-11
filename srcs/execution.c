@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/11 15:12:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:25:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
+	waitpid(pid, NULL, 0);
 }
 
 //Fonction qui execute une commande avec execve() dans un CHILD
