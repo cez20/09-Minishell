@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/10 16:25:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:12:02 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ void	do_redirection(t_command_line cmd_line)
 
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
-void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
+void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
-	pid = fork();
-	if (pid == -1)
+	*pid = fork();
+	if (*pid == -1)
 		return ;
-	if (pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
+	if (*pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
 	{
 		if (cmd_line.builtin == 1)
 		{
@@ -74,22 +74,21 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t pid)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	else
-		waitpid(pid, NULL, 0);
 }
 
-void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
+void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
-	int 	fd[2]; // Les fd qui seront associe
+	int	fd[2]; // Les fd qui seront associe
 	
 	if (pipe(fd) == -1) // Creer le pipe() 
 		return ;
-	pid = fork(); // Creer un fork qui cree un child et un parent process 
-	if (pid == -1)
+	*pid = fork(); // Creer un fork qui cree un child et un parent process 
+	if (*pid == -1)
 		return ;
-	if (pid == 0) // Je rentre dans le child process 
+	if (*pid == 0) // Je rentre dans le child process 
 	{
-		dup2(fd[1], STDOUT_FILENO);
+		if (cmd_line.fd_out == 1)
+			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		close(fd[0]);
 		if (cmd_line.builtin == 1)
@@ -112,20 +111,23 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t pid)
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
-	pid_t	pid[NB_PROCESS]; // La macro est dans le fichier .h
+	pid_t	pid[NB_PROCESS];
 	int		i;
 	
 	i = 0;
-	while (i < info->nb_of_pipe)
+	while (i <= info->nb_of_pipe)
 	{
-		do_redirection(cmd_line[i]); // dup_redirection cause probleme quand redirection dans commandes du milieu
-		create_child(cmd_line[i], info, pid[i]);
+		do_redirection(cmd_line[i]);
+		if (i == info->nb_of_pipe)
+		{
+			last_cmd_or_builtin(cmd_line[i], info, &pid[i]);
+			break;
+		}
+		create_child(cmd_line[i], info, &pid[i]);
 		i++;
 	}
-	do_redirection(cmd_line[i]);
-	last_cmd_or_builtin(cmd_line[i], info, pid[i]);
 	i = 0;
-	while (i <= info->nb_of_pipe) // J'attends tous les process qui ont un pipe associe
+	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], NULL, 0);
 }
 
@@ -144,8 +146,6 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	else
-		waitpid(pid, NULL, 0);	
 }
 
 //Fonction qui execute une commande avec execve() dans un CHILD

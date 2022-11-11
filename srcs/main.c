@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/10 14:15:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:11:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int main(int argc, char **argv, char **envp)
 	init_info(info, envp);
 
 	printf("Let's go ça part !\n");
-	disable_echo();
+	//disable_echo();
 	while(1 && argc && argv && envp)
 	{
 		signal_modified();
