@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/10 16:02:06 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:37:44 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,13 @@ void	echo(t_info *info)
 	}
 	if (!n)
 		printf("\n");
+}
+
+void	*ft_realloc(void *ptr, size_t size)
+{
+	free(ptr);
+	ptr = malloc(size);
+	return (ptr);
 }
 
 void	cd(t_info *info)

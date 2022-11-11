@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/08 15:14:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:05:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ void	reinit(t_info *info)
 		i++;
 	}
 	free(info->command_lines);
+	// free(info->pwd);
 	//free_double_pointers(info->path);
 	table_flip(info->path);
+	// table_flip(info->envp);
 	info->path = split_path(info->envp);
 	info->index = 0;
 	info->initial_stdin = dup(STDIN_FILENO);

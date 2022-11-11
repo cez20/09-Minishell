@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/07 23:25:14 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:40:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int	exit_terminal(void)
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
-void	sig_handler(int signum)
+void sig_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+        // printf("Minishell$>");
 		rl_redisplay();
 	}
 }

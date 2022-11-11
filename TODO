@@ -10,7 +10,7 @@
 [] redirections 
 	[] Modifer fonction heredoc pour pipe au lieu de fichier.
 	[X] << allo cat, ne reconnait pas le delimiter s'il y a un espace après
-	[] >> créer les fichiers en concervant les espaces
+	[X] >> créer les fichiers en concervant les espaces
 	[X] "< doit rediriger l'entrée"
 	[X] > doit rediriger la sortie 
 	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
@@ -44,6 +44,10 @@
 	[] ctrl-C
 	[] ctrl-D
 	[] ctrl-\
+
+FIXME:	
+		[] ctrl-C double le prompt lorsque le programme hang
+
 [] Builtins
 	[] echo et "l'option -n"
 		[] echo "" ''
@@ -115,6 +119,27 @@ FIXME:
 		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 
 
+LEAKS:
+		-  1,024 bytes in 1 blocks are definitely lost in loss record 75 of 117
+			    at 0x100178545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+			    by 0x100440AA7: __private_getcwd (in /usr/lib/system/libsystem_c.dylib)
+			    by 0x100005651: init_info (init.c:37)
+				by 0x100001C09: main (main.c:123)
+		- Syscall param execve(envp) points to uninitialised byte(s)
+			    at 0x10066241E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+			    by 0x1000030CA: exec_one_command (execution.c:145)
+			    by 0x1000032AD: one_command_or_builtin (execution.c:165)
+			    by 0x1000032F2: execution (execution.c:177)
+			    by 0x100001D27: main (main.c:152)
+			  Address 0x1008bdc40 is 320 bytes inside a block of size 321 alloc'd
+			    at 0x100178545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+			    by 0x1000319A5: tabcpy (ft_tab.c:89)
+			    by 0x10000566A: init_info (init.c:38)
+			    by 0x100001C09: main (main.c:123)
+
+
+
+
 
 
 Question: 
@@ -165,6 +190,9 @@ LOG:
 
 	Steven 11 novembre	- fix export 
 						- fix command seule, manquait un waitpid
+						- fix espaces après le delimiter des Heredocs
+						- fix espaces après les noms de fichiers générer par >>
+
 
 
 test redirection:
