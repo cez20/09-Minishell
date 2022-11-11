@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/09 15:15:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:20:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	while (1)
 	{
 		line = readline(">");
+		
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && (ft_strlen(delimiter) == ft_strlen(line)))
 		{
 			free(line);
@@ -137,6 +138,7 @@ void	redirection(t_info	*info)
 	{
 		chunk = &info->command_lines[i];
 		list = info->command_lines[i].list_token;
+		// lst_print_token(&list);
 		while (list)
 		{
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)

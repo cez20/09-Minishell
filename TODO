@@ -1,14 +1,16 @@
 
 [X] Afficher un prompt en l’attente d’une nouvelle commande.
 [X] Historique fonctionnel
-[] chercher et lancer le bon exécutable (PATH environnement, absolu ou relatif)
-[] ne pas interprèter de quotes non fermés ou de caractère spéciaux non préciser comme \ ou ;
+[X] chercher et lancer le bon exécutable (PATH environnement, absolu ou relatif)
+[X] ne pas interprèter de quotes non fermés ou de caractère spéciaux non préciser comme \ ou ;
 [X] gérer simple quotes
 [X] gérer double quotes
 
 
 [] redirections 
 	[] Modifer fonction heredoc pour pipe au lieu de fichier.
+	[X] << allo cat, ne reconnait pas le delimiter s'il y a un espace après
+	[] >> créer les fichiers en concervant les espaces
 	[X] "< doit rediriger l'entrée"
 	[X] > doit rediriger la sortie 
 	[X] << doit recevoir un délimiteur et lire l’input donné jusqu’à rencontrer une ligne contenant le délimiteur. Cependant, l’historique n’a pas à être mis à jour !
@@ -160,6 +162,9 @@ LOG:
 						- Changer strncmp dans fonction redirection pour strncmp(<<, 3) et strncmp(< , 2)
 						- Cas suivant fonctionne : < test.txt | wc   OU  << cat (Modification fonction create_execve_args_list)
 						- Expansion inexistante dans envp devrait afficher un retour a la ligne.  
+
+	Steven 11 novembre	- fix export 
+						- fix command seule, manquait un waitpid
 
 
 test redirection:

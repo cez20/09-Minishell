@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/10 16:01:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:19:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ void check_chevron(t_info *info)
 	}
 }
 
+void	trim_space(t_info *info, char *set)
+{
+	t_token *token;
+	char	*tmp;
+
+	token = info->list_token;
+
+	while (token)
+	{
+		tmp = token->token;
+		token->token = ft_strtrim(token->token, set);
+		free(tmp);
+		token = token->next;
+	}
+}
+
 void	split_token(char *token, t_info *info)
 {
 	int	i;
@@ -56,6 +72,7 @@ void	split_token(char *token, t_info *info)
 		check_chevron(info);
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
 		skip_space(info);
+		// trim_space(info, " \t\n\r\v");
 		if (*info->last_position == '|')
 		{
 			info->command_lines[i].list_token = info->list_token;
