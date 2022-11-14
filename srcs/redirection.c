@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/11 16:20:10 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/13 19:54:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	while (1)
 	{
 		line = readline(">");
-		
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && (ft_strlen(delimiter) == ft_strlen(line)))
 		{
 			free(line);
