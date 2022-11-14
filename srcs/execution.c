@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 14:01:58 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:04:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,18 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	int		i;
 	
 	i = 0;
-	while (i <= info->nb_of_pipe)
+	while (info->index <= info->nb_of_pipe)
 	{
-		do_redirection(cmd_line[i]);
-		if (i == info->nb_of_pipe)
+		do_redirection(cmd_line[info->index]);
+		if (info->index == info->nb_of_pipe)
 		{
-			last_cmd_or_builtin(cmd_line[i], info, &pid[i]);
+			last_cmd_or_builtin(cmd_line[info->index], info, &pid[info->index]);
 			break;
 		}
-		create_child(cmd_line[i], info, &pid[i]);
-		i++;
+		create_child(cmd_line[info->index], info, &pid[info->index]);
+		info->index++;
 	}
-	i = 0;
+	// i = 0;
 	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], NULL, 0);
 }
