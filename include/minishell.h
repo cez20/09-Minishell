@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/13 22:42:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:05:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ void	print_struct(t_command_line *cmd_line, t_info *info);
 void	is_builtin(t_info *info);
 void	find_execve_binaries(t_info *info, t_command_line *cmd_line);
 void	find_path_of_command(t_command_line *cmd_line, char *path);
+void	create_execve_args_list(t_info *info, t_command_line *cmd_line);;
 void	print_double_pointer(char **str);
-void	create_execve_args_list(t_info	*info);
 void	prepare_data_for_execution(t_info *info);
 
 #endif
