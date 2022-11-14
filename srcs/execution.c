@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 12:20:33 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:22:42 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_error_management(t_command_line cmd_line)
 			write(2, ": command not found\n", 20);
 		}
 	}
-	else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL)
+	else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL) // Pour les cas < te.txt sans argument.  
 	{
 		write(2, "bash: ", 6);
 		write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
@@ -84,14 +84,14 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 
 void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
-	int	fd[2]; // Les fd qui seront associe
+	int	fd[2];
 	
-	if (pipe(fd) == -1) // Creer le pipe() 
+	if (pipe(fd) == -1)
 		return ;
-	*pid = fork(); // Creer un fork qui cree un child et un parent process 
+	*pid = fork(); 
 	if (*pid == -1)
 		return ;
-	if (*pid == 0) // Je rentre dans le child process 
+	if (*pid == 0)
 	{
 		if (cmd_line.fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);

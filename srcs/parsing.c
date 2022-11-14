@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/11 16:19:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 17:06:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	split_token(char *token, t_info *info)
 		check_chevron(info);
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
 		skip_space(info);
-		// trim_space(info, " \t\n\r\v");
+		trim_space(info, " \t\n\r\v");
 		if (*info->last_position == '|')
 		{
 			info->command_lines[i].list_token = info->list_token;
