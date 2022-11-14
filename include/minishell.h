@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 11:27:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:25:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_info
 	int						nb_of_pipe;
 	int						initial_stdin;
 	int						initial_stdout;
+	int						exit_code;
 	char					**path;
 }		t_info;
 
@@ -119,7 +120,8 @@ void	disable_echo(void);
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
 char	*env_variable(char *str, int *i);
-void	locate_expansion(char **str, char **env);
+//void	locate_expansion(char **str, char **env);
+void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
 
 //*** REDIRECTION.C ***

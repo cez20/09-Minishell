@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 14:00:01 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 17:25:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_info(t_info *info, char **envp)
 	info->initial_stdout = 1;
 	info->path = split_path(envp);
 	info->state = TEXT;
+	info->exit_code = 0;
 	info->initial_stdin = dup(STDIN_FILENO);
 	info->initial_stdout = dup(STDOUT_FILENO);
 }

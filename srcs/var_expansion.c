@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:08:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:24:33 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ char	*env_variable(char *str, int *i)
 	return (str1);
 }
 
-void	locate_expansion(char **str, char **env)
+
+void	locate_expansion(char **str, char **env, t_info *info)
 {
 	int		i;
 	char	*str1;
@@ -83,6 +84,11 @@ void	locate_expansion(char **str, char **env)
 	str2 = NULL; // Pas olbige
 	str3 = NULL; // Pas olbige
 	str4 = NULL; // Pas olbige
+	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
+	{
+		free(*str);
+		*str = ft_itoa(info->exit_code);
+	}
 	while ((*str)[i] != '$' && (*str)[i])
 		i++;
 	if ((*str)[i] == '$')
@@ -90,6 +96,7 @@ void	locate_expansion(char **str, char **env)
 		if (i > 0)
 			str1 = ft_substr(*str, 0, i);
 		i++;
+		
 		str2 = env_variable(*str, &i);
 		str3 = ft_strjoin(str2, "=");
 		if (*str + 1)
@@ -116,7 +123,7 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 		while (list)
 		{
 			if (ft_strchr(list->token, '$'))
-				locate_expansion(&list->token, info->envp);
+				locate_expansion(&list->token, info->envp, info);
 			//printf("%s\n", list->token);
 			list = list->next;
 		}

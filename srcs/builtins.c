@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 15:10:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 17:53:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ int	is_n(t_token *node)
 	{
 		if (ft_strlen(node->token) == 2 && !ft_strncmp(node->token, "-n", 2))
 			return (1);
+		else if (ft_strlen(node->token) < 2)
+			return (0);
 		while (node->token[i])
 		{
 			if (!(node->token[i] == 'n'))
 				return (0);
 			i++;
 		}
-		if (!(*node->token))
+		if ((node->token[i]))
 			return (0);
 		return (1);
 	}
@@ -115,6 +117,7 @@ void	echo(t_info *info)
 	n = 0;
 	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
+	//printf("%s\n", token_list->token);
 	quote_remover(info);
 	if (token_list)
 	{
