@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/11 15:25:37 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 13:51:32 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	if (pid == 0)
 	{
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+		{
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+			printf("exec\n");
+		}
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
