@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 13:51:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 14:01:58 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ void	exec_error_management(t_command_line cmd_line)
 			write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
 			write(2, ": No such file or directory\n", 28);
 		}
-		else if (cmd_line.merge_path_cmd == NULL)
+		else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
 		{
 			write(2, "bash: ", 6);
 			write(2, cmd_line.cmd_and_args[0], ft_strlen(cmd_line.cmd_and_args[0]));
 			write(2, ": command not found\n", 20);
 		}
+	}
+	else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL)
+	{
+		write(2, "bash: ", 6);
+		write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
+		write(2, ": No such file or directory\n", 28);
 	}
 }
 
@@ -106,6 +112,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
+		if (cmd_line.fd_out != 1) // I must precise also that next command is not last one. 
+			dup2(info->initial_stdout, STDOUT_FILENO);
 	}
 }
 

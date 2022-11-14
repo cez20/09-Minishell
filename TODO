@@ -171,12 +171,23 @@ LOG:
 						- fix segfault unset sans argument
 						- 
 
+	Cesar 7 novembre 	- Gerer les absolute path dans la fonction find_path_of_command
+						- Modif find_path_command pour eviter que builtin "echo" ou autre ne cherche son executable (ex: bin/echo);
+						- Input redirection(1ere serie de commande) et output redirection (derniere serie de commande) fonctionnel. 
+						- Creation fonction one_command_or_builtin (pour execution un seule command ou builtin)
+						- Ajout initial_stdin et initial_stdin dans fonction init() et reinit();
+						- Creation fonction, put_back_initial_std (pour remettre les stdin a leur etat initial)
+						- Execution en simultanee (waitpid en dehors de la fonction create_child)
+
 	Steven 8 novembre:	- fix export plusieurs argument
 						- fix export sans "="
 						- gestion d'erreur' export
 						- fix unset sans argument 
 						- unset avec plusieurs args
 						- fix unset avec "=" 
+
+	Cesar 8 novembre 	- Infile error: message d'erreur STDERR s'affiche lors de l'execution (ex : < te.txt cat | wc)
+						- Refait les fonctions dans execution pour que ca soit plus lisible  
 
 	Steven 9 novembre:	- fix quotes fermés quand elles sont vides ex: "" ou ''
 						- fix echo "" et ''
@@ -186,13 +197,26 @@ LOG:
 	Cesar 9 novembre    - Modifier fonction heredoc pour un pipe.
 						- Changer strncmp dans fonction redirection pour strncmp(<<, 3) et strncmp(< , 2)
 						- Cas suivant fonctionne : < test.txt | wc   OU  << cat (Modification fonction create_execve_args_list)
-						- Expansion inexistante dans envp devrait afficher un retour a la ligne.  
+	
+
+	Cesar 10 novembre	- Modification des waitpid dans la fonction create_child
+						- 
 
 	Steven 11 novembre	- fix export 
 						- fix command seule, manquait un waitpid
 						- fix espaces après le delimiter des Heredocs
 						- fix espaces après les noms de fichiers générer par >>
 
+	Cesar 13 novembre   - Gestion du cas cat > test2.txt | wc  pour qu'il reagisse comme dans bash 
+						- Gestion des de input redirection dans les lignes commandes autre que 1ere! 
+						- Cleaner ma fonction find_execve_binary 
+						- Ajout du fichier temporary.c qui contient des fonctions qui fonctionnaient avant qu'elle ne soit
+						  epuree (Just in case!)
+
+	Cesar 14 novembre   - Expansion non-existante (Ex: TRES) n'affiche rien et retourne le prompt
+						- Message derreur lorsque redirection avec expansion non-existante (< TRES) (Ajout else if dans fonction exec_error_management)
+						- Message derreur lorsque redirection avec fichier non-existante (ex: < te.txt) (Ajout else if dans fonction exec_error_management)
+			
 
 
 test redirection:
