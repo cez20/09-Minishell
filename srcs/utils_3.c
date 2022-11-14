@@ -6,13 +6,14 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/13 22:45:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/13 23:00:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// Avec l'ancienne fonction, ca ne fait que verifier que le 1ere commande est un builtin.  
+// Avec l'ancienne fonction, ca ne fait que verifier que 
+//le 1ere commande est un builtin.  
 void	is_builtin(t_info *info)
 {
 	t_token	*list;
@@ -59,7 +60,7 @@ void	find_execve_binaries(t_info *info, t_command_line *cmd_line)
 		{
 			find_path_of_command(&cmd_line[i], path[j]);
 			if (cmd_line[i].merge_path_cmd)
-				break;
+				break ;
 			j++;
 		}
 		i++;
@@ -70,10 +71,10 @@ void	find_path_of_command(t_command_line *cmd_line, char *path)
 {
 	char	*temp_exe;
 	char	*temp_path;
-	
+
 	if (access((*cmd_line).list_token->token, X_OK) != -1)
 		(*cmd_line).merge_path_cmd = ft_strdup((*cmd_line).list_token->token);
-	else 
+	else
 	{
 		temp_path = ft_strjoin(path, "/");
 		temp_exe = ft_strjoin(temp_path, (*cmd_line).list_token->token);
