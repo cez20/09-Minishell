@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/13 21:50:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:22:42 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int main(int argc, char **argv, char **envp)
 	init_info(info, envp);
 
 	printf("Let's go ça part !\n");
-	//disable_echo();
+	disable_echo();
 	while(1 && argc && argv && envp)
 	{
 		signal_modified();
