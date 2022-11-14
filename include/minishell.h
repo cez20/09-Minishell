@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 11:27:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:57:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,16 @@ void	find_path_of_command(t_command_line *cmd_line, char *path);
 void	create_execve_args_list(t_info *info, t_command_line *cmd_line);;
 void	print_double_pointer(char **str);
 void	prepare_data_for_execution(t_info *info);
+
+int		check_arg_unset(char *arg);
+int		check_arg_export(char *arg);
+void	remove_quote(t_token *token_list);
+void	quote_remover(t_info *info);
+void	del_empty_node(t_token *token);
+int		is_n(t_token *node);
+char	*until_chr(char *str, char c);
+
+
+
 
 #endif

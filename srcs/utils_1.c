@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/11 16:09:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 17:16:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ t_token	*ft_lstlast_token(t_token *lst)
 void	ft_lstaddback_token(t_token **alst, t_token *new)
 {
 	t_token	*last;
-	// t_token	*first;
 
-	// first = *alst;
 	last = NULL;
 	if (!*alst)
 	{

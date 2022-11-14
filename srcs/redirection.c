@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 12:11:13 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:27:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	output_redirection(t_command_line *chunk, char *token)
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
 	char	*line;
-	int	  	fd[2];
-	
+	int		fd[2];
+
 	if (cmd_line->fd_in != 0)
 		close(cmd_line->fd_in);
 	if (pipe(fd) == -1)
@@ -44,7 +44,8 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	while (1)
 	{
 		line = readline(">");
-		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && (ft_strlen(delimiter) == ft_strlen(line)))
+		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
+		(ft_strlen(delimiter) == ft_strlen(line)))
 		{
 			free(line);
 			break ;
@@ -54,7 +55,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 		free(line);
 	}
 	close (fd[1]);
-	cmd_line->fd_in = fd[0]; 
+	cmd_line->fd_in = fd[0];
 }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)
@@ -69,8 +70,10 @@ void	input_redirection(t_command_line *cmd_line, t_token *list_token)
 
 int	is_redirection(t_token *list)
 {
-	if ((ft_strncmp(list->token, "<", 2) == 0) || (ft_strncmp(list->token, "<<", 2) == 0) ||
-		(ft_strncmp(list->token, ">", 2) == 0) || (ft_strncmp(list->token, ">>", 2) == 0))
+	if ((ft_strncmp(list->token, "<", 2) == 0) || \
+	(ft_strncmp(list->token, "<<", 2) == 0) || \
+		(ft_strncmp(list->token, ">", 2) == 0) || \
+		(ft_strncmp(list->token, ">>", 2) == 0))
 		return (1);
 	else
 		return (0);
@@ -130,12 +133,10 @@ void	redirection(t_info	*info)
 	int				i;
 
 	i = 0;
-	// lst_print_token(&info->command_lines[i].list_token);
 	while (i <= info->nb_of_pipe)
 	{
 		chunk = &info->command_lines[i];
 		list = info->command_lines[i].list_token;
-		// lst_print_token(&list);
 		while (list)
 		{
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
@@ -148,9 +149,8 @@ void	redirection(t_info	*info)
 				append_output_redirection(chunk, list->next->token);
 			list = list->next;
 		}
-		delete_redirection_tokens(info->command_lines[i].list_token, &info->command_lines[i].list_token);
-		//delete_redirection_tokens(&info->command_lines[i].list_token);
-		// lst_print_token(&info->command_lines[i].list_token);
+		delete_redirection_tokens(info->command_lines[i]. \
+		list_token, &info->command_lines[i].list_token);
 		i++;
 	}
 }

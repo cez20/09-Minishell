@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/11 16:40:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/14 17:23:19 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //I need to free eveything that cause a segfault 
 int	exit_terminal(void)
 {
-    printf(" exit\n");
+	printf(" exit\n");
 	exit (EXIT_SUCCESS);
 }
 
@@ -36,6 +36,7 @@ int	exit_terminal(void)
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
+
 void sig_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -43,7 +44,6 @@ void sig_handler(int signum)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-        // printf("Minishell$>");
 		rl_redisplay();
 	}
 }
@@ -57,7 +57,7 @@ void sig_handler(int signum)
 void	signal_modified(void)
 {
 	signal(SIGINT, &sig_handler);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 // This function essentially disable the ECHOCTL function

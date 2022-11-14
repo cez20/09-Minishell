@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/09 17:04:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:18:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*new_expanded_variable(int i, char *str, char **env)
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
 pour changer l'expansion par son contenu*/
-void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
+void	find_expansion(char **str, char *str1, \
+char *str2, char *str3, char **env)
 {
 	char	*string;
 	int		i;
@@ -79,10 +80,10 @@ void	locate_expansion(char **str, char **env)
 	char	*str4;
 
 	i = 0;
-	str1 = NULL; // Pas olbige
-	str2 = NULL; // Pas olbige
-	str3 = NULL; // Pas olbige
-	str4 = NULL; // Pas olbige
+	str1 = NULL;
+	str2 = NULL;
+	str3 = NULL;
+	str4 = NULL;
 	while ((*str)[i] != '$' && (*str)[i])
 		i++;
 	if ((*str)[i] == '$')
@@ -117,7 +118,6 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 		{
 			if (ft_strchr(list->token, '$'))
 				locate_expansion(&list->token, info->envp);
-			//printf("%s\n", list->token);
 			list = list->next;
 		}
 		i++;
