@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 15:22:42 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:11:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,17 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	int		i;
 	
 	i = 0;
-	while (i <= info->nb_of_pipe)
+	while (info->index <= info->nb_of_pipe)
 	{
-		do_redirection(cmd_line[i]);
-		if (i == info->nb_of_pipe)
+		do_redirection(cmd_line[info->index]);
+		if (info->index == info->nb_of_pipe)
 		{
-			last_cmd_or_builtin(cmd_line[i], info, &pid[i]);
+			last_cmd_or_builtin(cmd_line[info->index], info, &pid[info->index]);
 			break;
 		}
-		create_child(cmd_line[i], info, &pid[i]);
-		i++;
+		create_child(cmd_line[info->index], info, &pid[info->index]);
+		info->index++;
 	}
-	i = 0;
 	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], NULL, 0);
 }
@@ -150,7 +149,10 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	if (pid == 0)
 	{
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
+		{
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
+			printf("exec\n");
+		}
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}

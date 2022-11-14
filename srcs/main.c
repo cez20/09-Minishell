@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/14 14:52:04 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:10:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,20 @@ char	**tab_trunc(char **tab, char *str, int len)
 */
 void token_manager(t_info *info)
 {
-	while (info->index < info->nb_of_pipe + 1)
-	{
-		if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
-			pwd(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "env", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
-			print_tab(info->envp);
-		if (!ft_strncmp(info->command_lines[info->index].command, "cd", 2) && ft_strlen(info->command_lines[info->index].command) == 2)
-			cd(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
-			exit_terminal();
-		if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) && ft_strlen(info->command_lines[info->index].command) == 6)
-			export(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
-			echo(info);
-		if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
-			unset(info);
-	info->index++;
-	}
+	if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
+		pwd(info);
+	else if (!ft_strncmp(info->command_lines[info->index].command, "env", 3) && ft_strlen(info->command_lines[info->index].command) == 3)
+		print_tab(info->envp);
+	else if (!ft_strncmp(info->command_lines[info->index].command, "cd", 2) && ft_strlen(info->command_lines[info->index].command) == 2)
+		cd(info);
+	else if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
+		exit_terminal();
+	else if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) && ft_strlen(info->command_lines[info->index].command) == 6)
+		export(info);
+	else if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) && ft_strlen(info->command_lines[info->index].command) == 4)
+		echo(info);
+	else if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) && ft_strlen(info->command_lines[info->index].command) == 5)
+		unset(info);
 }
 
 int	close_quote_checker(t_info *info, char *str)
@@ -123,7 +119,7 @@ int main(int argc, char **argv, char **envp)
 	init_info(info, envp);
 
 	printf("Let's go ça part !\n");
-	//disable_echo();
+	disable_echo();
 	while(1 && argc && argv && envp)
 	{
 		signal_modified();
