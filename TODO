@@ -213,6 +213,11 @@ LOG:
 						- Ajout du fichier temporary.c qui contient des fonctions qui fonctionnaient avant qu'elle ne soit
 						  epuree (Just in case!)
 
+	Cesar 14 novembre   - Expansion non-existante (Ex: TRES) n'affiche rien et retourne le prompt
+						- Message derreur lorsque redirection avec expansion non-existante (< TRES) (Ajout else if dans fonction exec_error_management)
+						- Message derreur lorsque redirection avec fichier non-existante (ex: < te.txt) (Ajout else if dans fonction exec_error_management)
+			
+
 
 test redirection:
 					- <>		bash = bash: syntax error near unexpected token 'newline'

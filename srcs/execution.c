@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/13 20:20:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:20:33 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ void	exec_error_management(t_command_line cmd_line)
 			write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
 			write(2, ": No such file or directory\n", 28);
 		}
-		else if (cmd_line.merge_path_cmd == NULL)
+		else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
 		{
 			write(2, "bash: ", 6);
 			write(2, cmd_line.cmd_and_args[0], ft_strlen(cmd_line.cmd_and_args[0]));
 			write(2, ": command not found\n", 20);
 		}
+	}
+	else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL)
+	{
+		write(2, "bash: ", 6);
+		write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
+		write(2, ": No such file or directory\n", 28);
 	}
 }
 

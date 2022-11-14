@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 11:05:17 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:27:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_command_line
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
+	int		error;
 	char	*error_infile;
 	char	*merge_path_cmd;
 }				t_command_line;

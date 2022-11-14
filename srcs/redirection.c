@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/13 19:54:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:11:13 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	append_output_redirection(t_command_line *chunk, char *outfile)
 	{
 		printf("bash: %s: %s\n", outfile, strerror(errno));
 	}
-	//printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
 }
 
 void	output_redirection(t_command_line *chunk, char *token)
@@ -30,7 +29,6 @@ void	output_redirection(t_command_line *chunk, char *token)
 	if (chunk->fd_out != 1)
 		close(chunk->fd_out);
 	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
-	//printf("The fd associated with test2.txt est: %d\n", chunk->fd_out);
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
