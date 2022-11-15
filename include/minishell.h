@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 16:39:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:54:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,18 @@ void	cd(t_info *info);
 void	unset(t_info *info);
 
 // *** EXECUTION.C ***
+void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
+void	exec_one_command(t_command_line cmd_line, t_info *info);
+void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
+
+
+// *** EXECUTION_UTILS.C ***
+void	exec_error_management(t_command_line cmd_line);
+void	put_back_default_std(t_info *info);
+void	do_redirection(t_command_line cmd_line);
 
 //*** FREE.C ***
 void	free_double_pointers(char **args);
