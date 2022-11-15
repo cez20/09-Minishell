@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 14:18:37 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:46:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ void	exec_error_management(t_command_line cmd_line)
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(cmd_line.error_infile, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		exit (1);
 	}
-	else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
+	else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$' && \
+	cmd_line.cmd_and_args == NULL)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(cmd_line.cmd_and_args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit(127);
+		exit (127);
 	}
 }
 
@@ -62,6 +64,7 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 	{
+		exec_error_management(cmd_line);
 		if (cmd_line.builtin == 1)
 		{
 			token_manager(info);
@@ -69,7 +72,6 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 		}
 		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -85,6 +87,7 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 	{
+		exec_error_management(cmd_line);
 		if (cmd_line.fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
@@ -94,10 +97,8 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 			token_manager(info);
 			exit (EXIT_SUCCESS);
 		}
-		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		exec_error_management(cmd_line);
-		exit(EXIT_FAILURE);
+		else if (execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp) == -1)
+			exit(errno);
 	}
 	else
 	{
@@ -142,14 +143,13 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		return ;
 	if (pid == 0)
 	{
-		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
 		exec_error_management(cmd_line);
-		exit(EXIT_FAILURE);
+		if (execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp) == -1)
+			exit(errno);
 	}
 	waitpid(pid, &info->exit_code, 0);
 	if (WIFEXITED(info->exit_code))
-		info->exit_code = WEXITSTATUS(info->exit_code);
+	 	info->exit_code = WEXITSTATUS(info->exit_code);
 }
 
 //Fonction qui execute une commande avec execve() dans un CHILD

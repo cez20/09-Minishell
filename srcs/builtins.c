@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 10:32:28 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:35:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	unset(t_info *info)
 	i = 0;
 	while (info->command_lines[info->index].cmd_and_args[i + 1])
 	{
-		if (check_arg_unset(info->command_lines[info->index].cmd_and_args[i + 1]))
+		if (check_arg_unset(info->command_lines[info->index].cmd_and_args[i + 1], info))
 		{
 			str = ft_strjoin(info->command_lines[info->index].cmd_and_args[i + 1], "=");
 			info->envp = tab_trunc(info->envp, str, ft_strlen(str));
