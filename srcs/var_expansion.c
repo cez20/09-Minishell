@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:24:33 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:27:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*new_expanded_variable(int i, char *str, char **env)
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
 pour changer l'expansion par son contenu*/
-void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env)
+void	find_expansion(char **str, char *str1, \
+char *str2, char *str3, char **env)
 {
 	char	*string;
 	int		i;

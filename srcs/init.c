@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:25:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:26:16 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	init_info(t_info *info, char **envp)
 {
 	info->pwd = ft_strdup(getcwd(info->pwd, 4096));
 	info->envp = tabcpy(envp);
-	// info->envp = envp;
 	info->list_token = NULL;
-	// info->flag_quote = 0;
 	info->last_position = NULL;
 	info->nb_of_pipe = 0;
 	info->index = 0;
@@ -63,54 +61,9 @@ void	reinit(t_info *info)
 		i++;
 	}
 	free(info->command_lines);
-	// free(info->pwd);
-	//free_double_pointers(info->path);
 	table_flip(info->path);
-	// table_flip(info->envp);
 	info->path = split_path(info->envp);
 	info->index = 0;
 	info->initial_stdin = dup(STDIN_FILENO);
 	info->initial_stdout = dup(STDOUT_FILENO);
-	// free(info->list_token);
 }
-
-//Fonction qui permet de reinitialiser certaines infos de la struct 
-// void	reinit(t_info *info)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	info->nb_of_pipe = 0;
-// 	while (info->command_lines[i].list_token)
-// 	{
-// 		ft_lstclear_token(&info->command_lines->list_token, free);
-// 	}
-// 	free(info->command_lines);
-// 	free_dpointers(info->path);
-// 	info->index = 0;
-// 	// free(info->list_token);
-// }
-
-// void	reinit(t_info *info)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	info->nb_of_pipe = 0;
-// 	while (i < (info->nb_of_pipe + 1))
-// 	{
-// 		ft_lstclear_token(&info->command_lines[i].list_token, free);
-// 		free_dpointers(info->command_lines[i].cmd_and_args);
-// 		free(info->command_lines[i].command);
-// 		free(info->command_lines[i].args);
-// 		free(info->command_lines[i].merge_path_cmd);
-// 		if (info->command_lines[i].fd_in != 0)
-// 			close(info->command_lines[i].fd_in);
-// 		if (info->command_lines[i].fd_out != 1)
-// 			close(info->command_lines[i].fd_out);
-// 		i++;
-// 	}	
-// 	free(info->command_lines);
-// 	info->index = 0;
-// 	// free(info->list_token);
-// }

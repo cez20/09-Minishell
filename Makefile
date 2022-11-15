@@ -2,7 +2,7 @@ NAME 			= minishell
 
 SRCS_DIR   		= srcs/
 SRCS_FILES		= main.c builtins.c execution.c redirection.c signal.c utils_1.c var_expansion.c utils_2.c utils_3.c parsing.c \
-				  free.c init.c
+				  free.c init.c utils_builtins.c args_checker.c
 SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 CC 				= @gcc

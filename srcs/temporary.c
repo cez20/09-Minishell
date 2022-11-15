@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   temporary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 22:33:48 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 11:09:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:21:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "minishell.h"
 
 void	create_execve_path_executable(t_info *info)
 {
@@ -25,16 +25,18 @@ void	create_execve_path_executable(t_info *info)
 	while ((i <= info->nb_of_pipe))
 	{
 		j = 0;
-		while (info->path[j] && info->command_lines[i].builtin != 1 && (info->command_lines[i].list_token))
+		while (info->path[j] && info->command_lines[i].builtin != 1 \
+		&& (info->command_lines[i].list_token))
 		{
 			if (access(info->command_lines[i].list_token->token, X_OK) != -1)
 			{
 				cmd_exe = ft_strdup(info->command_lines[i].list_token->token);
 				info->command_lines[i].merge_path_cmd = cmd_exe;
-				break;
+				break ;
 			}	
 			path = ft_strjoin(info->path[j], "/");
-			cmd_exe = ft_strjoin(path, info->command_lines[i].list_token->token);
+			cmd_exe = ft_strjoin(path, info->command_lines[i] \
+			.list_token->token);
 			free(path);
 			if (access(cmd_exe, X_OK) != -1)
 			{
@@ -65,7 +67,8 @@ void	create_execve_args_list(t_info	*info, t_command_line *cmd_line)
 		list = cmd_line[i].list_token;
 		if (list)
 		{
-			cmd_line[i].cmd_and_args = malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
+			cmd_line[i].cmd_and_args = \
+			malloc((ft_lstsize_token(list) + 1) * sizeof(char *));
 			str = info->command_lines[i].cmd_and_args;
 			while (list)
 			{

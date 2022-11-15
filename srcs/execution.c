@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:11:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:26:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
 	int	fd[2];
-	
+
 	if (pipe(fd) == -1)
 		return ;
-	*pid = fork(); 
+	*pid = fork();
 	if (*pid == -1)
 		return ;
 	if (*pid == 0)
@@ -121,7 +121,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
 	pid_t	pid[NB_PROCESS];
 	int		i;
-	
+
 	i = 0;
 	while (info->index <= info->nb_of_pipe)
 	{
@@ -129,7 +129,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		if (info->index == info->nb_of_pipe)
 		{
 			last_cmd_or_builtin(cmd_line[info->index], info, &pid[info->index]);
-			break;
+			break ;
 		}
 		create_child(cmd_line[info->index], info, &pid[info->index]);
 		info->index++;
@@ -145,7 +145,7 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 
 	pid = fork();
 	if (pid == -1)
-		return ; 
+		return ;
 	if (pid == 0)
 	{
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
@@ -163,11 +163,11 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 //lorsqu'il n'y a aucun PIPE()
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	do_redirection(cmd_line[i]);
-	if (cmd_line[i].builtin == 1 && cmd_line->error_infile) 
+	if (cmd_line[i].builtin == 1 && cmd_line->error_infile)
 		exec_error_management(cmd_line[i]);
 	else if (cmd_line[i].builtin == 1)
 		token_manager(info);
@@ -185,7 +185,7 @@ void	execution(t_info *info, t_command_line *line)
 	cmd_line = line;
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
-	else 
+	else
 		multiple_commands_or_builtins(cmd_line, info);
-	put_back_default_std(info);  
+	put_back_default_std(info);
 }
