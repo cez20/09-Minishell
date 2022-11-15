@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temporary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 22:33:48 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:21:38 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/15 13:14:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,31 @@ void	create_execve_args_list(t_info	*info, t_command_line *cmd_line)
 			str = NULL;
 		i++;
 	}
+}
+
+
+void	exec_error_management(t_command_line cmd_line)
+{
+	//if (cmd_line.cmd_and_args != NULL)
+	//{
+		if (cmd_line.error_infile != NULL)
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd_line.error_infile, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+		}
+		else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd_line.cmd_and_args[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			exit(127);
+		}
+	//}
+	// else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL) // Pour les cas < te.txt sans argument.  
+	// {
+	// 	ft_putstr_fd("bash: ", 2);
+	// 	ft_putstr_fd(cmd_line.error_infile, 2);
+	// 	ft_putstr_fd(": No such file or directory\n", 2);
+	// }
 }

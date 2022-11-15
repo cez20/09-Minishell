@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/15 10:27:28 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:20:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,5 @@ int	main(int argc, char **argv, char **envp)
 		reinit(info);
 	}
 	free (info);
-	return (0);
+	return (info->exit_code);
 }

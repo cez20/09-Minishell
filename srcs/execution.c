@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 10:26:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:18:37 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,18 @@
 
 void	exec_error_management(t_command_line cmd_line)
 {
-	if (cmd_line.cmd_and_args != NULL)
+	if (cmd_line.error_infile != NULL)
 	{
-		if (cmd_line.error_infile != NULL)
-		{
-			write(2, "bash: ", 6);
-			write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
-			write(2, ": No such file or directory\n", 28);
-		}
-		else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
-		{
-			write(2, "bash: ", 6);
-			write(2, cmd_line.cmd_and_args[0], ft_strlen(cmd_line.cmd_and_args[0]));
-			write(2, ": command not found\n", 20);
-		}
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(cmd_line.error_infile, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
-	else if (cmd_line.cmd_and_args == NULL && cmd_line.error_infile != NULL) // Pour les cas < te.txt sans argument.  
+	else if (cmd_line.merge_path_cmd == NULL && cmd_line.cmd_and_args[0][0] != '$')
 	{
-		write(2, "bash: ", 6);
-		write(2, cmd_line.error_infile, ft_strlen(cmd_line.error_infile));
-		write(2, ": No such file or directory\n", 28);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(cmd_line.cmd_and_args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
 	}
 }
 
@@ -68,7 +60,7 @@ void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
 	*pid = fork();
 	if (*pid == -1)
 		return ;
-	if (*pid == 0) // Quand je execve , ca ne ferme pas la fonction mais plutot quitte le CHILD> 
+	if (*pid == 0)
 	{
 		if (cmd_line.builtin == 1)
 		{
@@ -135,7 +127,9 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		info->index++;
 	}
 	while (i <= info->nb_of_pipe)
-		waitpid(pid[i++], NULL, 0);
+		waitpid(pid[i++], &info->exit_code, 0);
+	if (WIFEXITED(info->exit_code))
+		info->exit_code = WEXITSTATUS(info->exit_code);
 }
 
 //If command is not valid. Verify that something needs to be freed or not? 
@@ -149,14 +143,13 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	if (pid == 0)
 	{
 		if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
-		{
 			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-			printf("exec\n");
-		}
 		exec_error_management(cmd_line);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &info->exit_code, 0);
+	if (WIFEXITED(info->exit_code))
+		info->exit_code = WEXITSTATUS(info->exit_code);
 }
 
 //Fonction qui execute une commande avec execve() dans un CHILD
