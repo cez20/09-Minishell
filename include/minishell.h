@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 16:54:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 22:42:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_command_line
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
-	int		error;
 	char	*error_infile;
 	char	*merge_path_cmd;
 }				t_command_line;
@@ -83,6 +82,10 @@ void	token_manager(t_info *info);
 int		close_quote_checker(t_info *info, char *str);
 int		main(int argc, char **argv, char **envp);
 
+//*** ARGS_CHECKER.C ***
+ int	check_arg_export(char *arg);
+ int	check_arg_unset(char *arg, t_info *info);
+
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
 void	pwd(t_info *info);
@@ -92,18 +95,10 @@ void	cd(t_info *info);
 void	unset(t_info *info);
 
 // *** EXECUTION.C ***
-void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	last_process(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
-void	exec_one_command(t_command_line cmd_line, t_info *info);
-void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
-
-
-// *** EXECUTION_UTILS.C ***
-void	exec_error_management(t_command_line cmd_line);
-void	put_back_default_std(t_info *info);
-void	do_redirection(t_command_line cmd_line);
 
 //*** FREE.C ***
 void	free_double_pointers(char **args);
@@ -127,22 +122,11 @@ void	sig_handler(int signum);
 void	signal_modified(void);
 void	disable_echo(void);
 
-//*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
-char	*new_expanded_variable(int i, char *str, char **env);
-void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
-char	*env_variable(char *str, int *i);
-//void	locate_expansion(char **str, char **env);
-void	locate_expansion(char **str, char **env, t_info *info);
-void	var_expansion(t_command_line *cmd_line, t_info *info);
-
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	output_redirection(t_command_line *chunk, char *token);
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
-int		is_redirection(t_token *list);
-void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
-void	delete_tokens(t_token **list);
 void	redirection(t_info	*info);
 
 //*** UTILS_1.C ***
@@ -159,25 +143,42 @@ char	simple_or_double(char *token);
 int		how_many(t_info *info, char *str, char c);
 void	skip_space(t_info *info);
 char	**split_path(char **env);
-void	print_struct(t_command_line *cmd_line, t_info *info);
 
-//*** UTILS_3.C **
+//*** EXECUTION_1.C **
 void	is_builtin(t_info *info);
-void	find_execve_binaries(t_info *info, t_command_line *cmd_line);
 void	find_path_of_command(t_command_line *cmd_line, char *path);
-void	create_execve_args_list(t_info *info, t_command_line *cmd_line);;
-void	print_double_pointer(char **str);
+void	find_execve_path(t_info *info, t_command_line *cmd_line);
+void	create_execve_argv(t_info *info, t_command_line *cmd_line);
 void	prepare_data_for_execution(t_info *info);
 
-int		check_arg_unset(char *arg, t_info *info);
-int		check_arg_export(char *arg);
+//*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);
 void	quote_remover(t_info *info);
 void	del_empty_node(t_token *token);
 int		is_n(t_token *node);
 char	*until_chr(char *str, char c);
 
+//*** UTILS_EXECUTION.C ***
+void	exec_one_command(t_command_line cmd_line, t_info *info);
+void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
+void	exec_error_management(t_command_line cmd_line);
+void	put_back_default_std(t_info *info);
+void	do_redirection(t_command_line cmd_line);
 
+///*** UTILS_PRINT.C ***
+void	print_struct(t_command_line *cmd_line, t_info *info);
+void	print_double_pointer(char **str);
 
+//*** UTILS_REDIRECTION.C ***
+void	delete_tokens(t_token **list);
+int		is_redirection(t_token *list);
+void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
+
+//*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
+char	*new_expanded_variable(int i, char *str, char **env);
+void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
+char	*env_variable(char *str, int *i);
+void	locate_expansion(char **str, char **env, t_info *info);
+void	var_expansion(t_command_line *cmd_line, t_info *info);
 
 #endif

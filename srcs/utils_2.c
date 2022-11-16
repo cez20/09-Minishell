@@ -3,113 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/11 16:54:46 by slavoie          ###   ########.fr       */
+/*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
+/*   Updated: 2022/11/15 23:08:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*
-	Vérifier la valeur du char à l'adresse du char pointeur "token"
-	renvoie la valeur du char si c'est '' ou ""
-	sinon renvoie la valeur de l'espace soit '32' 
-*/
-char	simple_or_double(char *token)
+void	lst_print_token(t_token **list)
 {
-	if (*token == 34 || *token == 39)
-		return (*token);
-	return (32);
-}
-
-/*
-    compte le nombre d'élément correspondant au char c dans la string
-*/
-int	how_many(t_info *info, char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (*str)
-	{
-		if (*str == D_QUOTE)
-		{
-			info->state = D_QUOTE;
-			str++;
-			while (*str && *str != D_QUOTE)
-				str++;
-			str++;
-		}
-		if (*str == S_QUOTE)
-		{
-			info->state = S_QUOTE;
-			str++;
-			while (*str && *str != S_QUOTE)
-				str++;
-			str++;
-		}
-		if (*str == c)
-			i++;
-		str++;
-	}
-	return (i);
-}
-
-/*
-	Avance le pointeur jusqu'à la prochaine chose à interpréter
-*/
-void	skip_space(t_info *info)
-{
-	if (*info->last_position)
-	{
-		while (is_white_space(*info->last_position))
-		{
-			if (*info->last_position == '|')
-				return ;
-			info->last_position++;
-			info->len++;
-			if (info->list_token)
-				ft_lstlast_token(info->list_token)->space_flag = 1;
-		}
-	}
-}
-
-char	**split_path(char **env)
-{
-	char	**str;
+	t_token	*node;
 	int		i;
 
+	node = *list;
 	i = 0;
-	while (env[i])
+	if (!node)
+		printf("node[0] is NULL\n");
+	while (node)
 	{
-		if (ft_strnstr(env[i], "PATH=", 5))
-		{
-			str = ft_split(&env[i][5], ':');
-			return (str);
-		}
+		if (!node)
+			return ;
+		printf("node[%d] = %s\n", i, (char *)node->token);
+		node = node->next;
 		i++;
 	}
-	return (NULL);
 }
 
-void	print_struct(t_command_line *cmd_line, t_info *info)
+void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 {
-	int	i;
+	if (del)
+		del(lst->token);
+	free(lst);
+}
 
-	i = 0;
-	while (i <= info->nb_of_pipe)
+int	ft_lstsize_token(t_token *lst)
+{
+	int	size;
+
+	size = 0;
+	while (lst)
 	{
-		printf("Address of list_token is: %p\n", cmd_line[i].list_token);
-		print_double_pointer(cmd_line[i].cmd_and_args);
-		printf("Command is :%s\n", cmd_line[i].command);
-		printf("Args is: %s\n", cmd_line[i].args);
-		printf("Builtin number is: %d\n", cmd_line[i].builtin);
-		printf("fd_in is:%d\n", cmd_line[i].fd_in);
-		printf("fd_out is :%d\n", cmd_line[i].fd_out);
-		printf("Error infile is: %s\n", cmd_line[i].error_infile);
-		printf("Merge path_cmd is :%s\n", cmd_line[i].merge_path_cmd);
-		i++;
+		lst = lst->next;
+		size++;
+	}
+	return (size);
+}
+
+void	ft_lstclear_token(t_token **lst, void (*del) (void *))
+{
+	t_token	*elem;
+	int		i;
+
+	if (!*lst)
+		return ;
+	i = ft_lstsize_token(*lst);
+	while (i != 0)
+	{
+		elem = (*lst)->next;
+		ft_lstdelone_token(*lst, del);
+		*lst = elem;
+		i--;
 	}
 }

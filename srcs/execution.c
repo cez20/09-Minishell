@@ -6,16 +6,15 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 16:50:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 22:24:40 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
 
-
 //1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
 // le STDIN original
-void	last_cmd_or_builtin(t_command_line cmd_line, t_info *info, pid_t *pid)
+void	last_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
 	*pid = fork();
 	if (*pid == -1)
@@ -63,7 +62,7 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		if (cmd_line.fd_out != 1) // I must precise also that next command is not last one. 
+		if (cmd_line.fd_out != 1)
 			dup2(info->initial_stdout, STDOUT_FILENO);
 	}
 }
@@ -79,7 +78,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		do_redirection(cmd_line[info->index]);
 		if (info->index == info->nb_of_pipe)
 		{
-			last_cmd_or_builtin(cmd_line[info->index], info, &pid[info->index]);
+			last_process(cmd_line[info->index], info, &pid[info->index]);
 			break ;
 		}
 		create_child(cmd_line[info->index], info, &pid[info->index]);
@@ -91,40 +90,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		info->exit_code = WEXITSTATUS(info->exit_code);
 }
 
-//If command is not valid. Verify that something needs to be freed or not? 
-void	exec_one_command(t_command_line cmd_line, t_info *info)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0)
-	{
-		exec_error_management(cmd_line);
-		if (execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp) == -1)
-			exit(errno);
-	}
-	waitpid(pid, &info->exit_code, 0);
-	if (WIFEXITED(info->exit_code))
-	 	info->exit_code = WEXITSTATUS(info->exit_code);
-}
-
-//Fonction qui execute une commande avec execve() dans un CHILD
-//lorsqu'il n'y a aucun PIPE()
-void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
-{
-	int	i;
-
-	i = 0;
-	do_redirection(cmd_line[i]);
-	if (cmd_line[i].builtin == 1 && cmd_line->error_infile)
-		exec_error_management(cmd_line[i]);
-	else if (cmd_line[i].builtin == 1)
-		token_manager(info);
-	else
-		exec_one_command(cmd_line[i], info);
-}
 
 // 1- Pourquoi lorsque je change le STDIN pour le fd[0], je ne suis pas oblige de devoir remettre le STDIN original?? 
 // 	  ou bien je dois mettre ls STDIN original dans la derniere serie de commande seulement a la TOUTE FIN? 

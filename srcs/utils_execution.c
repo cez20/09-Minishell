@@ -1,16 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_utils.c                                  :+:      :+:    :+:   */
+/*   utils_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 16:49:47 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:03:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
+
+//If command is not valid. Verify that something needs to be freed or not? 
+void	exec_one_command(t_command_line cmd_line, t_info *info)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0)
+	{
+		exec_error_management(cmd_line);
+		if (execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp) == -1)
+			exit(errno);
+	}
+	waitpid(pid, &info->exit_code, 0);
+	if (WIFEXITED(info->exit_code))
+		info->exit_code = WEXITSTATUS(info->exit_code);
+}
+
+//Fonction qui execute une commande avec execve() dans un CHILD
+//lorsqu'il n'y a aucun PIPE()
+void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
+{
+	int	i;
+
+	i = 0;
+	do_redirection(cmd_line[i]);
+	if (cmd_line[i].builtin == 1 && cmd_line->error_infile)
+		exec_error_management(cmd_line[i]);
+	else if (cmd_line[i].builtin == 1)
+		token_manager(info);
+	else
+		exec_one_command(cmd_line[i], info);
+}
 
 void	exec_error_management(t_command_line cmd_line)
 {

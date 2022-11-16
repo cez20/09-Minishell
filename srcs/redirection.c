@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:27:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/15 22:18:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,64 +65,6 @@ void	input_redirection(t_command_line *cmd_line, t_token *list_token)
 	{
 		cmd_line->error_infile = ft_strdup(list_token->next->token);
 		cmd_line->fd_in = 0;
-	}
-}
-
-int	is_redirection(t_token *list)
-{
-	if ((ft_strncmp(list->token, "<", 2) == 0) || \
-	(ft_strncmp(list->token, "<<", 2) == 0) || \
-		(ft_strncmp(list->token, ">", 2) == 0) || \
-		(ft_strncmp(list->token, ">>", 2) == 0))
-		return (1);
-	else
-		return (0);
-}
-
-void	delete_tokens(t_token **list)
-{
-	t_token	*temp;
-	t_token	*prev;
-	int		i;
-	int		nodes_to_erase;
-
-	i = 0;
-	temp = NULL;
-	prev = NULL;
-	nodes_to_erase = 0;
-	if ((*list)->next)
-		nodes_to_erase = 1;
-	while (i <= nodes_to_erase)
-	{
-		temp = *list;
-		prev = (*list)->prev;
-		*list = (*list)->next;
-		ft_lstdelone_token(temp, free);
-		temp = NULL;
-		if (*list)
-			(*list)->prev = prev;
-		if (prev)
-			prev->next = *list;
-		i++;
-	}
-}
-
-void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
-{
-	t_token	*list;
-
-	list = list_token;
-	while (list)
-	{
-		if (is_redirection(list) == 1 && list->prev)
-			delete_tokens(&list);
-		else if (is_redirection(list) == 1 && !list->prev)
-		{
-			delete_tokens(&list);
-			*list_addr = list;
-		}
-		if (list && is_redirection(list) == 0)
-			list = list->next;
 	}
 }
 

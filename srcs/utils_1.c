@@ -3,70 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/14 17:16:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/15 23:01:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
-{
-	if (del)
-		del(lst->token);
-	free(lst);
-}
-
-int	ft_lstsize_token(t_token *lst)
-{
-	int	size;
-
-	size = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		size++;
-	}
-	return (size);
-}
-
-void	ft_lstclear_token(t_token **lst, void (*del) (void *))
-{
-	t_token	*elem;
-	int		i;
-
-	if (!*lst)
-		return ;
-	i = ft_lstsize_token(*lst);
-	while (i != 0)
-	{
-		elem = (*lst)->next;
-		ft_lstdelone_token(*lst, del);
-		*lst = elem;
-		i--;
-	}
-}
-
-void	lst_print_token(t_token **list)
-{
-	t_token	*node;
-	int		i;
-
-	node = *list;
-	i = 0;
-	if (!node)
-		printf("node[0] is NULL\n");
-	while (node)
-	{
-		if (!node)
-			return ;
-		printf("node[%d] = %s\n", i, (char *)node->token);
-		node = node->next;
-		i++;
-	}
-}
 
 t_token	*ft_lstnew_token(char *content)
 {
