@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_3.c                                          :+:      :+:    :+:   */
+/*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 22:37:37 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:20:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	find_execve_path(t_info *info, t_command_line *cmd_line)
 	int		i;
 	int		j;
 
-	path = info->path;
+	path = info->paths;
 	if (!path)
 		return ;
 	i = 0;
@@ -59,7 +59,7 @@ void	find_execve_path(t_info *info, t_command_line *cmd_line)
 		while (cmd_line[i].list_token && cmd_line[i].builtin != 1 && path[j])
 		{
 			find_path_of_command(&cmd_line[i], path[j]);
-			if (cmd_line[i].merge_path_cmd)
+			if (cmd_line[i].path)
 				break ;
 			j++;
 		}
@@ -73,14 +73,14 @@ void	find_path_of_command(t_command_line *cmd_line, char *path)
 	char	*temp_path;
 
 	if (access((*cmd_line).list_token->token, X_OK) != -1)
-		(*cmd_line).merge_path_cmd = ft_strdup((*cmd_line).list_token->token);
+		(*cmd_line).path = ft_strdup((*cmd_line).list_token->token);
 	else
 	{
 		temp_path = ft_strjoin(path, "/");
 		temp_exe = ft_strjoin(temp_path, (*cmd_line).list_token->token);
 		free(temp_path);
 		if (access(temp_exe, X_OK) != -1)
-			(*cmd_line).merge_path_cmd = temp_exe;
+			(*cmd_line).path = temp_exe;
 		else
 			free(temp_exe);
 	}
@@ -103,13 +103,13 @@ void	create_execve_argv(t_info	*info, t_command_line *cmd_line)
 		if (list)
 		{
 			len = ft_lstsize_token(list);
-			cmd_line[i].cmd_and_args = malloc((len + 1) * sizeof(char *));
+			cmd_line[i].argv = malloc((len + 1) * sizeof(char *));
 			while (list)
 			{
-				cmd_line[i].cmd_and_args[j++] = ft_strdup(list->token);
+				cmd_line[i].argv[j++] = ft_strdup(list->token);
 				list = list->next;
 			}
-			cmd_line[i].cmd_and_args[j] = 0;
+			cmd_line[i].argv[j] = 0;
 		}
 		i++;
 	}

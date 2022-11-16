@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 10:26:16 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/15 23:20:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info)
 	while (i < (info->nb_of_pipe + 1))
 	{
 		cmd_line[i].list_token = NULL;
-		cmd_line[i].cmd_and_args = NULL;
+		cmd_line[i].argv = NULL;
 		cmd_line[i].command = NULL;
 		cmd_line[i].args = NULL;
 		cmd_line[i].builtin = 0;
 		cmd_line[i].fd_in = 0;
 		cmd_line[i].fd_out = 1;
 		cmd_line[i].error_infile = NULL;
-		cmd_line[i].merge_path_cmd = NULL;
+		cmd_line[i].path = NULL;
 		i++;
 	}
 }
@@ -42,7 +42,7 @@ void	init_info(t_info *info, char **envp)
 	info->index = 0;
 	info->initial_stdin = 0;
 	info->initial_stdout = 1;
-	info->path = split_path(envp);
+	info->paths = split_path(envp);
 	info->state = TEXT;
 	info->exit_code = 0;
 	info->initial_stdin = dup(STDIN_FILENO);
@@ -61,8 +61,8 @@ void	reinit(t_info *info)
 		i++;
 	}
 	free(info->command_lines);
-	table_flip(info->path);
-	info->path = split_path(info->envp);
+	table_flip(info->paths);
+	info->paths = split_path(info->envp);
 	info->index = 0;
 	info->initial_stdin = dup(STDIN_FILENO);
 	info->initial_stdout = dup(STDOUT_FILENO);

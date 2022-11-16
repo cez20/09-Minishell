@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/15 11:20:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:27:20 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			var_expansion(info->command_lines, info);
 			fill_command_lines(info);
-			redirection(info);
+			search_for_redirection(info);
 			prepare_data_for_execution(info);
 			execution(info, info->command_lines);
 			free(line);

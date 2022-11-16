@@ -6,34 +6,37 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 22:24:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:12:58 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
 
-//1- Dans la derniere ligne de commande, il est important de revenir mettre le STDIN_FILENO qui est l,entree du pipe pour
-// le STDIN original
-void	last_process(t_command_line cmd_line, t_info *info, pid_t *pid)
+void	do_execution(t_command_line cmd_line, t_info *info)
+{
+	check_if_error(cmd_line);
+	if (cmd_line.builtin == 1)
+	{
+		token_manager(info);
+		exit (EXIT_SUCCESS);
+	}
+	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
+		exit(errno);
+}
+
+//1- Dans la derniere ligne de commande, il est important 
+//de revenir mettre le STDIN_FILENO qui est l,entree du pipe
+// pour le STDIN original
+void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
 	*pid = fork();
 	if (*pid == -1)
 		return ;
 	if (*pid == 0)
-	{
-		exec_error_management(cmd_line);
-		if (cmd_line.builtin == 1)
-		{
-			token_manager(info);
-			exit (EXIT_SUCCESS);
-		}
-		else if (cmd_line.merge_path_cmd != NULL && cmd_line.error_infile == NULL)
-			execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp);
-		exit(EXIT_FAILURE);
-	}
+		do_execution(cmd_line, info);
 }
 
-void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
+void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 {
 	int	fd[2];
 
@@ -44,18 +47,11 @@ void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 	{
-		exec_error_management(cmd_line);
 		if (cmd_line.fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		if (cmd_line.builtin == 1)
-		{
-			token_manager(info);
-			exit (EXIT_SUCCESS);
-		}
-		else if (execve(cmd_line.merge_path_cmd, cmd_line.cmd_and_args, info->envp) == -1)
-			exit(errno);
+		do_execution(cmd_line, info);
 	}
 	else
 	{
@@ -78,10 +74,10 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		do_redirection(cmd_line[info->index]);
 		if (info->index == info->nb_of_pipe)
 		{
-			last_process(cmd_line[info->index], info, &pid[info->index]);
+			last_child_process(cmd_line[info->index], info, &pid[info->index]);
 			break ;
 		}
-		create_child(cmd_line[info->index], info, &pid[info->index]);
+		child_process(cmd_line[info->index], info, &pid[info->index]);
 		info->index++;
 	}
 	while (i <= info->nb_of_pipe)
@@ -90,10 +86,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		info->exit_code = WEXITSTATUS(info->exit_code);
 }
 
-
-// 1- Pourquoi lorsque je change le STDIN pour le fd[0], je ne suis pas oblige de devoir remettre le STDIN original?? 
-// 	  ou bien je dois mettre ls STDIN original dans la derniere serie de commande seulement a la TOUTE FIN? 
-// 2-- Lorsque j'arrive a la derniere serie de commande, quand il y a eu au moins 1 pipe, est-ce que j'execute dans parent ou child? 
 void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	*cmd_line;

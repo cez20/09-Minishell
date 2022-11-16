@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 22:42:39 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:27:52 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ typedef struct s_info
 	int						initial_stdin;
 	int						initial_stdout;
 	int						exit_code;
-	char					**path;
+	char					**paths;
 }		t_info;
 
 typedef struct s_command_line
 {
 	t_token	*list_token;
-	char	**cmd_and_args;
 	char	*command; // n'est plus necessaire mais aviser Steven 
 	char	*args; // N'est plus necessaire mais aviser Steven 
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
 	char	*error_infile;
-	char	*merge_path_cmd;
+	char	*path;
+	char	**argv;
 }				t_command_line;
 
 //*** MAIN.C ***
@@ -95,8 +95,8 @@ void	cd(t_info *info);
 void	unset(t_info *info);
 
 // *** EXECUTION.C ***
-void	last_process(t_command_line cmd_line, t_info *info, pid_t *pid);
-void	create_child(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
 
@@ -127,7 +127,7 @@ void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	output_redirection(t_command_line *chunk, char *token);
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
-void	redirection(t_info	*info);
+void	search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
@@ -161,7 +161,7 @@ char	*until_chr(char *str, char c);
 //*** UTILS_EXECUTION.C ***
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
-void	exec_error_management(t_command_line cmd_line);
+void	check_if_error(t_command_line cmd_line);
 void	put_back_default_std(t_info *info);
 void	do_redirection(t_command_line cmd_line);
 
