@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/16 19:23:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:06:59 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	fill_command_lines(t_info *info); // On pourra p-e l'enlever
 char	*search_another_one(char *str, char c, t_info *info);
 
 //*** SIGNAL.C ***
+int		get_exit_code(int exit_code);
 int		exit_terminal(void); // Function that needs to be worked on
 void	signal_child(int signum);
 void	signal_parent(int signum);

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 13:26:47 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:10:03 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 		do_execution(cmd_line, info);
+	put_back_default_std(info);
 }
 
 void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
@@ -66,6 +67,7 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
 	pid_t	pid[NB_PROCESS];
+	int		status;
 	int		i;
 
 	i = 0;
@@ -81,22 +83,22 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		info->index++;
 	}
 	while (i <= info->nb_of_pipe)
-		waitpid(pid[i++], &info->exit_code, 0);
-	if (WIFEXITED(info->exit_code))
-		info->exit_code = WEXITSTATUS(info->exit_code);
-	else if (WIFSIGNALED(info->exit_code))
-		info->exit_code = 128 + WTERMSIG(info->exit_code);
+		waitpid(pid[i++], &status, 0);
+	info->exit_code = get_exit_code(status);
 }
 
+// J'ai enelver la fonction put_back_default_std
+// et je les ai mise dans chacune des fonctions
+// one_command_or_builtin && multiples_commands 
 void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	*cmd_line;
 
-	cmd_line = line;
+	cmd_line = line; // Je crois que j'ai pas besoin de ca
 	signal_modified_child();
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
 	else
 		multiple_commands_or_builtins(cmd_line, info);
-	put_back_default_std(info);
+	//put_back_default_std(info);
 }

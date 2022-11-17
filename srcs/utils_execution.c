@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/16 19:07:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:09:27 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	put_back_default_std(t_info *info)
 void	exec_one_command(t_command_line cmd_line, t_info *info)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -61,11 +62,8 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
 			exit(errno);
 	}
-	waitpid(pid, &info->exit_code, 0);
-	if (WIFEXITED(info->exit_code))
-		info->exit_code = WEXITSTATUS(info->exit_code);
-	else if (WIFSIGNALED(info->exit_code))
-		info->exit_code = 128 + WTERMSIG(info->exit_code);
+	waitpid(pid, &status, 0);
+	info->exit_code = get_exit_code(status);
 }
 
 //Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
@@ -98,4 +96,5 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 		token_manager(info);
 	else
 		exec_one_command(cmd_line[info->index], info);
+	put_back_default_std(info);
 }

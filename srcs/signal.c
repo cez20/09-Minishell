@@ -6,11 +6,25 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/16 19:37:26 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:24:48 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+//Fonction qui intercepte exit_code:
+// Macro WIFEXITED retourne true si child a quitte correctement
+// Macro WEXITSTATUS permet de transformer le status dans le bon int
+// Macro WIFSIGNALED permet de capter si child a quitte avec signal
+// WTERMSIG transforme status bon int. On ajoute 128 pour avoir le bon exit_code
+int	get_exit_code(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (0);
+}
 
 //I need to free eveything that cause a segfault 
 int	exit_terminal(void)
