@@ -20,7 +20,7 @@ void	free_struct_command_line(t_info *info)
 	while (i <= info->nb_of_pipe)
 	{
 		table_flip(info->command_lines[i].argv);
-		free(info->command_lines[i].args);
+		// free(info->command_lines[i].args);
 		free(info->command_lines[i].path);
 		if (info->command_lines[i].fd_in != 0)
 			close (info->command_lines[i].fd_in);
