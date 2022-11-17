@@ -1,3 +1,5 @@
 .DS_Store
-./objs
+objs/
+readline/examples/rl-timeout
+readline/examples/rlkeymaps
 minishell

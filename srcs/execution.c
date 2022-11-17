@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 14:10:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:15:11 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	execution(t_info *info, t_command_line *line)
 	t_command_line	*cmd_line;
 
 	cmd_line = line; // Je crois que j'ai pas besoin de ca
-	signal_modified_child();
+	enable_signals();
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
 	else

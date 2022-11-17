@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 14:06:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:17:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,8 @@ int		get_exit_code(int exit_code);
 int		exit_terminal(void); // Function that needs to be worked on
 void	signal_child(int signum);
 void	signal_parent(int signum);
-void	signal_modified_child(void);
-void	signal_modified(void);
-void	disable_echo(void);
+void	enable_signals();
+void	disable_signals();
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);

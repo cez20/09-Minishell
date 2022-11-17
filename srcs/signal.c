@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 14:24:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:29:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,13 @@ int	exit_terminal(void)
 /*
     sig_handler() function enumerated the different actions
     to be realized when SIGINT signal is sent to kernel. 
-
     1- Print newline on terminal
-
     2- rl_on_new_line tell terminal, that readline() function will be reading
     from this new line. This function normally following a \n
-
     3- rl_replace_line (char *text, int clear_undo): 
     if any text was entered prior to pressing Ctrl+C,
     rl_replace line takes the text entered (found in buffer) 
     and replace it by whatever is given as first argument.
-
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
@@ -57,6 +53,7 @@ void	signal_child(int signum)
 		printf("\n");
 	else if (signum == SIGQUIT)
 		printf("Quit: 3\n");
+
 }
 
 void	signal_parent(int signum)
@@ -70,34 +67,17 @@ void	signal_parent(int signum)
 	}
 }
 
-// void	signal_parent(int signum)
-// {
-// 	if (signum == SIGINT)
-// 	{
-// 		printf("\n");
-// 		if(rl_on_new_line() == -1)
-// 			exit (1);
-// 		rl_replace_line("", 0);
-// 		rl_redisplay();
-// 	}
-// }
-
-void	signal_modified_child(void)
+void	enable_signals()
 {
+	struct termios old;
+	struct termios new;
+	
+	tcgetattr(STDIN_FILENO, &old);
+	new = old;
+	new.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new);
 	signal(SIGINT, &signal_child);
 	signal(SIGQUIT, &signal_child);
-}
-
-/* 
-    SIGINT = equivalent of Ctrl+C, SIGQUIT = equivalent of Ctrl+\
-    The signal() function defines a particular action to be realized
-    when a signal is encountered. For example, when Ctrl+C is pressed
-    The function sig_handler is immediately called whereas with the other
-    signal, it is ignored*/
-void	signal_modified(void)
-{
-	signal(SIGINT, &signal_parent);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 // This function essentially disable the ECHOCTL function
@@ -105,11 +85,15 @@ void	signal_modified(void)
 // keyboard. We take current terminal setting with tcgetattr and
 // then modify the attributes c_lflag to disable ECHOCTL and then
 // apply change with tcgetattr
-void	disable_echo(void)
+void	disable_signals()
 {
-	struct termios	attributes;
-
-	tcgetattr(STDIN_FILENO, &attributes);
-	attributes.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &attributes);
+	struct termios old;
+	struct termios new;
+	
+	tcgetattr(STDIN_FILENO, &old);
+	new = old;
+	new.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new);
+	signal(SIGINT, &signal_parent);
+	signal(SIGQUIT, SIG_IGN);
 }

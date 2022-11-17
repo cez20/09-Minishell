@@ -235,6 +235,7 @@ LOG:
 
 	Cesar 17 novembre   - Fix: regler le probleme de ' cat /dev/urandom | head -3
 						- Creer fonction get_exit_code (Elle se trouve dans signal.c)
+						- Desactiver echo pour que Ctrl+C n'affiche pas ^C, mais lorsque dans child il s'affiche
 
 test redirection:
 					- <>		bash = bash: syntax error near unexpected token 'newline'

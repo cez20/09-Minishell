@@ -750,5 +750,5 @@ rl_echo_signal_char (int sig)
       cstr[cslen = 1] = '\0';
     }
 
-  _rl_output_some_chars (cstr, cslen);
+ _rl_output_some_chars (cstr, cslen);
 }
