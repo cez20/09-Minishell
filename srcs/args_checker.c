@@ -6,13 +6,13 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/15 23:06:44 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:55:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
- int	check_arg_export(char *arg)
+int	check_arg_export(char *arg)
 {
 	int	i;
 

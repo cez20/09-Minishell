@@ -216,7 +216,22 @@ LOG:
 	Cesar 14 novembre   - Expansion non-existante (Ex: TRES) n'affiche rien et retourne le prompt
 						- Message derreur lorsque redirection avec expansion non-existante (< TRES) (Ajout else if dans fonction exec_error_management)
 						- Message derreur lorsque redirection avec fichier non-existante (ex: < te.txt) (Ajout else if dans fonction exec_error_management)
-			
+	
+	Cesar 15 novembre   - Commande non-existante affiche exit code 127 
+						- Incorrect input affiche code 1  
+						- Rendu ma fonction execution plus courte pour respecter les 25 lignes  
+						- Changer le nom de certains arguments dans ma strucuture t_command_line
+							-Cmd_and _args = path 
+							-Merge_path_cmd = argv 
+							-function "execve_error_management" s'appele check_if_error
+
+
+	Cesar 16 novembre   - Fix : mon message d'erreur command not found ne s'affiche plus.
+						- Fix : Regler le cas echo Cesar > test2.txt | wc qui causait un command not found pour echo 
+						- Fix : Regler le problemes des 2 minishell  Minishell> Minishell> lorsqu'on fait Ctrl+C
+						  (Regler avec l'ajout de la fonction signal(SIGINT, &signal_child) dans la fonction execution.c 
+						- Regler les codes d'erreurs des signaux (SIGINT et SIQUIT)
+						- Regler probleme de command ' << Cesar ' seul. Il manquait une protection dans table_flip
 
 
 test redirection:

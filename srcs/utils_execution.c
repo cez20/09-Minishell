@@ -6,15 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/16 00:16:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:07:23 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-
-
-
 
 void	check_if_error(t_command_line cmd_line)
 {
@@ -27,6 +23,14 @@ void	check_if_error(t_command_line cmd_line)
 	}
 	else if (cmd_line.path == NULL && cmd_line.argv[0][0] != '$' && \
 	cmd_line.argv == NULL)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(cmd_line.argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit (127);
+	}
+	else if (cmd_line.path == NULL && cmd_line.argv[0][0] != '$' && \
+	cmd_line.builtin != 1)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(cmd_line.argv[0], 2);
@@ -60,6 +64,8 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	waitpid(pid, &info->exit_code, 0);
 	if (WIFEXITED(info->exit_code))
 		info->exit_code = WEXITSTATUS(info->exit_code);
+	else if (WIFSIGNALED(info->exit_code))
+		info->exit_code = 128 + WTERMSIG(info->exit_code);
 }
 
 //Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
@@ -86,10 +92,10 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 
 	i = 0;
 	do_redirection(cmd_line[i]);
-	if (cmd_line[i].builtin == 1 && cmd_line->error_infile)
+	if (cmd_line[info->index].builtin == 1 && cmd_line->error_infile)
 		check_if_error(cmd_line[i]);
-	else if (cmd_line[i].builtin == 1)
+	else if (cmd_line[info->index].builtin == 1)
 		token_manager(info);
 	else
-		exec_one_command(cmd_line[i], info);
+		exec_one_command(cmd_line[info->index], info);
 }

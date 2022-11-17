@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 22:55:00 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:37:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //I need to free eveything that cause a segfault 
 int	exit_terminal(void)
 {
-	printf(" exit\n");
+	printf("exit\n");
 	exit (EXIT_SUCCESS);
 }
 
@@ -37,7 +37,15 @@ int	exit_terminal(void)
     is in rl_buffer.
 */
 
-void	sig_handler(int signum)
+void	signal_child(int signum)
+{
+	if (signum == SIGINT)
+		printf("\n");
+	else if (signum == SIGQUIT)
+		printf("Quit: 3\n");
+}
+
+void	signal_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -48,6 +56,24 @@ void	sig_handler(int signum)
 	}
 }
 
+// void	signal_parent(int signum)
+// {
+// 	if (signum == SIGINT)
+// 	{
+// 		printf("\n");
+// 		if(rl_on_new_line() == -1)
+// 			exit (1);
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// }
+
+void	signal_modified_child(void)
+{
+	signal(SIGINT, &signal_child);
+	signal(SIGQUIT, &signal_child);
+}
+
 /* 
     SIGINT = equivalent of Ctrl+C, SIGQUIT = equivalent of Ctrl+\
     The signal() function defines a particular action to be realized
@@ -56,7 +82,7 @@ void	sig_handler(int signum)
     signal, it is ignored*/
 void	signal_modified(void)
 {
-	signal(SIGINT, &sig_handler);
+	signal(SIGINT, &signal_parent);
 	signal(SIGQUIT, SIG_IGN);
 }
 
