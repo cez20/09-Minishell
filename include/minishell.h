@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 16:17:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:51:40 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ void	echo(t_info *info);
 void	cd(t_info *info);
 void	unset(t_info *info);
 
+//*** ERROR.C ***
+void	check_if_error(t_command_line cmd_line);
+void	no_file(char *str);
+void	command_not_found(char *str);
+
 // *** EXECUTION.C ***
 void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
@@ -163,7 +168,6 @@ char	*until_chr(char *str, char c);
 //*** UTILS_EXECUTION.C ***
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
-void	check_if_error(t_command_line cmd_line);
 void	put_back_default_std(t_info *info);
 void	do_redirection(t_command_line cmd_line);
 

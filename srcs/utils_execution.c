@@ -6,38 +6,11 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 14:09:27 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:50:28 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h" 
-
-void	check_if_error(t_command_line cmd_line)
-{
-	if (cmd_line.error_infile != NULL)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd_line.error_infile, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit (1);
-	}
-	else if (cmd_line.path == NULL && cmd_line.argv[0][0] != '$' && \
-	cmd_line.argv == NULL)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd_line.argv[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		exit (127);
-	}
-	else if (cmd_line.path == NULL && cmd_line.argv[0][0] != '$' && \
-	cmd_line.builtin != 1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd_line.argv[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		exit (127);
-	}
-}
 
 void	put_back_default_std(t_info *info)
 {
