@@ -233,6 +233,7 @@ LOG:
 						- Regler les codes d'erreurs des signaux (SIGINT et SIQUIT)
 						- Regler probleme de command ' << Cesar ' seul. Il manquait une protection dans table_flip
 
+	Cesar 17 novembre   - Fix: regler le probleme de ' cat /dev/urandom | head -3 '
 
 test redirection:
 					- <>		bash = bash: syntax error near unexpected token 'newline'
