@@ -63,9 +63,7 @@ void	find_expansion(char **str, char **tab, char **env)
 	else
 	{
 		string = *str;
-		print_tab(tab);
 		*str = ft_strjoin(tab[0], tab[3]);
-		printf("str =%s\n", *str);
 		free(string);
 	}
 }
@@ -127,9 +125,11 @@ void	var_expansion(t_command_line *cmd_line, t_info	*info)
 		list = cmd_line[i].list_token;
 		while (list)
 		{
-			if (ft_strchr(list->token, '$'))
-				locate_expansion(&list->token, info->envp, info);
-			//printf("%s\n", list->token);
+			if (list->flag_quote != S_QUOTE)
+			{
+				if (ft_strchr(list->token, '$'))
+					locate_expansion(&list->token, info->envp, info);
+			}
 			list = list->next;
 		}
 		i++;

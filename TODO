@@ -138,6 +138,11 @@ LEAKS:
 			    by 0x100001C09: main (main.c:123)
 
 
+		- à vérifier 
+			- dans find_expansion de var_expansion.c, les ligne 53 et 59 risque de leak car le pointeur n'est pas free avant d'être' reatribuer
+			
+
+
 
 
 

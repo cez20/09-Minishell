@@ -60,6 +60,7 @@ void	trim_space(t_info *info, char *set)
 void	split_token(char *token, t_info *info)
 {
 	int	i;
+	int type_quote;
 
 	i = 0;
 	info->last_position = token;
@@ -69,8 +70,10 @@ void	split_token(char *token, t_info *info)
 	{
 		skip_space(info);
 		check_chevron(info);
+		type_quote = simple_or_double(info->last_position);
 		ft_lstaddback_token(&info->list_token, ft_lstnew_token \
-		(search_another_one(info->last_position, simple_or_double(info->last_position), info)));
+		(search_another_one(info->last_position, type_quote, info)));
+		ft_lstlast_token(info->list_token)->flag_quote = type_quote;
 		skip_space(info);
 		trim_space(info, " \t\n\r\v");
 		if (*info->last_position == '|')
