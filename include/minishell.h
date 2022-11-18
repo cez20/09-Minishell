@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 17:51:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:38:02 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_info
 typedef struct s_command_line
 {
 	t_token	*list_token;
-	// char	*command; // n'est plus necessaire mais aviser Steven 
-	// char	*args; // N'est plus necessaire mais aviser Steven 
+	char	*command; // n'est plus necessaire mais aviser Steven 
+	char	*args; // N'est plus necessaire mais aviser Steven 
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
