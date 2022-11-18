@@ -123,7 +123,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 
 //*** SIGNAL.C ***
 int		get_exit_code(int exit_code);
-int		exit_terminal(void); // Function that needs to be worked on
+int		exit_terminal(t_info *info); // Function that needs to be worked on
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals();

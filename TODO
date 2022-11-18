@@ -17,13 +17,17 @@
 	[X] >> doit rediriger la sortie en mode append.
 
 [] execution
-	[] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
+	[X] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
 	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
-	[] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
+		FIXME: 
+				[] ex: cat | ls, cat attend, mais quitte a la premiere entrée
+
+
+	[X] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
 	[] Cas specifique a gerer 
-		[] Gerer les path relatifs?
+		[X] Gerer les path relatifs?
 		[] Tous les FDS fermes dans parent (et aussi child?).
-		[] gerer le cas  cat > test.txt | wc
+		[X] gerer le cas  cat > test.txt | wc
 	[X] Infile error : affichesur stderr durant letape execution (Nouvelle fonction: exec_error_manangement )
 	[X] Cmd error : afficher sur stderr durant execiton (Nouvelle fonction: exec_error_manangement )
 	[X] Fonction find_path_for command. Ajoute le fin que si la comande est deja un executable, le garder tel quel. 
@@ -38,15 +42,15 @@
 
 [X] implémenter les pipes ( | )
 [X] Gérer les variables d’environnement (un $ suivi d’une séquence de caractères) qui doivent être substituées par leur contenu.
-[] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
+[X] Gérer $? qui doit être substitué par le statut de sortie de la dernière pipeline exécutée au premier plan.
 
-[] signaux
-	[] ctrl-C
-	[] ctrl-D
-	[] ctrl-\
+[X] signaux
+	[X] ctrl-C
+	[X] ctrl-D
+	[X] ctrl-\
 
 FIXME:	
-		[] ctrl-C double le prompt lorsque le programme hang
+		[X] ctrl-C double le prompt lorsque le programme hang
 
 [] Builtins
 	[X] echo et "l'option -n"
@@ -75,38 +79,41 @@ FIXME:
 		[X] gérer plusieurs args
 		[X] gérer les "="
 		[X] sans argument
+		FIXME:
+				[] l'utilisation de unset et export créer parfois un segfault, diffile à reproduire, mais doit venir des strlcpy à vérifier avec valgrind
+
 	[X] env sans aucune option ni argument
 		[X] renvoyer une erreur s'il' il des arguments ?
 		[X] gestion d'erreur'
 	[] exit sans aucune option
-		[] errno
-		[] gestion d'erreur'
+		[X] errno
+		[X] gestion d'erreur'
 
 
 [] gérer le $
-	[] "$U'SE'R" doit supprimer $U	
-	[] supprimer tous les $
-	[] fix les cas de "$USER" "'$USER'" '$USER'
+	[X] "$U'SE'R" doit supprimer $U	
+	[] supprimer tous les $ seul
+	[X] fix les cas de "$USER" "'$USER'" '$USER'
 	
 [] Heredocs
 	[] Changer heredoc pour utiliser un pipe au lieu de fichier 
-	[] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	[] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
+	[X] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	[X] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
 	[X] heredoc ferme si le delim se retrouve au debut de la ligne 
 		ex:	$> cat << hello
 			>	hello my name is
 			$>
-	[] heredoc ne fonctionne pas avec les fonctions execve
+	[X] heredoc ne fonctionne pas avec les fonctions execve
 
-[] gérer le errno
+[X] gérer le errno
 
 Struct
 	[X] char **environnement
 
 
 TODO: 
-		[] fonction update state baser sur deux flag D_quote et S_quote déterminant quoi faire avec le contenue d'une expansion
-		[] fix l'espace de la destination de export
+		[X] fonction update state baser sur deux flag D_quote et S_quote déterminant quoi faire avec le contenue d'une expansion
+		[X] fix l'espace de la destination de export
 	
 	
 		

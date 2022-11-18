@@ -64,7 +64,7 @@ void	token_manager(t_info *info)
 		cd(info);
 	else if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) \
 	&& ft_strlen(info->command_lines[info->index].command) == 4)
-		exit_terminal();
+		exit_terminal(info);
 	else if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) \
 	&& ft_strlen(info->command_lines[info->index].command) == 6)
 		export(info);
@@ -130,7 +130,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line)
 			add_history(line);
 		else
-			exit_terminal();
+			exit_terminal(info);
 		if (close_quote_checker(info, line))
 			;
 		else

@@ -27,10 +27,10 @@ int	get_exit_code(int status)
 }
 
 //I need to free eveything that cause a segfault 
-int	exit_terminal(void)
+int	exit_terminal(t_info *info)
 {
 	printf("exit\n");
-	exit (EXIT_SUCCESS);
+	exit (info->exit_code);
 }
 
 /*
