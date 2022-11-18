@@ -92,6 +92,7 @@ char	*get_command(t_token *list_token)
 {
 	if (!list_token)
 		return (NULL);
+	remove_quote(list_token);
 	return (list_token->token);
 }
 
