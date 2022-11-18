@@ -250,17 +250,17 @@ LOG:
 						- Desactiver echo pour que Ctrl+C n'affiche pas ^C, mais lorsque dans child il s'affiche
 
 test redirection:
-					- <>		bash = bash: syntax error near unexpected token 'newline'
-					- <\>		bash = bash: >: No such file or directory
+					- (DONE) <>		bash = bash: syntax error near unexpected token 'newline'
+					- (DONE) <\>	bash = bash: >: No such file or directory . (Cesar: Il me semble que c'est le meme message qu'en haut dans ce cas)
 
 test général:
 				- vérifier comment se comporte le code lorsque l'on' unset une variables importantes, ex: PATH ou PWD
-				- sleep(2) | sleep(2) | sleep(2)
-				- dev/urandom
+				- (VALIDE) sleep(2) | sleep(2) | sleep(2)
+				- (VALIDE) dev/urandom
 
 
-test echo:
-			- echo <|>					bash = bash: syntax error near unexpected token '|'								
+test echo:  TOUS MIS DANS TEST sauf le premier 
+			- (A FAIRE) echo <|>					bash = bash: syntax error near unexpected token '|'								
 			- echo allo			OK
 			- echo "allo" 		OK 
 			- echo 'allo' 		OK
@@ -268,4 +268,4 @@ test echo:
 			- echo '"allo"' 	OK
 			- echo '"a"ll"o"' 	OK
 			- echo '"a"ll"o"' 	OK
-			- echo				
+			- echo				OK 	
