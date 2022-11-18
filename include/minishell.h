@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 12:59:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:08:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 //*** SIGNAL.C ***
 int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info); // Function that needs to be worked on
+void	enable_signals_minishell();
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals();
