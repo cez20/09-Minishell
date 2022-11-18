@@ -68,7 +68,6 @@ void	find_expansion(char **str, char **tab, char **env)
 	}
 }
 
-
 /*Fonction qui s'assurer de seulement garder la variable
 d'environmement sans metachracteres (EX:"echo'$ARGS'"")
 va seulement garder le ARGS sans le '(simple quote qui se trouve apres)*/
@@ -84,14 +83,13 @@ char	*env_variable(char *str, int *i)
 	return (str1);
 }
 
-
 void	locate_expansion(char **str, char **env, t_info *info)
 {
 	int		i;
-	char **tab;
+	char	**tab;
 
 	i = 0;
-	tab = ft_calloc(5, sizeof(char*));
+	tab = ft_calloc(5, sizeof(char *));
 	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
 	{
 		free(*str);

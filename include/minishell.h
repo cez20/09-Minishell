@@ -30,7 +30,7 @@
 # define TEXT 32
 # define S_QUOTE 39
 # define D_QUOTE 34
-# define NB_PROCESS info->nb_of_pipe + 1
+# define NB_PROCESS info->nb_of_pipe + 1 // va devoir être une constante pour la norme
 
 typedef struct s_token
 {
@@ -45,16 +45,13 @@ typedef struct s_token
 typedef struct s_info
 {
 	char					**envp;
-	// char	*prompt;
 	t_token					*list_token;
 	struct s_command_line	*command_lines;
-	// int 	flag_quote;
 	char					*pwd;
 	char					*last_position;
 	int						index;
 	int						len;
 	int						state;
-	// int		type_quote;
 	int						nb_of_pipe;
 	int						initial_stdin;
 	int						initial_stdout;
@@ -65,8 +62,8 @@ typedef struct s_info
 typedef struct s_command_line
 {
 	t_token	*list_token;
-	char	*command; // n'est plus necessaire mais aviser Steven 
-	char	*args; // N'est plus necessaire mais aviser Steven 
+	// char	*command; // n'est plus necessaire mais aviser Steven 
+	// char	*args; // N'est plus necessaire mais aviser Steven 
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
@@ -83,8 +80,8 @@ int		close_quote_checker(t_info *info, char *str);
 int		main(int argc, char **argv, char **envp);
 
 //*** ARGS_CHECKER.C ***
- int	check_arg_export(char *arg);
- int	check_arg_unset(char *arg, t_info *info);
+int		check_arg_export(char *arg);
+int		check_arg_unset(char *arg, t_info *info);
 
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
@@ -126,8 +123,8 @@ int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info); // Function that needs to be worked on
 void	signal_child(int signum);
 void	signal_parent(int signum);
-void	enable_signals();
-void	disable_signals();
+void	enable_signals(void);
+void	disable_signals(void);
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);

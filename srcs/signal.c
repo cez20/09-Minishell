@@ -53,7 +53,6 @@ void	signal_child(int signum)
 		printf("\n");
 	else if (signum == SIGQUIT)
 		printf("Quit: 3\n");
-
 }
 
 void	signal_parent(int signum)
@@ -67,11 +66,11 @@ void	signal_parent(int signum)
 	}
 }
 
-void	enable_signals()
+void	enable_signals(void)
 {
-	struct termios old;
-	struct termios new;
-	
+	struct termios	old;
+	struct termios	new;
+
 	tcgetattr(STDIN_FILENO, &old);
 	new = old;
 	new.c_lflag |= ECHOCTL;
@@ -85,11 +84,11 @@ void	enable_signals()
 // keyboard. We take current terminal setting with tcgetattr and
 // then modify the attributes c_lflag to disable ECHOCTL and then
 // apply change with tcgetattr
-void	disable_signals()
+void	disable_signals(void)
 {
-	struct termios old;
-	struct termios new;
-	
+	struct termios	old;
+	struct termios	new;
+
 	tcgetattr(STDIN_FILENO, &old);
 	new = old;
 	new.c_lflag &= ~ECHOCTL;
