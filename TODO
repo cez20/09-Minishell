@@ -49,13 +49,13 @@ FIXME:
 		[] ctrl-C double le prompt lorsque le programme hang
 
 [] Builtins
-	[] echo et "l'option -n"
-		[] echo "" ''
+	[X] echo et "l'option -n"
+		[X] echo "" ''
 		[X] gérer -n avec autre chose que juste n
 		[X] gérer plusieurs -n 
 		[X] gérer les cas de allo"allo""allo" fait: allo"allo""allo" devrait faire : alloalloallo
 		[X] gérer "'" '"' dans écho
-		[] gestion d'erreur'
+		[X] gestion d'erreur'
 	[X] cd uniquement avec un chemin relatif ou absolu
 		[X]	cd ..
 		[X]	cd invalid
@@ -75,9 +75,9 @@ FIXME:
 		[X] gérer plusieurs args
 		[X] gérer les "="
 		[X] sans argument
-	[] env sans aucune option ni argument
-		[] renvoyer une erreur s'il' il des arguments ?
-		[] gestion d'erreur'
+	[X] env sans aucune option ni argument
+		[X] renvoyer une erreur s'il' il des arguments ?
+		[X] gestion d'erreur'
 	[] exit sans aucune option
 		[] errno
 		[] gestion d'erreur'

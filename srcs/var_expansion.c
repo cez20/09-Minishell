@@ -25,36 +25,51 @@ char	*new_expanded_variable(int i, char *str, char **env)
 	str1 = &env[i][j];
 	return (str1);
 }
+// char	*chop_chop_$(char **tab)
+// {
+// 	char *str;
+
+// 	str = ft_strjoin(tab[0], tab[3]);
+// 	return (str);
+// }
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
 pour changer l'expansion par son contenu*/
-void	find_expansion(char **str, char *str1, \
-char *str2, char *str3, char **env)
+void	find_expansion(char **str, char **tab, char **env)
 {
 	char	*string;
 	int		i;
 
 	i = 0;
-	while (env[i] && ft_strnstr(env[i], str2, ft_strlen(str2)) == 0)
+	while (env[i] && ft_strnstr(env[i], tab[2], ft_strlen(tab[2])) == 0)
 		i++;
 	if (env[i])
 	{
 		free(*str);
 		*str = NULL;
-		if (str1)
+		if (tab[0])
 		{
-			string = ft_strjoin(str1, new_expanded_variable(i, str2, env));
-			*str = ft_strjoin(string, str3);
+			string = ft_strjoin(tab[0], new_expanded_variable(i, tab[2], env));
+			*str = ft_strjoin(string, tab[3]);
 			free(string);
 		}
 		else
 		{
-			string = ft_strdup(new_expanded_variable(i, str2, env));
-			*str = ft_strjoin(string, str3);
+			string = ft_strdup(new_expanded_variable(i, tab[2], env));
+			*str = ft_strjoin(string, tab[3]);
 			free(string);
 		}
 	}
+	else
+	{
+		string = *str;
+		print_tab(tab);
+		*str = ft_strjoin(tab[0], tab[3]);
+		printf("str =%s\n", *str);
+		free(string);
+	}
 }
+
 
 /*Fonction qui s'assurer de seulement garder la variable
 d'environmement sans metachracteres (EX:"echo'$ARGS'"")
@@ -75,16 +90,10 @@ char	*env_variable(char *str, int *i)
 void	locate_expansion(char **str, char **env, t_info *info)
 {
 	int		i;
-	char	*str1;
-	char	*str2;
-	char	*str3;
-	char	*str4;
+	char **tab;
 
 	i = 0;
-	str1 = NULL; // Pas olbige
-	str2 = NULL; // Pas olbige
-	str3 = NULL; // Pas olbige
-	str4 = NULL; // Pas olbige
+	tab = ft_calloc(5, sizeof(char*));
 	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
 	{
 		free(*str);
@@ -95,18 +104,13 @@ void	locate_expansion(char **str, char **env, t_info *info)
 	if ((*str)[i] == '$')
 	{
 		if (i > 0)
-			str1 = ft_substr(*str, 0, i);
+			tab[0] = ft_substr(*str, 0, i);
 		i++;
-		
-		str2 = env_variable(*str, &i);
-		str3 = ft_strjoin(str2, "=");
+		tab[1] = env_variable(*str, &i);
+		tab[2] = ft_strjoin(tab[1], "=");
 		if (*str + 1)
-			str4 = ft_strdup(*str + i);
-		find_expansion(str, str1, str3, str4, env);
-		free(str1);
-		free(str2);
-		free(str3);
-		free(str4);
+			tab[3] = ft_strdup(*str + i);
+		find_expansion(str, tab, env);
 	}
 }
 

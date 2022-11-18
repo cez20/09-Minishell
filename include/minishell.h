@@ -182,7 +182,7 @@ void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
 
 //*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
 char	*new_expanded_variable(int i, char *str, char **env);
-void	find_expansion(char **str, char *str1, char *str2, char *str3, char **env);
+void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);
 void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);

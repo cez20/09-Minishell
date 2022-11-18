@@ -76,7 +76,7 @@ int	is_n(t_token *node)
 				return (0);
 			i++;
 		}
-		if (!(*node->token))
+		if (!(*node->token) || *node->token == S_QUOTE || *node->token == D_QUOTE)
 			return (0);
 		return (1);
 	}
