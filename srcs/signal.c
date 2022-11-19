@@ -60,7 +60,6 @@ void	enable_signals_minishell(void)
 	rl_replace_line("", 1);
 }
 
-
 void	signal_child(int signum)
 {
 	if (signum == SIGINT)

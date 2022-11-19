@@ -114,6 +114,10 @@ Struct
 TODO: 
 		[X] fonction update state baser sur deux flag D_quote et S_quote déterminant quoi faire avec le contenue d'une expansion
 		[X] fix l'espace de la destination de export
+		[] réduire le main
+		[] répartir les fonctions du main dans différents fichiers
+		[] réduire find_expansion
+		[] clean up minishell.h 
 	
 	
 		
@@ -127,7 +131,7 @@ FIXME:
 		segfault Heredocs depuis le merge de la branche de Cesar
 		aussi dans les redirections
 		toujours à la ligne 98 du fichier execution.c, à vérifier si probleme avec la gestion des leaks
-		
+
 
 
 LEAKS:

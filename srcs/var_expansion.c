@@ -25,13 +25,6 @@ char	*new_expanded_variable(int i, char *str, char **env)
 	str1 = &env[i][j];
 	return (str1);
 }
-// char	*chop_chop_$(char **tab)
-// {
-// 	char *str;
-
-// 	str = ft_strjoin(tab[0], tab[3]);
-// 	return (str);
-// }
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
 pour changer l'expansion par son contenu*/
@@ -69,8 +62,6 @@ void	find_expansion(char **str, char **tab, char **env)
 	{
 		string = *str;
 		*str = ft_strjoin(tab[0], tab[3]);
-		// printf
-		// printf("tab 1 = %s\ntab 3 = %s\n", tab[0], tab[3]);
 		free(string);
 	}
 }

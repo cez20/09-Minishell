@@ -6,11 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2022/11/18 15:13:30 by slavoie          ###   ########.fr       */
-=======
-/*   Updated: 2022/11/19 12:44:38 by cemenjiv         ###   ########.fr       */
->>>>>>> 4ff8cfc79a8f2a7ee4e6b77f28d181cf71bdd6f6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +93,7 @@ void	unset(t_info *info);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line);
-void	syntax_error();
+void	syntax_error(void);
 void	no_file(char *str);
 void	command_not_found(char *str);
 
@@ -126,7 +122,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 //*** SIGNAL.C ***
 int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info); // Function that needs to be worked on
-void	enable_signals_minishell();
+void	enable_signals_minishell(void);
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals(void);

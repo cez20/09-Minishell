@@ -20,7 +20,8 @@ void	check_if_error(t_command_line cmd_line)
 		no_file(">");
 	else if ((ft_strncmp(cmd_line.argv[0], "<>", 3) == 0))
 		syntax_error();
-	else if (!cmd_line.path && cmd_line.argv[0][0] != '$' && cmd_line.builtin != 1)
+	else if (!cmd_line.path && cmd_line.argv[0][0] \
+	!= '$' && cmd_line.builtin != 1)
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
