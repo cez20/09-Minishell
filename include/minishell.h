@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:50:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:36:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ typedef struct s_command_line
 	char	**argv;
 }				t_command_line;
 
-int		stop;
-
 //*** MAIN.C ***
 char	*search_line(char **tab, char *search);
 char	**tab_trunc(char **tab, char *str, int len);
@@ -133,6 +131,7 @@ void	disable_signals(void);
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
+void	delimiter_finder(char *line, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:49:02 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:42:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@ void	output_redirection(t_command_line *chunk, char *token)
 	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
 }
 
+void	delimiter_finder(char *line, char *delimiter, int fd[])
+{
+	close(fd[0]);
+	line = readline(">");
+	while(1)
+	{
+		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
+		ft_strlen(delimiter) == ft_strlen(line))
+		{
+			free(line);
+			exit (EXIT_SUCCESS);
+		}
+		else if (!line)
+			exit(EXIT_SUCCESS);
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
+		line = readline(">");
+	}
+}
+
+
+
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
@@ -41,24 +64,16 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
-	//signal(SIGINT, SIG_DFL); Mets les signaux comme ils doivent etre normalement 
+	line = NULL;
 	if (pid == 0)
 	{
-		line = readline(">");
-		while((ft_strncmp(line, delimiter, ft_strlen(delimiter)) != 0) && \
-		(ft_strlen(delimiter) == ft_strlen(line)))
-		{
-			if (!line)
-				exit(EXIT_SUCCESS);
-			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
-			free(line);
-			line = readline(">");
-		}
-		free(line);
+		signal(SIGINT, SIG_DFL);
+		delimiter_finder(line, delimiter, fd);
 	}
+	signal(SIGINT, &signal_heredoc);
 	close (fd[1]);
 	cmd_line->fd_in = fd[0];
+	waitpid(pid, NULL, 0); // Mettre le exit_code a 1. 
 }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)

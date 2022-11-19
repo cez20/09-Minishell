@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:36:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:04:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ int	exit_terminal(t_info *info)
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
+
+void	signal_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		if (rl_on_new_line() == -1)
+			exit(1);
+		rl_replace_line("", 1);
+	}
+}
 
 void	enable_signals_minishell(void)
 {
