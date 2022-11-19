@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 13:00:00 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:19:42 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	garbage_collector(t_info *info)
 
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -186,6 +185,5 @@ int	main(int argc, char **argv, char **envp)
 		reinit(info);
 	}
 	free (info);
-	return (0);
-	//return (info->exit_code); // Ca ne marche pas, je retourne info->exit_code, mais je free info juste avant 
+	return (0); 
 }
