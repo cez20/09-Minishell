@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 23:19:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:42:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_struct_command_line(t_info *info)
 	{
 		if (info->command_lines[i].argv)
 			table_flip(info->command_lines[i].argv);
-		// free(info->command_lines[i].args);
+		free(info->command_lines[i].args);
 		free(info->command_lines[i].path);
 		if (info->command_lines[i].fd_in != 0)
 			close (info->command_lines[i].fd_in);

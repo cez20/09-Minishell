@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 15:00:54 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:20:32 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	get_exit_code(int status)
 //I need to free eveything that cause a segfault 
 int	exit_terminal(t_info *info)
 {
-	printf("\r");
-	printf("	    exit");
+	// printf("\r");
+	printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
+	// printf("	    exit");
 	exit (info->exit_code);
 }
 

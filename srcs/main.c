@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/17 16:22:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:35:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	**tab_trunc(char **tab, char *str, int len)
 			new_tab = tab_join(new_tab, tab[i]);
 		i++;
 	}
-	if (new_tab)
-		new_tab[i] = NULL;
 	table_flip(tab);
 	return (new_tab);
 }
@@ -115,6 +113,21 @@ int	close_quote_checker(t_info *info, char *str)
 		return (0);
 }
 
+char	*take_input(void)
+{
+	char	*line;
+	char	*temp;
+	
+	disable_signals();
+	line = readline("\033[0;32mMinishell$> \033[0m");
+	temp = line;
+	if (line)
+		line = ft_strjoin(line, "\0");
+	free(temp);
+	return (line);
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -125,8 +138,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	while (1 && argc && argv && envp)
 	{
-		disable_signals();
-		line = readline("Minishell$> ");
+		line = take_input();
 		if (line)
 			add_history(line);
 		else

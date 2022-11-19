@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 14:38:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:13:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	unset(t_info *info);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line);
+void	syntax_error();
 void	no_file(char *str);
 void	command_not_found(char *str);
 

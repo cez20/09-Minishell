@@ -7,8 +7,8 @@
 [X] gérer double quotes
 
 
-[] redirections 
-	[] Modifer fonction heredoc pour pipe au lieu de fichier.
+[X] redirections 
+	[X] Modifer fonction heredoc pour pipe au lieu de fichier.
 	[X] << allo cat, ne reconnait pas le delimiter s'il y a un espace après
 	[X] >> créer les fichiers en concervant les espaces
 	[X] "< doit rediriger l'entrée"
@@ -18,9 +18,9 @@
 
 [] execution
 	[X] 2 lignes de commands (1 builtin, 1 pipe, 1 command)
-	[] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
+	[X] 2 lignes de commands (1 commande, 1 pipe, 1 builtin)
 		FIXME: 
-				[] ex: cat | ls, cat attend, mais quitte a la premiere entrée
+				[X] ex: cat | ls, cat attend, mais quitte a la premiere entrée
 
 
 	[X] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
@@ -122,7 +122,7 @@ FIXME:
 		[X] unset
 		[X] trunc les espaces après
 		[X] unset PATH fait segfault fill_cmd
-		[] double le prompt quand ctrl-C lorsque que le minishell hang
+		[X] double le prompt quand ctrl-C lorsque que le minishell hang
 		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 
 
@@ -250,17 +250,17 @@ LOG:
 						- Desactiver echo pour que Ctrl+C n'affiche pas ^C, mais lorsque dans child il s'affiche
 
 test redirection:
-					- <>		bash = bash: syntax error near unexpected token 'newline'
-					- <\>		bash = bash: >: No such file or directory
+					- (DONE) <>		bash = bash: syntax error near unexpected token 'newline'
+					- (DONE) <\>	bash = bash: >: No such file or directory . (Cesar: Il me semble que c'est le meme message qu'en haut dans ce cas)
 
 test général:
 				- vérifier comment se comporte le code lorsque l'on' unset une variables importantes, ex: PATH ou PWD
-				- sleep(2) | sleep(2) | sleep(2)
-				- dev/urandom
+				- (VALIDE) sleep(2) | sleep(2) | sleep(2)
+				- (VALIDE) dev/urandom
 
 
-test echo:
-			- echo <|>					bash = bash: syntax error near unexpected token '|'								
+test echo:  TOUS MIS DANS TEST sauf le premier 
+			- (A FAIRE) echo <|>					bash = bash: syntax error near unexpected token '|'								
 			- echo allo			OK
 			- echo "allo" 		OK 
 			- echo 'allo' 		OK
@@ -268,4 +268,4 @@ test echo:
 			- echo '"allo"' 	OK
 			- echo '"a"ll"o"' 	OK
 			- echo '"a"ll"o"' 	OK
-			- echo				
+			- echo				OK 	
