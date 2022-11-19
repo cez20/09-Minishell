@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 23:20:39 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 15:06:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	find_execve_path(t_info *info, t_command_line *cmd_line)
 	if (!path)
 		return ;
 	i = 0;
-	while (i < NB_PROCESS)
+	while (i <= info->nb_of_pipe)
 	{
 		j = 0;
 		while (cmd_line[i].list_token && cmd_line[i].builtin != 1 && path[j])
@@ -96,7 +96,7 @@ void	create_execve_argv(t_info	*info, t_command_line *cmd_line)
 	i = 0;
 	if (!cmd_line)
 		return ;
-	while (i < NB_PROCESS)
+	while (i <= info->nb_of_pipe)
 	{
 		j = 0;
 		list = cmd_line[i].list_token;

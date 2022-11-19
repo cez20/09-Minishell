@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 15:42:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:28:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	check_if_error(t_command_line cmd_line)
 {
-	if (cmd_line.error_infile)
+	if (!cmd_line.list_token)
+		exit (1);
+	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
 		no_file(">");
@@ -25,6 +27,8 @@ void	check_if_error(t_command_line cmd_line)
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
+	else if (!cmd_line.argv && cmd_line.fd_in > 0)
+		exit (1);
 }
 
 void	syntax_error(void)

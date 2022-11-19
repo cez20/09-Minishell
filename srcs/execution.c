@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:47:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:28:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
-	pid_t	pid[NB_PROCESS];
+	pid_t	pid[info->nb_of_pipe + 1];
 	int		status;
 	int		i;
 
