@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/18 21:01:12 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 14:55:22 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	token_manager(t_info *info)
 		cd(info);
 	else if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) \
 	&& ft_strlen(info->command_lines[info->index].command) == 4)
-		exit_terminal(info);
+		exit_terminal(info, 0);
 	else if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) \
 	&& ft_strlen(info->command_lines[info->index].command) == 6)
 		export(info);
@@ -155,7 +155,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line)
 			add_history(line);
 		else
-			exit_terminal(info);
+			exit_terminal(info, 1);
 		if (close_quote_checker(info, line))
 			;
 		else

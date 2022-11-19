@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 20:14:58 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 14:52:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@ void	pwd(t_info *info)
 	else
 		printf("%s\n", info->pwd);
 }
-
-// int	is_all_n(char *token)
-// {
-// 	while (*token)
-// 	{
-// 		token++;
-// 		printf("*token = %c\n", *token);
-// 		if (*token == '\0')
-// 			return (1);
-// 		else if (*token != 'n')
-// 			return (0);
-// 	}
-// 	return (1);
-// }
 
 void	echo(t_info *info)
 {
@@ -164,7 +150,6 @@ void	unset(t_info *info)
 		{
 			str = ft_strjoin(info->command_lines[info->index].argv[i + 1], "=");
 			info->envp = tab_trunc(info->envp, str, ft_strlen(str));
-			// print_tab(info->envp);
 			free(str);
 		}
 		i++;
