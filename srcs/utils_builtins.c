@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/18 21:10:10 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 16:21:04 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ char	*until_chr(char *str, char c)
 	line = NULL;
 	while (str[i] != c)
 		i++;
-	if (str[i])
+	if (str[i++])
 	{
-		line = ft_substr(str, 0, i + 1);
+		line = ft_substr(str, 0, i);
 		return (line);
 	}
 	return (line);
