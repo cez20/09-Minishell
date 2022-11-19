@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/15 22:51:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 20:25:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	how_many(t_info *info, char *str, char c)
 	int	i;
 
 	i = 0;
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == D_QUOTE)
 		{
@@ -82,7 +82,7 @@ char	**split_path(char **env)
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strnstr(env[i], "PATH=", 5))
 		{

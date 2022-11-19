@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/17 16:29:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:20:32 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	get_exit_code(int status)
 //I need to free eveything that cause a segfault 
 int	exit_terminal(t_info *info)
 {
-	printf("exit\n");
+	// printf("\r");
+	printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
+	// printf("	    exit");
 	exit (info->exit_code);
 }
 
