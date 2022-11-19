@@ -127,26 +127,38 @@ FIXME:
 
 
 LEAKS:
-		-  1,024 bytes in 1 blocks are definitely lost in loss record 75 of 117
-			    at 0x100178545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-			    by 0x100440AA7: __private_getcwd (in /usr/lib/system/libsystem_c.dylib)
-			    by 0x100005651: init_info (init.c:37)
-				by 0x100001C09: main (main.c:123)
-		- Syscall param execve(envp) points to uninitialised byte(s)
-			    at 0x10066241E: execve (in /usr/lib/system/libsystem_kernel.dylib)
-			    by 0x1000030CA: exec_one_command (execution.c:145)
-			    by 0x1000032AD: one_command_or_builtin (execution.c:165)
-			    by 0x1000032F2: execution (execution.c:177)
-			    by 0x100001D27: main (main.c:152)
-			  Address 0x1008bdc40 is 320 bytes inside a block of size 321 alloc'd
-			    at 0x100178545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-			    by 0x1000319A5: tabcpy (ft_tab.c:89)
-			    by 0x10000566A: init_info (init.c:38)
-			    by 0x100001C09: main (main.c:123)
-
-
 		- à vérifier 
 			- dans find_expansion de var_expansion.c, les ligne 53 et 59 risque de leak car le pointeur n'est pas free avant d'être' reatribuer
+		FIXME:
+				beaucoup d'invalid read lorsque l'on export deux fois la meme variable
+				"''"' invalid read 1
+				<< allo
+					18 bytes in 3 blocks are definitely lost in loss record 19 of 125
+					   at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+					   by 0x100031A10: ft_calloc (ft_calloc.c:19)
+					   by 0x100030D55: ft_strjoin (ft_strjoin.c:21)
+					   by 0x1000013AF: take_input (main.c:125)
+					   by 0x1000014C6: main (main.c:162)
+
+					   echo allo | wc
+
+					   ==27060== 18 bytes in 3 blocks are definitely lost in loss record 20 of 132
+					   ==27060==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+					   ==27060==    by 0x100031A10: ft_calloc (ft_calloc.c:19)
+					   ==27060==    by 0x100030D55: ft_strjoin (ft_strjoin.c:21)
+					   ==27060==    by 0x1000013AF: take_input (main.c:125)
+					   ==27060==    by 0x1000014C6: main (main.c:162)
+					   ==27060== 
+					   ==27060== 4,096 bytes in 1 blocks are definitely lost in loss record 105 of 132
+					   ==27060==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+					   ==27060==    by 0x100031A10: ft_calloc (ft_calloc.c:19)
+					   ==27060==    by 0x10000270E: init_info (init.c:37)
+					   ==27060==    by 0x100001479: main (main.c:158)
+
+
+				reste beaucoup de FDS ouvert
+					
+
 			
 
 

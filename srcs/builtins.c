@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 19:17:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/18 20:14:58 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,11 @@ void	echo(t_info *info)
 void	cd(t_info *info)
 {
 	char	*new_path;
-	char	*pwd;
 	char	*oldpwd;
 	char	*line;
 
-	pwd = ft_calloc(4096, sizeof(char));
+	info->pwd = ft_calloc(4096, sizeof(char));
 	oldpwd = ft_calloc(4096, sizeof(char));
-
 	oldpwd = getcwd(oldpwd, 4096);
 	if (info->command_lines[info->index].args)
 		new_path = info->command_lines[info->index].args;
@@ -88,9 +86,9 @@ void	cd(t_info *info)
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
 		printf("cd: %s: No such file or directory\n", new_path);
-	pwd = getcwd(pwd, 4096);
+	info->pwd = getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
-	line = ft_strjoin("PWD=", pwd);
+	line = ft_strjoin("PWD=", info->pwd);
 	info->envp = tab_trunc(info->envp, "PWD=", 4);
 	info->envp = tab_join(info->envp, line);
 	free(line);
@@ -98,6 +96,7 @@ void	cd(t_info *info)
 	info->envp = tab_trunc(info->envp, "OLDPWD=", 7);
 	info->envp = tab_join(info->envp, line);
 	free(line);
+	free(oldpwd);
 }
 
 void	export(t_info *info)
@@ -121,13 +120,16 @@ void	export(t_info *info)
 				line = search_line(info->envp, str);
 				if (line)
 				{
+					info->envp = tab_trunc(info->envp, str, ft_strlen(str));
+					info->envp = tab_join(info->envp, line);
 					free(str);
-					ft_strlcpy(line, info->command_lines[info->index] \
-					.argv[i + 1], ft_strlen(line) + 1);
 				}
 				else
+				{
 					info->envp = tab_join(info->envp, info->command_lines[info->index] \
 					.argv[i + 1]);
+					free(str);
+				}
 			}
 			i++;
 		}

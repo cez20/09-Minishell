@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 17:45:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/18 20:23:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ void	reinit(t_info *info)
 
 	i = 0;
 	info->nb_of_pipe = 0;
-	while (i <= info->nb_of_pipe)
-	{
-		ft_lstclear_token(&info->command_lines[i].list_token, free);
-		i++;
-	}
-	free(info->command_lines);
 	table_flip(info->paths);
 	info->paths = split_path(info->envp);
 	info->index = 0;
