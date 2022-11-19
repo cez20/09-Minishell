@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
 /*   Updated: 2022/11/18 16:20:32 by slavoie          ###   ########.fr       */
@@ -32,6 +32,8 @@ int	exit_terminal(t_info *info)
 	// printf("\r");
 	printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
 	// printf("	    exit");
+	close(info->initial_stdin);
+	close(info->initial_stdout);
 	exit (info->exit_code);
 }
 

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
 /*   Updated: 2022/11/18 21:01:12 by slavoie          ###   ########.fr       */
@@ -178,5 +178,6 @@ int	main(int argc, char **argv, char **envp)
 		reinit(info);
 	}
 	free (info);
-	return (info->exit_code);
+	return (0);
+	//return (info->exit_code); // Ca ne marche pas, je retourne info->exit_code, mais je free info juste avant 
 }

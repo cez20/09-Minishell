@@ -265,6 +265,8 @@ LOG:
 						- Creer fonction get_exit_code (Elle se trouve dans signal.c)
 						- Desactiver echo pour que Ctrl+C n'affiche pas ^C, mais lorsque dans child il s'affiche
 
+	Cesar 18 novembre	- Inserer le dup de STDIN et STDOUT au bon endroit dans mon code. 
+
 test redirection:
 					- (DONE) <>		bash = bash: syntax error near unexpected token 'newline'
 					- (DONE) <\>	bash = bash: >: No such file or directory . (Cesar: Il me semble que c'est le meme message qu'en haut dans ce cas)

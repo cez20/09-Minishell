@@ -3,3 +3,4 @@ objs/
 readline/examples/rl-timeout
 readline/examples/rlkeymaps
 minishell
+minishell.dSYM
