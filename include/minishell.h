@@ -62,8 +62,8 @@ typedef struct s_info
 typedef struct s_command_line
 {
 	t_token	*list_token;
-	// char	*command; // n'est plus necessaire mais aviser Steven 
-	// char	*args; // N'est plus necessaire mais aviser Steven 
+	char	*command; // n'est plus necessaire mais aviser Steven 
+	char	*args; // N'est plus necessaire mais aviser Steven 
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
