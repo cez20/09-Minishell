@@ -124,6 +124,10 @@ FIXME:
 		[X] unset PATH fait segfault fill_cmd
 		[X] double le prompt quand ctrl-C lorsque que le minishell hang
 		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
+		segfault Heredocs depuis le merge de la branche de Cesar
+		aussi dans les redirections
+		toujours à la ligne 98 du fichier execution.c, à vérifier si probleme avec la gestion des leaks
+		
 
 
 LEAKS:

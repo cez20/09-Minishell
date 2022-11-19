@@ -52,9 +52,6 @@ void	init_info(t_info *info, char **envp)
 
 void	reinit(t_info *info)
 {
-	int	i;
-
-	i = 0;
 	info->nb_of_pipe = 0;
 	table_flip(info->paths);
 	info->paths = split_path(info->envp);

@@ -49,13 +49,37 @@ int	exit_terminal(t_info *info)
     is in rl_buffer.
 */
 
+void	enable_signals_minishell(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	if (rl_on_new_line() == -1)
+		exit(1);
+	rl_replace_line("", 1);
+}
+
+
 void	signal_child(int signum)
 {
 	if (signum == SIGINT)
+	{
 		printf("\n");
+		if (rl_on_new_line() == -1)
+			exit(1);
+		rl_replace_line("", 1);
+	}
 	else if (signum == SIGQUIT)
 		printf("Quit: 3\n");
 }
+
+// void	signal_child(int signum)
+// {
+// 	if (signum == SIGINT)
+// 		printf("\n");
+// 	else if (signum == SIGQUIT)
+// 		printf("Quit: 3\n");
+
+// }
 
 void	signal_parent(int signum)
 {

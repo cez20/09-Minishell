@@ -95,7 +95,10 @@ void	execution(t_info *info, t_command_line *line)
 	t_command_line	*cmd_line;
 
 	cmd_line = line; // Je crois que j'ai pas besoin de ca
-	enable_signals();
+	if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
+		enable_signals_minishell();
+	else
+		enable_signals();
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
 	else
