@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:36:44 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:49:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,25 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
 	char	*line;
 	int		fd[2];
+	pid_t	pid;
 
-	if (cmd_line->fd_in != 0)
-		close(cmd_line->fd_in);
 	if (pipe(fd) == -1)
 		return ;
-	while (1)
+	pid = fork();
+	//signal(SIGINT, SIG_DFL); Mets les signaux comme ils doivent etre normalement 
+	if (pid == 0)
 	{
 		line = readline(">");
-		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
+		while((ft_strncmp(line, delimiter, ft_strlen(delimiter)) != 0) && \
 		(ft_strlen(delimiter) == ft_strlen(line)))
 		{
+			if (!line)
+				exit(EXIT_SUCCESS);
+			write(fd[1], line, ft_strlen(line));
+			write(fd[1], "\n", 1);
 			free(line);
-			break ;
+			line = readline(">");
 		}
-		if (!line) // This would handle the Ctrl +D
-			break ;
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
 		free(line);
 	}
 	close (fd[1]);

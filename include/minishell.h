@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:19:46 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:50:38 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define TEXT 32
 # define S_QUOTE 39
 # define D_QUOTE 34
-# define NB_PROCESS info->nb_of_pipe + 1 // va devoir être une constante pour la norme
 
 typedef struct s_token
 {
