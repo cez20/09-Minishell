@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 10:27:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:07:15 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ pour changer l'expansion par son contenu*/
 void	find_expansion(char **str, char **tab, char **env)
 {
 	char	*string;
+	char	*temp;
 	int		i;
 
 	i = 0;
@@ -50,13 +51,17 @@ void	find_expansion(char **str, char **tab, char **env)
 		if (tab[0])
 		{
 			string = ft_strjoin(tab[0], new_expanded_variable(i, tab[2], env));
+			temp = *str;
 			*str = ft_strjoin(string, tab[3]);
+			free(temp);
 			free(string);
 		}
 		else
 		{
 			string = ft_strdup(new_expanded_variable(i, tab[2], env));
+			temp = *str;
 			*str = ft_strjoin(string, tab[3]);
+			free(temp);
 			free(string);
 		}
 	}
@@ -64,10 +69,11 @@ void	find_expansion(char **str, char **tab, char **env)
 	{
 		string = *str;
 		*str = ft_strjoin(tab[0], tab[3]);
+		// printf
+		// printf("tab 1 = %s\ntab 3 = %s\n", tab[0], tab[3]);
 		free(string);
 	}
 }
-
 
 /*Fonction qui s'assurer de seulement garder la variable
 d'environmement sans metachracteres (EX:"echo'$ARGS'"")
@@ -84,14 +90,13 @@ char	*env_variable(char *str, int *i)
 	return (str1);
 }
 
-
 void	locate_expansion(char **str, char **env, t_info *info)
 {
 	int		i;
-	char **tab;
+	char	**tab;
 
 	i = 0;
-	tab = ft_calloc(5, sizeof(char*));
+	tab = ft_calloc(5, sizeof(char *));
 	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
 	{
 		free(*str);
@@ -99,7 +104,7 @@ void	locate_expansion(char **str, char **env, t_info *info)
 	}
 	while ((*str)[i] != '$' && (*str)[i])
 		i++;
-	if ((*str)[i] == '$')
+	if ((*str)[i] == '$' && (*str)[i + 1])
 	{
 		if (i > 0)
 			tab[0] = ft_substr(*str, 0, i);

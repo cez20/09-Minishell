@@ -60,7 +60,7 @@ void	trim_space(t_info *info, char *set)
 void	split_token(char *token, t_info *info)
 {
 	int	i;
-	int type_quote;
+	int	type_quote;
 
 	i = 0;
 	info->last_position = token;

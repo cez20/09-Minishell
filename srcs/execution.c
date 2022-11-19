@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 15:08:58 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 13:31:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		if (cmd_line.fd_out != 1)
+		{
 			dup2(info->initial_stdout, STDOUT_FILENO);
+			//close (info->initial_stdout);
+		}
 	}
 }
 
@@ -103,5 +106,4 @@ void	execution(t_info *info, t_command_line *line)
 		one_command_or_builtin(cmd_line, info);
 	else
 		multiple_commands_or_builtins(cmd_line, info);
-	//put_back_default_std(info);
 }

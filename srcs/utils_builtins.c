@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/15 10:31:49 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/18 21:10:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*until_chr(char *str, char c)
 		i++;
 	if (str[i])
 	{
-		line = ft_substr(str, 0, i);
+		line = ft_substr(str, 0, i + 1);
 		return (line);
 	}
 	return (line);

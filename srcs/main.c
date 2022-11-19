@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/18 16:14:41 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 13:00:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	**tab_trunc(char **tab, char *str, int len)
 			new_tab = tab_join(new_tab, tab[i]);
 		i++;
 	}
-	if (new_tab)
-		new_tab[i] = NULL;
 	table_flip(tab);
 	return (new_tab);
 }
@@ -115,6 +113,42 @@ int	close_quote_checker(t_info *info, char *str)
 		return (0);
 }
 
+char	*take_input(void)
+{
+	char	*line;
+	char	*temp;
+	
+	disable_signals();
+	line = readline("\033[0;32mMinishell$> \033[0m");
+	temp = line;
+	if (line)
+		line = ft_strjoin(line, "\0");
+	free(temp);
+	return (line);
+}
+
+void	free_info(t_info *info)
+{
+	if (info->envp)
+		free(info->envp);
+	if (info->pwd)
+		free(info->pwd);
+	
+
+}
+
+
+void	garbage_collector(t_info *info)
+{
+	free_struct_command_line(info);
+	// free_info(info);
+
+
+
+
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -125,8 +159,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	while (1 && argc && argv && envp)
 	{
-		disable_signals();
-		line = readline("\033[0;32mMinishell$> \033[0m");
+		line = take_input();
 		if (line)
 			add_history(line);
 		else
@@ -148,10 +181,11 @@ int	main(int argc, char **argv, char **envp)
 			prepare_data_for_execution(info);
 			execution(info, info->command_lines);
 			free(line);
-			free_struct_command_line(info);
+			garbage_collector(info);
 		}
 		reinit(info);
 	}
 	free (info);
-	return (info->exit_code);
+	return (0);
+	//return (info->exit_code); // Ca ne marche pas, je retourne info->exit_code, mais je free info juste avant 
 }
