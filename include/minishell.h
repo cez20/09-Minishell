@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 12:44:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:19:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_info
 	int						initial_stdout;
 	int						exit_code;
 	char					**paths;
+	char					*delimiter;
 }		t_info;
 
 typedef struct s_command_line
@@ -71,6 +72,8 @@ typedef struct s_command_line
 	char	*path;
 	char	**argv;
 }				t_command_line;
+
+int		stop;
 
 //*** MAIN.C ***
 char	*search_line(char **tab, char *search);
@@ -120,6 +123,7 @@ void	fill_command_lines(t_info *info); // On pourra p-e l'enlever
 char	*search_another_one(char *str, char c, t_info *info);
 
 //*** SIGNAL.C ***
+void	signal_heredoc(int signum);
 int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info); // Function that needs to be worked on
 void	enable_signals_minishell();

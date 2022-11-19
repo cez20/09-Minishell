@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 13:31:49 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:05:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,13 @@ void	execution(t_info *info, t_command_line *line)
 	t_command_line	*cmd_line;
 
 	cmd_line = line; // Je crois que j'ai pas besoin de ca
-	if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
-		enable_signals_minishell();
-	else
-		enable_signals();
+	if (cmd_line->argv)
+	{
+		if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
+			enable_signals_minishell();
+		else 
+			enable_signals();
+	}
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
 	else

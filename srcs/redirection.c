@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/16 00:26:10 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:36:44 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 			free(line);
 			break ;
 		}
+		if (!line) // This would handle the Ctrl +D
+			break ;
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);

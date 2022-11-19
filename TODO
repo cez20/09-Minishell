@@ -261,7 +261,8 @@ LOG:
 						- Creer fonction get_exit_code (Elle se trouve dans signal.c)
 						- Desactiver echo pour que Ctrl+C n'affiche pas ^C, mais lorsque dans child il s'affiche
 
-	Cesar 18 novembre	- Inserer le dup de STDIN et STDOUT au bon endroit dans mon code. 
+	Cesar 18 novembre	- Arranger le cas du initial_stdin et initial_stdout
+						- Modifier ma fonction execution pour eviter segfault dans heredoc (a retravailler)
 
 test redirection:
 					- (DONE) <>		bash = bash: syntax error near unexpected token 'newline'
