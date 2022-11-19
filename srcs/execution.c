@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 17:21:41 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 14:47:04 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,13 @@ void	execution(t_info *info, t_command_line *line)
 	t_command_line	*cmd_line;
 
 	cmd_line = line; // Je crois que j'ai pas besoin de ca
-	if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
-		enable_signals_minishell();
-	else
-		enable_signals();
+	if (cmd_line->argv)
+	{
+		if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
+			enable_signals_minishell();
+		else 
+			enable_signals();
+	}
 	if (info->nb_of_pipe == 0)
 		one_command_or_builtin(cmd_line, info);
 	else
