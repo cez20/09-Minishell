@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:52:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:42:52 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ void	cd(t_info *info)
 	char	*new_path;
 	char	*oldpwd;
 	char	*line;
-
-	info->pwd = ft_calloc(4096, sizeof(char));
+	
 	oldpwd = ft_calloc(4096, sizeof(char));
-	oldpwd = getcwd(oldpwd, 4096);
+	getcwd(oldpwd, 4096);
 	if (info->command_lines[info->index].args)
 		new_path = info->command_lines[info->index].args;
 	else
@@ -72,7 +71,7 @@ void	cd(t_info *info)
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
 		printf("cd: %s: No such file or directory\n", new_path);
-	info->pwd = getcwd(info->pwd, 4096);
+	getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", info->pwd);
 	info->envp = tab_trunc(info->envp, "PWD=", 4);

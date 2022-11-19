@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 14:54:56 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:08:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,7 @@ void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);
 void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
+
+void	garbage_collector(t_info *info);
 
 #endif

@@ -135,35 +135,9 @@ FIXME:
 
 
 LEAKS:
-		- à vérifier 
-			- dans find_expansion de var_expansion.c, les ligne 53 et 59 risque de leak car le pointeur n'est pas free avant d'être' reatribuer
 		FIXME:
 				beaucoup d'invalid read lorsque l'on export deux fois la meme variable
 				"''"' invalid read 1
-				<< allo
-					18 bytes in 3 blocks are definitely lost in loss record 19 of 125
-					   at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-					   by 0x100031A10: ft_calloc (ft_calloc.c:19)
-					   by 0x100030D55: ft_strjoin (ft_strjoin.c:21)
-					   by 0x1000013AF: take_input (main.c:125)
-					   by 0x1000014C6: main (main.c:162)
-
-					   echo allo | wc
-
-					   ==27060== 18 bytes in 3 blocks are definitely lost in loss record 20 of 132
-					   ==27060==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-					   ==27060==    by 0x100031A10: ft_calloc (ft_calloc.c:19)
-					   ==27060==    by 0x100030D55: ft_strjoin (ft_strjoin.c:21)
-					   ==27060==    by 0x1000013AF: take_input (main.c:125)
-					   ==27060==    by 0x1000014C6: main (main.c:162)
-					   ==27060== 
-					   ==27060== 4,096 bytes in 1 blocks are definitely lost in loss record 105 of 132
-					   ==27060==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-					   ==27060==    by 0x100031A10: ft_calloc (ft_calloc.c:19)
-					   ==27060==    by 0x10000270E: init_info (init.c:37)
-					   ==27060==    by 0x100001479: main (main.c:158)
-
-
 				reste beaucoup de FDS ouvert
 					
 

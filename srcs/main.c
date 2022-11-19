@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 14:55:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:48:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	token_manager(t_info *info)
 int	close_quote_checker(t_info *info, char *str)
 {
 	info->state = TEXT;
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == D_QUOTE)
 		{
@@ -130,15 +130,20 @@ char	*take_input(void)
 void	free_info(t_info *info)
 {
 	if (info->envp)
-		free(info->envp);
+		table_flip(info->envp);
 	if (info->pwd)
 		free(info->pwd);
+	if (info->list_token)
+		ft_lstclear_token(&info->list_token, free);
+	if (info->paths)
+		table_flip(info->paths);
+	free(info);
 }
 
 void	garbage_collector(t_info *info)
 {
-	free_struct_command_line(info);
-	// free_info(info);
+	// free_struct_command_line(info);
+	free_info(info);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -155,7 +160,10 @@ int	main(int argc, char **argv, char **envp)
 		if (line)
 			add_history(line);
 		else
+		{
+			free(line);
 			exit_terminal(info, 1);
+		}
 		if (close_quote_checker(info, line))
 			;
 		else
@@ -173,7 +181,7 @@ int	main(int argc, char **argv, char **envp)
 			prepare_data_for_execution(info);
 			execution(info, info->command_lines);
 			free(line);
-			garbage_collector(info);
+			free_struct_command_line(info);
 		}
 		reinit(info);
 	}
