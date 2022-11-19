@@ -139,6 +139,32 @@ LEAKS:
 				beaucoup d'invalid read lorsque l'on export deux fois la meme variable
 				"''"' invalid read 1
 				reste beaucoup de FDS ouvert
+
+				
+				Invalid read of size 
+				    at 0x10000431B: quote_remover (utils_builtins.c:42
+				    by 0x100001564: echo (builtins.c:32
+				    by 0x100000EE9: token_manager (main.c:71
+				    by 0x100004857: one_command_or_builtin (utils_execution.c:69
+				    by 0x10000221A: execution (execution.c:109
+				    by 0x10000133D: main (main.c:182
+				  Address 0x10091fb68 is 24 bytes inside a block of size 40 free'
+				    at 0x10017C91D: free (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so
+				    by 0x100003E43: ft_lstdelone_token (utils_2.c:38
+				    by 0x100004373: del_empty_node (utils_builtins.c:55
+				    by 0x100004316: quote_remover (utils_builtins.c:41
+				    by 0x100001564: echo (builtins.c:32
+				    by 0x100000EE9: token_manager (main.c:71
+				    by 0x100004857: one_command_or_builtin (utils_execution.c:69
+				    by 0x10000221A: execution (execution.c:109
+				    by 0x10000133D: main (main.c:182
+				  Block was alloc'd a
+				    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so
+				    by 0x1000319F0: ft_calloc (ft_calloc.c:19
+				    by 0x100003C4A: ft_lstnew_token (utils_1.c:19
+				    by 0x100002945: split_token (parsing.c:74
+				    by 0x1000012EE: main (main.c:175)
+
 					
 
 			

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 16:07:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:52:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	locate_expansion(char **str, char **env, t_info *info)
 			tab[3] = ft_strdup(*str + i);
 		find_expansion(str, tab, env);
 	}
+	table_flip(tab);
 }
 
 /* A valider si on garde le 2e if qui enleve les quotes */
