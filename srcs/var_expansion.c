@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 16:07:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 17:52:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ char	*new_expanded_variable(int i, char *str, char **env)
 	str1 = &env[i][j];
 	return (str1);
 }
-// char	*chop_chop_$(char **tab)
-// {
-// 	char *str;
-
-// 	str = ft_strjoin(tab[0], tab[3]);
-// 	return (str);
-// }
 
 /* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
 pour changer l'expansion par son contenu*/
@@ -69,8 +62,6 @@ void	find_expansion(char **str, char **tab, char **env)
 	{
 		string = *str;
 		*str = ft_strjoin(tab[0], tab[3]);
-		// printf
-		// printf("tab 1 = %s\ntab 3 = %s\n", tab[0], tab[3]);
 		free(string);
 	}
 }
@@ -115,6 +106,7 @@ void	locate_expansion(char **str, char **env, t_info *info)
 			tab[3] = ft_strdup(*str + i);
 		find_expansion(str, tab, env);
 	}
+	table_flip(tab);
 }
 
 /* A valider si on garde le 2e if qui enleve les quotes */

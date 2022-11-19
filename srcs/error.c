@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:55:10 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:28:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	check_if_error(t_command_line cmd_line)
 		no_file(">");
 	else if ((ft_strncmp(cmd_line.argv[0], "<>", 3) == 0))
 		syntax_error();
-	else if (!cmd_line.path && cmd_line.argv[0][0] != '$' && cmd_line.builtin != 1)
+	else if (!cmd_line.path && cmd_line.argv[0][0] \
+	!= '$' && cmd_line.builtin != 1)
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
@@ -30,7 +31,7 @@ void	check_if_error(t_command_line cmd_line)
 		exit (1);
 }
 
-void	syntax_error()
+void	syntax_error(void)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 }

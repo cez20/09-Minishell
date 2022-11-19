@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 20:14:58 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 16:24:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@ void	pwd(t_info *info)
 	else
 		printf("%s\n", info->pwd);
 }
-
-// int	is_all_n(char *token)
-// {
-// 	while (*token)
-// 	{
-// 		token++;
-// 		printf("*token = %c\n", *token);
-// 		if (*token == '\0')
-// 			return (1);
-// 		else if (*token != 'n')
-// 			return (0);
-// 	}
-// 	return (1);
-// }
 
 void	echo(t_info *info)
 {
@@ -75,10 +61,9 @@ void	cd(t_info *info)
 	char	*new_path;
 	char	*oldpwd;
 	char	*line;
-
-	info->pwd = ft_calloc(4096, sizeof(char));
+	
 	oldpwd = ft_calloc(4096, sizeof(char));
-	oldpwd = getcwd(oldpwd, 4096);
+	getcwd(oldpwd, 4096);
 	if (info->command_lines[info->index].args)
 		new_path = info->command_lines[info->index].args;
 	else
@@ -86,7 +71,7 @@ void	cd(t_info *info)
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
 		printf("cd: %s: No such file or directory\n", new_path);
-	info->pwd = getcwd(info->pwd, 4096);
+	getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", info->pwd);
 	info->envp = tab_trunc(info->envp, "PWD=", 4);
@@ -117,11 +102,14 @@ void	export(t_info *info)
 			{
 				str = until_chr(info->command_lines[info->index] \
 				.argv[i + 1], '=');
+				printf("str = %s\n", str);
 				line = search_line(info->envp, str);
+				printf("line = %s\n", line);
+
 				if (line)
 				{
 					info->envp = tab_trunc(info->envp, str, ft_strlen(str));
-					info->envp = tab_join(info->envp, line);
+					info->envp = tab_join(info->envp, info->command_lines[info->index].argv[i + 1]);
 					free(str);
 				}
 				else
@@ -164,7 +152,6 @@ void	unset(t_info *info)
 		{
 			str = ft_strjoin(info->command_lines[info->index].argv[i + 1], "=");
 			info->envp = tab_trunc(info->envp, str, ft_strlen(str));
-			// print_tab(info->envp);
 			free(str);
 		}
 		i++;

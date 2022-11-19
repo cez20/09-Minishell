@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:04:55 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:39:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -27,14 +28,23 @@ int	get_exit_code(int status)
 }
 
 //I need to free eveything that cause a segfault 
-int	exit_terminal(t_info *info)
+int	exit_terminal(t_info *info, int flag)
 {
-	// printf("\r");
-	printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
-	// printf("	    exit");
-	close(info->initial_stdin);
-	close(info->initial_stdout);
-	exit (info->exit_code);
+	int	exit_code;
+
+	exit_code = info->exit_code;
+	garbage_collector(info);
+	if (flag)
+	{
+		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
+		exit (exit_code);
+	}
+	else
+	{
+		printf("exit\n");
+		exit(exit_code);
+	}
+	
 }
 
 /*
@@ -70,7 +80,6 @@ void	enable_signals_minishell(void)
 		exit(1);
 	rl_replace_line("", 1);
 }
-
 
 void	signal_child(int signum)
 {

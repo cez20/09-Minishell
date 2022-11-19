@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:36:49 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:29:02 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	unset(t_info *info);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line);
-void	syntax_error();
+void	syntax_error(void);
 void	no_file(char *str);
 void	command_not_found(char *str);
 
@@ -122,8 +122,8 @@ char	*search_another_one(char *str, char c, t_info *info);
 //*** SIGNAL.C ***
 void	signal_heredoc(int signum);
 int		get_exit_code(int exit_code);
-int		exit_terminal(t_info *info); // Function that needs to be worked on
-void	enable_signals_minishell();
+int		exit_terminal(t_info *info, int flag); // Function that needs to be worked on
+void	enable_signals_minishell(void);
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals(void);
@@ -187,5 +187,7 @@ void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);
 void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
+
+void	garbage_collector(t_info *info);
 
 #endif
