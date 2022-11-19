@@ -117,7 +117,7 @@ char	*take_input(void)
 {
 	char	*line;
 	char	*temp;
-	
+
 	disable_signals();
 	line = readline("\033[0;32mMinishell$> \033[0m");
 	temp = line;
@@ -133,21 +133,13 @@ void	free_info(t_info *info)
 		free(info->envp);
 	if (info->pwd)
 		free(info->pwd);
-	
-
 }
-
 
 void	garbage_collector(t_info *info)
 {
 	free_struct_command_line(info);
 	// free_info(info);
-
-
-
-
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {

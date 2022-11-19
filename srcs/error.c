@@ -24,10 +24,9 @@ void	check_if_error(t_command_line cmd_line)
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
-	
 }
 
-void	syntax_error()
+void	syntax_error(void)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 }
