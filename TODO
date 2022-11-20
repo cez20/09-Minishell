@@ -135,19 +135,6 @@ LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
 
-				==48375== 2 bytes in 1 blocks are definitely lost in loss record 2 of 105
-				==48375==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-				==48375==    by 0x100031A00: ft_calloc (ft_calloc.c:19)
-				==48375==    by 0x100030D65: ft_strjoin (ft_strjoin.c:21)
-				==48375==    by 0x10000111F: take_input (main.c:125)
-				==48375==    by 0x100001286: main (main.c:159)
-
-==54877== 4 bytes in 1 blocks are definitely lost in loss record 2 of 105
-==54877==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==54877==    by 0x100031A00: ft_calloc (ft_calloc.c:19)
-==54877==    by 0x100030D65: ft_strjoin (ft_strjoin.c:21)
-==54877==    by 0x10000111F: take_input (main.c:125)
-==54877==    by 0x100001286: main (main.c:159)
 
 
 
