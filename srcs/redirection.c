@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:42:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/20 13:39:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	delimiter_finder(char *line, char *delimiter, int fd[])
 	}
 }
 
-
-
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
@@ -73,7 +71,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	signal(SIGINT, &signal_heredoc);
 	close (fd[1]);
 	cmd_line->fd_in = fd[0];
-	waitpid(pid, NULL, 0); // Mettre le exit_code a 1. 
+	waitpid(pid, NULL, 0);
 }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)

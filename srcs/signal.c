@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:39:56 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 13:50:51 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	exit_terminal(t_info *info, int flag)
 	int	exit_code;
 
 	exit_code = info->exit_code;
+	close(info->initial_stdin);
+	close(info->initial_stdout);
 	garbage_collector(info);
 	if (flag)
 	{
