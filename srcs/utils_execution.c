@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:53:14 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/20 17:31:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	if (pid == 0)
 	{
 		check_if_error(cmd_line);
+		do_redirection(cmd_line);
 		if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
-			exit(errno);
+		{
+			info->exit_code = 1;
+			exit(info->exit_code);
+		}
 	}
 	waitpid(pid, &status, 0);
 	info->exit_code = get_exit_code(status);
@@ -62,12 +66,16 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 	int	i;
 
 	i = 0;
-	do_redirection(cmd_line[i]);
 	if (cmd_line[info->index].builtin == 1 && cmd_line->error_infile)
 		check_if_error(cmd_line[i]);
 	else if (cmd_line[info->index].builtin == 1)
+	{
+		info->initial_stdin = dup(STDIN_FILENO);
+		info->initial_stdout = dup(STDOUT_FILENO);
+		do_redirection(cmd_line[info->index]);
 		token_manager(info);
+		put_back_default_std(info);
+	}
 	else
 		exec_one_command(cmd_line[info->index], info);
-	put_back_default_std(info);
 }

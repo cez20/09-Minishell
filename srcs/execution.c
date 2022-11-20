@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:28:37 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 17:40:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 		exit (EXIT_SUCCESS);
 	}
 	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
-		exit(errno);
+	{
+		info->exit_code = 1;
+		exit(info->exit_code);
+	}
 }
 
 //1- Dans la derniere ligne de commande, il est important 
@@ -33,7 +36,11 @@ void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 	if (*pid == -1)
 		return ;
 	if (*pid == 0)
+	{
+		close(info->initial_stdin);
+		close(info->initial_stdout);
 		do_execution(cmd_line, info);
+	}	
 	put_back_default_std(info);
 }
 
@@ -76,7 +83,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	i = 0;
 	while (info->index <= info->nb_of_pipe)
 	{
-		do_redirection(cmd_line[info->index]);
 		if (info->index == info->nb_of_pipe)
 		{
 			last_child_process(cmd_line[info->index], info, &pid[info->index]);
