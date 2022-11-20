@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 21:12:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:21:28 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-	cherche la ligne (char *line) dans le tableau (char **tab) et la renvoie
-	si rien n'est trouvé, renvoie NULL 
-*/
-char	*search_line(char **tab, char *line)
-{
-	while (*tab)
-	{
-		if (ft_strnstr(*tab, line, ft_strlen(line)))
-			return (*tab);
-		tab++;
-	}
-	return (NULL);
-}
-
-char	**tab_trunc(char **tab, char *str, int len)
-{
-	int		i;
-	char	**new_tab;
-
-	i = 0;
-	new_tab = NULL;
-	if (!tab || !str)
-		return (tab);
-	while (tab[i])
-	{
-		if (ft_strncmp(tab[i], str, len) != 0)
-			new_tab = tab_join(new_tab, tab[i]);
-		i++;
-	}
-	table_flip(tab);
-	return (new_tab);
-}
 
 /*
 	exécute le builtin associer à la première commande
@@ -74,46 +40,6 @@ void	token_manager(t_info *info)
 		unset(info);
 }
 
-int	close_quote_checker(t_info *info, char *str)
-{
-	info->state = TEXT;
-	while (str && *str)
-	{
-		if (*str == D_QUOTE)
-		{
-			info->state = D_QUOTE;
-			while (str && *str)
-			{
-				str++;
-				if (*str && *str == D_QUOTE)
-				{
-					info->state = TEXT;
-					break ;
-				}
-			}
-		}
-		if (*str == S_QUOTE)
-		{
-			info->state = S_QUOTE;
-			while (str && *str)
-			{
-				str++;
-				if (*str && *str == S_QUOTE)
-				{
-					info->state = TEXT;
-					break ;
-				}
-			}
-		}
-		if (*str)
-			str++;
-	}
-	if (info->state == TEXT)
-		return (1);
-	else
-		return (0);
-}
-
 char	*take_input(void)
 {
 	char	*line;
@@ -128,23 +54,28 @@ char	*take_input(void)
 	return (line);
 }
 
-void	free_info(t_info *info)
+void	routine(t_info *info, char *line)
 {
-	if (info->envp)
-		table_flip(info->envp);
-	if (info->pwd)
-		free(info->pwd);
-	if (info->list_token)
-		ft_lstclear_token(&info->list_token, free);
-	if (info->paths)
-		table_flip(info->paths);
-	free(info);
-}
-
-void	garbage_collector(t_info *info)
-{
-	// free_struct_command_line(info);
-	free_info(info);
+	if (close_quote_checker(info, line))
+		;
+	else
+	{
+		printf("Les quotes ne sont pas fermés.\n");
+		free(line);
+		return ;
+	}
+	info->nb_of_pipe = how_many(info, line, '|');
+	split_token(line, info);
+	if (info->command_lines->list_token)
+	{
+		var_expansion(info->command_lines, info);
+		fill_command_lines(info);
+		search_for_redirection(info);
+		prepare_data_for_execution(info);
+		execution(info, info->command_lines);
+		free_struct_command_line(info);
+	}
+	free(line);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -165,42 +96,9 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			exit_terminal(info, 1);
 		}
-		if (close_quote_checker(info, line))
-			;
-		else
-		{
-			printf("Les quotes ne sont pas fermés.\n");
-			free(line);
-			continue ;
-		}
-		info->nb_of_pipe = how_many(info, line, '|');
-		split_token(line, info);
-		if (info->command_lines->list_token)
-		{
-			var_expansion(info->command_lines, info);
-			fill_command_lines(info);
-			search_for_redirection(info);
-			prepare_data_for_execution(info);
-			execution(info, info->command_lines);
-			free(line);
-			free_struct_command_line(info);
-		}
+		routine(info, line);
 		reinit(info);
 	}
 	free (info);
-	return (0);
-}
-
-//Fonction qui intercepte exit_code:
-// Macro WIFEXITED retourne true si child a quitte correctement
-// Macro WEXITSTATUS permet de transformer le status dans le bon int
-// Macro WIFSIGNALED permet de capter si child a quitte avec signal
-// WTERMSIG transforme status bon int. On ajoute 128 pour avoir le bon exit_code
-int	get_exit_code(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 20:22:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:01:46 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	exit_terminal(t_info *info, int flag)
 	int	exit_code;
 
 	exit_code = info->exit_code;
-	garbage_collector(info);
 	if (flag)
 	{
 		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 21:06:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:00:49 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,7 @@ void	var_expansion(t_command_line *cmd_line, t_info *info);
 void	garbage_collector(t_info *info);
 void	check_chevron(t_info *info);
 void	trim_space(t_info *info, char *set);
+void	enable_signals_minishell(void);
+void	free_info(t_info *info);
 
 #endif

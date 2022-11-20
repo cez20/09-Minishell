@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 18:27:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:44:30 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	cd(t_info *info)
 	char	*new_path;
 	char	*oldpwd;
 	char	*line;
-	
+
 	oldpwd = ft_calloc(4096, sizeof(char));
 	getcwd(oldpwd, 4096);
 	if (info->command_lines[info->index].args)
@@ -106,13 +106,14 @@ void	export(t_info *info)
 				if (line)
 				{
 					info->envp = tab_trunc(info->envp, str, ft_strlen(str));
-					info->envp = tab_join(info->envp, info->command_lines[info->index].argv[i + 1]);
+					info->envp = tab_join(info->envp, \
+					info->command_lines[info->index].argv[i + 1]);
 					free(str);
 				}
 				else
 				{
-					info->envp = tab_join(info->envp, info->command_lines[info->index] \
-					.argv[i + 1]);
+					info->envp = tab_join(info->envp, \
+					info->command_lines[info->index].argv[i + 1]);
 					free(str);
 				}
 			}

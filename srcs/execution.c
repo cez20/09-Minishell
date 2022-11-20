@@ -66,10 +66,11 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
-	pid_t	pid[info->nb_of_pipe + 1];
+	pid_t	*pid;
 	int		status;
 	int		i;
 
+	pid = ft_calloc(info->nb_of_pipe + 1, sizeof(pid_t));
 	i = 0;
 	while (info->index <= info->nb_of_pipe)
 	{
@@ -94,12 +95,12 @@ void	execution(t_info *info, t_command_line *line)
 {
 	t_command_line	*cmd_line;
 
-	cmd_line = line; // Je crois que j'ai pas besoin de ca
+	cmd_line = line;
 	if (cmd_line->argv)
 	{
 		if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
 			enable_signals_minishell();
-		else 
+		else
 			enable_signals();
 	}
 	if (info->nb_of_pipe == 0)

@@ -91,3 +91,17 @@ char	**split_path(char **env)
 	}
 	return (NULL);
 }
+
+//Fonction qui intercepte exit_code:
+// Macro WIFEXITED retourne true si child a quitte correctement
+// Macro WEXITSTATUS permet de transformer le status dans le bon int
+// Macro WIFSIGNALED permet de capter si child a quitte avec signal
+// WTERMSIG transforme status bon int. On ajoute 128 pour avoir le bon exit_code
+int	get_exit_code(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (0);
+}

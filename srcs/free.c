@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/18 19:45:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:01:24 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,17 @@ void	free_struct_command_line(t_info *info)
 		i++;
 	}
 	free (info->command_lines);
+}
+
+void	free_info(t_info *info)
+{
+	if (info->envp)
+		table_flip(info->envp);
+	if (info->pwd)
+		free(info->pwd);
+	if (info->list_token)
+		ft_lstclear_token(&info->list_token, free);
+	if (info->paths)
+		table_flip(info->paths);
+	free(info);
 }

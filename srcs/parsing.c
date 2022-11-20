@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 21:08:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:45:21 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	split_token(char *token, t_info *info)
 
 	i = 0;
 	info->last_position = token;
-	info->command_lines = ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
+	info->command_lines = \
+	ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
 	while (*info->last_position)
 	{
@@ -76,8 +77,10 @@ void	fill_command_lines(t_info *info)
 	i = 0;
 	while (i <= info->nb_of_pipe)
 	{
-		info->command_lines[i].command = get_command(info->command_lines[i].list_token);
-		info->command_lines[i].args = get_args(info->command_lines[i].list_token);
+		info->command_lines[i].command = \
+		get_command(info->command_lines[i].list_token);
+		info->command_lines[i].args = \
+		get_args(info->command_lines[i].list_token);
 		i++;
 	}
 }
@@ -105,7 +108,8 @@ char	*search_another_one(char *str, char c, t_info *info)
 	}
 	while (*str != c)
 	{
-		if (*str == '\0' || (c == 32 && (*str == 34 || *str == 39 || *str == '|')))
+		if (*str == '\0' || (c == 32 && \
+		(*str == 34 || *str == 39 || *str == '|')))
 		{
 			info->last_position = str;
 			token = ft_substr(start, 0, info->len);

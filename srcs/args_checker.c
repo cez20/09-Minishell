@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 20:47:19 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 16:43:16 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,39 @@ int	check_arg_unset(char *arg, t_info *info)
 	return (1);
 }
 
+void	input_chevron(t_info *info, int i)
+{
+	if (info->last_position[i + 2] == '<')
+		printf("bash: syntax error near unexpected token '<'\n");
+	else
+	{
+		ft_lstaddback_token(&info->list_token, \
+		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+		info->last_position++;
+		info->last_position++;
+	}
+}
+
+void	output_chevron(t_info *info, int i)
+{
+	if (info->last_position[i + 2] == '>')
+		printf("bash: syntax error near unexpected token '>'\n");
+	else
+	{
+		ft_lstaddback_token(&info->list_token, \
+		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+		info->last_position++;
+		info->last_position++;
+	}
+}
+
 void	check_chevron(t_info *info)
 {
 	int	i;
 
 	i = 0;
 	if (info->last_position[i] == '<' && info->last_position[i + 1] == '<')
-	{
-		if (info->last_position[i + 2] == '<')
-			printf("bash: syntax error near unexpected token '<'\n");
-		else
-		{
-			ft_lstaddback_token(&info->list_token, \
-			ft_lstnew_token(ft_substr(info->last_position, i, 2)));
-			info->last_position++;
-			info->last_position++;
-		}
-	}
+		input_chevron(info, i);
 	else if (info->last_position[i] == '>' && info->last_position[i + 1] == '>')
-	{
-		if (info->last_position[i + 2] == '>')
-			printf("bash: syntax error near unexpected token '>'\n");
-		else
-		{
-			ft_lstaddback_token(&info->list_token, ft_lstnew_token(ft_substr(info->last_position, i, 2)));
-			info->last_position++;
-			info->last_position++;
-		}
-	}
+		output_chevron(info, i);
 }
