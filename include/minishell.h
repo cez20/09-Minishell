@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:29:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 21:06:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_info
 typedef struct s_command_line
 {
 	t_token	*list_token;
-	char	*command; // n'est plus necessaire mais aviser Steven 
-	char	*args; // N'est plus necessaire mais aviser Steven 
+	char	*command;
+	char	*args;
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
@@ -122,8 +122,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 //*** SIGNAL.C ***
 void	signal_heredoc(int signum);
 int		get_exit_code(int exit_code);
-int		exit_terminal(t_info *info, int flag); // Function that needs to be worked on
-void	enable_signals_minishell(void);
+int		exit_terminal(t_info *info, int flag);
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals(void);
@@ -189,5 +188,7 @@ void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
 
 void	garbage_collector(t_info *info);
+void	check_chevron(t_info *info);
+void	trim_space(t_info *info, char *set);
 
 #endif

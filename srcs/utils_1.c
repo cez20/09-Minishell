@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/15 23:01:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:48:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	ft_lstaddback_token(t_token **alst, t_token *new)
 	new->prev = last;
 	last->next = new;
 	new->next = NULL;
+}
+
+void	trim_space(t_info *info, char *set)
+{
+	t_token	*token;
+	char	*tmp;
+
+	token = info->list_token;
+	while (token)
+	{
+		tmp = token->token;
+		token->token = ft_strtrim(token->token, set);
+		free(tmp);
+		token = token->next;
+	}
 }

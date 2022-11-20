@@ -6,46 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:39:56 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:42:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
-
-//Fonction qui intercepte exit_code:
-// Macro WIFEXITED retourne true si child a quitte correctement
-// Macro WEXITSTATUS permet de transformer le status dans le bon int
-// Macro WIFSIGNALED permet de capter si child a quitte avec signal
-// WTERMSIG transforme status bon int. On ajoute 128 pour avoir le bon exit_code
-int	get_exit_code(int status)
-{
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (0);
-}
-
-//I need to free eveything that cause a segfault 
-int	exit_terminal(t_info *info, int flag)
-{
-	int	exit_code;
-
-	exit_code = info->exit_code;
-	garbage_collector(info);
-	if (flag)
-	{
-		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
-		exit (exit_code);
-	}
-	else
-	{
-		printf("exit\n");
-		exit(exit_code);
-	}
-	
-}
 
 /*
     sig_handler() function enumerated the different actions
@@ -60,7 +25,6 @@ int	exit_terminal(t_info *info, int flag)
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
-
 void	signal_heredoc(int signum)
 {
 	if (signum == SIGINT)
@@ -94,15 +58,6 @@ void	signal_child(int signum)
 		printf("Quit: 3\n");
 }
 
-// void	signal_child(int signum)
-// {
-// 	if (signum == SIGINT)
-// 		printf("\n");
-// 	else if (signum == SIGQUIT)
-// 		printf("Quit: 3\n");
-
-// }
-
 void	signal_parent(int signum)
 {
 	if (signum == SIGINT)
@@ -112,35 +67,4 @@ void	signal_parent(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-}
-
-void	enable_signals(void)
-{
-	struct termios	old;
-	struct termios	new;
-
-	tcgetattr(STDIN_FILENO, &old);
-	new = old;
-	new.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &new);
-	signal(SIGINT, &signal_child);
-	signal(SIGQUIT, &signal_child);
-}
-
-// This function essentially disable the ECHOCTL function
-// that normally prints out ^C when Ctrl+C signal is entered on
-// keyboard. We take current terminal setting with tcgetattr and
-// then modify the attributes c_lflag to disable ECHOCTL and then
-// apply change with tcgetattr
-void	disable_signals(void)
-{
-	struct termios	old;
-	struct termios	new;
-
-	tcgetattr(STDIN_FILENO, &old);
-	new = old;
-	new.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &new);
-	signal(SIGINT, &signal_parent);
-	signal(SIGQUIT, SIG_IGN);
 }

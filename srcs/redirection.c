@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 15:42:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:45:03 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,11 @@ void	append_output_redirection(t_command_line *chunk, char *outfile)
 	}
 }
 
-void	output_redirection(t_command_line *chunk, char *token)
-{	
-	if (chunk->fd_out != 1)
-		close(chunk->fd_out);
-	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
-}
-
 void	delimiter_finder(char *line, char *delimiter, int fd[])
 {
 	close(fd[0]);
 	line = readline(">");
-	while(1)
+	while (1)
 	{
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
@@ -51,8 +44,6 @@ void	delimiter_finder(char *line, char *delimiter, int fd[])
 		line = readline(">");
 	}
 }
-
-
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
@@ -73,17 +64,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	signal(SIGINT, &signal_heredoc);
 	close (fd[1]);
 	cmd_line->fd_in = fd[0];
-	waitpid(pid, NULL, 0); // Mettre le exit_code a 1. 
-}
-
-void	input_redirection(t_command_line *cmd_line, t_token *list_token)
-{
-	cmd_line->fd_in = open(list_token->next->token, O_RDWR);
-	if (cmd_line->fd_in == -1 && !(cmd_line->error_infile))
-	{
-		cmd_line->error_infile = ft_strdup(list_token->next->token);
-		cmd_line->fd_in = 0;
-	}
+	waitpid(pid, NULL, 0);
 }
 
 void	search_for_redirection(t_info *info)

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 17:47:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:21:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,48 +24,6 @@ char	simple_or_double(char *token)
 	return (32);
 }
 
-
-// int	how_many(t_info *info, char *str, char c)
-// {
-// 	int	i;
-
-// 	i = 0;
-
-// 	while (str && *str)
-// 	{
-// 		if (*str == D_QUOTE)
-// 		{
-// 			info->state = D_QUOTE;
-// 			str++;
-// 			while (*str && *str != D_QUOTE)
-// 				str++;
-
-
-
-
-// 		}
-
-
-
-
-
-
-
-// 	}
-
-
-
-
-
-// }
-
-
-
-
-
-
-
-
 /*
     compte le nombre d'élément correspondant au char c dans la string
 */
@@ -82,7 +40,6 @@ int	how_many(t_info *info, char *str, char c)
 			str++;
 			while (*str && *str != D_QUOTE)
 				str++;
-			// str++;
 		}
 		if (*str == S_QUOTE)
 		{
@@ -90,7 +47,6 @@ int	how_many(t_info *info, char *str, char c)
 			str++;
 			while (*str && *str != S_QUOTE)
 				str++;
-			// str++;
 		}
 		if (*str == c)
 			i++;

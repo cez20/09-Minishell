@@ -6,7 +6,8 @@
 		"minishell.h": "c",
 		"rltypedefs.h": "c",
 		"chrono": "c",
-		"complex": "c"
+		"complex": "c",
+		"iosfwd": "c"
 	},
     "editor.insertSpaces": false,
     "editor.detectIndentation": false

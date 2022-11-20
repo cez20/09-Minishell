@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 15:59:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 21:08:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	check_chevron(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	if (info->last_position[i] == '<' && info->last_position[i + 1] == '<')
-	{
-		if (info->last_position[i + 2] == '<')
-			printf("bash: syntax error near unexpected token '<'\n");
-		else
-		{
-			ft_lstaddback_token(&info->list_token, \
-			ft_lstnew_token(ft_substr(info->last_position, i, 2)));
-			info->last_position++;
-			info->last_position++;
-		}
-	}
-	else if (info->last_position[i] == '>' && info->last_position[i + 1] == '>')
-	{
-		if (info->last_position[i + 2] == '>')
-			printf("bash: syntax error near unexpected token '>'\n");
-		else
-		{
-			ft_lstaddback_token(&info->list_token, ft_lstnew_token(ft_substr(info->last_position, i, 2)));
-			info->last_position++;
-			info->last_position++;
-		}
-	}
-}
-
-void	trim_space(t_info *info, char *set)
-{
-	t_token	*token;
-	char	*tmp;
-
-	token = info->list_token;
-	while (token)
-	{
-		tmp = token->token;
-		token->token = ft_strtrim(token->token, set);
-		free(tmp);
-		token = token->next;
-	}
-}
 
 void	split_token(char *token, t_info *info)
 {

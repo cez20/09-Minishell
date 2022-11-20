@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 18:24:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:20:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	is_n(t_token *node)
 				return (0);
 			i++;
 		}
-		if (!(*node->token) || *node->token == S_QUOTE || *node->token == D_QUOTE)
+		if (!(*node->token) || *node->token == S_QUOTE \
+		|| *node->token == D_QUOTE)
 			return (0);
 		return (1);
 	}

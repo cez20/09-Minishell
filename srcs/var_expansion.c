@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:52:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:18:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,6 @@ char	*new_expanded_variable(int i, char *str, char **env)
 		j++;
 	str1 = &env[i][j];
 	return (str1);
-}
-
-/* Fonction qui trouve l'expansion dans ENV et appelle une autre fonction
-pour changer l'expansion par son contenu*/
-void	find_expansion(char **str, char **tab, char **env)
-{
-	char	*string;
-	char	*temp;
-	int		i;
-
-	i = 0;
-	while (env[i] && ft_strnstr(env[i], tab[2], ft_strlen(tab[2])) == 0)
-		i++;
-	if (env[i])
-	{
-		free(*str);
-		*str = NULL;
-		if (tab[0])
-		{
-			string = ft_strjoin(tab[0], new_expanded_variable(i, tab[2], env));
-			temp = *str;
-			*str = ft_strjoin(string, tab[3]);
-			free(temp);
-			free(string);
-		}
-		else
-		{
-			string = ft_strdup(new_expanded_variable(i, tab[2], env));
-			temp = *str;
-			*str = ft_strjoin(string, tab[3]);
-			free(temp);
-			free(string);
-		}
-	}
-	else
-	{
-		string = *str;
-		*str = ft_strjoin(tab[0], tab[3]);
-		free(string);
-	}
 }
 
 /*Fonction qui s'assurer de seulement garder la variable

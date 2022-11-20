@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/16 15:55:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:47:19 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,34 @@ int	check_arg_unset(char *arg, t_info *info)
 		i++;
 	}
 	return (1);
+}
+
+void	check_chevron(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	if (info->last_position[i] == '<' && info->last_position[i + 1] == '<')
+	{
+		if (info->last_position[i + 2] == '<')
+			printf("bash: syntax error near unexpected token '<'\n");
+		else
+		{
+			ft_lstaddback_token(&info->list_token, \
+			ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+			info->last_position++;
+			info->last_position++;
+		}
+	}
+	else if (info->last_position[i] == '>' && info->last_position[i + 1] == '>')
+	{
+		if (info->last_position[i + 2] == '>')
+			printf("bash: syntax error near unexpected token '>'\n");
+		else
+		{
+			ft_lstaddback_token(&info->list_token, ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+			info->last_position++;
+			info->last_position++;
+		}
+	}
 }
