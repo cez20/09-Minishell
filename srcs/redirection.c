@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 20:45:03 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 21:12:25 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ void	delimiter_finder(char *line, char *delimiter, int fd[])
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
+			close(fd[1]);
 			free(line);
 			exit (EXIT_SUCCESS);
 		}
 		else if (!line)
+		{
+			close(fd[1]);
 			exit(EXIT_SUCCESS);
+		}
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);

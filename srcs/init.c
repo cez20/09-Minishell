@@ -6,7 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/19 20:58:04 by slavoie          ###   ########.fr       */
+=======
+/*   Updated: 2022/11/19 16:33:09 by cemenjiv         ###   ########.fr       */
+>>>>>>> 0e156437a605ad23c4e3cc25c899b402171f0d62
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +46,6 @@ void	init_info(t_info *info, char **envp)
 	info->nb_of_pipe = 0;
 	info->index = 0;
 	info->len = 0;
-	info->initial_stdin = dup(STDIN_FILENO);
-	info->initial_stdout = dup(STDOUT_FILENO);
 	info->paths = split_path(envp);
 	info->state = TEXT;
 	info->exit_code = 0;
@@ -55,6 +57,4 @@ void	reinit(t_info *info)
 	table_flip(info->paths);
 	info->paths = split_path(info->envp);
 	info->index = 0;
-	info->initial_stdin = dup(STDIN_FILENO);
-	info->initial_stdout = dup(STDOUT_FILENO);
 }
