@@ -136,38 +136,24 @@ FIXME:
 
 LEAKS:
 		FIXME:
-				beaucoup d'invalid read lorsque l'on export deux fois la meme variable
-				"''"' invalid read 1
 				reste beaucoup de FDS ouvert
 
-				
-				Invalid read of size 
-				    at 0x10000431B: quote_remover (utils_builtins.c:42
-				    by 0x100001564: echo (builtins.c:32
-				    by 0x100000EE9: token_manager (main.c:71
-				    by 0x100004857: one_command_or_builtin (utils_execution.c:69
-				    by 0x10000221A: execution (execution.c:109
-				    by 0x10000133D: main (main.c:182
-				  Address 0x10091fb68 is 24 bytes inside a block of size 40 free'
-				    at 0x10017C91D: free (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so
-				    by 0x100003E43: ft_lstdelone_token (utils_2.c:38
-				    by 0x100004373: del_empty_node (utils_builtins.c:55
-				    by 0x100004316: quote_remover (utils_builtins.c:41
-				    by 0x100001564: echo (builtins.c:32
-				    by 0x100000EE9: token_manager (main.c:71
-				    by 0x100004857: one_command_or_builtin (utils_execution.c:69
-				    by 0x10000221A: execution (execution.c:109
-				    by 0x10000133D: main (main.c:182
-				  Block was alloc'd a
-				    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so
-				    by 0x1000319F0: ft_calloc (ft_calloc.c:19
-				    by 0x100003C4A: ft_lstnew_token (utils_1.c:19
-				    by 0x100002945: split_token (parsing.c:74
-				    by 0x1000012EE: main (main.c:175)
+				==48375== 2 bytes in 1 blocks are definitely lost in loss record 2 of 105
+				==48375==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				==48375==    by 0x100031A00: ft_calloc (ft_calloc.c:19)
+				==48375==    by 0x100030D65: ft_strjoin (ft_strjoin.c:21)
+				==48375==    by 0x10000111F: take_input (main.c:125)
+				==48375==    by 0x100001286: main (main.c:159)
 
-					
-
-			
+				==48375== Invalid read of size 1
+				==48375==    at 0x100000F7B: close_quote_checker (main.c:80)
+				==48375==    by 0x1000012C7: main (main.c:167)
+				==48375==  Address 0x1009186d2 is 0 bytes after a block of size 2 alloc'd
+				==48375==    at 0x10017C545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				==48375==    by 0x100031A00: ft_calloc (ft_calloc.c:19)
+				==48375==    by 0x100030D65: ft_strjoin (ft_strjoin.c:21)
+				==48375==    by 0x10000111F: take_input (main.c:125)
+				==48375==    by 0x100001286: main (main.c:159)
 
 
 

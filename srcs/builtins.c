@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 16:24:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 18:27:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ void	export(t_info *info)
 			{
 				str = until_chr(info->command_lines[info->index] \
 				.argv[i + 1], '=');
-				printf("str = %s\n", str);
 				line = search_line(info->envp, str);
-				printf("line = %s\n", line);
-
 				if (line)
 				{
 					info->envp = tab_trunc(info->envp, str, ft_strlen(str));

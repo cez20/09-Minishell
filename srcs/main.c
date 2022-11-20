@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 15:48:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 18:59:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	close_quote_checker(t_info *info, char *str)
 		if (*str == D_QUOTE)
 		{
 			info->state = D_QUOTE;
-			while (*str)
+			while (str && *str)
 			{
 				str++;
 				if (*str == D_QUOTE)
@@ -95,7 +95,7 @@ int	close_quote_checker(t_info *info, char *str)
 		if (*str == S_QUOTE)
 		{
 			info->state = S_QUOTE;
-			while (*str)
+			while (str && *str)
 			{
 				str++;
 				if (*str == S_QUOTE)

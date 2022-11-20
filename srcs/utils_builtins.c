@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 16:21:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/19 18:24:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	remove_quote(t_token *token_list)
 void	quote_remover(t_info *info)
 {
 	t_token	*token;
+	t_token	*tmp;
 
 	token = info->command_lines[info->index].list_token;
 	while (token)
 	{
 		remove_quote(token);
-		del_empty_node(token);
+		tmp = token;
 		token = token->next;
+		del_empty_node(tmp);
 	}
 }
 
