@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 19:24:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/20 20:24:38 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,13 @@ void	no_file(char *str);
 void	command_not_found(char *str);
 
 // *** EXECUTION.C ***
-void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
-void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+//void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+//void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
+void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
+void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
+void	close_unused_fds(t_command_line *cmd_line, t_info *info);
 
 //*** FREE.C ***
 void	free_double_pointers(char **args);
@@ -153,7 +156,7 @@ int		how_many(t_info *info, char *str, char c);
 void	skip_space(t_info *info);
 char	**split_path(char **env);
 
-//*** EXECUTION_1.C **
+//*** PREPARE_EXEC.C **
 void	is_builtin(t_info *info);
 void	find_path_of_command(t_command_line *cmd_line, char *path);
 void	find_execve_path(t_info *info, t_command_line *cmd_line);
