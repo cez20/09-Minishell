@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 17:40:34 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/20 20:00:44 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,24 @@ void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 	{
-		close(info->initial_stdin);
-		close(info->initial_stdout);
+		do_redirection(cmd_line, info);
 		do_execution(cmd_line, info);
 	}	
-	put_back_default_std(info);
+	else
+	{
+		if(info->read_pipe != -1)
+			close(info->read_pipe);
+		if (cmd_line.fd_in != 0)
+		{
+			dup2(cmd_line.fd_in, STDIN_FILENO);
+			close(cmd_line.fd_in);
+		}
+		if (cmd_line.fd_out != 1)
+		{
+			dup2(cmd_line.fd_out, STDOUT_FILENO);
+			close(cmd_line.fd_out);
+		}
+	}
 }
 
 void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
@@ -55,6 +68,7 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 		return ;
 	if (*pid == 0)
 	{
+		do_redirection(cmd_line, info);
 		if (cmd_line.fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
@@ -64,15 +78,12 @@ void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid)
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		if (cmd_line.fd_out != 1)
-		{
-			dup2(info->initial_stdout, STDOUT_FILENO);
-			//close (info->initial_stdout);
-		}
+		if (info->read_pipe != -1)
+			close (info->read_pipe);
+		info->read_pipe = fd[0];
 	}
 }
+
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 17:29:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/20 19:24:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info
 	int						initial_stdin;
 	int						initial_stdout;
 	int						exit_code;
+	int						read_pipe;
 	char					**paths;
 	char					*delimiter;
 }		t_info;
@@ -170,7 +171,8 @@ char	*until_chr(char *str, char c);
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	put_back_default_std(t_info *info);
-void	do_redirection(t_command_line cmd_line);
+//void	do_redirection(t_command_line cmd_line);
+void	do_redirection(t_command_line cmd_line, t_info *info);
 
 ///*** UTILS_PRINT.C ***
 void	print_struct(t_command_line *cmd_line, t_info *info);
