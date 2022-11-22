@@ -6,16 +6,29 @@
 /*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/20 16:45:21 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 10:40:51 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	routine_split_token(t_info *info)
+{
+	int	type_quote;
+
+	skip_space(info);
+	check_chevron(info);
+	type_quote = simple_or_double(info->last_position);
+	ft_lstaddback_token(&info->list_token, ft_lstnew_token \
+	(search_another_one(info->last_position, type_quote, info)));
+	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
+	skip_space(info);
+	trim_space(info, " \t\n\r\v");
+}
+
 void	split_token(char *token, t_info *info)
 {
 	int	i;
-	int	type_quote;
 
 	i = 0;
 	info->last_position = token;
@@ -24,14 +37,7 @@ void	split_token(char *token, t_info *info)
 	init_command_lines(info->command_lines, info);
 	while (*info->last_position)
 	{
-		skip_space(info);
-		check_chevron(info);
-		type_quote = simple_or_double(info->last_position);
-		ft_lstaddback_token(&info->list_token, ft_lstnew_token \
-		(search_another_one(info->last_position, type_quote, info)));
-		ft_lstlast_token(info->list_token)->flag_quote = type_quote;
-		skip_space(info);
-		trim_space(info, " \t\n\r\v");
+		routine_split_token(info);
 		if (*info->last_position == '|')
 		{
 			info->command_lines[i].list_token = info->list_token;
@@ -42,32 +48,6 @@ void	split_token(char *token, t_info *info)
 	}
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
-}
-
-char	*get_command(t_token *list_token)
-{
-	if (!list_token)
-		return (NULL);
-	remove_quote(list_token);
-	return (list_token->token);
-}
-
-char	*get_args(t_token *list_token)
-{
-	char	*args;
-	char	*tmp;
-
-	args = NULL;
-	if (list_token)
-		list_token = list_token->next;
-	while (list_token)
-	{
-		tmp = args;
-		args = ft_strjoin(args, list_token->token);
-		free(tmp);
-		list_token = list_token->next;
-	}
-	return (args);
 }
 
 void	fill_command_lines(t_info *info)
@@ -85,6 +65,25 @@ void	fill_command_lines(t_info *info)
 	}
 }
 
+// char	*set_start(t_info *info, char c, char **str)
+// {
+// 	char *start;
+
+// 	start = *str;
+// 	if (c == 32 && **str == 32)
+// 	{
+// 		skip_space(info);
+// 		*str = info->last_position;
+// 		start = *str;
+// 	}
+// 	else
+// 	{
+// 		*str++;
+// 		info->len++;
+// 	}
+// 	return (start);
+// }
+
 /*
 	Cherche la prochaine occurence de "c" et renvoie le token
 */
@@ -94,7 +93,6 @@ char	*search_another_one(char *str, char c, t_info *info)
 	char	*start;
 
 	start = str;
-	info->len = 0;
 	if (c == 32 && *str == 32)
 	{
 		skip_space(info);

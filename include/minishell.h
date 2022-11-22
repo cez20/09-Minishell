@@ -6,7 +6,7 @@
 /*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 16:00:49 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 10:39:40 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,6 @@ void	check_chevron(t_info *info);
 void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);
+char	*get_command(t_token *list_token);
 
 #endif
