@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 21:12:25 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/21 19:46:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	append_output_redirection(t_command_line *chunk, char *outfile)
 void	delimiter_finder(char *line, char *delimiter, int fd[])
 {
 	close(fd[0]);
+	fd_in = fd[1];
 	line = readline(">");
 	while (1)
 	{
@@ -62,7 +63,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	line = NULL;
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &signal_inside_heredoc);
 		delimiter_finder(line, delimiter, fd);
 	}
 	signal(SIGINT, &signal_heredoc);
