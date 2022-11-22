@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 18:59:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/21 19:57:32 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ char	*search_line(char **tab, char *line)
 	return (NULL);
 }
 
-char	**tab_trunc(char **tab, char *str, int len)
-{
-	int		i;
-	char	**new_tab;
+// char	**tab_trunc(char **tab, char *str, int len)
+// {
+// 	int		i;
+// 	char	**new_tab;
 
-	i = 0;
-	new_tab = NULL;
-	if (!tab || !str)
-		return (tab);
-	while (tab[i])
-	{
-		if (ft_strncmp(tab[i], str, len) != 0)
-			new_tab = tab_join(new_tab, tab[i]);
-		i++;
-	}
-	table_flip(tab);
-	return (new_tab);
-}
+// 	i = 0;
+// 	new_tab = NULL;
+// 	if (!tab || !str)
+// 		return (tab);
+// 	while (tab[i])
+// 	{
+// 		if (ft_strncmp(tab[i], str, len) != 0)
+// 			new_tab = tab_join(new_tab, tab[i]);
+// 		i++;
+// 	}
+// 	table_flip(tab);
+// 	return (new_tab);
+// }
 
 /*
 	exécute le builtin associer à la première commande

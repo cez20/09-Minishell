@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 20:33:28 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:15:26 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	close_unused_fds(t_command_line *cmd_line, t_info *info)
 	int i;
 	
 	i = info->index + 1;
+
 	while (i <= info->nb_of_pipe)
 	{
 		if (cmd_line[i].fd_in != 0)
