@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:27:14 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 15:48:48 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_info(t_info *info, char **envp)
 	info->paths = split_path(envp);
 	info->state = TEXT;
 	info->exit_code = 0;
+	info->read_pipe = -1;
 }
 
 void	reinit(t_info *info)
@@ -54,4 +55,5 @@ void	reinit(t_info *info)
 	table_flip(info->paths);
 	info->paths = split_path(info->envp);
 	info->index = 0;
+	info->read_pipe = -1;
 }

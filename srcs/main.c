@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/20 16:21:28 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 12:25:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+	cherche la ligne (char *line) dans le tableau (char **tab) et la renvoie
+	si rien n'est trouvé, renvoie NULL 
+*/
+char	*search_line(char **tab, char *line)
+{
+	while (*tab)
+	{
+		if (ft_strnstr(*tab, line, ft_strlen(line)))
+			return (*tab);
+		tab++;
+	}
+	return (NULL);
+}
 
 /*
 	exécute le builtin associer à la première commande
