@@ -6,7 +6,7 @@
 /*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/22 10:40:51 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 12:29:23 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ void	split_token(char *token, t_info *info)
 	info->list_token = NULL;
 }
 
+char	*get_command(t_token *list_token)
+{
+	if (!list_token)
+		return (NULL);
+	remove_quote(list_token);
+	return (list_token->token);
+}
+
 void	fill_command_lines(t_info *info)
 {
 	int	i;
@@ -65,24 +73,24 @@ void	fill_command_lines(t_info *info)
 	}
 }
 
-// char	*set_start(t_info *info, char c, char **str)
-// {
-// 	char *start;
+char	*set_start(t_info *info, char c, char **str)
+{
+	char *start;
 
-// 	start = *str;
-// 	if (c == 32 && **str == 32)
-// 	{
-// 		skip_space(info);
-// 		*str = info->last_position;
-// 		start = *str;
-// 	}
-// 	else
-// 	{
-// 		*str++;
-// 		info->len++;
-// 	}
-// 	return (start);
-// }
+	start = *str;
+	if (c == 32 && **str == 32)
+	{
+		skip_space(info);
+		*str = info->last_position;
+		start = *str;
+	}
+	else
+	{
+		*str++;
+		info->len++;
+	}
+	return (start);
+}
 
 /*
 	Cherche la prochaine occurence de "c" et renvoie le token
