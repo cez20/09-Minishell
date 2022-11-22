@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/21 19:39:53 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:00:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info
 	int						initial_stdin;
 	int						initial_stdout;
 	int						exit_code;
+	int						read_pipe;
 	char					**paths;
 	char					*delimiter;
 }		t_info;
@@ -100,10 +101,13 @@ void	no_file(char *str);
 void	command_not_found(char *str);
 
 // *** EXECUTION.C ***
-void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
-void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+//void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+//void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
+void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
+void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
+void	close_unused_fds(t_command_line *cmd_line, t_info *info);
 
 //*** FREE.C ***
 void	free_double_pointers(char **args);
@@ -135,7 +139,8 @@ void	disable_signals(void);
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	delimiter_finder(char *line, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info);
+//void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 void	search_for_redirection(t_info	*info);
 
@@ -154,7 +159,7 @@ int		how_many(t_info *info, char *str, char c);
 void	skip_space(t_info *info);
 char	**split_path(char **env);
 
-//*** EXECUTION_1.C **
+//*** PREPARE_EXEC.C **
 void	is_builtin(t_info *info);
 void	find_path_of_command(t_command_line *cmd_line, char *path);
 void	find_execve_path(t_info *info, t_command_line *cmd_line);
@@ -172,7 +177,8 @@ char	*until_chr(char *str, char c);
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	put_back_default_std(t_info *info);
-void	do_redirection(t_command_line cmd_line);
+//void	do_redirection(t_command_line cmd_line);
+void	do_redirection(t_command_line cmd_line, t_info *info);
 
 ///*** UTILS_PRINT.C ***
 void	print_struct(t_command_line *cmd_line, t_info *info);

@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/20 16:21:28 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 11:06:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+	cherche la ligne (char *line) dans le tableau (char **tab) et la renvoie
+	si rien n'est trouvé, renvoie NULL 
+*/
+char	*search_line(char **tab, char *line)
+{
+	while (*tab)
+	{
+		if (ft_strnstr(*tab, line, ft_strlen(line)))
+			return (*tab);
+		tab++;
+	}
+	return (NULL);
+}
+
+// char	**tab_trunc(char **tab, char *str, int len)
+// {
+// 	int		i;
+// 	char	**new_tab;
+
+// 	i = 0;
+// 	new_tab = NULL;
+// 	if (!tab || !str)
+// 		return (tab);
+// 	while (tab[i])
+// 	{
+// 		if (ft_strncmp(tab[i], str, len) != 0)
+// 			new_tab = tab_join(new_tab, tab[i]);
+// 		i++;
+// 	}
+// 	table_flip(tab);
+// 	return (new_tab);
+// }
 
 /*
 	exécute le builtin associer à la première commande
