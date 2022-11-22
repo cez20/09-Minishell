@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:06:44 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:10:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,4 @@ void	prepare_data_for_execution(t_info *info)
 	is_builtin(info);
 	find_execve_path(info, info->command_lines);
 	create_execve_argv(info, info->command_lines);
-	info->initial_stdin = dup(STDIN_FILENO);
-	info->initial_stdout = dup(STDOUT_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:02:11 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:05:48 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 	}
 	else
 	{
+		close(fd[1]);
 		if (info->read_pipe != -1)
 			close (info->read_pipe);
 		info->read_pipe = fd[0];

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:08:51 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:26:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	output_redirection(t_command_line *chunk, char *token)
 void	delimiter_finder(char *line, char *delimiter, int fd[])
 {
 	close(fd[0]);
+	fd_in = fd[1];
 	line = readline(">");
 	while(1)
 	{
@@ -69,7 +70,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	line = NULL;
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &signal_inside_heredoc);
 		delimiter_finder(line, delimiter, fd);
 	}
 	signal(SIGINT, &signal_heredoc);
@@ -149,7 +150,8 @@ void	search_for_redirection(t_info *info)
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list);
 			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
-				heredoc_redirection(chunk, list->next->token, info);
+				heredoc_redirection(chunk, list->next->token);
+				//heredoc_redirection(chunk, list->next->token, info);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)

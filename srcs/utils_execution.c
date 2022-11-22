@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:14:13 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:21:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 			exit(info->exit_code);
 		}
 	}
+	close_current_fds(&cmd_line, info);
 	waitpid(pid, &status, 0);
 	info->exit_code = get_exit_code(status);
-	unlink("heredoc.txt"); 
 }
 
 //Fonction that changes STDIN and STDOUT with dup2()in PARENT before entering 
