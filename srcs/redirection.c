@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/21 22:03:20 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/21 22:57:50 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,21 @@ void	output_redirection(t_command_line *chunk, char *token)
 // }
 
 
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info)
 {
 	char	*line;
 	int		fd[2];
 	pid_t	pid;
+	int		status;
 	
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
 	cmd_line->fd_in = open("heredoc.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	signal(SIGINT, &signal_heredoc);
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &signal_inside_heredoc);
 		line = readline(">");
 		while(1)
 		{
@@ -113,8 +115,10 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 			line = readline(">");
 		}
 	}
-	signal(SIGINT, &signal_heredoc);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	info->exit_code = get_exit_code(status);
+	close(cmd_line->fd_in);
+	cmd_line->fd_in = open("heredoc.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
 }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)
@@ -143,7 +147,7 @@ void	search_for_redirection(t_info *info)
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list);
 			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
-				heredoc_redirection(chunk, list->next->token);
+				heredoc_redirection(chunk, list->next->token, info);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)

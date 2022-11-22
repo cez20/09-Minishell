@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 20:24:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/21 22:50:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	fill_command_lines(t_info *info); // On pourra p-e l'enlever
 char	*search_another_one(char *str, char c, t_info *info);
 
 //*** SIGNAL.C ***
+void	signal_inside_heredoc(int signum);
 void	signal_heredoc(int signum);
 int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info, int flag); // Function that needs to be worked on
@@ -137,7 +138,8 @@ void	disable_signals(void);
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	delimiter_finder(char *line, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info);
+//void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 void	search_for_redirection(t_info	*info);
 
