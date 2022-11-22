@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 16:01:46 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/21 19:05:24 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	exit_terminal(t_info *info, int flag)
 {
 	int	exit_code;
 
+	close(info->initial_stdin);
+	close (info->initial_stdout);
 	exit_code = info->exit_code;
 	if (flag)
 	{
