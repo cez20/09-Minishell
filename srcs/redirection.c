@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:26:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:42:37 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,21 @@ void	output_redirection(t_command_line *chunk, char *token)
 	if (chunk->fd_out != 1)
 		close(chunk->fd_out);
 	chunk->fd_out = open(token, O_TRUNC | O_CREAT | O_RDWR, 0644);
+}
+
+void	close_unused(t_command_line *cmd_line, int current_index)
+{
+	int i;
+	
+	i = 0;
+	while (i < current_index)
+	{
+		if (cmd_line[i].fd_in != 0)
+			close (cmd_line[i].fd_in);
+		if (cmd_line[i].fd_out != 1)
+			close (cmd_line[i].fd_out);
+		i++;
+	}
 }
 
 void	delimiter_finder(char *line, char *delimiter, int fd[])
@@ -58,12 +73,12 @@ void	delimiter_finder(char *line, char *delimiter, int fd[])
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info, int i)
 {
 	char	*line;
 	int		fd[2];
 	pid_t	pid;
-
+	
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
@@ -71,6 +86,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	if (pid == 0)
 	{
 		signal(SIGINT, &signal_inside_heredoc);
+		close_unused(info->command_lines, i);
 		delimiter_finder(line, delimiter, fd);
 	}
 	signal(SIGINT, &signal_heredoc);
@@ -78,51 +94,6 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	cmd_line->fd_in = fd[0];
 	waitpid(pid, NULL, 0);
 }
-
-// void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info)
-// {
-// 	char	*line;
-// 	int		fd[2];
-// 	pid_t	pid;
-// 	int		status;
-	
-// 	if (pipe(fd) == -1)
-// 		return ;
-// 	pid = fork();
-// 	cmd_line->fd_in = open("heredoc.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
-// 	signal(SIGINT, &signal_heredoc);
-// 	if (pid == 0)
-// 	{
-// 		signal(SIGINT, &signal_heredoc);
-// 		close (fd[1]);
-// 		cmd_line->fd_in = fd[0];
-// 		waitpid(pid, NULL, 0);
-// 		line = readline(">");
-// 		while(1)
-// 		{
-// 			if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
-// 			ft_strlen(delimiter) == ft_strlen(line))
-// 			{
-// 				close (cmd_line->fd_in);
-// 				free(line);
-// 				exit (EXIT_SUCCESS);
-// 			}
-// 			else if (!line)
-// 			{
-// 				close (cmd_line->fd_in);
-// 				exit(EXIT_SUCCESS);
-// 			}
-// 			write(cmd_line->fd_in, line, ft_strlen(line));
-// 			write(cmd_line->fd_in, "\n", 1);
-// 			free(line);
-// 			line = readline(">");
-// 		}
-// 	}
-// 	waitpid(pid, &status, 0);
-// 	info->exit_code = get_exit_code(status);
-// 	close(cmd_line->fd_in);
-// 	cmd_line->fd_in = open("heredoc.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
-// }
 
 void	input_redirection(t_command_line *cmd_line, t_token *list_token)
 {
@@ -150,8 +121,7 @@ void	search_for_redirection(t_info *info)
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list);
 			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
-				heredoc_redirection(chunk, list->next->token);
-				//heredoc_redirection(chunk, list->next->token, info);
+				heredoc_redirection(chunk, list->next->token, info, i);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)

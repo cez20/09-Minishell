@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:20:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:22:31 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_info
 	int						exit_code;
 	int						read_pipe;
 	char					**paths;
-	char					*delimiter;
 }		t_info;
 
 typedef struct s_command_line
@@ -141,8 +140,9 @@ void	disable_signals(void);
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	delimiter_finder(char *line, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info, int i);
 //void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info);
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
+//void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, t_token *list_token);
 void	search_for_redirection(t_info	*info);
 

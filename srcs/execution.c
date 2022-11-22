@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:05:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:48:08 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	int		i;
 
 	pid = ft_calloc(info->nb_of_pipe + 1, sizeof(pid_t));
-	i = 0;
 	while (info->index <= info->nb_of_pipe)
 	{
 		if (info->index == info->nb_of_pipe)
@@ -208,6 +207,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		child_process(cmd_line, info, &pid[info->index]);
 		info->index++;
 	}
+	i = 0;
 	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], &status, 0);
 	info->exit_code = get_exit_code(status);
