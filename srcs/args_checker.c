@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/20 16:43:16 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 14:46:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_arg_export(char *arg)
+int	check_arg_export(char *arg, t_info *info)
 {
 	int	i;
 
 	i = 0;
 	if (arg[i] == '=')
 	{
-		printf("bash: export: '%s': not a valid identifier\n", arg);
+		ft_putstr_fd("bash: export: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		info->exit_code = 1;
 		return (0);
 	}
 	while (arg[i])
@@ -39,8 +42,11 @@ int	check_arg_unset(char *arg, t_info *info)
 	while (arg[i])
 	{
 		if (arg[i] == '=')
-		{
-			printf("bash: unset: '%s': not a valid identifier\n", arg);
+			{
+			ft_putstr_fd("bash: unset: '", 2);
+			ft_putstr_fd(arg, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			// printf("bash: unset: '%s': not a valid identifier\n", arg);
 			info->exit_code = 1;
 			return (0);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 16:44:30 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 14:47:22 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ void	pwd(t_info *info)
 void	echo(t_info *info)
 {
 	t_token	*token_list;
-	int		i;
 	int		n;
 
 	n = 0;
-	i = 0;
 	token_list = info->command_lines[info->index].list_token->next;
 	quote_remover(info);
 	if (token_list)
@@ -43,15 +41,7 @@ void	echo(t_info *info)
 		printf("\n");
 		return ;
 	}
-	while (token_list)
-	{
-		if (token_list->prev && token_list->prev->space_flag == 1 && i > 0)
-			printf(" %s", token_list->token);
-		else
-			printf("%s", token_list->token);
-		i++;
-		token_list = token_list->next;
-	}
+	echo_routine(token_list);
 	if (!n)
 		printf("\n");
 }
@@ -87,55 +77,22 @@ void	cd(t_info *info)
 void	export(t_info *info)
 {
 	int		i;
-	int		j;
 	char	*str;
-	char	*line;
 
+	str = NULL;
 	i = 0;
-	j = 0;
 	if (info->command_lines[info->index].argv[i + 1])
 	{
 		while (info->command_lines[info->index].argv[i + 1])
 		{
 			if (check_arg_export(info->command_lines[info->index] \
-			.argv[i + 1]))
-			{
-				str = until_chr(info->command_lines[info->index] \
-				.argv[i + 1], '=');
-				line = search_line(info->envp, str);
-				if (line)
-				{
-					info->envp = tab_trunc(info->envp, str, ft_strlen(str));
-					info->envp = tab_join(info->envp, \
-					info->command_lines[info->index].argv[i + 1]);
-					free(str);
-				}
-				else
-				{
-					info->envp = tab_join(info->envp, \
-					info->command_lines[info->index].argv[i + 1]);
-					free(str);
-				}
-			}
+			.argv[i + 1], info))
+				export_routine(info, str);
 			i++;
 		}
 	}
 	else
-	{
-		while (info->envp[i])
-		{
-			printf("declare -x ");
-			while (info->envp[i][j] != '=' && info->envp[i][j] != '\0')
-			{
-				printf("%c", info->envp[i][j]);
-				j++;
-			}
-			str = ft_strchr(info->envp[i], '=');
-			printf("=\"%s\"\n", ++str);
-			i++;
-			j = 0;
-		}
-	}
+		export_no_args(info, str);
 }
 
 void	unset(t_info *info)

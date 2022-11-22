@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/22 12:29:23 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 13:05:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ void	split_token(char *token, t_info *info)
 	info->list_token = NULL;
 }
 
-char	*get_command(t_token *list_token)
-{
-	if (!list_token)
-		return (NULL);
-	remove_quote(list_token);
-	return (list_token->token);
-}
-
 void	fill_command_lines(t_info *info)
 {
 	int	i;
@@ -73,23 +65,22 @@ void	fill_command_lines(t_info *info)
 	}
 }
 
-char	*set_start(t_info *info, char c, char **str)
+char	*set_start(t_info *info, char c, char **start, char *str)
 {
-	char *start;
-
-	start = *str;
-	if (c == 32 && **str == 32)
+	info->len = 0;
+	*start = str;
+	if (c == 32 && *str == 32)
 	{
 		skip_space(info);
-		*str = info->last_position;
-		start = *str;
+		str = info->last_position;
+		*start = str;
 	}
 	else
 	{
-		*str++;
+		str++;
 		info->len++;
 	}
-	return (start);
+	return (str);
 }
 
 /*
@@ -100,18 +91,7 @@ char	*search_another_one(char *str, char c, t_info *info)
 	char	*token;
 	char	*start;
 
-	start = str;
-	if (c == 32 && *str == 32)
-	{
-		skip_space(info);
-		str = info->last_position;
-		start = str;
-	}
-	else
-	{
-		str++;
-		info->len++;
-	}
+	str = set_start(info, c, &start, str);
 	while (*str != c)
 	{
 		if (*str == '\0' || (c == 32 && \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 10:39:40 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 14:47:33 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		close_quote_checker(t_info *info, char *str);
 int		main(int argc, char **argv, char **envp);
 
 //*** ARGS_CHECKER.C ***
-int		check_arg_export(char *arg);
+int		check_arg_export(char *arg, t_info *info);
 int		check_arg_unset(char *arg, t_info *info);
 
 //***BUILTINS.C
@@ -193,5 +193,8 @@ void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);
 char	*get_command(t_token *list_token);
+void	export_routine(t_info *info, char *str);
+void	export_no_args(t_info *info, char *str);
+void	echo_routine(t_token *token_list);
 
 #endif

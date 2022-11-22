@@ -80,7 +80,7 @@ FIXME:
 		[X] gérer les "="
 		[X] sans argument
 		FIXME:
-				[] l'utilisation de unset et export créer parfois un segfault, diffile à reproduire, mais doit venir des strlcpy à vérifier avec valgrind
+				[X] l'utilisation de unset et export créer parfois un segfault, diffile à reproduire, mais doit venir des strlcpy à vérifier avec valgrind
 
 	[X] env sans aucune option ni argument
 		[X] renvoyer une erreur s'il' il des arguments ?
@@ -92,11 +92,11 @@ FIXME:
 
 [] gérer le $
 	[X] "$U'SE'R" doit supprimer $U	
-	[] supprimer tous les $ seul
+	[X] supprimer tous les $ seul
 	[X] fix les cas de "$USER" "'$USER'" '$USER'
 	
-[] Heredocs
-	[] Changer heredoc pour utiliser un pipe au lieu de fichier 
+[X] Heredocs
+	[X] Changer heredoc pour utiliser un pipe au lieu de fichier 
 	[X] Discussion avec plus de chevrons <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	[X] heredoc ne fonctionne pas collé au delim. ex :cat <<delim
 	[X] heredoc ferme si le delim se retrouve au debut de la ligne 
@@ -118,9 +118,10 @@ TODO:
 		[] répartir les fonctions du main dans différents fichiers
 		[] réduire find_expansion
 		[] clean up minishell.h 
+		[] changer les printf pour la sortie d'erreurs
 	
-	
-		
+
+
 
 FIXME:
 		[X] unset
@@ -128,7 +129,12 @@ FIXME:
 		[X] unset PATH fait segfault fill_cmd
 		[X] double le prompt quand ctrl-C lorsque que le minishell hang
 		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
-
+		[] les builtins en même temps que les commandes
+		[] ne pas expande le délimiteur des Heredocs
+		[] expand les variables dans les Heredocs
+		[] cat <<< hello --> affiche un erreur mais lance la commande.
+		[] ls"2" devrait error --> ls2 : not found
+		[] ca"t" devrait succeed
 
 
 LEAKS:
