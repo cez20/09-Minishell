@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:20:32 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:23:58 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_info
 	int						exit_code;
 	int						read_pipe;
 	char					**paths;
-	char					*delimiter;
 }		t_info;
 
 typedef struct s_command_line
@@ -103,13 +102,10 @@ void	command_not_found(char *str);
 // *** EXECUTION.C ***
 void	close_current_fds(t_command_line *cmd_line, t_info *info);
 void	close_unused_fds(t_command_line *cmd_line, t_info *info);
-//void	last_child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
-//void	child_process(t_command_line cmd_line, t_info *info, pid_t *pid);
+void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
+void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
 void	execution(t_info *info, t_command_line *line);
-void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
-void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
-void	close_unused_fds(t_command_line *cmd_line, t_info *info);
 
 //*** FREE.C ***
 void	free_double_pointers(char **args);
@@ -141,9 +137,8 @@ void	disable_signals(void);
 void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	delimiter_finder(char *line, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-//void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info);
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
-void	input_redirection(t_command_line *cmd_line, t_token *list_token);
+void	input_redirection(t_command_line *cmd_line, char *infile);
 void	search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***
