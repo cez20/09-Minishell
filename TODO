@@ -26,7 +26,7 @@
 	[X] activer les signaux Ctrl+C et Ctrl + \ dans les childs (ai je le droit)
 	[] Cas specifique a gerer 
 		[X] Gerer les path relatifs?
-		[] Tous les FDS fermes dans parent (et aussi child?).
+		[X] Tous les FDS fermes dans parent (et aussi child?).
 		[X] gerer le cas  cat > test.txt | wc
 	[X] Infile error : affichesur stderr durant letape execution (Nouvelle fonction: exec_error_manangement )
 	[X] Cmd error : afficher sur stderr durant execiton (Nouvelle fonction: exec_error_manangement )
@@ -134,8 +134,8 @@ FIXME:
 		[X] ne pas expande le délimiteur des Heredocs
 		[] expand les variables dans les Heredocs
 		[] cat <<< hello --> affiche un erreur mais lance la commande.
-		[] ls"2" devrait error --> ls2 : not found
-		[] ca"t" devrait succeed
+		[X] ls"2" devrait error --> ls2 : not found
+		[X] ca"t" devrait succeed
 
 
 LEAKS:
