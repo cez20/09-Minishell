@@ -114,11 +114,12 @@ Struct
 TODO: 
 		[X] fonction update state baser sur deux flag D_quote et S_quote déterminant quoi faire avec le contenue d'une expansion
 		[X] fix l'espace de la destination de export
-		[] réduire le main
-		[] répartir les fonctions du main dans différents fichiers
-		[] réduire find_expansion
+		[X] réduire le main
+		[]X répartir les fonctions du main dans différents fichiers
+		[] Xréduire find_expansion
 		[] clean up minishell.h 
 		[] changer les printf pour la sortie d'erreurs
+		[] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
 	
 
 
