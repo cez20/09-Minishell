@@ -6,7 +6,7 @@
 /*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/24 16:59:28 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/24 17:43:08 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,26 @@ void	remove_inside_quote(t_info *info)
 {
 	char	*str;
 	int		i;
+	int		str_index;
 	int		len;
 
 	len =ft_strlen(info->list_token->token);
+	str_index = 0;
 	str = ft_calloc(len, sizeof(char));
 	i = 0;
 	if (info->list_token->flag_quote == 32)
 	{ 
-		while (*info->list_token->token)
+		while (info->list_token->token[i])
 		{
-			if (*info->list_token->token != D_QUOTE || *info->list_token->token != S_QUOTE)
-				ft_strlcat(str, &info->list_token->token[i], len);
+			if (info->list_token->token[i] != D_QUOTE && info->list_token->token[i] != S_QUOTE)
+			{
+				str[str_index] = info->list_token->token[i];
+				str_index++;
+			}
 			i++;
 		}
 		free(info->list_token->token);
 		info->list_token->token = str;
-		printf("token = %s\n", info->list_token->token);	
 	}
 }
 
@@ -51,6 +55,7 @@ void	routine_split_token(t_info *info)
 		remove_inside_quote(info);
 	skip_space(info);
 	trim_space(info, " \t\n\r\v");
+	nb_token++;
 }
 
 void	split_token(char *token, t_info *info)
@@ -139,6 +144,5 @@ char	*search_another_one(char *str, char c, t_info *info)
 	else
 		info->last_position = str;
 	token = ft_substr(start, 0, info->len);
-	printf("token = %s\n", token);
 	return (token);
 }
