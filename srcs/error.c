@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/20 16:01:46 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/22 11:00:22 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	check_if_error(t_command_line cmd_line)
 void	syntax_error(void)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+	exit (258);
 }
 
 void	no_file(char *str)
@@ -57,6 +58,8 @@ int	exit_terminal(t_info *info, int flag)
 {
 	int	exit_code;
 
+	close(info->initial_stdin);
+	close (info->initial_stdout);
 	exit_code = info->exit_code;
 	if (flag)
 	{

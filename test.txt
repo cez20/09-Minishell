@@ -1,4 +1,6 @@
+Allo ca va
 Steven et Cesar
+<<<<<<< HEAD
 sont en train de travailler
 sur minishell!
 allos
@@ -6,3 +8,6 @@ ssfs
 af
 saf
 bahe
+=======
+travaille sur minishell!
+>>>>>>> 1b3e342fd9d88d931b03d227b64c23370f916608

@@ -4,7 +4,7 @@ SRCS_DIR   		= srcs/
 SRCS_FILES		= main.c export_utils.c args_checker.c builtins.c execution.c free.c \
 				  init.c parsing.c parsing_utils.c prepare_exec.c redirection.c signal.c \
 				  utils_1.c utils_2.c utils_3.c utils_builtins.c utils_execution.c \
-				  utils_print.c utils_redirection.c redirection_utils.c var_expansion.c utils_expansion.c error.c signal_utils.c
+				  utils_print.c utils_redirection.c var_expansion.c utils_expansion.c error.c signal_utils.c
 SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 CC 				= @gcc
