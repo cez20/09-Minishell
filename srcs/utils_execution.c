@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:21:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:24:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 		return ;
 	if (pid == 0)
 	{
-		check_if_error(cmd_line);
+		check_if_error(cmd_line, info);
 		do_redirection(cmd_line, info);
 		if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
 		{
@@ -73,7 +73,7 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 
 	i = 0;
 	if (cmd_line[info->index].builtin == 1 && cmd_line->error_infile)
-		check_if_error(cmd_line[i]);
+		check_if_error(cmd_line[i], info);
 	else if (cmd_line[info->index].builtin == 1)
 	{
 		info->initial_stdin = dup(STDIN_FILENO);

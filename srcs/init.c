@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 10:52:18 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 10:54:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	reinit(t_info *info)
 	info->paths = split_path(info->envp);
 	info->index = 0;
 	info->read_pipe = -1;
+	info->herestring = 0;
 }

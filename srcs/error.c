@@ -6,13 +6,13 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:00:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:02:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_if_error(t_command_line cmd_line)
+void	check_if_error(t_command_line cmd_line, t_info *info)
 {
 	if (!cmd_line.list_token)
 		exit (1);
@@ -29,6 +29,8 @@ void	check_if_error(t_command_line cmd_line)
 		command_not_found(cmd_line.argv[0]);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
 		exit (1);
+	else if (info->herestring == 1)
+	 	exit(1);
 }
 
 void	syntax_error(void)

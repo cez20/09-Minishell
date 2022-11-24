@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/22 14:46:43 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 10:54:33 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	check_arg_unset(char *arg, t_info *info)
 void	input_chevron(t_info *info, int i)
 {
 	if (info->last_position[i + 2] == '<')
+	{
 		printf("bash: syntax error near unexpected token '<'\n");
+		info->herestring = 1;
+	}
 	else
 	{
 		ft_lstaddback_token(&info->list_token, \

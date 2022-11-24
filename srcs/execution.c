@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 16:58:08 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:27:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	do_execution(t_command_line cmd_line, t_info *info)
 {
-	check_if_error(cmd_line);
 	if (cmd_line.builtin == 1)
 	{
 		token_manager(info);
@@ -64,6 +63,7 @@ void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 	if (*pid == 0)
 	{
 		close_unused_fds(cmd_line, info);
+		check_if_error(cmd_line[info->index], info);
 		do_redirection(cmd_line[info->index], info);
 		do_execution(cmd_line[info->index], info);
 	}	
@@ -87,6 +87,7 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 	if (*pid == 0)
 	{
 		close_unused_fds(cmd_line, info);
+		check_if_error(cmd_line[info->index], info);
 		do_redirection(cmd_line[info->index], info);
 		if (cmd_line[info->index].fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
