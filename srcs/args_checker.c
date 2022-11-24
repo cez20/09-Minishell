@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/23 23:21:58 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:01:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	input_chevron(t_info *info, int i)
 	if (info->last_position[i + 2] == '<')
 	{
 		printf("bash: syntax error near unexpected token '<'\n");
-		info->exit_code = 1;
+		info->herestring = 1;
 	}
 	else
 	{

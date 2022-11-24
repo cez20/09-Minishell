@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 23:29:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:01:21 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_info
 	int						exit_code;
 	int						read_pipe;
 	char					**paths;
+	int						herestring;
 }		t_info;
 
 typedef struct s_command_line

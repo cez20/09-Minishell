@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 23:25:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:02:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
-	(void)info;
 	if (!cmd_line.list_token)
 		exit (1);
-	else if (info->exit_code != 0)
-	 	exit(info->exit_code);
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
@@ -32,6 +29,8 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		command_not_found(cmd_line.argv[0]);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
 		exit (1);
+	else if (info->herestring == 1)
+	 	exit(1);
 }
 
 void	syntax_error(void)

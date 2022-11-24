@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 16:59:42 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:51:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ void	enable_signals_minishell(void)
 void	signal_child(int signum)
 {
 	if (signum == SIGINT)
+	{
 		printf("\n");
+		if (rl_on_new_line() == -1)
+			exit(1);
+		rl_replace_line("", 1);
+	}
 	else if (signum == SIGQUIT)
 		printf("Quit: 3\n");
 }
