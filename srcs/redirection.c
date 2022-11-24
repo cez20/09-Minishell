@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 23:58:13 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:32:27 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 	}
 }
 
-void	delimiter_finder(char *line, char *delimiter, int fd[])
+void	delimiter_finder(char *delimiter, int fd[])
 {
+	char *line;
+
 	close(fd[0]);
 	fd_in = fd[1];
-	line = readline(">");
 	while(1)
 	{
+		line = readline(">");
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
@@ -59,25 +61,24 @@ void	delimiter_finder(char *line, char *delimiter, int fd[])
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);
-		line = readline(">");
 	}
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 {
-	char	*line;
+	// char	*line; // vérifier avec Cesar la pertinence
 	int		fd[2];
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
-	line = NULL;
+	// line = NULL;
 	if (pid == 0)
 	{
 		signal(SIGINT, &signal_inside_heredoc);
-		delimiter_finder(line, delimiter, fd);
+		delimiter_finder(delimiter, fd);
 	}
 	signal(SIGINT, &signal_heredoc);
 	close (fd[1]);

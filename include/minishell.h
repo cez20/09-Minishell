@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 10:54:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 12:30:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	disable_signals(void);
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
-void	delimiter_finder(char *line, char *delimiter, int fd[]);
+void	delimiter_finder(char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, char *infile);
@@ -194,7 +194,7 @@ char	*env_variable(char *str, int *i);
 void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
 
-void	garbage_collector(t_info *info);
+// void	garbage_collector(t_info *info);
 void	check_chevron(t_info *info);
 void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);

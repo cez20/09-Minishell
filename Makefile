@@ -57,6 +57,7 @@ b:
 update:
 	@git fetch
 	@git pull origin $(BRANCH)
+	@$(MAKE) sub
 
 cb:
 	@./clone_branch.sh

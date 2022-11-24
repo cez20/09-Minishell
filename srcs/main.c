@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/24 00:04:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:06:12 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	routine(t_info *info, char *line)
 	split_token(line, info);
 	if (info->command_lines->list_token)
 	{
+		search_for_redirection(info);
 		var_expansion(info->command_lines, info);
 		fill_command_lines(info);
-		search_for_redirection(info);
 		prepare_data_for_execution(info);
 		execution(info, info->command_lines);
 		free_struct_command_line(info);
