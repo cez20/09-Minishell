@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/20 16:43:16 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/23 23:21:58 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	check_arg_unset(char *arg, t_info *info)
 void	input_chevron(t_info *info, int i)
 {
 	if (info->last_position[i + 2] == '<')
+	{
 		printf("bash: syntax error near unexpected token '<'\n");
+		info->exit_code = 1;
+	}
 	else
 	{
 		ft_lstaddback_token(&info->list_token, \

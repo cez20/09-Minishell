@@ -6,16 +6,19 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:00:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:25:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_if_error(t_command_line cmd_line)
+void	check_if_error(t_command_line cmd_line, t_info *info)
 {
+	(void)info;
 	if (!cmd_line.list_token)
 		exit (1);
+	else if (info->exit_code != 0)
+	 	exit(info->exit_code);
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
