@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 10:43:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 11:26:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ void	echo(t_info *info);
 void	cd(t_info *info);
 void	unset(t_info *info);
 
+//*** CLOSE_FDS.C ***
+void	close_unused_fds_heredoc(t_command_line *cmd_line, int current_index);
+void	close_current_fds(t_command_line *cmd_line, t_info *info);
+void	close_unused_fds(t_command_line *cmd_line, t_info *info);
+
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
 void	syntax_error(void);
@@ -136,10 +141,10 @@ void	disable_signals(void);
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
+void	close_unused(t_command_line *cmd_line, int current_index);
 void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_info *info, t_command_line *cmd_line, char *delimiter);
-void	input_redirection(t_command_line *cmd_line, char *infile);
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info, int i);
 void	search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***

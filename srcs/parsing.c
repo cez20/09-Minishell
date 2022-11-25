@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 12:03:06 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 17:17:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	remove_inside_quote(t_info *info)
 	}
 }
 
-void	routine_split_token(t_info *info)
+void	outine_split_token(t_info *info)
 {
 	int	type_quote;
 	static int	nb_token = 0;
