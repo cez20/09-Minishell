@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 10:24:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:26:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);
 char	*get_command(t_token *list_token);
-void	export_routine(t_info *info, char *str);
+void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
 

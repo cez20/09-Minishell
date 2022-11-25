@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/24 10:54:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 10:49:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_arg_export(char *arg, t_info *info)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '=')
+	if (!ft_isalpha(arg[i]) && arg[i] != '_')
 	{
 		ft_putstr_fd("bash: export: '", 2);
 		ft_putstr_fd(arg, 2);

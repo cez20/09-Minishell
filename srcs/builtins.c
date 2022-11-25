@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 14:47:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 10:42:33 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	export(t_info *info)
 		{
 			if (check_arg_export(info->command_lines[info->index] \
 			.argv[i + 1], info))
-				export_routine(info, str);
+				export_routine(info, str, i);
 			i++;
 		}
 	}
