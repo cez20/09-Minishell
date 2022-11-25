@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/23 23:27:06 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:22:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,6 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 	}
 }
 
-void	close_current_fds(t_command_line *cmd_line, t_info *info)
-{
-	int i;	
-	
-	i = info->index;
-	if (cmd_line[i].fd_in != 0)
-		close (cmd_line[i].fd_in);
-	if (cmd_line[i].fd_out != 1)
-		close (cmd_line[i].fd_out);
-}
-
-void	close_unused_fds(t_command_line *cmd_line, t_info *info)
-{
-	int i;
-	
-	i = info->index + 1;
-	while (i <= info->nb_of_pipe)
-	{
-		if (cmd_line[i].fd_in != 0)
-			close (cmd_line[i].fd_in);
-		if (cmd_line[i].fd_out != 1)
-			close (cmd_line[i].fd_out);
-		i++;
-	}
-}
 
 //1- Dans la derniere ligne de commande, il est important 
 //de revenir mettre le STDIN_FILENO qui est l,entree du pipe
