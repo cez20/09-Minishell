@@ -117,7 +117,7 @@ TODO:
 		[X] réduire le main
 		[X] répartir les fonctions du main dans différents fichiers
 		[X]réduire find_expansion
-		[]clean up minishell.h 
+		[] clean up minishell.h 
 		[] changer les printf pour la sortie d'erreurs
 		[] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
 	
@@ -136,6 +136,16 @@ FIXME:
 		[X] cat <<< hello --> affiche un erreur mais lance la commande.
 		[X] ls"2" devrait error --> ls2 : not found
 		[X] ca"t" devrait succeed
+		[] export plusieurs variables
+		[] export ne peux pas commencer par un nombre 
+		[] ne peux pas commence par autre chose qu'une lettre ou un _
+		[] echo "bon"jour""
+		[] unset path segfault
+		[] echo allo>file
+		[] <file wc -l
+		[] remettre la static à zéro
+		[] invalid read Heredocs
+		[] expand après la condition
 
 
 LEAKS:
