@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 12:30:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 20:53:12 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ void	disable_signals(void);
 
 //*** REDIRECTION.C ***
 void	append_output_redirection(t_command_line *chunk, char *outfile);
-void	delimiter_finder(char *delimiter, int fd[]);
+void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter);
+void	heredoc_redirection(t_info *info, t_command_line *cmd_line, char *delimiter);
 void	input_redirection(t_command_line *cmd_line, char *infile);
 void	search_for_redirection(t_info	*info);
 

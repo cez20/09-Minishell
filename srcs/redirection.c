@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 12:32:27 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 20:52:16 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 	}
 }
 
-void	delimiter_finder(char *delimiter, int fd[])
+void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 {
 	char *line;
 
@@ -46,6 +46,7 @@ void	delimiter_finder(char *delimiter, int fd[])
 	while(1)
 	{
 		line = readline(">");
+		locate_expansion(&line, info->envp, info);
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
@@ -65,7 +66,7 @@ void	delimiter_finder(char *delimiter, int fd[])
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
+void	heredoc_redirection(t_info *info, t_command_line *cmd_line, char *delimiter)
 {
 	// char	*line; // vérifier avec Cesar la pertinence
 	int		fd[2];
@@ -78,7 +79,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter)
 	if (pid == 0)
 	{
 		signal(SIGINT, &signal_inside_heredoc);
-		delimiter_finder(delimiter, fd);
+		delimiter_finder(info, delimiter, fd);
 	}
 	signal(SIGINT, &signal_heredoc);
 	close (fd[1]);
@@ -119,7 +120,7 @@ void	search_for_redirection(t_info *info)
 			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
-				heredoc_redirection(chunk, list->next->token);
+				heredoc_redirection(info, chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)

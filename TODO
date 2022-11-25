@@ -117,7 +117,7 @@ TODO:
 		[X] réduire le main
 		[X] répartir les fonctions du main dans différents fichiers
 		[X]réduire find_expansion
-		[] clean up minishell.h 
+		[]clean up minishell.h 
 		[] changer les printf pour la sortie d'erreurs
 		[] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
 	
@@ -132,8 +132,8 @@ FIXME:
 		[X] gérer les quotes vides "" '' pense que les quotes ne sont pas fermés
 		[X] les builtins en même temps que les commandes
 		[X] ne pas expande le délimiteur des Heredocs
-		[] expand les variables dans les Heredocs
-		[] cat <<< hello --> affiche un erreur mais lance la commande.
+		[X] expand les variables dans les Heredocs
+		[X] cat <<< hello --> affiche un erreur mais lance la commande.
 		[X] ls"2" devrait error --> ls2 : not found
 		[X] ca"t" devrait succeed
 

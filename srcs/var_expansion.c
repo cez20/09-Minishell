@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 20:18:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/24 20:57:26 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*env_variable(char *str, int *i)
 	int		j;
 
 	j = *i;
-	while (ft_isalpha(str[*i]) != 0)
+	while (ft_isalnum(str[*i]) != 0)
 		(*i)++;
 	str1 = ft_substr(str, j, *i - j);
 	return (str1);
@@ -53,18 +53,22 @@ void	locate_expansion(char **str, char **env, t_info *info)
 		free(*str);
 		*str = ft_itoa(info->exit_code);
 	}
-	while ((*str)[i] != '$' && (*str)[i])
-		i++;
-	if ((*str)[i] == '$' && (*str)[i + 1])
+	// while ((*str)[i] != '$' && (*str)[i])
+	// 	i++;
+	while ((*str)[i])
 	{
-		if (i > 0)
-			tab[0] = ft_substr(*str, 0, i);
+		if ((*str)[i] == '$' && (*str)[i + 1])
+		{
+			if (i > 0)
+				tab[0] = ft_substr(*str, 0, i);
+			i++;
+			tab[1] = env_variable(*str, &i);
+			tab[2] = ft_strjoin(tab[1], "=");
+			if (*str + 1)
+				tab[3] = ft_strdup(*str + i);
+			find_expansion(str, tab, env);
+		}
 		i++;
-		tab[1] = env_variable(*str, &i);
-		tab[2] = ft_strjoin(tab[1], "=");
-		if (*str + 1)
-			tab[3] = ft_strdup(*str + i);
-		find_expansion(str, tab, env);
 	}
 	table_flip(tab);
 }
