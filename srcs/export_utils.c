@@ -6,18 +6,16 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/22 14:37:59 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 10:42:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_routine(t_info *info, char *str)
+void	export_routine(t_info *info, char *str, int i)
 {	
 	char	*line;
-	int		i;
 
-	i = 0;
 	str = until_chr(info->command_lines[info->index] \
 	.argv[i + 1], '=');
 	line = search_line(info->envp, str);

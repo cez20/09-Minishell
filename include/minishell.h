@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 20:53:12 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/25 10:43:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);
 char	*get_command(t_token *list_token);
-void	export_routine(t_info *info, char *str);
+void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
 

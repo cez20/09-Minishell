@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/24 17:43:08 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/25 11:04:29 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	remove_inside_quote(t_info *info)
 	int		str_index;
 	int		len;
 
-	len =ft_strlen(info->list_token->token);
+	len = ft_strlen(info->list_token->token);
 	str_index = 0;
 	str = ft_calloc(len, sizeof(char));
 	i = 0;
