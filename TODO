@@ -141,7 +141,66 @@ FIXME:
 LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
+				echo salut > file | wc -l >>file leaks 8 bytes
+				8 bytes in 1 blocks are definitely lost in loss record 6 of 136
+				==19317==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				==19317==    by 0x100035A30: ft_calloc (ft_calloc.c:19)
+				==19317==    by 0x100005BF6: multiple_commands_or_builtins (execution.c:115)
+				==19317==    by 0x100005D64: execution (execution.c:149)
+				==19317==    by 0x10000497E: routine (main.c:90)
+				==19317==    by 0x100004A67: main (main.c:114)
 
+				***Ca leak toujours quand il y a un pipe***
+
+				<<EOF (heredoc)
+				2 bytes in 1 blocks are definitely lost in loss record 1 of 124
+				==20471==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				==20471==    by 0x100035A30: ft_calloc (ft_calloc.c:19)
+				==20471==    by 0x1000061E3: remove_inside_quote (parsing.c:24)
+				==20471==    by 0x100006363: routine_split_token (parsing.c:55)
+				==20471==    by 0x10000652C: split_token (parsing.c:72)
+				==20471==    by 0x10000492F: routine (main.c:83)
+				==20471==    by 0x100004A67: main (main.c:114)
+
+				Minishell$> export TEST=salut
+				Minishell$> echo $TEST
+				==20991== Invalid read of size 1
+				==20991==    at 0x100008B97: locate_expansion (var_expansion.c:58)
+				==20991==    by 0x100008D31: var_expansion (var_expansion.c:92)
+				==20991==    by 0x10000495B: routine (main.c:87)
+				==20991==    by 0x100004A67: main (main.c:114)
+				==20991==  Address 0x100927706 is 0 bytes after a block of size 6 alloc'd
+				==20991==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				==20991==    by 0x100035A30: ft_calloc (ft_calloc.c:19)
+				==20991==    by 0x100034CC5: ft_strjoin (ft_strjoin.c:21)
+				==20991==    by 0x100008E2B: chop_chop (utils_expansion.c:32)
+				==20991==    by 0x100008F26: find_expansion (utils_expansion.c:52)
+				==20991==    by 0x100008C7B: locate_expansion (var_expansion.c:69)
+				==20991==    by 0x100008D31: var_expansion (var_expansion.c:92)
+				==20991==    by 0x10000495B: routine (main.c:87)
+				==20991==    by 0x100004A67: main (main.c:114)
+				==20991== 
+				salut
+
+				==21727== Invalid read of size 1
+				=21727==    at 0x100008B97: locate_expansion (var_expansion.c:58)
+				=21727==    by 0x100007142: delimiter_finder (redirection.c:49)
+				=21727==    by 0x1000072B3: heredoc_redirection (redirection.c:82)
+				=21727==    by 0x1000074AF: search_for_redirection (redirection.c:123)
+				=21727==    by 0x10000494A: routine (main.c:86)
+				=21727==    by 0x100004A67: main (main.c:114)
+				=21727==  Address 0x1009bbbf9 is 4 bytes after a block of size 21 alloc'd
+				=21727==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+				=21727==    by 0x100035A30: ft_calloc (ft_calloc.c:19)
+				=21727==    by 0x100034CC5: ft_strjoin (ft_strjoin.c:21)
+				=21727==    by 0x100008F4A: find_expansion (utils_expansion.c:57)
+				=21727==    by 0x100008C7B: locate_expansion (var_expansion.c:69)
+				=21727==    by 0x100007142: delimiter_finder (redirection.c:49)
+				=21727==    by 0x1000072B3: heredoc_redirection (redirection.c:82)
+				=21727==    by 0x1000074AF: search_for_redirection (redirection.c:123)
+				=21727==    by 0x10000494A: routine (main.c:86)
+				=21727==    by 0x100004A67: main (main.c:114)
+				
 
 
 
