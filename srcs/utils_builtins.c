@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 12:14:46 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 14:46:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	remove_quote(t_token *token_list)
 		token_list->token = ft_substr(token_list->token, 1, \
 		ft_strlen(token_list->token) - 2);
 		free(temp);
-		token_list->flag_quote = 1;
+		token_list->flag_quote = chr;
 	}
 	else
-		token_list->flag_quote = 0;
+		token_list->flag_quote = chr;
 }
 
 void	quote_remover(t_info *info)
@@ -39,6 +39,8 @@ void	quote_remover(t_info *info)
 	while (token)
 	{
 		remove_quote(token);
+		if (token->flag_quote == 32)
+			token->token = ft_strtrim(token->token, "\'\"");
 		tmp = token;
 		token = token->next;
 		del_empty_node(tmp);
