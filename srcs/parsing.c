@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 11:04:29 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:03:06 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	routine_split_token(t_info *info)
 	type_quote = simple_or_double(info->last_position);
 	if (nb_token < 1)
 		type_quote = 32;
-	ft_lstaddback_token(&info->list_token, ft_lstnew_token (search_another_one(info->last_position, type_quote, info)));
+	ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, type_quote, info)));
 	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
 	if (nb_token < 1)
 		remove_inside_quote(info);
@@ -80,6 +80,7 @@ void	split_token(char *token, t_info *info)
 	}
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
+	lst_print_token(&info->command_lines[i].list_token);
 }
 
 void	fill_command_lines(t_info *info)

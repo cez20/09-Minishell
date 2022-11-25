@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 10:42:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:11:13 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	echo(t_info *info)
 	quote_remover(info);
 	if (token_list)
 	{
-		while (is_n(token_list))
+		while (is_n(token_list)) // ICI
 		{
 			token_list = token_list->next;
 			n++;

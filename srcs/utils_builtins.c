@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/24 15:30:41 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/25 12:14:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	is_n(t_token *node)
 {
 	int	i;
 
-	i = 2;
+	i = 1;
 	if (node)
 	{
 		if (ft_strlen(node->token) == 2 && !ft_strncmp(node->token, "-n", 2))
