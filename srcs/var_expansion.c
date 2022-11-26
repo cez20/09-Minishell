@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/24 20:57:26 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/26 16:04:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	locate_expansion(char **str, char **env, t_info *info)
 		free(*str);
 		*str = ft_itoa(info->exit_code);
 	}
-	// while ((*str)[i] != '$' && (*str)[i])
-	// 	i++;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])
@@ -64,13 +62,13 @@ void	locate_expansion(char **str, char **env, t_info *info)
 			i++;
 			tab[1] = env_variable(*str, &i);
 			tab[2] = ft_strjoin(tab[1], "=");
-			if (*str + 1)
+			if (*str + i)
 				tab[3] = ft_strdup(*str + i);
 			find_expansion(str, tab, env);
 		}
 		i++;
 	}
-	table_flip(tab);
+	free_tab(tab);
 }
 
 /* A valider si on garde le 2e if qui enleve les quotes */

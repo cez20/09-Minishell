@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 11:02:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/26 16:05:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,13 @@ void	free_info(t_info *info)
 	if (info->paths)
 		table_flip(info->paths);
 	free(info);
+}
+
+void	free_tab(char **tab)
+{
+	free(tab[0]);
+	free(tab[1]);
+	free(tab[2]);
+	free(tab[3]);
+	free(tab[4]);
 }
