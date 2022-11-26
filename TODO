@@ -149,6 +149,7 @@ FIXME:
 		[] bash: syntax error near unexpected token `newline' si << sans rien comme argument
 		[] CTRL C heredoc
 		[X] argument exit
+		[] export lol2="hello steven"
 
 
 LEAKS:
@@ -338,4 +339,3 @@ test echo:  TOUS MIS DANS TEST sauf le premier
 			- echo				OK 	
 
 
-export lol2="hello steven"
