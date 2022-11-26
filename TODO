@@ -147,7 +147,7 @@ FIXME:
 		[X] invalid read Heredocs
 		[X] expand après la condition
 		[] bash: syntax error near unexpected token `newline' si << sans rien comme argument
-		[] CTRL C heredoc
+		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
 

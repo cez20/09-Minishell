@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 19:42:49 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 12:03:56 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 	fd_in = fd[1];
 	while (1)
 	{
-		line = take_input(">");
+		line = readline("> ");
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
@@ -59,8 +59,8 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 			exit(EXIT_SUCCESS);
 		}
 		locate_expansion(&line, info->envp, info);
-		// write(fd[1], line, ft_strlen(line));   pourquoi ?
-		// write(fd[1], "\n", 1);
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
 }
@@ -80,7 +80,7 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info
 		close_unused_fds_heredoc(info->command_lines, i);
 		delimiter_finder(info, delimiter, fd);
 	}
-	signal(SIGINT, &signal_heredoc);
+	signal(SIGINT, &signal_outside_heredoc);
 	close (fd[1]);
 	if (cmd_line->fd_in != 0)
 		close (cmd_line->fd_in);

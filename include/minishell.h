@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 22:17:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 11:29:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 
 //*** SIGNAL.C ***
 void	signal_inside_heredoc(int signum);
-void	signal_heredoc(int signum);
+void	signal_outside_heredoc(int signum);
 int		get_exit_code(int exit_code);
 int		exit_terminal(t_info *info, int flag, int exit_code);
 void	signal_child(int signum);

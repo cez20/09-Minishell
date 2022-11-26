@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 21:04:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 10:45:52 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	split_token(char *token, t_info *info)
 	}
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
-	lst_print_token(&info->command_lines[i].list_token);
+	//lst_print_token(&info->command_lines[i].list_token);
 }
 
 void	fill_command_lines(t_info *info)
