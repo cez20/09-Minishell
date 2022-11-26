@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 23:10:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 14:06:28 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ char	*take_input(char *prompt)
 	char	*line;
 	char	*temp;
 
-	disable_signals();
 	line = readline(prompt);
 	temp = line;
 	if (line)
@@ -142,6 +141,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	while (1 && argc && argv && envp)
 	{
+		disable_signals();
 		line = take_input("\033[0;32mMinishell$> \033[0m");
 		if (line)
 			add_history(line);
