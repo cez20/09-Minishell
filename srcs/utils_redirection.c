@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 22:10:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 21:18:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 14:40:41 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,20 @@ void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 		}
 		if (list && is_redirection(list) == 0)
 			list = list->next;
+	}
+}
+
+void	input_redirection(t_command_line *cmd_line, char *infile)
+{
+	if (!cmd_line->error_infile)
+	{
+		if (cmd_line->fd_in != 0)
+			close(cmd_line->fd_in);
+		cmd_line->fd_in = open(infile, O_RDWR);
+		if (cmd_line->fd_in == -1)
+		{
+			cmd_line->error_infile = ft_strdup(infile);
+			cmd_line->fd_in = 0;
+		}
 	}
 }

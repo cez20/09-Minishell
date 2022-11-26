@@ -68,14 +68,14 @@ FIXME:
 		[X] gestion d'erreur'
 	[X] pwd sans aucune option
 		[X] pas de pwd 
-	[] export sans aucune option
+	[X  ] export sans aucune option
 		[X] export sans argument
 		[X] gérer plusieurs args
 		[X] pas de "="
 		[X] var1, var111111111
 		[X] vérifier si la variable existe déjà
 		[X] gestion des erreurs
-	[] unset sans aucune option
+	[X] unset sans aucune option
 		[X] gérer plusieurs args
 		[X] gérer les "="
 		[X] sans argument
@@ -150,6 +150,7 @@ FIXME:
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
+		[] expansion ne fontionne plus après un cas qui n'existe' pas 
 
 
 LEAKS:

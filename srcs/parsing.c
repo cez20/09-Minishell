@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/26 10:45:52 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/26 14:43:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	remove_inside_quote(t_info *info)
-{
-	char	*str;
-	int		i;
-	int		str_index;
-	int		len;
-
-	len = ft_strlen(info->list_token->token);
-	str_index = 0;
-	str = ft_calloc(len, sizeof(char));
-	i = 0;
-	if (info->list_token->flag_quote == 32)
-	{ 
-		while (info->list_token->token[i])
-		{
-			if (info->list_token->token[i] != D_QUOTE && info->list_token->token[i] != S_QUOTE)
-			{
-				str[str_index] = info->list_token->token[i];
-				str_index++;
-			}
-			i++;
-		}
-		free(info->list_token->token);
-		info->list_token->token = str;
-	}
-}
 
 void	routine_split_token(t_info *info)
 {
@@ -48,7 +21,8 @@ void	routine_split_token(t_info *info)
 	type_quote = simple_or_double(info->last_position);
 	if (info->nb_token < 1)
 		type_quote = 32;
-	ft_lstaddback_token(&info->list_token, ft_lstnew_token(search_another_one(info->last_position, type_quote, info)));
+	ft_lstaddback_token(&info->list_token, ft_lstnew_token \
+	(search_another_one(info->last_position, type_quote, info)));
 	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
 	if (info->nb_token < 1)
 		remove_inside_quote(info);
@@ -79,7 +53,6 @@ void	split_token(char *token, t_info *info)
 	}
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
-	//lst_print_token(&info->command_lines[i].list_token);
 }
 
 void	fill_command_lines(t_info *info)

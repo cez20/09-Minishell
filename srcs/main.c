@@ -6,42 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 23:10:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 14:49:25 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-	cherche la ligne (char *line) dans le tableau (char **tab) et la renvoie
-	si rien n'est trouvé, renvoie NULL 
-*/
-char	*search_line(char **tab, char *line)
-{
-	while (*tab)
-	{
-		if (ft_strnstr(*tab, line, ft_strlen(line)))
-			return (*tab);
-		tab++;
-	}
-	return (NULL);
-}
-
-int	ft_isnum(char c)
-{
-	return (c > '0' && c < '9');
-}
-
-int	str_isnum(char *str)
-{
-	while (str && *str)
-	{
-		if (!(ft_isnum(*str)))
-			return (0);
-		str++;
-	}
-	return(1);
-}
 
 int	arg_exit(t_info *info)
 {
@@ -49,19 +18,22 @@ int	arg_exit(t_info *info)
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
 		info->exit_code = 1;
-		return(-42);
+		return (-42);
 	}
 	if (info->command_lines[info->index].list_token->next)
 	{
-		if (!(str_isnum(info->command_lines[info->index].list_token->next->token)))
+		if (!(str_isnum(info->command_lines[info->index] \
+		.list_token->next->token)))
 		{
 			ft_putstr_fd("bash: exit: ", 2);
-			ft_putstr_fd(info->command_lines[info->index].list_token->next->token, 2);
+			ft_putstr_fd(info->command_lines[info->index] \
+			.list_token->next->token, 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			return (255);
 		}
 		else
-			return (ft_atoi(info->command_lines[info->index].list_token->next->token));
+			return (ft_atoi(info->command_lines[info->index] \
+			.list_token->next->token));
 	}
 	return (info->exit_code);
 }
@@ -99,7 +71,6 @@ char	*take_input(char *prompt)
 	char	*line;
 	char	*temp;
 
-	disable_signals();
 	line = readline(prompt);
 	temp = line;
 	if (line)
@@ -142,6 +113,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	while (1 && argc && argv && envp)
 	{
+		disable_signals();
 		line = take_input("\033[0;32mMinishell$> \033[0m");
 		if (line)
 			add_history(line);

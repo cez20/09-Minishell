@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/19 20:48:01 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 14:42:44 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,33 @@ void	trim_space(t_info *info, char *set)
 		token->token = ft_strtrim(token->token, set);
 		free(tmp);
 		token = token->next;
+	}
+}
+
+void	remove_inside_quote(t_info *info)
+{
+	char	*str;
+	int		i;
+	int		str_index;
+	int		len;
+
+	len = ft_strlen(info->list_token->token);
+	str_index = 0;
+	str = ft_calloc(len, sizeof(char));
+	i = 0;
+	if (info->list_token->flag_quote == 32)
+	{
+		while (info->list_token->token[i])
+		{
+			if (info->list_token->token[i] != D_QUOTE && \
+			info->list_token->token[i] != S_QUOTE)
+			{
+				str[str_index] = info->list_token->token[i];
+				str_index++;
+			}
+			i++;
+		}
+		free(info->list_token->token);
+		info->list_token->token = str;
 	}
 }
