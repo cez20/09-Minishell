@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 17:24:36 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 19:43:10 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,5 +209,6 @@ char	*get_command(t_token *list_token);
 void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
+char	*take_input(char *prompt);
 
 #endif

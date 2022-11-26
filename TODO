@@ -139,13 +139,13 @@ FIXME:
 		[X] export plusieurs variables
 		[X] export ne peux pas commencer par un nombre 
 		[X] ne peux pas commence par autre chose qu'une lettre ou un _
-		[] echo "bon"jour""
-		[] unset path segfault
+		[X] echo "bon"jour""
+		[X] unset path segfault
 		[] echo allo>file
 		[] <file wc -l
-		[] remettre la static à zéro
+		[X] remettre la static à zéro
 		[] invalid read Heredocs
-		[] expand après la condition
+		[X] expand après la condition
 
 
 LEAKS:

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 17:18:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 19:44:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	token_manager(t_info *info)
 		unset(info);
 }
 
-char	*take_input(void)
+char	*take_input(char *prompt)
 {
 	char	*line;
 	char	*temp;
 
 	disable_signals();
-	line = readline("\033[0;32mMinishell$> \033[0m");
+	line = readline(prompt);
 	temp = line;
 	if (line)
 		line = ft_strjoin(line, "\0");
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Let's go ça part !\n");
 	while (1 && argc && argv && envp)
 	{
-		line = take_input();
+		line = take_input("\033[0;32mMinishell$> \033[0m");
 		if (line)
 			add_history(line);
 		else

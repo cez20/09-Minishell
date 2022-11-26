@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 10:24:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:42:49 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 	fd_in = fd[1];
 	while (1)
 	{
-		line = readline(">");
-		locate_expansion(&line, info->envp, info);
+		line = take_input(">");
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
@@ -59,8 +58,9 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 			close(fd[1]);
 			exit(EXIT_SUCCESS);
 		}
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
+		locate_expansion(&line, info->envp, info);
+		// write(fd[1], line, ft_strlen(line));   pourquoi ?
+		// write(fd[1], "\n", 1);
 		free(line);
 	}
 }
