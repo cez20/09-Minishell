@@ -141,12 +141,14 @@ FIXME:
 		[X] ne peux pas commence par autre chose qu'une lettre ou un _
 		[X] echo "bon"jour""
 		[X] unset path segfault
-		[] echo allo>file
+		[X] echo allo>file
 		[X] <file wc -l
 		[X] remettre la static à zéro
-		[] invalid read Heredocs
+		[X] invalid read Heredocs
 		[X] expand après la condition
 		[] bash: syntax error near unexpected token `newline' si << sans rien comme argument
+		[] CTRL C heredoc
+		[X] argument exit
 
 
 LEAKS:
@@ -334,3 +336,6 @@ test echo:  TOUS MIS DANS TEST sauf le premier
 			- echo '"a"ll"o"' 	OK
 			- echo '"a"ll"o"' 	OK
 			- echo				OK 	
+
+
+export lol2="hello steven"

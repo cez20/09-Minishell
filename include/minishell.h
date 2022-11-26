@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 19:43:10 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 22:17:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*search_another_one(char *str, char c, t_info *info);
 void	signal_inside_heredoc(int signum);
 void	signal_heredoc(int signum);
 int		get_exit_code(int exit_code);
-int		exit_terminal(t_info *info, int flag);
+int		exit_terminal(t_info *info, int flag, int exit_code);
 void	signal_child(int signum);
 void	signal_parent(int signum);
 void	enable_signals(void);

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 19:44:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 23:10:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,45 @@ char	*search_line(char **tab, char *line)
 	return (NULL);
 }
 
+int	ft_isnum(char c)
+{
+	return (c > '0' && c < '9');
+}
+
+int	str_isnum(char *str)
+{
+	while (str && *str)
+	{
+		if (!(ft_isnum(*str)))
+			return (0);
+		str++;
+	}
+	return(1);
+}
+
+int	arg_exit(t_info *info)
+{
+	if (ft_lstsize_token(info->command_lines[info->index].list_token) > 2)
+	{
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+		info->exit_code = 1;
+		return(-42);
+	}
+	if (info->command_lines[info->index].list_token->next)
+	{
+		if (!(str_isnum(info->command_lines[info->index].list_token->next->token)))
+		{
+			ft_putstr_fd("bash: exit: ", 2);
+			ft_putstr_fd(info->command_lines[info->index].list_token->next->token, 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			return (255);
+		}
+		else
+			return (ft_atoi(info->command_lines[info->index].list_token->next->token));
+	}
+	return (info->exit_code);
+}
+
 /*
 	exécute le builtin associer à la première commande
 */
@@ -43,7 +82,7 @@ void	token_manager(t_info *info)
 		cd(info);
 	else if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) \
 	&& ft_strlen(info->command_lines[info->index].command) == 4)
-		exit_terminal(info, 0);
+		exit_terminal(info, 0, arg_exit(info));
 	else if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) \
 	&& ft_strlen(info->command_lines[info->index].command) == 6)
 		export(info);
@@ -109,7 +148,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			free(line);
-			exit_terminal(info, 1);
+			exit_terminal(info, 1, 0);
 		}
 		routine(info, line);
 		reinit(info);
