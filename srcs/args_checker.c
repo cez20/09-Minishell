@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/25 10:49:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/25 20:18:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,18 @@ void	input_chevron(t_info *info, int i)
 		printf("bash: syntax error near unexpected token '<'\n");
 		info->herestring = 1;
 	}
-	else
+	else if (info->last_position[i + 1] == '<')
 	{
 		ft_lstaddback_token(&info->list_token, \
 		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
 		info->last_position++;
 		info->last_position++;
+	}
+	else if (!(info->last_position[i + 1] == '<'))
+	{
+		ft_lstaddback_token(&info->list_token, \
+		ft_lstnew_token(ft_substr(info->last_position, i, 1)));
+		info->last_position++;	
 	}
 }
 
@@ -75,12 +81,18 @@ void	output_chevron(t_info *info, int i)
 {
 	if (info->last_position[i + 2] == '>')
 		printf("bash: syntax error near unexpected token '>'\n");
-	else
+	else if (info->last_position[i + 1] == '>')
 	{
 		ft_lstaddback_token(&info->list_token, \
 		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
 		info->last_position++;
 		info->last_position++;
+	}
+	else if (!(info->last_position[i + 1] == '>'))
+	{
+		ft_lstaddback_token(&info->list_token, \
+		ft_lstnew_token(ft_substr(info->last_position, i, 1)));
+		info->last_position++;	
 	}
 }
 
@@ -89,8 +101,8 @@ void	check_chevron(t_info *info)
 	int	i;
 
 	i = 0;
-	if (info->last_position[i] == '<' && info->last_position[i + 1] == '<')
+	if (info->last_position[i] == '<')
 		input_chevron(info, i);
-	else if (info->last_position[i] == '>' && info->last_position[i + 1] == '>')
+	else if (info->last_position[i] == '>')
 		output_chevron(info, i);
 }

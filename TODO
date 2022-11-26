@@ -142,10 +142,11 @@ FIXME:
 		[X] echo "bon"jour""
 		[X] unset path segfault
 		[] echo allo>file
-		[] <file wc -l
+		[X] <file wc -l
 		[X] remettre la static à zéro
 		[] invalid read Heredocs
 		[X] expand après la condition
+		[] bash: syntax error near unexpected token `newline' si << sans rien comme argument
 
 
 LEAKS:
