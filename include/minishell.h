@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:05:24 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:47:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,11 @@ void	print_double_pointer(char **str);
 void	delete_tokens(t_token **list);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
+
+//*** UTILS_EXPANSION.C ***
+void	chop_chop(char **str, char **tab, char **env, int i);
+void	find_expansion(char **str, char **tab, char **env);
+void	if_exit_code(char **str, t_info *info);
 
 //*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
 char	*new_expanded_variable(int i, char *str, char **env);

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 14:29:20 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:45:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,13 @@ void	locate_expansion(char **str, char **env, t_info *info)
 	char	**tab;
 	int		i;
 
+	if_exit_code(str, info);
 	i = 0;
-	tab = ft_calloc(5, sizeof(char *));
-	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
-	{
-		free(*str);
-		*str = ft_itoa(info->exit_code);
-	}
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])
 		{
+			tab = ft_calloc(5, sizeof(char *));
 			if (i > 0)
 				tab[0] = ft_substr(*str, 0, i);
 			i++;
@@ -65,12 +61,11 @@ void	locate_expansion(char **str, char **env, t_info *info)
 			if (*(*str + i))
 				tab[3] = ft_strdup(*str + i);
 			find_expansion(str, tab, env);
+			free_tab(tab);
 			i = -1;
 		}
-		free_tab(tab);
 		i++;
 	}
-	free(tab);
 }
 
 /* A valider si on garde le 2e if qui enleve les quotes */
