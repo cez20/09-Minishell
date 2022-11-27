@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 13:07:38 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 19:57:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 void	routine_split_token(t_info *info)
 {
 	int	type_quote;
+	char *token;
 
 	skip_space(info);
-	check_chevron(info);
+	token = check_chevron(info);
 	type_quote = simple_or_double(info->last_position);
 	if (info->nb_token < 1)
 		type_quote = 32;
-	ft_lstaddback_token(&info->list_token, ft_lstnew_token \
-	(search_another_one(info->last_position, type_quote, info)));
+	if (!token)
+		token = search_another_one(info->last_position, type_quote, info);
+	ft_lstaddback_token(&info->list_token, ft_lstnew_token(token));
 	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
 	// if (info->nb_token < 1)
 	// 	remove_inside_quote(info);
@@ -97,9 +99,9 @@ char	*search_another_one(char *str, char c, t_info *info)
 	char	*start;
 
 	str = set_start(info, c, &start, str);
-	while (*str != c)
+	while (*str != c && *str)
 	{
-		if ((*str == '\0' || *str == c) || *str == '<' || *str == '>')
+		if ((*str == '\0' || *str == c)) //|| *str == '<' || *str == '>')
 		{
 			info->last_position = str;
 			token = ft_substr(start, 0, info->len);

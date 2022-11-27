@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:11:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 18:38:36 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	info->exit_code = get_exit_code(status);
 }
 
-// J'ai enelver la fonction put_back_default_std
+// J'ai enlever la fonction put_back_default_std
 // et je les ai mise dans chacune des fonctions
 // one_command_or_builtin && multiples_commands 
 void	execution(t_info *info, t_command_line *cmd_line)

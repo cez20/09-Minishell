@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:12:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 21:25:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	cd(t_info *info)
 
 	oldpwd = ft_calloc(4096, sizeof(char));
 	getcwd(oldpwd, 4096);
-	if (info->command_lines[info->index].args)
-		new_path = info->command_lines[info->index].args;
+	if (info->command_lines[info->index].list_token && info->command_lines[info->index].list_token->next)
+		new_path = info->command_lines[info->index].list_token->next->token;
 	else
 		new_path = getenv("HOME");
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 13:07:27 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 16:19:04 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ void	free_info(t_info *info)
 
 void	free_tab(char **tab)
 {
-	free(tab[0]);
-	free(tab[1]);
-	free(tab[2]);
-	free(tab[3]);
-	free(tab[4]);
+	int i;
+	
+	i = 0;
+	while (i <= 4)
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
 }

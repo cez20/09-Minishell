@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 13:08:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 20:25:41 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,11 @@ void	delete_tokens(t_token **list);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
 
+//*** UTILS_EXPANSION.C ***
+void	chop_chop(char **str, char **tab, char **env, int i);
+void	find_expansion(char **str, char **tab, char **env);
+void	if_exit_code(char **str, t_info *info);
+
 //*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char **tab, char **env);
@@ -203,7 +208,7 @@ void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
 
 // void	garbage_collector(t_info *info);
-void	check_chevron(t_info *info);
+char	*check_chevron(t_info *info);
 void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);

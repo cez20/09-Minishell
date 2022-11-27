@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/26 16:13:01 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 20:58:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ int	check_arg_unset(char *arg, t_info *info)
 	return (1);
 }
 
-void	input_chevron(t_info *info, int i)
+char	*input_chevron(t_info *info, int i)
 {
+	char *token;
+
+	token = NULL;
 	if (info->last_position[i + 2] == '<')
 	{
 		printf("bash: syntax error near unexpected token '<'\n");
@@ -63,45 +66,51 @@ void	input_chevron(t_info *info, int i)
 	}
 	else if (info->last_position[i + 1] == '<')
 	{
-		ft_lstaddback_token(&info->list_token, \
-		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+		token = ft_substr(info->last_position, i, 2);
 		info->last_position++;
 		info->last_position++;
+		return (token);
 	}
 	else if (!(info->last_position[i + 1] == '<'))
 	{
-		ft_lstaddback_token(&info->list_token, \
-		ft_lstnew_token(ft_substr(info->last_position, i, 1)));
+		token = ft_substr(info->last_position, i, 1);
 		info->last_position++;
+		return (token);
 	}
+	return (token);
 }
 
-void	output_chevron(t_info *info, int i)
+char	*output_chevron(t_info *info, int i)
 {
+	char	*token;
+
+	token = NULL;
 	if (info->last_position[i + 2] == '>')
 		printf("bash: syntax error near unexpected token '>'\n");
 	else if (info->last_position[i + 1] == '>')
 	{
-		ft_lstaddback_token(&info->list_token, \
-		ft_lstnew_token(ft_substr(info->last_position, i, 2)));
+		token = ft_substr(info->last_position, i, 2);
 		info->last_position++;
 		info->last_position++;
+		return (token);
 	}
 	else if (!(info->last_position[i + 1] == '>'))
 	{
-		ft_lstaddback_token(&info->list_token, \
-		ft_lstnew_token(ft_substr(info->last_position, i, 1)));
+		token = ft_substr(info->last_position, i, 1);
 		info->last_position++;
+		return (token);
 	}
+	return (NULL);
 }
 
-void	check_chevron(t_info *info)
+char	*check_chevron(t_info *info)
 {
 	int	i;
 
 	i = 0;
 	if (info->last_position[i] == '<')
-		input_chevron(info, i);
+		return (input_chevron(info, i));
 	else if (info->last_position[i] == '>')
-		output_chevron(info, i);
+		return (output_chevron(info, i));
+	return (NULL);
 }

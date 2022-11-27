@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/26 14:38:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 20:44:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ void	del_empty_node(t_token *token)
 
 	prev_token = token->prev;
 	next_token = token->next;
-	if (!(*token->token))
+	if (token->token && !(*token->token))
 	{
 		ft_lstdelone_token(token, free);
-		prev_token->next = next_token;
+		if (prev_token)
+			prev_token->next = next_token;
 		if (next_token)
 			next_token->prev = prev_token;
 	}

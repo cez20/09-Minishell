@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/19 20:21:00 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 20:43:24 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 */
 char	simple_or_double(char *token)
 {
-	if (*token == 34 || *token == 39)
+	if (token && (*token == 34 || *token == 39))
 		return (*token);
 	return (32);
 }
