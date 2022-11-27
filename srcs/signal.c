@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 11:45:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/26 16:21:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@
     4- rl_redisplay changes what's display on screen to change for what
     is in rl_buffer.
 */
-
 void	signal_inside_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
-		close(fd_in);
+		close(g_fd_in);
 		exit(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 18:17:35 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/26 16:11:13 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 	}
 }
 
-
 //1- Dans la derniere ligne de commande, il est important 
 //de revenir mettre le STDIN_FILENO qui est l,entree du pipe
 // pour le STDIN original
@@ -44,7 +43,7 @@ void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 	}	
 	else
 	{
-		if(info->read_pipe != -1)
+		if (info->read_pipe != -1)
 			close(info->read_pipe);
 		close_current_fds(cmd_line, info);
 	}
@@ -66,8 +65,7 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 		do_redirection(cmd_line[info->index], info);
 		if (cmd_line[info->index].fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		close(fd[0]);
+		close_fds(fd);
 		do_execution(cmd_line[info->index], info);
 	}
 	else
@@ -79,7 +77,6 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 		close_current_fds(cmd_line, info);
 	}
 }
-
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
@@ -103,8 +100,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 		waitpid(pid[i++], &status, 0);
 	info->exit_code = get_exit_code(status);
 }
-
-
 
 // J'ai enelver la fonction put_back_default_std
 // et je les ai mise dans chacune des fonctions

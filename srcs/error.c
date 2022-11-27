@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 11:37:14 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/26 16:11:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
 		exit (1);
 	else if (info->herestring == 1)
-	 	exit(1);
+		exit (1);
 }
 
 void	syntax_error(void)
@@ -58,7 +58,6 @@ void	command_not_found(char *str)
 //I need to free eveything that cause a segfault 
 int	exit_terminal(t_info *info, int flag, int exit_code)
 {
-	
 	close(info->initial_stdin);
 	close (info->initial_stdout);
 	if (flag)

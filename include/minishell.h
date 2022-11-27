@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:05:24 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 13:08:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_command_line
 	char	**argv;
 }				t_command_line;
 
-int	fd_in;
+int	g_fd_in;
 
 //*** MAIN.C ***
 char	*search_line(char **tab, char *search);
@@ -146,7 +146,8 @@ void	append_output_redirection(t_command_line *chunk, char *outfile);
 void	close_unused(t_command_line *cmd_line, int current_index);
 void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info, int i);
+void	heredoc_redirection(t_command_line *cmd_line, \
+char *delimiter, t_info *info, int i);
 void	search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***
@@ -211,5 +212,8 @@ void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
 char	*take_input(char *prompt);
+void	input_redirection(t_command_line *cmd_line, char *infile);
+void	remove_inside_quote(t_info *info);
+void	close_fds(int *fd);
 
 #endif

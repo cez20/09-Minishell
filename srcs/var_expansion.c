@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:04:15 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 13:08:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	locate_expansion(char **str, char **env, t_info *info)
 	int		i;
 	char	**tab;
 
-	i = 0;
+	i = -1;
 	tab = ft_calloc(5, sizeof(char *));
 	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
 	{
 		free(*str);
 		*str = ft_itoa(info->exit_code);
 	}
-	while ((*str)[i])
+	while ((*str)[++i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])
 		{
@@ -66,7 +66,6 @@ void	locate_expansion(char **str, char **env, t_info *info)
 				tab[3] = ft_strdup(*str + i);
 			find_expansion(str, tab, env);
 		}
-		i++;
 	}
 	free_tab(tab);
 }

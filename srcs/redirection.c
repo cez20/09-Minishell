@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 14:07:00 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/27 13:07:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 	char	*line;
 
 	close(fd[0]);
-	fd_in = fd[1];
+	g_fd_in = fd[1];
 	while (1)
 	{
 		line = take_input("> ");
@@ -66,7 +66,8 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 }
 
 // Si j'ai plusieurs heredoc comment leur donner des noms differents? 
-void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info, int i)
+void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, \
+t_info *info, int i)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -86,21 +87,6 @@ void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, t_info *info
 		close (cmd_line->fd_in);
 	cmd_line->fd_in = fd[0];
 	waitpid(pid, NULL, 0);
-}
-
-void	input_redirection(t_command_line *cmd_line, char *infile)
-{
-	if (!cmd_line->error_infile)
-	{
-		if (cmd_line->fd_in != 0)
-			close(cmd_line->fd_in);
-		cmd_line->fd_in = open(infile, O_RDWR);
-		if (cmd_line->fd_in == -1)
-		{
-			cmd_line->error_infile = ft_strdup(infile);
-			cmd_line->fd_in = 0;
-		}
-	}
 }
 
 void	search_for_redirection(t_info *info)
