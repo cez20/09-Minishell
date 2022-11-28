@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 17:32:23 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:49:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	free_info(t_info *info)
 	if (info->envp)
 		table_flip(info->envp);
 	if (info->pwd)
+	{
 		free(info->pwd);
+		info->pwd = NULL;
+	}
 	if (info->list_token)
 		ft_lstclear_token(&info->list_token, free);
 	if (info->paths)
