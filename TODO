@@ -150,19 +150,13 @@ FIXME:
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[] builtins majuscule passe dans execve 
 		[] echo "allo""allo2" skip parfois le premier caractère du deuxième token, probablement en lien avece un invalid read 
 		[] segfault quote seule 
-=======
+		[] espace devant les fichier ex: > test.txt
 		[] expansion ne fontionne plus après un cas qui n'existe' pas 
->>>>>>> parent of 08d86df... test
-=======
-		[] expansion ne fontionne plus après un cas qui n'existe' pas 
->>>>>>> parent of 08d86df... test
-
 
 LEAKS:
 		FIXME:

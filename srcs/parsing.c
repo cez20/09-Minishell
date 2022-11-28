@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 21:40:05 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 11:11:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	routine_split_token(t_info *info)
 		token = search_another_one(info->last_position, type_quote, info);
 	ft_lstaddback_token(&info->list_token, ft_lstnew_token(token));
 	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
-	// if (info->nb_token < 1)
-	// 	remove_inside_quote(info);
+	if (info->nb_token < 1)
+		remove_inside_quote(info);
 	skip_space(info);
 	trim_space(info, " \t\n\r\v");
 	info->nb_token++;
