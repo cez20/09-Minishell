@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 14:55:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:58:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ void	free_struct_command_line(t_info *info)
 	{
 		if (info->command_lines[i].list_token)
 			ft_lstclear_token(&info->command_lines[i].list_token, free);
-		if (info->command_lines[i].command)
-			free(info->command_lines[i].command);
-		if (info->command_lines[i].args)
-			free(info->command_lines[i].args);
 		if (info->command_lines[i].path)
 			free(info->command_lines[i].path);
 		if (info->command_lines[i].argv)

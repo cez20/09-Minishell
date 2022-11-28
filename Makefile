@@ -38,7 +38,7 @@ $(NAME): 		$(OBJS)
 clean:
 				@echo "Cleaning 🌪 🔥🌊"
 				@$(MAKE) -C ./Libft fclean
-				@$(MAKE) -C ./readline clean
+				# @$(MAKE) -C ./readline clean
 				@rm -rf $(OBJS)
 				@rm -rf $(OBJS_DIR)
 

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 14:42:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:53:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ void	remove_inside_quote(t_info *info)
 	int		len;
 
 	len = ft_strlen(info->list_token->token);
+	printf("len = %d\n", len);
 	str_index = 0;
-	str = ft_calloc(len, sizeof(char));
 	i = 0;
 	if (info->list_token->flag_quote == 32)
 	{
+		str = ft_calloc(len + 1, sizeof(char));
 		while (info->list_token->token[i])
 		{
 			if (info->list_token->token[i] != D_QUOTE && \
@@ -92,4 +93,5 @@ void	remove_inside_quote(t_info *info)
 		free(info->list_token->token);
 		info->list_token->token = str;
 	}
+
 }

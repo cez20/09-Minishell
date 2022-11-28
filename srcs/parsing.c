@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 12:15:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:45:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	routine_split_token(t_info *info)
 	skip_space(info);
 	token = check_chevron(info);
 	type_quote = simple_or_double(info->last_position);
-	if (info->nb_token < 1)
+	if (info->nb_token < 1 && *info->last_position)
 		type_quote = 32;
 	if (!token)
 		token = search_another_one(info->last_position, type_quote, info);
@@ -95,7 +95,7 @@ char	*set_start(t_info *info, char c, char **start, char *str)
 */
 char	*search_another_one(char *str, char c, t_info *info)
 {
-	char	*token;
+	char	*tok;
 	char	*start;
 
 	str = set_start(info, c, &start, str);
@@ -104,8 +104,8 @@ char	*search_another_one(char *str, char c, t_info *info)
 		if ((*str == '\0' || *str == c)) //|| *str == '<' || *str == '>')
 		{
 			info->last_position = str;
-			token = ft_substr(start, 0, info->len);
-			return (token);
+			tok = ft_substr(start, 0, info->len);
+			return (tok);
 		}
 		str++;
 		info->len++;
@@ -117,6 +117,6 @@ char	*search_another_one(char *str, char c, t_info *info)
 	}
 	else
 		info->last_position = str;
-	token = ft_substr(start, 0, info->len);
-	return (token);
+	tok = ft_substr(start, 0, info->len);
+	return (tok);
 }

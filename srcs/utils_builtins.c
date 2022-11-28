@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 20:44:37 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:57:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,42 @@ void	remove_quote(t_token *token_list)
 		token_list->flag_quote = chr;
 }
 
-void	quote_remover(t_info *info)
+void	quote_remover(t_command_line **cmd_line)
 {
 	t_token	*token;
-	t_token	*tmp;
+	t_token	**tmp;
+	char *to_free;
+	t_command_line *line;
 
-	token = info->command_lines[info->index].list_token;
+	line = *cmd_line;
+	token = line->list_token;
 	while (token)
 	{
 		remove_quote(token);
 		if (token->flag_quote == 32)
+		{
+			to_free = token->token;
 			token->token = ft_strtrim(token->token, " \'\"");
-		tmp = token;
+			free(to_free);
+		}
+		tmp = &token;
 		token = token->next;
 		del_empty_node(tmp);
 	}
 }
 
-void	del_empty_node(t_token *token)
+void	del_empty_node(t_token **token)
 {
 	t_token	*prev_token;
 	t_token	*next_token;
-
-	prev_token = token->prev;
-	next_token = token->next;
-	if (token->token && !(*token->token))
+	if (!*token)
+		return ;
+	prev_token = (*token)->prev;
+	next_token = (*token)->next;
+	if ((*token)->token && !((*token)->token))
 	{
-		ft_lstdelone_token(token, free);
+		ft_lstdelone_token(*token, free);
+		*token = NULL;
 		if (prev_token)
 			prev_token->next = next_token;
 		if (next_token)

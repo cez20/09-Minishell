@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 20:45:29 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:25:22 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ void	lst_print_token(t_token **list)
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 {
 	if (del)
-		del(lst->token);
-	free(lst);
+	{
+		if (lst->token)
+			del(lst->token);
+	}
+	if(lst)
+		free(lst);
 }
 
 int	ft_lstsize_token(t_token *lst)
