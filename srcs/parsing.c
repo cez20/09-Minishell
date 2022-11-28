@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 15:45:07 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:31:31 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	routine_split_token(t_info *info)
 {
-	int	type_quote;
-	char *token;
+	int		type_quote;
+	char	*token;
 
 	skip_space(info);
 	token = check_chevron(info);
@@ -66,8 +66,6 @@ void	fill_command_lines(t_info *info)
 	{
 		info->command_lines[i].command = \
 		get_command(info->command_lines[i].list_token);
-		// info->command_lines[i].args = \
-		// get_args(info->command_lines[i].list_token);
 		i++;
 	}
 }
@@ -101,7 +99,7 @@ char	*search_another_one(char *str, char c, t_info *info)
 	str = set_start(info, c, &start, str);
 	while (*str != c)
 	{
-		if ((*str == '\0' || *str == c)) //|| *str == '<' || *str == '>')
+		if ((*str == '\0' || *str == c))
 		{
 			info->last_position = str;
 			tok = ft_substr(start, 0, info->len);

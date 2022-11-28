@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:13:57 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:32:23 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	free_info(t_info *info)
 
 void	free_tab(char **tab)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i <= 4)
 	{

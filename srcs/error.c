@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:13:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:32:42 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 {
 	close(info->initial_stdin);
 	close (info->initial_stdout);
-	// free_struct_command_line(info);
 	free_info(info);
 	if (flag)
 	{

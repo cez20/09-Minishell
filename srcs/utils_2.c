@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 15:25:22 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:29:16 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 		if (lst->token)
 			del(lst->token);
 	}
-	if(lst)
+	if (lst)
 		free(lst);
 }
 

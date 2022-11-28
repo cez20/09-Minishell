@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:24:15 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:29:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,4 @@ void	remove_inside_quote(t_info *info)
 		free(info->list_token->token);
 		info->list_token->token = str;
 	}
-
 }
