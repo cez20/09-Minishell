@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 21:25:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 16:39:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cd(t_info *info)
 		new_path = getenv("HOME");
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
-		printf("cd: %s: No such file or directory\n", new_path);
+		printf("cd: %s: No such file or directory\n", new_path); // sortie d'erreur ?
 	getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", info->pwd);
