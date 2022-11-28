@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 19:57:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/27 21:37:23 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*search_another_one(char *str, char c, t_info *info)
 	char	*start;
 
 	str = set_start(info, c, &start, str);
-	while (*str != c && *str)
+	while (*str != c)
 	{
 		if ((*str == '\0' || *str == c)) //|| *str == '<' || *str == '>')
 		{
