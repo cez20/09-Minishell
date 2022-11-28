@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 16:14:11 by stevenlavoi       #+#    #+#             */
-/*   Updated: 2022/11/21 15:04:31 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/11/28 12:26:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ char	*get_command(t_token *list_token)
 	if (!list_token)
 		return (NULL);
 	remove_quote(list_token);
+	
 	return (list_token->token);
 }

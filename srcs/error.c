@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:11:38 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:07:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 {
 	close(info->initial_stdin);
 	close (info->initial_stdout);
+	free_info(info);
 	if (flag)
 	{
 		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");

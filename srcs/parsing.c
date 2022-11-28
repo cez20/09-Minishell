@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 11:11:01 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:15:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	fill_command_lines(t_info *info)
 	{
 		info->command_lines[i].command = \
 		get_command(info->command_lines[i].list_token);
-		info->command_lines[i].args = \
-		get_args(info->command_lines[i].list_token);
+		// info->command_lines[i].args = \
+		// get_args(info->command_lines[i].list_token);
 		i++;
 	}
 }

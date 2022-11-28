@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 12:05:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:18:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,26 @@ int	arg_exit(t_info *info)
 */
 void	token_manager(t_info *info)
 {
-	if (!ft_strncmp(info->command_lines[info->index].command, "pwd", 3) \
-	&& ft_strlen(info->command_lines[info->index].command) == 3)
+	if (!ft_strncmp(info->command_lines[info->index].argv[0], "pwd", 3) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 3)
 		pwd(info);
-	else if (!ft_strncmp(info->command_lines[info->index].command, "env", 3) \
-	&& ft_strlen(info->command_lines[info->index].command) == 3)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "env", 3) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 3)
 		print_tab(info->envp);
-	else if (!ft_strncmp(info->command_lines[info->index].command, "cd", 2) \
-	&& ft_strlen(info->command_lines[info->index].command) == 2)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "cd", 2) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 2)
 		cd(info);
-	else if (!ft_strncmp(info->command_lines[info->index].command, "exit", 4) \
-	&& ft_strlen(info->command_lines[info->index].command) == 4)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "exit", 4) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 4)
 		exit_terminal(info, 0, arg_exit(info));
-	else if (!ft_strncmp(info->command_lines[info->index].command, "export", 6) \
-	&& ft_strlen(info->command_lines[info->index].command) == 6)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "export", 6) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 6)
 		export(info);
-	else if (!ft_strncmp(info->command_lines[info->index].command, "echo", 4) \
-	&& ft_strlen(info->command_lines[info->index].command) == 4)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "echo", 4) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 4)
 		echo(info);
-	else if (!ft_strncmp(info->command_lines[info->index].command, "unset", 5) \
-	&& ft_strlen(info->command_lines[info->index].command) == 5)
+	else if (!ft_strncmp(info->command_lines[info->index].argv[0], "unset", 5) \
+	&& ft_strlen(info->command_lines[info->index].argv[0]) == 5)
 		unset(info);
 }
 
