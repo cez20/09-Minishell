@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 16:14:11 by stevenlavoi       #+#    #+#             */
-/*   Updated: 2022/11/28 12:26:43 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:37:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,20 @@ char	*get_args(t_token *list_token)
 	return (args);
 }
 
+void	ft_str_tolower(char *str)
+{
+	while (*str)
+	{
+		*str = ft_tolower(*str);
+		str++;
+	}
+}
+
 char	*get_command(t_token *list_token)
 {
 	if (!list_token)
 		return (NULL);
-	remove_quote(list_token);
-	
+	// remove_quote(list_token);
+	ft_str_tolower(list_token->token);
 	return (list_token->token);
 }
