@@ -154,7 +154,7 @@ FIXME:
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
 		[] echo "allo""allo2" skip parfois le premier caractère du deuxième token, probablement en lien avece un invalid read 
-		[] segfault quote seule 
+		[] double free quote seule 
 		[X] espace devant les fichier ex: > test.txt
 		[] expansion ne fontionne plus après un cas qui n'existe' pas 
 

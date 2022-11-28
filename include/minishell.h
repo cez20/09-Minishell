@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 12:11:32 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 16:10:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ void	prepare_data_for_execution(t_info *info);
 
 //*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);
-void	quote_remover(t_info *info);
-void	del_empty_node(t_token *token);
+void	quote_remover(t_command_line **cmd_line);
+void	del_empty_node(t_token **token);
 int		is_n(t_token *node);
 char	*until_chr(char *str, char c);
 
