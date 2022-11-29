@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 10:22:12 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:12:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:34:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,10 @@ void	close_unused_fds(t_command_line *cmd_line, t_info *info)
 			close (cmd_line[i].fd_out);
 		i++;
 	}
+}
+
+void	close_fds(int *fd)
+{
+	close(fd[1]);
+	close(fd[0]);
 }

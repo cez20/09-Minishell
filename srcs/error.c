@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 16:16:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:42:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,4 @@ void	command_not_found(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	exit (127);
-}
-
-//I need to free eveything that cause a segfault 
-int	exit_terminal(t_info *info, int flag, int exit_code)
-{
-	close(info->initial_stdin);
-	close (info->initial_stdout);
-	if (flag)
-	{
-		printf("\033[1A\001"GREEN"\002Minishell\001"RESET"\002$> exit\n");
-		exit (exit_code);
-	}
-	else
-	{
-		free_struct_command_line(info);
-		free_info(info);
-		printf("exit\n");
-		exit(exit_code);
-	}
 }
