@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 17:29:16 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 14:24:47 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ void	ft_lstclear_token(t_token **lst, void (*del) (void *))
 		*lst = elem;
 		i--;
 	}
+}
+
+void	print_error_cd(char *str)
+{
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 }

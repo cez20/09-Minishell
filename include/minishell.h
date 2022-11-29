@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:43:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:31:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,19 @@ typedef struct s_command_line
 }				t_command_line;
 
 int	g_fd_in;
-
-//*** MAIN.C ***
+int		close_quote_checker(t_info *info, char *str);
 char	*search_line(char **tab, char *search);
+//*** MAIN.C ***
 char	**tab_trunc(char **tab, char *str, int len);
 void	token_manager(t_info *info);
-int		close_quote_checker(t_info *info, char *str);
+char	*take_input(char *prompt);
 int		main(int argc, char **argv, char **envp);
+
 
 //*** ARGS_CHECKER.C ***
 int		check_arg_export(char *arg, t_info *info);
 int		check_arg_unset(char *arg, t_info *info);
+char	*check_chevron(t_info *info);
 
 //***BUILTINS.C
 void	remove_quote(t_token *token_list);
@@ -210,7 +212,7 @@ void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info *info);
 
 // void	garbage_collector(t_info *info);
-char	*check_chevron(t_info *info);
+
 void	trim_space(t_info *info, char *set);
 void	enable_signals_minishell(void);
 void	free_info(t_info *info);
@@ -218,9 +220,9 @@ char	*get_command(t_token *list_token);
 void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
-char	*take_input(char *prompt);
 void	input_redirection(t_command_line *cmd_line, char *infile);
 void	remove_inside_quote(t_info *info);
 void	close_fds(int *fd);
+void	print_error_cd(char *str);
 
 #endif

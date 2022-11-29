@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:39:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 14:26:23 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ void	cd(t_info *info)
 
 	oldpwd = ft_calloc(4096, sizeof(char));
 	getcwd(oldpwd, 4096);
-	if (info->command_lines[info->index].list_token && info->command_lines[info->index].list_token->next)
+	if (info->command_lines[info->index].list_token && \
+	info->command_lines[info->index].list_token->next)
 		new_path = info->command_lines[info->index].list_token->next->token;
 	else
 		new_path = getenv("HOME");
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
-		printf("cd: %s: No such file or directory\n", new_path); // sortie d'erreur ?
+		print_error_cd(new_path);
 	getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", info->pwd);
