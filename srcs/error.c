@@ -6,7 +6,11 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/29 12:23:06 by slavoie          ###   ########.fr       */
+=======
+/*   Updated: 2022/11/29 13:49:15 by cemenjiv         ###   ########.fr       */
+>>>>>>> 053471b809afe93a2b7b0c57d49878f084ca2d20
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +18,14 @@
 
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
-	if (!cmd_line.list_token)
+	if (!cmd_line.list_token && cmd_line.chevron == 0)
 		syntax_error();
+	if (!cmd_line.list_token && cmd_line.chevron == 1)
+		exit(0);
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
+	else if (cmd_line.error_outfile)
+		no_file(cmd_line.error_outfile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
 		no_file(">");
 	else if ((ft_strncmp(cmd_line.argv[0], "<>", 3) == 0))
@@ -62,8 +70,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 	close (info->initial_stdout);
 	if (flag)
 	{
-		free_info(info);
-		printf("\033[1AMinishell$>\033[0m exit\n");
+		printf("\033[1AMinishell$> exit\n");
 		exit (exit_code);
 	}
 	else

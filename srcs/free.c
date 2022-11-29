@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 12:23:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 14:17:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	free_struct_command_line(t_info *info)
 		if (info->command_lines[i].argv)
 			table_flip(info->command_lines[i].argv);
 		free(info->command_lines[i].error_infile);
+		free(info->command_lines[i].error_outfile);
 		i++;
 	}
 	free (info->command_lines);

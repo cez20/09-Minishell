@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:24:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:53:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,34 @@ void	signal_inside_heredoc(int signum)
 void	signal_outside_heredoc(int signum)
 {
 	if (signum == SIGINT)
-		write(1, "\n", 1);
+		ft_putstr_fd("\n", 2);
 }
 
 void	enable_signals_minishell(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	if (rl_on_new_line() == -1)
-		exit(1);
-	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
 void	signal_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
-		if (rl_on_new_line() == -1)
-			exit(1);
-		rl_replace_line("", 1);
+		ft_putstr_fd("\n", 2);
+		rl_on_new_line();
+		rl_replace_line("", 0);
 	}
 	else if (signum == SIGQUIT)
-		printf("Quit: 3\n"); // Sortie d'erreur ?
+		ft_putstr_fd("Quit: 3\n", 2);
 }
 
 void	signal_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

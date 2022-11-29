@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/25 17:35:41 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:44:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info)
 	while (i < (info->nb_of_pipe + 1))
 	{
 		cmd_line[i].list_token = NULL;
-		cmd_line[i].argv = NULL;
 		cmd_line[i].command = NULL;
 		cmd_line[i].args = NULL;
 		cmd_line[i].builtin = 0;
+		cmd_line[i].chevron = 0;
 		cmd_line[i].fd_in = 0;
 		cmd_line[i].fd_out = 1;
 		cmd_line[i].error_infile = NULL;
+		cmd_line[i].error_outfile = NULL;
 		cmd_line[i].path = NULL;
+		cmd_line[i].argv = NULL;
 		i++;
 	}
 }
