@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:44:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:08:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_info(t_info *info, char **envp)
 	info->state = TEXT;
 	info->exit_code = 0;
 	info->read_pipe = -1;
+	info->heredoc = 0;
 }
 
 void	reinit(t_info *info)

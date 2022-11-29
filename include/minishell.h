@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:43:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:07:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_info
 	int						read_pipe;
 	char					**paths;
 	int						herestring;
+	int						heredoc;
 }		t_info;
 
 typedef struct s_command_line
@@ -185,7 +186,6 @@ char	*until_chr(char *str, char c);
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	put_back_default_std(t_info *info);
-//void	do_redirection(t_command_line cmd_line);
 void	do_redirection(t_command_line cmd_line, t_info *info);
 
 ///*** UTILS_PRINT.C ***
@@ -202,7 +202,7 @@ void	chop_chop(char **str, char **tab, char **env, int i);
 void	find_expansion(char **str, char **tab, char **env);
 void	if_exit_code(char **str, t_info *info);
 
-//*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
+//*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);
