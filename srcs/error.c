@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 11:57:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:43:37 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 	free_info(info);
 	if (flag)
 	{
-		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
+		printf("Minishell$> ");
 		exit (exit_code);
 	}
 	else

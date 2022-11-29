@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:19:50 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 	}
 }
 
-// Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, \
 t_info *info, int i)
 {
