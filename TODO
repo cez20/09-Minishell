@@ -150,6 +150,7 @@ FIXME:
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
+		[] command 3 ne fontionne pas
 
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
@@ -161,16 +162,8 @@ FIXME:
 LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
-				echo salut > file | wc -l >>file leaks 8 bytes
-				8 bytes in 1 blocks are definitely lost in loss record 6 of 136
-				==19317==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-				==19317==    by 0x100035A30: ft_calloc (ft_calloc.c:19)
-				==19317==    by 0x100005BF6: multiple_commands_or_builtins (execution.c:115)
-				==19317==    by 0x100005D64: execution (execution.c:149)
-				==19317==    by 0x10000497E: routine (main.c:90)
-				==19317==    by 0x100004A67: main (main.c:114)
 
-				***Ca leak toujours quand il y a un pipe***
+ 
 				
 << allo
 > asdf
