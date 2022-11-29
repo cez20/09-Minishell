@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 12:45:43 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:53:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	enable_signals_minishell(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	if (rl_on_new_line() == -1)
-		exit(1);
-	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
 void	signal_child(int signum)
@@ -54,9 +53,8 @@ void	signal_child(int signum)
 	if (signum == SIGINT)
 	{
 		ft_putstr_fd("\n", 2);
-		if (rl_on_new_line() == -1)
-			exit(1);
-		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
 	}
 	else if (signum == SIGQUIT)
 		ft_putstr_fd("Quit: 3\n", 2);
