@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:13:31 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:17:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	free_info(t_info *info)
 	if (info->envp)
 		table_flip(info->envp);
 	if (info->pwd)
+	{
 		free(info->pwd);
+		info->pwd = NULL;
+	}
 	if (info->list_token)
 		ft_lstclear_token(&info->list_token, free);
 	if (info->paths)

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 14:40:34 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:35:56 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	i = 0;
 	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], &status, 0);
+	free(pid);
 	info->exit_code = get_exit_code(status);
 }
 
