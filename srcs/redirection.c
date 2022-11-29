@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:17:48 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:46:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_info *info, int i)
 	int		fd[2];
 	pid_t	pid;
 
+	cmd_line->chevron = 1;
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
