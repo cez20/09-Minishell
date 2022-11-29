@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 11:57:17 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:07:57 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1 && argc && argv && envp)
 	{
 		disable_signals();
-		line = take_input("\033[0;32mMinishell$> \033[0m");
+		line = take_input("Minishell$> ");
 		if (line)
 			add_history(line);
 		else
