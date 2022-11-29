@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 12:40:03 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:45:43 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	signal_outside_heredoc(int signum)
 {
 	if (signum == SIGINT)
 		ft_putstr_fd("\n", 2);
-		//write(2, "\n", 2);
 }
 
 void	enable_signals_minishell(void)
@@ -54,7 +53,7 @@ void	signal_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 		if (rl_on_new_line() == -1)
 			exit(1);
 		rl_replace_line("", 1);
@@ -67,7 +66,7 @@ void	signal_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
