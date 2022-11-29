@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 17:32:42 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 11:57:23 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
 	if (!cmd_line.list_token)
-		exit (1);
+		syntax_error();
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
