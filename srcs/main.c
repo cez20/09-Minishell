@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 12:07:57 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:54:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*take_input(char *prompt)
 	line = readline(prompt);
 	temp = line;
 	if (line)
-		line = ft_strjoin(line, "\0");
+		line = ft_strtrim(line, " \t\r\v\f\n");
 	free(temp);
 	return (line);
 }
@@ -114,10 +114,10 @@ int	main(int argc, char **argv, char **envp)
 	while (1 && argc && argv && envp)
 	{
 		disable_signals();
-		line = take_input("Minishell$> ");
-		if (line)
+		line = take_input("\001"GREEN"\002Minishell\001"RESET"\002$> ");
+		if (line && *line)
 			add_history(line);
-		else
+		else if (!line)
 		{
 			free(line);
 			exit_terminal(info, 1, 0);

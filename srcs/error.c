@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 15:14:46 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:57:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 	free_info(info);
 	if (flag)
 	{
-		printf("\033[1AMinishell$> exit\n");
+		printf("\033[1A\001"GREEN"\002Minishell\001"RESET"\002$> exit\n");
 		exit (exit_code);
 	}
 	else
