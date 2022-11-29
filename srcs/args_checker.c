@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 20:58:39 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:32:49 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	check_arg_unset(char *arg, t_info *info)
 
 char	*input_chevron(t_info *info, int i)
 {
-	char *token;
+	char	*token;
 
 	token = NULL;
 	if (info->last_position[i + 2] == '<')
 	{
-		printf("bash: syntax error near unexpected token '<'\n");
+		ft_putstr_fd("bash: syntax error near unexpected token '<'\n", 2);
 		info->herestring = 1;
 	}
 	else if (info->last_position[i + 1] == '<')
@@ -86,7 +86,7 @@ char	*output_chevron(t_info *info, int i)
 
 	token = NULL;
 	if (info->last_position[i + 2] == '>')
-		printf("bash: syntax error near unexpected token '>'\n");
+		ft_putstr_fd("bash: syntax error near unexpected token '>'\n", 2);
 	else if (info->last_position[i + 1] == '>')
 	{
 		token = ft_substr(info->last_position, i, 2);

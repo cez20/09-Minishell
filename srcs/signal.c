@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:10:15 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:21:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 16:24:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	signal_child(int signum)
 		rl_replace_line("", 1);
 	}
 	else if (signum == SIGQUIT)
-		printf("Quit: 3\n");
+		printf("Quit: 3\n"); // Sortie d'erreur ?
 }
 
 void	signal_parent(int signum)

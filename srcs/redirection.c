@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/27 13:07:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:23:53 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (cmd_line->fd_out == -1)
-			printf("bash: %s: %s\n", outfile, strerror(errno));
+			printf("bash: %s: %s\n", outfile, strerror(errno)); // Sortie d'erreur ?
 	}
 }
 
@@ -33,7 +33,7 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_TRUNC | O_CREAT | O_RDWR, 0644);
 		if (cmd_line->fd_out == -1)
-			printf("bash: %s: %s\n", outfile, strerror(errno));
+			printf("bash: %s: %s\n", outfile, strerror(errno)); // Sortie d'erreur ?
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 16:14:11 by stevenlavoi       #+#    #+#             */
-/*   Updated: 2022/11/28 14:07:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:30:51 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,6 @@ int	close_quote_checker(t_info *info, char *str)
 		return (0);
 }
 
-char	*get_args(t_token *list_token)
-{
-	char	*args;
-	char	*tmp;
-
-	args = NULL;
-	if (list_token)
-		list_token = list_token->next;
-	while (list_token)
-	{
-		tmp = args;
-		args = ft_strjoin(args, list_token->token);
-		free(tmp);
-		list_token = list_token->next;
-	}
-	return (args);
-}
-
 void	ft_str_tolower(char *str)
 {
 	while (*str)
@@ -95,7 +77,6 @@ char	*get_command(t_token *list_token)
 {
 	if (!list_token)
 		return (NULL);
-	// remove_quote(list_token);
 	ft_str_tolower(list_token->token);
 	return (list_token->token);
 }
