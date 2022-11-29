@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 14:20:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:15:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 	close (info->initial_stdout);
 	if (flag)
 	{
-		printf("\033[1AMinishell$> exit\n");
+		printf("\033[1A\001"GREEN"\002Minishell\001"RESET"\002$> exit\n");
 		exit (exit_code);
 	}
 	else

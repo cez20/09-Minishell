@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 14:31:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:14:57 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_command_line
 int	g_fd_in;
 int		close_quote_checker(t_info *info, char *str);
 char	*search_line(char **tab, char *search);
+void	remove_quote(t_token *token_list);
 //*** MAIN.C ***
 char	**tab_trunc(char **tab, char *str, int len);
 void	token_manager(t_info *info);
@@ -92,11 +93,10 @@ int		check_arg_unset(char *arg, t_info *info);
 char	*check_chevron(t_info *info);
 
 //***BUILTINS.C
-void	remove_quote(t_token *token_list);
 void	pwd(t_info *info);
-void	export(t_info *info);
 void	echo(t_info *info);
 void	cd(t_info *info);
+void	export(t_info *info);
 void	unset(t_info *info);
 
 //*** CLOSE_FDS.C ***
@@ -187,7 +187,6 @@ char	*until_chr(char *str, char c);
 void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	put_back_default_std(t_info *info);
-//void	do_redirection(t_command_line cmd_line);
 void	do_redirection(t_command_line cmd_line, t_info *info);
 
 ///*** UTILS_PRINT.C ***
