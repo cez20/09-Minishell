@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:53 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:46:18 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		cmd_line->fd_out = -1;
 		if (cmd_line->fd_out == -1)
-			printf("bash: %s: %s\n", outfile, strerror(errno)); // Sortie d'erreur ?
+		{
+			cmd_line->error_outfile = ft_strdup(outfile);
+			cmd_line->fd_out = 1;
+		}
 	}
 }
 
@@ -33,7 +37,10 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_TRUNC | O_CREAT | O_RDWR, 0644);
 		if (cmd_line->fd_out == -1)
-			printf("bash: %s: %s\n", outfile, strerror(errno)); // Sortie d'erreur ?
+		{
+			cmd_line->error_outfile = ft_strdup(outfile);
+			cmd_line->fd_out = 1;
+		}
 	}
 }
 
@@ -65,13 +72,13 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 	}
 }
 
-// Si j'ai plusieurs heredoc comment leur donner des noms differents? 
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, \
 t_info *info, int i)
 {
 	int		fd[2];
 	pid_t	pid;
 
+	cmd_line->chevron = 1;
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
