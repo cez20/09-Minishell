@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 17:31:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 18:12:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	routine_split_token(t_info *info)
 	if (info->nb_token < 1)
 		remove_inside_quote(info);
 	skip_space(info);
-	trim_space(info, " \t\n\r\v");
+	trim_space(info, " \t\n\r\v|");
 	info->nb_token++;
 }
 
@@ -40,7 +40,7 @@ void	split_token(char *token, t_info *info)
 	i = 0;
 	info->last_position = token;
 	info->command_lines = \
-	ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
+	ft_calloc(info->nb_of_pipe + 2, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
 	while (*info->last_position)
 	{
@@ -99,7 +99,7 @@ char	*search_another_one(char *str, char c, t_info *info)
 	str = set_start(info, c, &start, str);
 	while (*str != c)
 	{
-		if ((*str == '\0' || *str == c))
+		if ((*str == '\0' || *str == c || *str == '|'))
 		{
 			info->last_position = str;
 			tok = ft_substr(start, 0, info->len);

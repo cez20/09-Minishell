@@ -1,4 +1,0 @@
-asdfghjklkjhgfd$
-sdfghjkjhgf$
-sdfghgf$
-dff$
