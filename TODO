@@ -150,6 +150,7 @@ FIXME:
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
+		[] command 3 ne fontionne pas
 
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
@@ -162,6 +163,7 @@ LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
 
+<<<<<<< HEAD
 			echo salut echo salut > file | wc -l >>file
 
 				==39098== 6 bytes in 2 blocks are still reachable in loss record 1 of 130
@@ -271,6 +273,9 @@ LEAKS:
 ==39098==    by 0x100005A19: init_info (init.c:39)
 ==39098==    by 0x1000042E9: main (main.c:112)
 				***Ca leak toujours quand il y a un pipe***
+=======
+ 
+>>>>>>> Steven
 				
 << allo
 > asdf

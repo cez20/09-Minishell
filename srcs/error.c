@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 17:52:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:23:06 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
 	if (!cmd_line.list_token)
-		exit (1);
+		syntax_error();
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
@@ -63,7 +63,7 @@ int	exit_terminal(t_info *info, int flag, int exit_code)
 	if (flag)
 	{
 		free_info(info);
-		printf("\033[1A\e[0;32mMinishell$>\033[0m exit\n");
+		printf("\033[1AMinishell$>\033[0m exit\n");
 		exit (exit_code);
 	}
 	else
