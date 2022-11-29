@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 16:14:57 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:16:40 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_info
 	int						read_pipe;
 	char					**paths;
 	int						herestring;
+	int						heredoc;
 }		t_info;
 
 typedef struct s_command_line
@@ -203,7 +204,7 @@ void	chop_chop(char **str, char **tab, char **env, int i);
 void	find_expansion(char **str, char **tab, char **env);
 void	if_exit_code(char **str, t_info *info);
 
-//*** VAR_EXPANSION.C ***  VARIABLE avec 5 parametres, c'est trop! 
+//*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
 void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);

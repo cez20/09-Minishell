@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:46:18 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:08:23 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_info *info, int i)
 {
 	int		fd[2];
 	pid_t	pid;
+	int 	status;
 
 	cmd_line->chevron = 1;
 	if (pipe(fd) == -1)
@@ -93,7 +94,8 @@ t_info *info, int i)
 	if (cmd_line->fd_in != 0)
 		close (cmd_line->fd_in);
 	cmd_line->fd_in = fd[0];
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	info->heredoc = get_exit_code(status);
 }
 
 void	search_for_redirection(t_info *info)
