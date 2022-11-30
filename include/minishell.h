@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 17:43:49 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:57:00 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_info
 	int						initial_stdout;
 	int						exit_code;
 	int						read_pipe;
+	int						err_chevron;
+	int						err_happen;
 	char					**paths;
 	int						herestring;
 	int						heredoc;
@@ -169,7 +171,7 @@ void	output_redirection(t_command_line *cmd_line, char *outfile);
 void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
 void	heredoc_redirection(t_command_line *cmd_line, \
 char *delimiter, t_info *info, int i);
-void	search_for_redirection(t_info *info);
+int		search_for_redirection(t_info *info);
 
 //*** SIGNAL_UTILS.C ***
 void	disable_signals(void);
@@ -190,7 +192,7 @@ void	trim_space(t_info *info, char *set);
 void	remove_inside_quote(t_info *info);
 
 //*** UTILS_2.C **
-void	lst_print_token(t_token **list);
+void	lst_print_token(t_info *info);
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
 int		ft_lstsize_token(t_token *lst);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));

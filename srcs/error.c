@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 17:42:35 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:55:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		exit (1);
 }
 
-void	syntax_error(void)
+void	syntax_error(void) 
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 	exit (258);

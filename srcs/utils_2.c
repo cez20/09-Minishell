@@ -6,28 +6,33 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 14:24:47 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 18:12:03 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	lst_print_token(t_token **list)
+void	lst_print_token(t_info *info)
 {
 	t_token	*node;
 	int		i;
+	int		j;
 
-	node = *list;
+	j = 0;
 	i = 0;
-	if (!node)
-		printf("node[0] is NULL\n");
-	while (node)
+	while (info->command_lines[j].list_token )
 	{
-		if (!node)
-			return ;
-		printf("node[%d] = %s\n", i, (char *)node->token);
-		node = node->next;
-		i++;
+		printf("command_line[%d]\n", j);
+
+		node = info->command_lines[j].list_token;
+		while (node)
+		{
+			if (node->token)
+				printf("node[%d] = %s\n", i, (char *)node->token);
+			node = node->next;
+			i++;
+		}
+		j++;
 	}
 }
 

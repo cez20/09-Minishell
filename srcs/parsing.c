@@ -6,11 +6,34 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 17:31:31 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 22:26:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	parse_error(t_info *info)
+{
+	if (info->err_chevron == 1)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '<'\n", 2);
+		info->err_chevron = 1;
+		return (0);
+	}
+	else if (info->err_chevron == 2)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '>'\n", 2);
+		info->err_happen = 1;
+		return (0);
+	}
+	else if (info->err_chevron == 3)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
+		info->err_happen = 1;
+		return (0);
+	}
+	return (1);
+}
 
 void	routine_split_token(t_info *info)
 {
@@ -19,6 +42,8 @@ void	routine_split_token(t_info *info)
 
 	skip_space(info);
 	token = check_chevron(info);
+	if (!(parse_error(info)))
+		return ;
 	type_quote = simple_or_double(info->last_position);
 	if (info->nb_token < 1 && *info->last_position)
 		type_quote = 32;
@@ -29,9 +54,10 @@ void	routine_split_token(t_info *info)
 	if (info->nb_token < 1)
 		remove_inside_quote(info);
 	skip_space(info);
-	trim_space(info, " \t\n\r\v");
+	trim_space(info, " \t\n\r\v|");
 	info->nb_token++;
 }
+
 
 void	split_token(char *token, t_info *info)
 {
@@ -45,8 +71,16 @@ void	split_token(char *token, t_info *info)
 	while (*info->last_position)
 	{
 		routine_split_token(info);
+		if (info->err_chevron || info->err_happen)
+			break ;
 		if (*info->last_position == '|')
 		{
+			if (!(*info->list_token->token))
+			{
+				ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+				info->err_happen = 1;
+				break ;
+			}
 			info->command_lines[i].list_token = info->list_token;
 			info->list_token = NULL;
 			info->last_position++;
@@ -93,17 +127,17 @@ char	*set_start(t_info *info, char c, char **start, char *str)
 */
 char	*search_another_one(char *str, char c, t_info *info)
 {
-	char	*tok;
+	char	*token;
 	char	*start;
 
 	str = set_start(info, c, &start, str);
 	while (*str != c)
 	{
-		if ((*str == '\0' || *str == c))
+		if ((*str == '\0' || *str == c || *str == '|'))
 		{
 			info->last_position = str;
-			tok = ft_substr(start, 0, info->len);
-			return (tok);
+			token = ft_substr(start, 0, info->len);
+			return (token);
 		}
 		str++;
 		info->len++;
@@ -115,6 +149,6 @@ char	*search_another_one(char *str, char c, t_info *info)
 	}
 	else
 		info->last_position = str;
-	tok = ft_substr(start, 0, info->len);
-	return (tok);
+	token = ft_substr(start, 0, info->len);
+	return (token);
 }
