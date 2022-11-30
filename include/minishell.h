@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 13:57:00 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:08:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	close_fds(int *fd);
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
 void	syntax_error(void);
-void	no_file(char *str);
+void	no_file(t_info *info, char *str);
 void	command_not_found(char *str);
 
 // *** EXECUTION.C ***

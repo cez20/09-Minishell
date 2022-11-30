@@ -147,10 +147,17 @@ test:
 		<>			Nous = bash: >: No such file or directory													bash = bash: syntax error near unexpected token `newline'    FIXME: traite le dernier chevrons 
 		<> | <>		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		< | <		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
+<<<<<<< HEAD
 		<< | <<		Nous = deux fois newline															bash = bash: syntax error near unexpected token `|'
 		<<< | <<<	Nous = bash: syntax error near unexpected token '<'											bash = bash: syntax error near unexpected token `|'  TOKNOW: C'est correct on traite le <<< en premier
 		> | > 		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		>> | >>		Nous = deux fois newline 															bash = bash: syntax error near unexpected token `|'
+=======
+		<< | <<		Nous = 	bash: syntax error near unexpected token '|'										bash = bash: syntax error near unexpected token `|'
+		<<< | <<<	Nous = bash: syntax error near unexpected token '<'											bash = bash: syntax error near unexpected token `|'  TOKNOW: C'est correct on traite le <<< en premier
+		> | > 		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
+		>> | >>		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
+>>>>>>> 8a50d3863065f1b2c6c73cc9888390761f454030
 		>>> | >>>	Nous = bash: syntax error near unexpected token '>'											bash = bash: syntax error near unexpected token `|'
 		echo <|>	Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		echo <>		Nous = bash: >: No such file or directory FIXME: le programme quitte dans le parent			bash = bash: syntax error near unexpected token `newline'
