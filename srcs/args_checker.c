@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 13:51:33 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:04:39 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	search_next_pipe(t_info *info)
 	int	i;
 
 	i = 1;
-	while (is_white_space(info->last_position[i]) && info->last_position[i] == '<')
+	while (is_white_space(info->last_position[i]) || info->last_position[i] == '<' || info->last_position[i] == '>')
 		i++;
 	if (info->last_position[i] == '|')
 	{

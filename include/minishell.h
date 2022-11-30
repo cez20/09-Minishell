@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 20:09:27 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:35:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	close_unused_fds(t_command_line *cmd_line, t_info *info);
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
 void	syntax_error(void);
-void	no_file(char *str);
+void	no_file(t_info *info, char *str);
 void	command_not_found(char *str);
 
 // *** EXECUTION.C ***
