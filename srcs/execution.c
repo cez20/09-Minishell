@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 14:36:41 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:57:39 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 	if (cmd_line.builtin == 1)
 	{
 		token_manager(info);
+		free_struct_command_line(info);
+		free_info(info);
 		exit (EXIT_SUCCESS);
 	}
 	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
 	{
-		info->exit_code = 1;
-		exit(info->exit_code);
+		free_struct_command_line(info);
+		free_info(info);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -66,6 +69,7 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 		if (cmd_line[info->index].fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close_fds(fd);
+		free(pid);
 		do_execution(cmd_line[info->index], info);
 	}
 	else
