@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 19:55:09 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 22:28:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,21 @@ char	*output_chevron(t_info *info, int i)
 	return (NULL);
 }
 
+int	search_next_pipe(t_info *info)
+{
+	int	i;
+
+	i = 1;
+	while (is_white_space(info->last_position[i]))
+		i++;
+	if (info->last_position[i] == '|')
+	{
+		info->err_chevron = 3;
+		return (0);
+	}
+	return (1);
+}
+
 char	*check_chevron(t_info *info)
 {
 	int	i;
@@ -109,9 +124,9 @@ char	*check_chevron(t_info *info)
 		info->err_chevron = 1;
 	else if (ft_strnstr(info->last_position, ">>>", 4))
 		info->err_chevron = 2;
-	else if (info->last_position[i] == '<')
+	else if (info->last_position[i] == '<' && search_next_pipe(info))
 		return (input_chevron(info, i));
-	else if (info->last_position[i] == '>')
-		return (output_chevron(info, i));
+	else if (info->last_position[i] == '>' && search_next_pipe(info))
+		return (output_chevron(info, i) );
 	return (NULL);
 }

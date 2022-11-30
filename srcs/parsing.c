@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 20:28:37 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 22:26:07 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	parse_error(t_info *info)
 	else if (info->err_chevron == 2)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token '>'\n", 2);
+		info->err_happen = 1;
+		return (0);
+	}
+	else if (info->err_chevron == 3)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
 		info->err_happen = 1;
 		return (0);
 	}
@@ -65,7 +71,7 @@ void	split_token(char *token, t_info *info)
 	while (*info->last_position)
 	{
 		routine_split_token(info);
-		if (info->err_chevron)
+		if (info->err_chevron || info->err_happen)
 			break ;
 		if (*info->last_position == '|')
 		{
