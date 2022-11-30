@@ -6,13 +6,12 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 15:03:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 15:19:45 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// Qu'arrive-til si le fichier est deja cree? On ne veut pas remplacer le fd? 
 void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 {
 	if (!cmd_line->error_infile)
@@ -76,7 +75,7 @@ t_info *info, int i)
 {
 	int		fd[2];
 	pid_t	pid;
-	int 	status;
+	int		status;
 
 	cmd_line->chevron = 1;
 	if (pipe(fd) == -1)

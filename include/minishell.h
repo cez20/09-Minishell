@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 14:35:00 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 15:08:35 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,19 @@ int	g_fd_in;
 int		close_quote_checker(t_info *info, char *str);
 char	*search_line(char **tab, char *search);
 void	remove_quote(t_token *token_list);
+
 //*** MAIN.C ***
-char	**tab_trunc(char **tab, char *str, int len);
+int		arg_exit(t_info *info);
 void	token_manager(t_info *info);
 char	*take_input(char *prompt);
+void	routine(t_info *info, char *line);
 int		main(int argc, char **argv, char **envp);
-
 
 //*** ARGS_CHECKER.C ***
 int		check_arg_export(char *arg, t_info *info);
 int		check_arg_unset(char *arg, t_info *info);
+char	*input_chevron(t_info *info, int i);
+char	*output_chevron(t_info *info, int i);
 char	*check_chevron(t_info *info);
 
 //***BUILTINS.C
@@ -106,6 +109,7 @@ void	unset(t_info *info);
 void	close_unused_fds_heredoc(t_command_line *cmd_line, int current_index);
 void	close_current_fds(t_command_line *cmd_line, t_info *info);
 void	close_unused_fds(t_command_line *cmd_line, t_info *info);
+void	close_fds(int *fd);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
@@ -114,16 +118,25 @@ void	no_file(t_info *info, char *str);
 void	command_not_found(char *str);
 
 // *** EXECUTION.C ***
-void	close_current_fds(t_command_line *cmd_line, t_info *info);
-void	close_unused_fds(t_command_line *cmd_line, t_info *info);
+void	do_execution(t_command_line cmd_line, t_info *info);
 void	last_child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
 void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid);
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info);
-void	execution(t_info *info, t_command_line *line);
+void	execution(t_info *info, t_command_line *cmd_line);
+
+// *** EXIT.C ***
+int		get_exit_code(int status);
+void	if_exit_code(char **str, t_info *info);
+int		exit_terminal(t_info *info, int flag, int exit_code);
+
+// *** EXPORT_UTILS.C ***
+void	export_routine(t_info *info, char *str, int i);
+void	export_no_args(t_info *info, char *str);
+void	echo_routine(t_token *token_list);
 
 //*** FREE.C ***
-void	free_double_pointers(char **args);
 void	free_struct_command_line(t_info *info);
+void	free_info(t_info *info);
 void	free_tab(char **tab);
 
 //*** INIT.C ***
@@ -131,53 +144,65 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info);
 void	init_info(t_info *info, char **envp);
 void	reinit(t_info *info);
 
+//*** PARSING_UTILS.C ***
+char	*check_double_quote(char *str, t_info *info);
+char	*check_simple_quote(char *str, t_info *info);
+int		close_quote_checker(t_info *info, char *str);
+void	ft_str_tolower(char *str);
+char	*get_command(t_token *list_token);
+
 //*** PARSING.C ***
+void	routine_split_token(t_info *info);
 void	split_token(char *token, t_info *info);
-char	*get_command(t_token *list_token); // On pourra p-e l'enlever
-char	*get_args(t_token	*list_token); // On pourra p-e l'enlever
-void	fill_command_lines(t_info *info); // On pourra p-e l'enlever
+void	fill_command_lines(t_info *info);
+char	*set_start(t_info *info, char c, char **start, char *str);
 char	*search_another_one(char *str, char c, t_info *info);
+
+//*** PREPARE_EXEC.C  ***
+void	is_builtin(t_info *info);
+void	find_execve_path(t_info *info, t_command_line *cmd_line);
+void	find_path_of_command(t_command_line *cmd_line, char *path);
+void	create_execve_argv(t_info	*info, t_command_line *cmd_line);
+void	prepare_data_for_execution(t_info *info);
+
+//*** REDIRECTION.C ***
+void	append_output_redirection(t_command_line *cmd_line, char *outfile);
+void	output_redirection(t_command_line *cmd_line, char *outfile);
+void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
+void	heredoc_redirection(t_command_line *cmd_line, \
+char *delimiter, t_info *info, int i);
+int		search_for_redirection(t_info *info);
+
+//*** SIGNAL_UTILS.C ***
+void	disable_signals(void);
+void	enable_signals(void);
 
 //*** SIGNAL.C ***
 void	signal_inside_heredoc(int signum);
 void	signal_outside_heredoc(int signum);
-int		get_exit_code(int exit_code);
-int		exit_terminal(t_info *info, int flag, int exit_code);
+void	enable_signals_minishell(void);
 void	signal_child(int signum);
 void	signal_parent(int signum);
-void	enable_signals(void);
-void	disable_signals(void);
-
-//*** REDIRECTION.C ***
-void	append_output_redirection(t_command_line *chunk, char *outfile);
-void	close_unused(t_command_line *cmd_line, int current_index);
-void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
-void	output_redirection(t_command_line *chunk, char *token);
-void	heredoc_redirection(t_command_line *cmd_line, \
-char *delimiter, t_info *info, int i);
-int		search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***
-void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
-int		ft_lstsize_token(t_token *lst);
-void	ft_lstclear_token(t_token **lst, void (*del) (void *));
-void	lst_print_token(t_info *info);
 t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
 void	ft_lstaddback_token(t_token **alst, t_token *new);
+void	trim_space(t_info *info, char *set);
+void	remove_inside_quote(t_info *info);
 
 //*** UTILS_2.C **
+void	lst_print_token(t_info *info);
+void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
+int		ft_lstsize_token(t_token *lst);
+void	ft_lstclear_token(t_token **lst, void (*del) (void *));
+void	print_error_cd(char *str);
+
+//*** UTILS_3.C **
 char	simple_or_double(char *token);
 int		how_many(t_info *info, char *str, char c);
 void	skip_space(t_info *info);
 char	**split_path(char **env);
-
-//*** PREPARE_EXEC.C **
-void	is_builtin(t_info *info);
-void	find_path_of_command(t_command_line *cmd_line, char *path);
-void	find_execve_path(t_info *info, t_command_line *cmd_line);
-void	create_execve_argv(t_info *info, t_command_line *cmd_line);
-void	prepare_data_for_execution(t_info *info);
 
 //*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);
@@ -187,10 +212,14 @@ int		is_n(t_token *node);
 char	*until_chr(char *str, char c);
 
 //*** UTILS_EXECUTION.C ***
-void	exec_one_command(t_command_line cmd_line, t_info *info);
-void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 void	put_back_default_std(t_info *info);
+void	exec_one_command(t_command_line cmd_line, t_info *info);
 void	do_redirection(t_command_line cmd_line, t_info *info);
+void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
+
+//*** UTILS_EXPANSION.C ***
+void	chop_chop(char **str, char **tab, char **env, int i);
+void	find_expansion(char **str, char **tab, char **env);
 
 ///*** UTILS_PRINT.C ***
 void	print_struct(t_command_line *cmd_line, t_info *info);
@@ -200,31 +229,12 @@ void	print_double_pointer(char **str);
 void	delete_tokens(t_token **list);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
-
-//*** UTILS_EXPANSION.C ***
-void	chop_chop(char **str, char **tab, char **env, int i);
-void	find_expansion(char **str, char **tab, char **env);
-void	if_exit_code(char **str, t_info *info);
+void	input_redirection(t_command_line *cmd_line, char *infile);
 
 //*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
-void	find_expansion(char **str, char **tab, char **env);
 char	*env_variable(char *str, int *i);
 void	locate_expansion(char **str, char **env, t_info *info);
-void	var_expansion(t_command_line *cmd_line, t_info *info);
-
-// void	garbage_collector(t_info *info);
-
-void	trim_space(t_info *info, char *set);
-void	enable_signals_minishell(void);
-void	free_info(t_info *info);
-char	*get_command(t_token *list_token);
-void	export_routine(t_info *info, char *str, int i);
-void	export_no_args(t_info *info, char *str);
-void	echo_routine(t_token *token_list);
-void	input_redirection(t_command_line *cmd_line, char *infile);
-void	remove_inside_quote(t_info *info);
-void	close_fds(int *fd);
-void	print_error_cd(char *str);
+void	var_expansion(t_command_line *cmd_line, t_info	*info);
 
 #endif

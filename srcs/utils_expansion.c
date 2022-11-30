@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/27 15:45:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:35:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,5 @@ void	find_expansion(char **str, char **tab, char **env)
 		string = *str;
 		*str = ft_strjoin(tab[0], tab[3]);
 		free(string);
-	}
-}
-
-void	if_exit_code(char **str, t_info *info)
-{
-	if ((*str)[1] == '?' && ft_strlen(*str) == 2)
-	{
-		free(*str);
-		*str = ft_itoa(info->exit_code);
 	}
 }

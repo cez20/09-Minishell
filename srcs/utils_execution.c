@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/26 16:10:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:47:58 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,4 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info)
 	}
 	else
 		exec_one_command(cmd_line[info->index], info);
-}
-
-void	close_fds(int *fd)
-{
-	close(fd[1]);
-	close(fd[0]);
 }

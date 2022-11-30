@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/30 14:52:11 by slavoie          ###   ########.fr       */
+=======
+/*   Updated: 2022/11/30 15:13:58 by cemenjiv         ###   ########.fr       */
+>>>>>>> 923c5f8386edce4132ec3917c1d1ee9bd7b10c71
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +18,7 @@
 
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
-	// printf("error_infile = %s\n", cmd_line.error_infile);
-
-	if (info->herestring == 1 || info->heredoc == 1)
+	if (info->heredoc == 1) // Gere les cas de heredoc qui ont ete quitte avec SIGINT 
 	{
 		if (cmd_line.fd_in != 0)
 			close(cmd_line.fd_in);
@@ -24,19 +26,19 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 	}
 	else if (cmd_line.error_infile)
 		no_file(info, cmd_line.error_infile);
-	// else if (!cmd_line.list_token && cmd_line.chevron == 0)
-	// 	syntax_error();
+	else if (cmd_line.error_outfile)
+		no_file(info, cmd_line.error_outfile);
+	else if (!cmd_line.list_token && cmd_line.chevron == 0)
+		syntax_error();
 	else if (!cmd_line.list_token && cmd_line.chevron == 1)
-		exit(0);
+		exit(EXIT_SUCCESS);
 	else if (!cmd_line.path && cmd_line.argv[0][0] \
-	!= '$' && cmd_line.builtin != 1)
+	!= '$' && cmd_line.builtin != 1) 
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
-	{
-		exit (1);
-	}
+		exit (EXIT_FAILURE);
 }
 
 void	syntax_error(void) 
