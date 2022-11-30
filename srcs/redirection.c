@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 15:08:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:42:06 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_info *info, int i)
 	info->heredoc = get_exit_code(status);
 }
 
-void	search_for_redirection(t_info *info)
+int	search_for_redirection(t_info *info)
 {
 	t_command_line	*chunk;
 	t_token			*list;
@@ -111,13 +111,23 @@ void	search_for_redirection(t_info *info)
 		list = info->command_lines[i].list_token;
 		while (list)
 		{
-			if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
+			if ((ft_strncmp(list->token, "<<<", 4) == 0) && list->next)
+			{
+				ft_putstr_fd("bash: syntax error near unexpected token '<'", 2);
+				return (0);
+			}
+			else if ((ft_strncmp(list->token, ">>>", 4) == 0) && list->next)
+			{
+				ft_putstr_fd("bash: syntax error near unexpected token '>'", 2);
+				return (0);
+			}
+			else if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
 				input_redirection(chunk, list->next->token);
 			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
 				heredoc_redirection(chunk, list->next->token, info, i);
 			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
 				output_redirection(chunk, list->next->token);
-			else if ((ft_strncmp(list->token, ">>", 2) == 0) && list->next)
+			else if ((ft_strncmp(list->token, ">>", 3) == 0) && list->next)
 				append_output_redirection(chunk, list->next->token);
 			list = list->next;
 		}
@@ -125,4 +135,5 @@ void	search_for_redirection(t_info *info)
 		list_token, &info->command_lines[i].list_token);
 		i++;
 	}
+	return (1);
 }

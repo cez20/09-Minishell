@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 14:17:00 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 20:45:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ void	free_struct_command_line(t_info *info)
 	int	i;
 
 	i = 0;
-	while (i <= info->nb_of_pipe)
+	if (info->command_lines)
 	{
-		if (info->command_lines[i].list_token)
-			ft_lstclear_token(&info->command_lines[i].list_token, free);
-		if (info->command_lines[i].path)
-			free(info->command_lines[i].path);
-		if (info->command_lines[i].argv)
-			table_flip(info->command_lines[i].argv);
-		free(info->command_lines[i].error_infile);
-		free(info->command_lines[i].error_outfile);
-		i++;
+		while (i <= info->nb_of_pipe)
+		{
+			if (info->command_lines[i].list_token)
+				ft_lstclear_token(&info->command_lines[i].list_token, free);
+			if (info->command_lines[i].path)
+				free(info->command_lines[i].path);
+			if (info->command_lines[i].argv)
+				table_flip(info->command_lines[i].argv);
+			free(info->command_lines[i].error_infile);
+			free(info->command_lines[i].error_outfile);
+			i++;
+		}
 	}
 	free (info->command_lines);
 }

@@ -117,10 +117,21 @@ TODO:
 		[X] réduire le main
 		[X] répartir les fonctions du main dans différents fichiers
 		[X]réduire find_expansion
-		[] clean up minishell.h 
-		[] changer les printf pour la sortie d'erreurs
-		[] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
-	
+		[X] clean up minishell.h 
+		[X] changer les printf pour la sortie d'erreurs
+		[X] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
+
+		[] |
+		[] ||||
+		[] <
+		[] <<
+		[] <<<
+		[] >
+		[] >>
+		[] >>>
+		[] <|>
+		[] 
+
 
 
 
@@ -163,119 +174,7 @@ LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
 
-<<<<<<< HEAD
-			echo salut echo salut > file | wc -l >>file
-
-				==39098== 6 bytes in 2 blocks are still reachable in loss record 1 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034740: ft_substr (ft_substr.c:21)
-==39098==    by 0x1000348FD: ft_strtrim (ft_strtrim.c:28)
-==39098==    by 0x1000070A1: trim_space (utils_1.c:63)
-==39098==    by 0x100005C0F: routine_split_token (parsing.c:32)
-==39098==    by 0x100005DBC: split_token (parsing.c:47)
-==39098==    by 0x10000423F: routine (main.c:93)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 8 bytes in 1 blocks are still reachable in loss record 4 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x1000054F6: multiple_commands_or_builtins (execution.c:87)
-==39098==    by 0x10000566D: execution (execution.c:121)
-==39098==    by 0x10000428E: routine (main.c:100)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 11 bytes in 2 blocks are still reachable in loss record 8 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034740: ft_substr (ft_substr.c:21)
-==39098==    by 0x1000348FD: ft_strtrim (ft_strtrim.c:28)
-==39098==    by 0x100007801: quote_remover (utils_builtins.c:47)
-==39098==    by 0x1000055F8: execution (execution.c:110)
-==39098==    by 0x10000428E: routine (main.c:100)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 12 bytes in 1 blocks are still reachable in loss record 12 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034965: ft_strjoin (ft_strjoin.c:21)
-==39098==    by 0x10000662F: find_path_of_command (prepare_exec.c:80)
-==39098==    by 0x10000657B: find_execve_path (prepare_exec.c:61)
-==39098==    by 0x1000067C5: prepare_data_for_execution (prepare_exec.c:121)
-==39098==    by 0x10000427D: routine (main.c:99)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 17 bytes in 4 blocks are still reachable in loss record 20 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034691: ft_strdup (ft_strdup.c:23)
-==39098==    by 0x10000672E: create_execve_argv (prepare_exec.c:109)
-==39098==    by 0x1000067D6: prepare_data_for_execution (prepare_exec.c:122)
-==39098==    by 0x10000427D: routine (main.c:99)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 33 bytes in 1 blocks are still reachable in loss record 40 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034965: ft_strjoin (ft_strjoin.c:21)
-==39098==    by 0x1000041AB: take_input (main.c:77)
-==39098==    by 0x100004342: main (main.c:117)
-
-==39098== 48 bytes in 2 blocks are still reachable in loss record 45 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x100006704: create_execve_argv (prepare_exec.c:106)
-==39098==    by 0x1000067D6: prepare_data_for_execution (prepare_exec.c:122)
-==39098==    by 0x10000427D: routine (main.c:99)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 80 bytes in 1 blocks are still reachable in loss record 54 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034AAC: ft_split (ft_split.c:57)
-==39098==    by 0x10000767B: split_path (utils_3.c:87)
-==39098==    by 0x100005A6D: init_info (init.c:46)
-==39098==    by 0x1000042E9: main (main.c:112)
-
-==39098== 96 bytes in 1 blocks are still reachable in loss record 58 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x1000042D8: main (main.c:111)
-
-==39098== 128 bytes in 1 blocks are still reachable in loss record 62 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100005D89: split_token (parsing.c:43)
-==39098==    by 0x10000423F: routine (main.c:93)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 135 bytes in 9 blocks are still reachable in loss record 64 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100034C0E: word_dup (ft_split.c:44)
-==39098==    by 0x100034B8A: ft_split (ft_split.c:69)
-==39098==    by 0x10000767B: split_path (utils_3.c:87)
-==39098==    by 0x100005A6D: init_info (init.c:46)
-==39098==    by 0x1000042E9: main (main.c:112)
-
-==39098== 160 bytes in 4 blocks are still reachable in loss record 65 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100006F2A: ft_lstnew_token (utils_1.c:19)
-==39098==    by 0x100005BBA: routine_split_token (parsing.c:27)
-==39098==    by 0x100005DBC: split_token (parsing.c:47)
-==39098==    by 0x10000423F: routine (main.c:93)
-==39098==    by 0x100004385: main (main.c:125)
-
-==39098== 328 bytes in 1 blocks are still reachable in loss record 74 of 130
-==39098==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39098==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==39098==    by 0x100035581: tabcpy (ft_tab.c:89)
-==39098==    by 0x100005A19: init_info (init.c:39)
-==39098==    by 0x1000042E9: main (main.c:112)
-				***Ca leak toujours quand il y a un pipe***
-=======
  
->>>>>>> Steven
 				
 << allo
 > asdf

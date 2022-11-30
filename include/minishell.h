@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 17:55:54 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 20:09:27 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_info
 	int						initial_stdout;
 	int						exit_code;
 	int						read_pipe;
+	int						err_chevron;
+	int						err_happen;
 	char					**paths;
 	int						herestring;
 	int						heredoc;
@@ -153,7 +155,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
 void	output_redirection(t_command_line *chunk, char *token);
 void	heredoc_redirection(t_command_line *cmd_line, \
 char *delimiter, t_info *info, int i);
-void	search_for_redirection(t_info	*info);
+int		search_for_redirection(t_info	*info);
 
 //*** UTILS_1.C ***
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
