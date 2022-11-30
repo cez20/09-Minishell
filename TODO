@@ -121,14 +121,14 @@ TODO:
 		[X] changer les printf pour la sortie d'erreurs
 		[X] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
 
-		[] |
-		[] ||||
-		[] <
-		[] <<
-		[] <<<
-		[] >
-		[] >>
-		[] >>>
+		[X] |
+		[X] ||||
+		[X] <
+		[X] <<
+		[X] <<<
+		[X] >
+		[X] >>
+		[X] >>>
 		[] <|>
 		[] 
 

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 21:07:29 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 21:39:28 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 			close(cmd_line.fd_in);
 		exit (1);
 	}
-	// else if (!cmd_line.list_token && cmd_line.chevron == 0)
-	// 	syntax_error();
-	// else if (!cmd_line.list_token && cmd_line.chevron == 1)
-	// 	exit(0);
+	else if (!cmd_line.list_token && cmd_line.chevron == 0)
+		syntax_error();
+	else if (!cmd_line.list_token && cmd_line.chevron == 1)
+		exit(0);
 	else if (cmd_line.error_infile)
 		no_file(cmd_line.error_infile);
 	else if (cmd_line.error_outfile)
 		no_file(cmd_line.error_outfile);
 	else if ((ft_strncmp(cmd_line.argv[0], "<\\>", 4) == 0))
 		no_file(">");
-	// else if ((ft_strncmp(cmd_line.argv[0], "<>", 3) == 0))
-	// 	syntax_error();
+	else if ((ft_strncmp(cmd_line.argv[0], "<>", 3) == 0))
+		syntax_error();
 	else if (!cmd_line.path && cmd_line.argv[0][0] \
 	!= '$' && cmd_line.builtin != 1)
 		command_not_found(cmd_line.argv[0]);

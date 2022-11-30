@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 20:51:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/29 21:52:59 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	routine(t_info *info, char *line)
 	{
 			info->nb_of_pipe = how_many(info, line, '|');
 			split_token(line, info);
+			// lst_print_token(info);
 		if (info->command_lines->list_token && !info->err_happen)
 		{
 			if (search_for_redirection(info))
