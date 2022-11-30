@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 16:24:05 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:51:42 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_command_line
 }				t_command_line;
 
 int	g_fd_in;
+
 int		close_quote_checker(t_info *info, char *str);
 char	*search_line(char **tab, char *search);
 void	remove_quote(t_token *token_list);
@@ -128,12 +129,15 @@ void	execution(t_info *info, t_command_line *cmd_line);
 // *** EXIT.C ***
 int		get_exit_code(int status);
 void	if_exit_code(char **str, t_info *info);
+int		parse_error(t_info *info);
 int		exit_terminal(t_info *info, int flag, int exit_code);
 
 // *** EXPORT_UTILS.C ***
 void	export_routine(t_info *info, char *str, int i);
 void	export_no_args(t_info *info, char *str);
 void	echo_routine(t_token *token_list);
+void	little_main_routine(char *line, t_info *info);
+void	routine(t_info *info, char *line);
 
 //*** FREE.C ***
 void	free_struct_command_line(t_info *info);
@@ -153,8 +157,7 @@ void	ft_str_tolower(char *str);
 char	*get_command(t_token *list_token);
 
 //*** PARSING.C ***
-void	routine_split_token(t_info *info);
-void	split_token(char *token, t_info *info);
+
 void	fill_command_lines(t_info *info);
 char	*set_start(t_info *info, char c, char **start, char *str);
 char	*search_another_one(char *str, char c, t_info *info);
@@ -185,6 +188,11 @@ void	enable_signals_minishell(void);
 void	signal_child(int signum);
 void	signal_parent(int signum);
 
+//*** SPLIT_TOKEN.C *** 
+void	little_split_token(t_info *info, int i);
+void	routine_split_token(t_info *info);
+void	split_token(char *token, t_info *info);
+
 //*** UTILS_1.C ***
 t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
@@ -204,6 +212,7 @@ char	simple_or_double(char *token);
 int		how_many(t_info *info, char *str, char c);
 void	skip_space(t_info *info);
 char	**split_path(char **env);
+int		search_next_pipe(t_info *info);
 
 //*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);

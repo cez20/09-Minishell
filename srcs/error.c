@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 16:23:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:52:21 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
-	if (info->heredoc == 1) // Gere les cas de heredoc qui ont ete quitte avec SIGINT 
+	if (info->heredoc == 1)
 	{
 		if (cmd_line.fd_in != 0)
 			close(cmd_line.fd_in);
@@ -41,7 +41,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		exit_fail(info);
 }
 
-void	syntax_error(t_info *info) 
+void	syntax_error(t_info *info)
 {
 	free_struct_command_line(info);
 	free_info(info);
@@ -78,3 +78,5 @@ void 	exit_fail (t_info *info)
 	free_info(info);
 	exit(EXIT_FAILURE);
 }
+
+

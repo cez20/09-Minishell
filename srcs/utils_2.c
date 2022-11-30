@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 18:12:03 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 16:14:30 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	lst_print_token(t_info *info)
 
 	j = 0;
 	i = 0;
-	while (info->command_lines[j].list_token )
+	while (info->command_lines[j].list_token)
 	{
 		printf("command_line[%d]\n", j);
-
 		node = info->command_lines[j].list_token;
 		while (node)
 		{

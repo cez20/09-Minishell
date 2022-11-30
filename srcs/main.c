@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 16:52:52 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:49:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	arg_exit(t_info *info)
 {
 	if (ft_lstsize_token(info->command_lines[info->index].list_token) > 2)
 	{
+		printf("exit\n");
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
 		info->exit_code = 1;
-		return (info->exit_code);
+		return (-42);
 	}
 	if (info->command_lines[info->index].list_token->next)
 	{
@@ -77,42 +78,6 @@ char	*take_input(char *prompt)
 		line = ft_strtrim(line, " \t\r\v\f\n");
 	free(temp);
 	return (line);
-}
-
-void	routine(t_info *info, char *line)
-{
-	if (close_quote_checker(info, line))
-		;
-	else
-	{
-		ft_putstr_fd("Les quotes ne sont pas fermés.\n", 2);
-		free(line);
-		return ;
-	}
-	if (*line != '|')
-	{
-			info->nb_of_pipe = how_many(info, line, '|');
-			split_token(line, info);
-			// lst_print_token(info);
-		if (info->command_lines->list_token && !info->err_happen)
-		{
-			if (search_for_redirection(info))
-			{
-				var_expansion(info->command_lines, info);
-				fill_command_lines(info);
-				prepare_data_for_execution(info);
-				execution(info, info->command_lines);
-			}
-		}
-	}
-	else
-	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-		info->exit_code = 258;
-	}
-	
-	free_struct_command_line(info);
-	free(line);
 }
 
 int	main(int argc, char **argv, char **envp)

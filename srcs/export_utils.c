@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 17:37:04 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:22:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,43 @@ void	echo_routine(t_token *token_list)
 		i++;
 		token_list = token_list->next;
 	}
+}
+
+void	little_main_routine(char *line, t_info *info)
+{
+	if (*line != '|')
+	{
+		info->nb_of_pipe = how_many(info, line, '|');
+		split_token(line, info);
+		if (info->command_lines->list_token && !info->err_happen)
+		{
+			if (search_for_redirection(info))
+			{
+				var_expansion(info->command_lines, info);
+				fill_command_lines(info);
+				prepare_data_for_execution(info);
+				execution(info, info->command_lines);
+			}
+		}
+	}
+	else
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		info->exit_code = 258;
+	}
+}
+
+void	routine(t_info *info, char *line)
+{
+	if (close_quote_checker(info, line))
+		;
+	else
+	{
+		ft_putstr_fd("Les quotes ne sont pas fermés.\n", 2);
+		free(line);
+		return ;
+	}
+	little_main_routine(line, info);
+	free_struct_command_line(info);
+	free(line);
 }
