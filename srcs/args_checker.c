@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 14:45:04 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 15:11:58 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*input_chevron(t_info *info, int i)
 
 	token = NULL;
 	if (info->last_position[i + 2] == '<')
-		ft_putstr_fd("bash: syntax error near unexpected token '>'\n", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token '<'\n", 2);
 	else if (info->last_position[i + 1] == '<')
 	{
 		token = ft_substr(info->last_position, i, 2);

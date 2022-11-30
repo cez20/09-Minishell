@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 22:04:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:59:17 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	arg_exit(t_info *info)
 {
 	if (ft_lstsize_token(info->command_lines[info->index].list_token) > 2)
 	{
+		printf("exit\n");
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
 		info->exit_code = 1;
-		return (info->exit_code);
+		return (-42);
 	}
 	if (info->command_lines[info->index].list_token->next)
 	{
