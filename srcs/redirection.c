@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 13:54:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:04:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		cmd_line->fd_out = -1;
 		if (cmd_line->fd_out == -1)
 		{
 			cmd_line->error_outfile = ft_strdup(outfile);

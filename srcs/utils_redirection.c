@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 22:10:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 13:52:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:43:35 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,18 @@ void	delete_redirection_tokens(t_token *list_token, t_token **list_addr)
 
 void	input_redirection(t_command_line *cmd_line, char *infile)
 {
+	// printf("redirection\n");
 	if (!cmd_line->error_infile)
 	{
 		cmd_line->chevron = 1;
 		if (cmd_line->fd_in != 0)
 			close(cmd_line->fd_in);
 		cmd_line->fd_in = open(infile, O_RDWR);
+		// printf("fd = %d\n", cmd_line->fd_in);
 		if (cmd_line->fd_in == -1)
 		{
 			cmd_line->error_infile = ft_strdup(infile);
+			// printf("error = %s\n", cmd_line->error_infile);
 			cmd_line->fd_in = 0;
 		}
 	}
