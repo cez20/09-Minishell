@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 17:35:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 17:12:20 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,33 @@ void	find_expansion(char **str, char **tab, char **env)
 		string = *str;
 		*str = ft_strjoin(tab[0], tab[3]);
 		free(string);
+	}
+}
+
+void	delimiter_finder(t_info *info, char *delimiter, int fd[])
+{
+	char	*line;
+
+	close(fd[0]);
+	g_fd_in = fd[1];
+	while (1)
+	{
+		line = take_input("> ");
+		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
+		ft_strlen(delimiter) == ft_strlen(line))
+		{
+			close(fd[1]);
+			free(line);
+			exit (EXIT_SUCCESS);
+		}
+		else if (!line)
+		{
+			close(fd[1]);
+			exit(EXIT_SUCCESS);
+		}
+		locate_expansion(&line, info->envp, info);
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
 	}
 }

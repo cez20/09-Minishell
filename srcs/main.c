@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 14:59:17 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 16:23:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,42 +78,6 @@ char	*take_input(char *prompt)
 		line = ft_strtrim(line, " \t\r\v\f\n");
 	free(temp);
 	return (line);
-}
-
-void	routine(t_info *info, char *line)
-{
-	if (close_quote_checker(info, line))
-		;
-	else
-	{
-		ft_putstr_fd("Les quotes ne sont pas fermés.\n", 2);
-		free(line);
-		return ;
-	}
-	if (*line != '|')
-	{
-			info->nb_of_pipe = how_many(info, line, '|');
-			split_token(line, info);
-			// lst_print_token(info);
-		if (info->command_lines->list_token && !info->err_happen)
-		{
-			if (search_for_redirection(info))
-			{
-				var_expansion(info->command_lines, info);
-				fill_command_lines(info);
-				prepare_data_for_execution(info);
-				execution(info, info->command_lines);
-			}
-		}
-	}
-	else
-	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-		info->exit_code = 258;
-	}
-	
-	free_struct_command_line(info);
-	free(line);
 }
 
 int	main(int argc, char **argv, char **envp)

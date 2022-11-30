@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/30 14:52:11 by slavoie          ###   ########.fr       */
-=======
-/*   Updated: 2022/11/30 15:13:58 by cemenjiv         ###   ########.fr       */
->>>>>>> 923c5f8386edce4132ec3917c1d1ee9bd7b10c71
+/*   Updated: 2022/11/30 15:31:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +14,7 @@
 
 void	check_if_error(t_command_line cmd_line, t_info *info)
 {
-	if (info->heredoc == 1) // Gere les cas de heredoc qui ont ete quitte avec SIGINT 
+	if (info->heredoc == 1)
 	{
 		if (cmd_line.fd_in != 0)
 			close(cmd_line.fd_in);
@@ -33,7 +29,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 	else if (!cmd_line.list_token && cmd_line.chevron == 1)
 		exit(EXIT_SUCCESS);
 	else if (!cmd_line.path && cmd_line.argv[0][0] \
-	!= '$' && cmd_line.builtin != 1) 
+	!= '$' && cmd_line.builtin != 1)
 		command_not_found(cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(cmd_line.argv[0]);
@@ -41,7 +37,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		exit (EXIT_FAILURE);
 }
 
-void	syntax_error(void) 
+void	syntax_error(void)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 	exit (258);

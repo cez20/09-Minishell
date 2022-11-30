@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:35:47 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 17:37:59 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:51:16 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,25 @@ void	if_exit_code(char **str, t_info *info)
 	}
 }
 
-//I need to free eveything that cause a segfault 
-int	exit_terminal(t_info *info, int flag, int exit_code)
+int	parse_error(t_info *info)
 {
-	close(info->initial_stdin);
-	close (info->initial_stdout);
-	if (flag)
+	if (info->err_chevron == 1)
 	{
-		printf("\033[1A\001"GREEN"\002Minishell\001"RESET"\002$> exit\n");
-		exit (exit_code);
+		ft_putstr_fd("bash: syntax error near unexpected token '<'\n", 2);
+		info->err_chevron = 1;
+		return (0);
 	}
-	else
+	else if (info->err_chevron == 2)
 	{
-		free_struct_command_line(info);
-		free_info(info);
-		printf("exit\n");
-		exit(exit_code);
+		ft_putstr_fd("bash: syntax error near unexpected token '>'\n", 2);
+		info->err_happen = 1;
+		return (0);
 	}
+	else if (info->err_chevron == 3)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
+		info->err_happen = 1;
+		return (0);
+	}
+	return (1);
 }

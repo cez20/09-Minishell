@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:04:58 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/29 17:43:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:29:33 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,20 @@ char	**split_path(char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+int	search_next_pipe(t_info *info)
+{
+	int	i;
+
+	i = 1;
+	while (is_white_space(info->last_position[i]) || \
+	info->last_position[i] == '<' || info->last_position[i] == '>')
+		i++;
+	if (info->last_position[i] == '|')
+	{
+		info->err_chevron = 3;
+		return (0);
+	}
+	return (1);
 }

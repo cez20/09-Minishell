@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 15:19:45 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/11/30 17:12:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,6 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 	}
 }
 
-void	delimiter_finder(t_info *info, char *delimiter, int fd[])
-{
-	char	*line;
-
-	close(fd[0]);
-	g_fd_in = fd[1];
-	while (1)
-	{
-		line = take_input("> ");
-		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
-		ft_strlen(delimiter) == ft_strlen(line))
-		{
-			close(fd[1]);
-			free(line);
-			exit (EXIT_SUCCESS);
-		}
-		else if (!line)
-		{
-			close(fd[1]);
-			exit(EXIT_SUCCESS);
-		}
-		locate_expansion(&line, info->envp, info);
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
-	}
-}
-
 void	heredoc_redirection(t_command_line *cmd_line, char *delimiter, \
 t_info *info, int i)
 {
@@ -96,6 +68,30 @@ t_info *info, int i)
 	info->heredoc = get_exit_code(status);
 }
 
+int	routine_redirection(int i, t_command_line *chunk, \
+t_token *list, t_info *info)
+{
+	if ((ft_strncmp(list->token, "<<<", 4) == 0) && list->next)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '<'", 2);
+		return (0);
+	}
+	else if ((ft_strncmp(list->token, ">>>", 4) == 0) && list->next)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token '>'", 2);
+		return (0);
+	}
+	else if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
+		input_redirection(chunk, list->next->token);
+	else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
+		heredoc_redirection(chunk, list->next->token, info, i);
+	else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
+		output_redirection(chunk, list->next->token);
+	else if ((ft_strncmp(list->token, ">>", 3) == 0) && list->next)
+		append_output_redirection(chunk, list->next->token);
+	return (1);
+}
+
 int	search_for_redirection(t_info *info)
 {
 	t_command_line	*chunk;
@@ -109,24 +105,8 @@ int	search_for_redirection(t_info *info)
 		list = info->command_lines[i].list_token;
 		while (list)
 		{
-			if ((ft_strncmp(list->token, "<<<", 4) == 0) && list->next)
-			{
-				ft_putstr_fd("bash: syntax error near unexpected token '<'", 2);
+			if (!routine_redirection(i, chunk, list, info))
 				return (0);
-			}
-			else if ((ft_strncmp(list->token, ">>>", 4) == 0) && list->next)
-			{
-				ft_putstr_fd("bash: syntax error near unexpected token '>'", 2);
-				return (0);
-			}
-			else if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)
-				input_redirection(chunk, list->next->token);
-			else if ((ft_strncmp(list->token, "<<", 3) == 0) && list->next)
-				heredoc_redirection(chunk, list->next->token, info, i);
-			else if ((ft_strncmp(list->token, ">", 2) == 0) && list->next)
-				output_redirection(chunk, list->next->token);
-			else if ((ft_strncmp(list->token, ">>", 3) == 0) && list->next)
-				append_output_redirection(chunk, list->next->token);
 			list = list->next;
 		}
 		delete_redirection_tokens(info->command_lines[i]. \
