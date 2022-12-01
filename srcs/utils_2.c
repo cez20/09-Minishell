@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 16:14:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/01 11:10:24 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,10 @@ void	ft_lstclear_token(t_token **lst, void (*del) (void *))
 	}
 }
 
-void	print_error_cd(char *str)
+void	print_error_cd(t_info *info, char *str)
 {
 	ft_putstr_fd("cd: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
+	info->exit_code = 1;
 }

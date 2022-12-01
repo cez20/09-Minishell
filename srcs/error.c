@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 02:38:23 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/01 10:52:22 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		free_info(info);
 		exit(EXIT_SUCCESS);
 	}
-	else if (!cmd_line.path && cmd_line.argv[0][0] \
-	!= '$' && cmd_line.builtin != 1)
-		command_not_found(info, cmd_line.argv[0]);
-	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
-		command_not_found(info, cmd_line.argv[0]);
+	// else if (!cmd_line.path && cmd_line.argv[0][0] \
+	// != '$' && cmd_line.builtin != 1)
+	// 	command_not_found(info, cmd_line.argv[0]);
+	// else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
+	// 	command_not_found(info, cmd_line.argv[0]);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
 		exit_fail(info);
 }

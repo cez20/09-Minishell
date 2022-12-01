@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 14:26:23 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/01 11:51:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	echo(t_info *info)
 	echo_routine(token_list);
 	if (!n)
 		printf("\n");
+	info->exit_code = 0;
 }
 
 void	cd(t_info *info)
@@ -60,7 +61,7 @@ void	cd(t_info *info)
 		new_path = getenv("HOME");
 	if (chdir(new_path) != 0 && ((ft_strncmp(new_path, ".", 1) && \
 	ft_strncmp(new_path, "..", 2)) || !ft_strncmp(new_path, "...", 3)))
-		print_error_cd(new_path);
+		print_error_cd(info, new_path);
 	getcwd(info->pwd, 4096);
 	line = search_line(info->envp, "PWD=");
 	line = ft_strjoin("PWD=", info->pwd);
