@@ -147,23 +147,24 @@ test:
 		<>			Nous = bash: >: No such file or directory													bash = bash: syntax error near unexpected token `newline'    FIXME: traite le dernier chevrons 
 		<> | <>		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		< | <		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
-<<<<<<< HEAD
-		<< | <<		Nous = deux fois newline															bash = bash: syntax error near unexpected token `|'
-		<<< | <<<	Nous = bash: syntax error near unexpected token '<'											bash = bash: syntax error near unexpected token `|'  TOKNOW: C'est correct on traite le <<< en premier
-		> | > 		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
-		>> | >>		Nous = deux fois newline 															bash = bash: syntax error near unexpected token `|'
-=======
 		<< | <<		Nous = 	bash: syntax error near unexpected token '|'										bash = bash: syntax error near unexpected token `|'
 		<<< | <<<	Nous = bash: syntax error near unexpected token '<'											bash = bash: syntax error near unexpected token `|'  TOKNOW: C'est correct on traite le <<< en premier
 		> | > 		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		>> | >>		Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
->>>>>>> 8a50d3863065f1b2c6c73cc9888390761f454030
 		>>> | >>>	Nous = bash: syntax error near unexpected token '>'											bash = bash: syntax error near unexpected token `|'
 		echo <|>	Nous = bash: syntax error near unexpected token '|'											bash = bash: syntax error near unexpected token `|'
 		echo <>		Nous = bash: >: No such file or directory FIXME: le programme quitte dans le parent			bash = bash: syntax error near unexpected token `newline'
 		echo |		Nous = bash: syntax error near unexpected token `newline'									bash = 	
 		echo |||	Nous = bash: syntax error near unexpected token `|'	
 		echo <> allo Nous = bash: >: No such file or directory et bash fonctionne, il lit dans le fichier qui viens d'être créer, on devrais s'en crisser
+
+		echo | ls > Nous = ne créer pas d'erreur
+		< a | 
+		< a | > b
+		> j | < a   fichier existe
+		> j | < b   fichier n'existe pas
+
+
 
 Cesar:
 - Gerer les bons exit_code. Si j'appelle 2 fois de suite echo $? cela va afficher 0 la deuxieme fois. 
