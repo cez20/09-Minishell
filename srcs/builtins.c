@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 11:08:08 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:51:29 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	echo(t_info *info)
 	echo_routine(token_list);
 	if (!n)
 		printf("\n");
+	info->exit_code = 0;
 }
 
 void	cd(t_info *info)
