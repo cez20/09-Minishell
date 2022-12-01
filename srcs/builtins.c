@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:45:30 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 11:51:29 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:37:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	pwd(t_info *info)
 		printf("%s\n", getcwd(info->pwd, 4096));
 	else
 		printf("%s\n", info->pwd);
+	info->exit_code = 0;
 }
 
 void	echo(t_info *info)
