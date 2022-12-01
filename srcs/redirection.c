@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 17:12:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/01 15:22:24 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 {
 	if (!cmd_line->error_infile)
 	{
+		cmd_line->chevron = 1;
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -31,6 +32,7 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 {	
 	if (!cmd_line->error_infile)
 	{
+		cmd_line->chevron = 1;
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_TRUNC | O_CREAT | O_RDWR, 0644);
