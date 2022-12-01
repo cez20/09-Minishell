@@ -163,7 +163,7 @@ test:
 		(REGLE) > j | < a   fichier existe
 		(REGLE) > j | < b   fichier n'existe pas
 		(REGLE) >> j | < b  
-		< a | 
+		(REGLE) < a |    avec l'aide d'un flag no_token dans la fonction redirection et nouvelle condition dans check_if_error
 
 
 

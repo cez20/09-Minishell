@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 10:52:22 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:02:43 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		no_file(info, cmd_line.error_infile);
 	else if (cmd_line.error_outfile)
 		no_file(info, cmd_line.error_outfile);
+	else if (!cmd_line.list_token && cmd_line.no_token == 1)
+		exit_fail(info);
 	else if (!cmd_line.list_token && cmd_line.chevron == 0)
 		syntax_error(info);
 	else if (!cmd_line.list_token && cmd_line.chevron == 1)

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 11:49:51 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:01:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_command_lines(t_command_line *cmd_line, t_info *info)
 		cmd_line[i].args = NULL;
 		cmd_line[i].builtin = 0;
 		cmd_line[i].chevron = 0;
+		cmd_line[i].no_token = 0;
 		cmd_line[i].fd_in = 0;
 		cmd_line[i].fd_out = 1;
 		cmd_line[i].error_infile = NULL;

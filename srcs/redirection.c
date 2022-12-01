@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 15:22:24 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:02:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	search_for_redirection(t_info *info)
 	{
 		chunk = &info->command_lines[i];
 		list = info->command_lines[i].list_token;
+		if (!list)
+			chunk->no_token = 1;
 		while (list)
 		{
 			if (!routine_redirection(i, chunk, list, info))
