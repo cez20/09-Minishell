@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 23:49:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:38:23 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 	else if (!cmd_line.list_token && cmd_line.chevron == 1)
 	{
 		free_struct_command_line(info);
-		free_info(info);	
+		free_info(info);
 		exit(EXIT_SUCCESS);
 	}
 	else if (!cmd_line.path && cmd_line.argv[0][0] \
-	!= '$' && cmd_line.builtin != 1) 
+	!= '$' && cmd_line.builtin != 1)
 		command_not_found(info, cmd_line.argv[0]);
 	else if (cmd_line.argv[0][0] == '$' && ft_strlen(cmd_line.argv[0]) == 1)
 		command_not_found(info, cmd_line.argv[0]);
@@ -72,11 +72,9 @@ void	command_not_found(t_info *info, char *str)
 	exit (127);
 }
 
-void 	exit_fail (t_info *info)
+void	exit_fail(t_info *info)
 {
 	free_struct_command_line(info);
 	free_info(info);
 	exit(EXIT_FAILURE);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 17:51:42 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 02:35:10 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void	signal_child(int signum);
 void	signal_parent(int signum);
 
 //*** SPLIT_TOKEN.C *** 
-void	little_split_token(t_info *info, int i);
+int	little_split_token(t_info *info, int i);
 void	routine_split_token(t_info *info);
 void	split_token(char *token, t_info *info);
 

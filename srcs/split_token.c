@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:59:53 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 17:00:54 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/01 02:34:54 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	routine_split_token(t_info *info)
 	info->nb_token++;
 }
 
-void	little_split_token(t_info *info, int i)
+int	little_split_token(t_info *info, int i)
 {
 	while (*info->last_position)
 	{
@@ -57,6 +57,7 @@ void	little_split_token(t_info *info, int i)
 			i++;
 		}
 	}
+	return (i);
 }
 
 void	split_token(char *token, t_info *info)
@@ -68,7 +69,7 @@ void	split_token(char *token, t_info *info)
 	info->command_lines = \
 	ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
-	little_split_token(info, i);
+	i = little_split_token(info, i);
 	info->command_lines[i].list_token = info->list_token;
 	info->list_token = NULL;
 }
