@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 02:35:10 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/01 11:08:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	lst_print_token(t_info *info);
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
 int		ft_lstsize_token(t_token *lst);
 void	ft_lstclear_token(t_token **lst, void (*del) (void *));
-void	print_error_cd(char *str);
+void	print_error_cd(t_info *info, char *str);
 
 //*** UTILS_3.C **
 char	simple_or_double(char *token);

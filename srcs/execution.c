@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 10:53:25 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:13:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 		token_manager(info);
 		free_struct_command_line(info);
 		free_info(info);
-		exit (EXIT_SUCCESS);
+		if (info->exit_code != 1)
+			exit(EXIT_SUCCESS);
+		else
+			exit(EXIT_FAILURE);
 	}
 	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
 		command_not_found(info, cmd_line.argv[0]);

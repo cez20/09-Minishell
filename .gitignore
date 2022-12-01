@@ -5,4 +5,3 @@ readline/examples/rlkeymaps
 minishell
 minishell.dSYM
 *.o
-test.txt
