@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 16:57:39 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:53:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 		exit (EXIT_SUCCESS);
 	}
 	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
-	{
-		free_struct_command_line(info);
-		free_info(info);
-		exit(EXIT_FAILURE);
-	}
+		command_not_found(info, cmd_line.argv[0]);
 }
 
 //1- Dans la derniere ligne de commande, il est important 
