@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 17:52:21 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:49:09 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	no_file(t_info *info, char *str)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
-	if (info->nb_of_pipe > 0)
+	if (info->command_lines[info->index].builtin == 0)
 	{
 		free_struct_command_line(info);
 		free_info(info);
