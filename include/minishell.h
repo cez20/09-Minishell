@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 16:16:47 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:22:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,8 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 //*** UTILS_EXPANSION.C ***
 void	chop_chop(char **str, char **tab, char **env, int i);
 void	find_expansion(char **str, char **tab, char **env);
+void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
+void	free_inside_heredoc(int fd, t_info *info);
 
 ///*** UTILS_PRINT.C ***
 void	print_struct(t_command_line *cmd_line, t_info *info);

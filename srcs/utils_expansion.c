@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 17:12:20 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:21:14 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
-			close(fd[1]);
 			free(line);
+			free_inside_heredoc(fd[1], info);
 			exit (EXIT_SUCCESS);
 		}
 		else if (!line)
 		{
-			close(fd[1]);
+			free_inside_heredoc(fd[1], info);
 			exit(EXIT_SUCCESS);
 		}
 		locate_expansion(&line, info->envp, info);
@@ -85,4 +85,11 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 		write(fd[1], "\n", 1);
 		free(line);
 	}
+}
+
+void	free_inside_heredoc(int fd, t_info *info)
+{
+	close(fd);
+	free_struct_command_line(info);
+	free_info(info);
 }
