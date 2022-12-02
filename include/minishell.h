@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 15:46:46 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:01:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	routine(t_info *info, char *line);
 void	free_struct_command_line(t_info *info);
 void	free_info(t_info *info);
 void	free_tab(char **tab);
+void	free_structs_and_exit(t_info *info, int exit_number);
 
 //*** INIT.C ***
 void	init_command_lines(t_command_line *cmd_line, t_info *info);
