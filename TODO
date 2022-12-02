@@ -158,15 +158,15 @@ test:
 		echo |||	Nous = bash: syntax error near unexpected token `|'	
 		echo <> allo Nous = bash: >: No such file or directory et bash fonctionne, il lit dans le fichier qui viens d'être créer, on devrais s'en crisser
 
-		(REGLE) echo | ls > Nous = ne créer pas d'erreur
 		(REGLE) < a | > b
 		(REGLE) > j | < a   fichier existe
 		(REGLE) > j | < b   fichier n'existe pas
 		(REGLE) >> j | < b  
+		
+		
 		(REGLE) < a |    avec l'aide d'un flag no_token dans la fonction redirection et nouvelle condition dans check_if_error
-
-
-
+		(REGLE) echo | ls > Nous = ne créer pas d'erreur
+		
 Cesar:
 - Gerer les bons exit_code. Si j'appelle 2 fois de suite echo $? cela va afficher 0 la deuxieme fois. 
 - Gestion des cas d'erreurs dans les builtin. 
@@ -200,6 +200,7 @@ FIXME:
 		[X] argument exit
 		[] export lol2="hello steven"
 		[] command 3 ne fontionne pas
+		[] vecho allo"allo2"
 
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 

@@ -3,35 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/01 20:08:50 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:57:38 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char	*get_arg_export(char *str)
+{
+	char	*line;
+	char	*temp;
+
+	line =	ft_strdup(ft_strchr(str, '=') + 1);
+	printf("line = %s\n", line);
+	temp = line;
+	line = ft_strtrim(line, "\"\'");
+	free(temp);
+
+	return (line);
+}
+
 void	export_routine(t_info *info, char *str, int i)
 {	
 	char	*line;
+	char	*temp;
 
 	str = until_chr(info->command_lines[info->index] \
 	.argv[i + 1], '=');
 	line = search_line(info->envp, str);
+	temp = info->command_lines[info->index].argv[i + 1];
+	info->command_lines[info->index].argv[i + 1] = ft_strjoin(str, get_arg_export(info->command_lines[info->index].argv[i + 1]));
 	if (line)
 	{
 		info->envp = tab_trunc(info->envp, str, ft_strlen(str));
 		info->envp = tab_join(info->envp, \
 		info->command_lines[info->index].argv[i + 1]);
-		free(str);
 	}
 	else
 	{
 		info->envp = tab_join(info->envp, \
 		info->command_lines[info->index].argv[i + 1]);
-		free(str);
 	}
+	free(temp);
+	free(str);
 }
 
 void	export_no_args(t_info *info, char *str)
