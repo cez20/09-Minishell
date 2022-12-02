@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 22:10:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 16:15:44 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:02:05 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	input_redirection(t_command_line *cmd_line, char *infile)
 {
 	if (!cmd_line->error_infile)
 	{
-		cmd_line->chevron = 1;
+		cmd_line->file_after_chevron = 1;
 		if (cmd_line->fd_in != 0)
 			close(cmd_line->fd_in);
 		cmd_line->fd_in = open(infile, O_RDWR);
@@ -84,4 +84,18 @@ void	input_redirection(t_command_line *cmd_line, char *infile)
 			cmd_line->fd_in = 0;
 		}
 	}
+}
+
+void	manage_heredoc_fds(t_info *info, t_command_line *cmd_line, int *fd)
+{
+	close (fd[1]);
+	if (cmd_line->fd_in != 0)
+	{
+		close (cmd_line->fd_in);
+		cmd_line->fd_in = 0;
+	}
+	if (info->heredoc == 1)
+		close(fd[0]);
+	else
+		cmd_line->fd_in = fd[0];
 }

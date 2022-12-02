@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 16:20:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:59:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,9 @@ t_info *info, int i)
 		delimiter_finder(info, delimiter, fd);
 	}
 	signal(SIGINT, &signal_outside_heredoc);
-	close (fd[1]);
-	if (cmd_line->fd_in != 0)
-		close (cmd_line->fd_in);
-	cmd_line->fd_in = fd[0];
 	waitpid(pid, &status, 0);
 	info->heredoc = get_exit_code(status);
+	manage_heredoc_fds(info, cmd_line, fd);
 }
 
 int	routine_redirection(int i, t_command_line *chunk, \

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 16:18:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:59:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ void	delete_tokens(t_token **list);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
 void	input_redirection(t_command_line *cmd_line, char *infile);
+void	manage_heredoc_fds(t_info *info, t_command_line *cmd_line, int *fd);
 
 //*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
