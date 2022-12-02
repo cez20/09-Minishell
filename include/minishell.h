@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 16:01:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:18:19 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_command_line
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
-	int		chevron;
+	int		file_after_chevron;
 	char	*error_infile;
 	char	*error_outfile;
 	char	*path;
