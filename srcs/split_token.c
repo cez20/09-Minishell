@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:59:53 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/02 13:19:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:25:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	split_token(char *token, t_info *info)
 	i = 0;
 	info->last_position = token;
 	info->command_lines = \
-	ft_calloc(info->nb_of_pipe + 1, sizeof(t_command_line));
+	ft_calloc(info->nb_of_pipe + 2, sizeof(t_command_line));
 	init_command_lines(info->command_lines, info);
 	i = little_split_token(info, i);
 	info->command_lines[i].list_token = info->list_token;

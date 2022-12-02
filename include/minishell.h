@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 16:16:47 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:59:55 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ typedef struct s_command_line
 	int		builtin;
 	int		fd_in;
 	int		fd_out;
-	int		chevron;
-	int		no_token;
+	int		file_after_chevron;
 	char	*error_infile;
 	char	*error_outfile;
 	char	*path;
@@ -143,6 +142,7 @@ void	routine(t_info *info, char *line);
 void	free_struct_command_line(t_info *info);
 void	free_info(t_info *info);
 void	free_tab(char **tab);
+void	free_structs_and_exit(t_info *info, int exit_number);
 
 //*** INIT.C ***
 void	init_command_lines(t_command_line *cmd_line, t_info *info);
@@ -230,6 +230,8 @@ void	one_command_or_builtin(t_command_line *cmd_line, t_info *info);
 //*** UTILS_EXPANSION.C ***
 void	chop_chop(char **str, char **tab, char **env, int i);
 void	find_expansion(char **str, char **tab, char **env);
+void	delimiter_finder(t_info *info, char *delimiter, int fd[]);
+void	free_inside_heredoc(int fd, t_info *info);
 
 ///*** UTILS_PRINT.C ***
 void	print_struct(t_command_line *cmd_line, t_info *info);
@@ -240,6 +242,7 @@ void	delete_tokens(t_token **list);
 int		is_redirection(t_token *list);
 void	delete_redirection_tokens(t_token *list_token, t_token **list_addr);
 void	input_redirection(t_command_line *cmd_line, char *infile);
+void	manage_heredoc_fds(t_info *info, t_command_line *cmd_line, int *fd);
 
 //*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);

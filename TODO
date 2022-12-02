@@ -381,3 +381,68 @@ Cas a regarder ensemble
 	a) affiche un message d'erreur mais aussi une ligne?
 6 - < test.txt cat | head -3 | sort -r | uniq -c OU  des qu'il y a 3 commandes. 
 	Creer un message, pointer being free was not allocated. Ceci est cause par free(pid) dans le child. 
+
+
+<< Cesar cat | wc  (On met le mot Allo dans le heredoc)
+
+==39566== 3 bytes in 1 blocks are still reachable in loss record 1 of 124
+==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==39566==    by 0x1000341C8: xmalloc (xmalloc.c:59)
+==39566==    by 0x100009018: readline (readline.c:344)
+==39566==    by 0x100003A54: take_input (main.c:75)
+==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
+==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
+==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
+==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
+==39566==    by 0x100003F3E: little_main_routine (export_utils.c:84)
+==39566==    by 0x100004006: routine (export_utils.c:110)
+==39566==    by 0x100003B95: main (main.c:102)
+==39566== 
+==39566== 3 bytes in 1 blocks are still reachable in loss record 2 of 124
+==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==39566==    by 0x1000341C8: xmalloc (xmalloc.c:59)
+==39566==    by 0x10001E5DE: expand_prompt (display.c:410)
+==39566==    by 0x10001ED47: rl_expand_prompt (display.c:606)
+==39566==    by 0x10000905A: readline (readline.c:347)
+==39566==    by 0x100003A54: take_input (main.c:75)
+==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
+==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
+==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
+==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
+==39566==    by 0x100003F3E: little_main_routine (export_utils.
+
+
+==39566== 8 bytes in 1 blocks are still reachable in loss record 4 of 124
+==39566==    at 0x100180EE6: realloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==39566==    by 0x10003421D: xrealloc (xmalloc.c:70)
+==39566==    by 0x10001E631: expand_prompt (display.c:415)
+==39566==    by 0x10001ED47: rl_expand_prompt (display.c:606)
+==39566==    by 0x10000905A: readline (readline.c:347)
+==39566==    by 0x100003A54: take_input (main.c:75)
+==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
+==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
+==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
+==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
+==39566==    by 0x100003F3E: little_main_routine (export_utils.c:84)
+==39566==    by 0x100004006: routine (export_utils.c:110)
+
+==39566== 16 bytes in 4 blocks are still reachable in loss record 18 of 124
+==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==39566==    by 0x100035930: ft_calloc (ft_calloc.c:19)
+==39566==    by 0x100034690: ft_substr (ft_substr.c:21)
+==39566==    by 0x100034845: ft_strtrim (ft_strtrim.c:27)
+==39566==    by 0x1000069B1: trim_space (utils_1.c:63)
+==39566==    by 0x100008DB6: routine_split_token (split_token.c:34)
+==39566==    by 0x100008DF8: little_split_token (split_token.c:42)
+==39566==    by 0x100008F1E: split_token (split_token.c:72)
+==39566==    by 0x100003F15: little_main_routine (export_utils.c:81)
+==39566==    by 0x100004006: routine (export_utils.c:110)
+==39566==    by 0x100003B95: main (main.c:102)
+
+==39566== 18 bytes in 1 blocks are still reachable in loss record 19 of 124
+==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==39566==    by 0x100035930: ft_calloc (ft_calloc.c:19)
+==39566==    by 0x100034690: ft_substr (ft_substr.c:21)
+==39566==    by 0x100034845: ft_strtrim (ft_strtrim.c:27)
+==39566==    by 0x100003A7B: take_input (main.c:78)
+==39566==    by 0x100003B32: main (main.c:94)

@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 16:02:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:59:25 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	append_output_redirection(t_command_line *cmd_line, char *outfile)
 {
 	if (!cmd_line->error_infile)
 	{
-		cmd_line->chevron = 1;
+		cmd_line->file_after_chevron = 1;
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -32,7 +32,7 @@ void	output_redirection(t_command_line *cmd_line, char *outfile)
 {	
 	if (!cmd_line->error_infile)
 	{
-		cmd_line->chevron = 1;
+		cmd_line->file_after_chevron = 1;
 		if (cmd_line->fd_out != 1)
 			close(cmd_line->fd_out);
 		cmd_line->fd_out = open(outfile, O_TRUNC | O_CREAT | O_RDWR, 0644);
@@ -51,7 +51,7 @@ t_info *info, int i)
 	pid_t	pid;
 	int		status;
 
-	cmd_line->chevron = 1;
+	cmd_line->file_after_chevron = 1;
 	if (pipe(fd) == -1)
 		return ;
 	pid = fork();
@@ -62,12 +62,9 @@ t_info *info, int i)
 		delimiter_finder(info, delimiter, fd);
 	}
 	signal(SIGINT, &signal_outside_heredoc);
-	close (fd[1]);
-	if (cmd_line->fd_in != 0)
-		close (cmd_line->fd_in);
-	cmd_line->fd_in = fd[0];
 	waitpid(pid, &status, 0);
 	info->heredoc = get_exit_code(status);
+	manage_heredoc_fds(info, cmd_line, fd);
 }
 
 int	routine_redirection(int i, t_command_line *chunk, \
@@ -105,8 +102,6 @@ int	search_for_redirection(t_info *info)
 	{
 		chunk = &info->command_lines[i];
 		list = info->command_lines[i].list_token;
-		if (!list)
-			chunk->no_token = 1;
 		while (list)
 		{
 			if (!routine_redirection(i, chunk, list, info))

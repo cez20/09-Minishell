@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 17:12:20 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/02 16:09:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,13 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
-			close(fd[1]);
 			free(line);
-			exit (EXIT_SUCCESS);
+			free_structs_and_exit(info, EXIT_SUCCESS);
 		}
 		else if (!line)
 		{
 			close(fd[1]);
-			exit(EXIT_SUCCESS);
+			free_structs_and_exit(info, EXIT_SUCCESS);
 		}
 		locate_expansion(&line, info->envp, info);
 		write(fd[1], line, ft_strlen(line));

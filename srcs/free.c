@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:53:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/29 20:45:38 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:57:45 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ void	free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	free_structs_and_exit(t_info *info, int exit_number)
+{
+	free_struct_command_line(info);
+	free_info(info);
+	exit(exit_number);
 }
