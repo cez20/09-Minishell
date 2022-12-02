@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/22 12:10:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:03:06 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //le 1ere commande est un builtin.  
 void	is_builtin(t_info *info)
 {
-	t_token	*list;
+	char	*token;
 	int		i;
 
 	if (!info->command_lines)
@@ -24,20 +24,20 @@ void	is_builtin(t_info *info)
 	i = 0;
 	while ((i <= info->nb_of_pipe) && info->command_lines[i].list_token)
 	{
-		list = info->command_lines[i].list_token;
-		if (ft_strncmp(list->token, "pwd", 3) == 0)
+		token = info->command_lines[i].list_token->token;
+		if (!ft_strncmp(token, "pwd", 3) && ft_strlen(token) == 3)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "env", 3) == 0)
+		else if (!ft_strncmp(token, "env", 3) && ft_strlen(token) == 3)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "cd", 2) == 0)
+		else if (!ft_strncmp(token, "cd", 2) && ft_strlen(token) == 2)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "exit", 4) == 0)
+		else if (!ft_strncmp(token, "exit", 4) && ft_strlen(token) == 4)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "export", 6) == 0)
+		else if (!ft_strncmp(token, "export", 6) && ft_strlen(token) == 6)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "echo", 4) == 0)
+		else if (!ft_strncmp(token, "echo", 4) && ft_strlen(token) == 4)
 			info->command_lines[i].builtin = 1;
-		else if (ft_strncmp(list->token, "unset", 5) == 0)
+		else if (!ft_strncmp(token, "unset", 5) && ft_strlen(token) == 5)
 			info->command_lines[i].builtin = 1;
 		i++;
 	}
