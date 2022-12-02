@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 15:22:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:46:46 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_command_line
 	int		fd_in;
 	int		fd_out;
 	int		chevron;
-	int		no_token;
 	char	*error_infile;
 	char	*error_outfile;
 	char	*path;
