@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:59:53 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/01 02:34:54 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/02 13:19:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	routine_split_token(t_info *info)
 {
