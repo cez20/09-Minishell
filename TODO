@@ -363,13 +363,20 @@ test echo:  TOUS MIS DANS TEST sauf le premier
 			- echo '"a"ll"o"' 	OK
 			- echo				OK 	
 
-
-echo Cesar > test2.txt | wc
-
-==69891== 8 bytes in 1 blocks are still reachable in loss record 3 of 117
-==69891==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==69891==    by 0x100035960: ft_calloc (ft_calloc.c:19)
-==69891==    by 0x1000050B6: multiple_commands_or_builtins (execution.c:90)
-==69891==    by 0x10000522D: execution (execution.c:124)
-==69891==    by 0x100003CF5: routine (main.c:104)
-==69891==    by 0x100003E35: main (main.c:137)
+Cas a regarder ensemble 
+1- export ARGS="1 2 3 4" 
+	a) affiche message d'erreur alors qu'il ne devrait pas
+	b) Lorsqu'on ecrit env, on voit qu'une partie de l'export a fonctionne ARGS="1 est ce qui apparait
+2- export ARGS="1"
+	a) Lorsqu'on regarder env, on voit que les quotes ont ete conserve alors que ARGS=1 devrait apparaitre
+3- Exit (avec des arguments)
+	a) exit Cesar : cense ecrire  ---> bash: exit: Cesar : numeric argument required
+	b) exit 127 ---> quitte le terminal normalement
+	c) exit 127 Cesar -----> affiche exit sur une nouvelle ligne suivit du message derreur suivante: bash: exit: too many arguments
+	d) exit Cesar Steven ----> affiche exit sur une nouvelle ligne suivit du message derreur suivante: bash: exit: Cesar: numeric argument required
+4- echo <<
+	devrait afficher bash:syntax error near unexpected token 'newline'
+5 - echo <<<
+	a) affiche un message d'erreur mais aussi une ligne?
+6 - < test.txt cat | head -3 | sort -r | uniq -c OU  des qu'il y a 3 commandes. 
+	Creer un message, pointer being free was not allocated. Ceci est cause par free(pid) dans le child. 

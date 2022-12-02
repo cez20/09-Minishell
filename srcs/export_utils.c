@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/01 16:03:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 20:08:50 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	little_main_routine(char *line, t_info *info)
 				var_expansion(info->command_lines, info);
 				fill_command_lines(info);
 				prepare_data_for_execution(info);
-				//print_struct(info->command_lines, info);
 				execution(info, info->command_lines);
 			}
 		}

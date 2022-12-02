@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:21:34 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 16:01:55 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:16:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	reinit(t_info *info)
 	info->paths = split_path(info->envp);
 	info->index = 0;
 	info->read_pipe = -1;
-	info->herestring = 0;
 	info->err_chevron = 0;
 	info->err_happen = 0;
 	info->heredoc = 0;

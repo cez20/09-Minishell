@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 11:13:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 20:21:07 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 		if (cmd_line[info->index].fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close_fds(fd);
-		free(pid);
+		//free(pid);
 		do_execution(cmd_line[info->index], info);
 	}
 	else

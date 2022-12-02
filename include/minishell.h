@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 15:59:19 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:16:47 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_info
 	int						err_chevron;
 	int						err_happen;
 	char					**paths;
-	int						herestring;
 	int						heredoc;
 }		t_info;
 
