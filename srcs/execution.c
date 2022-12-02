@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 20:21:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:20:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 		if (cmd_line[info->index].fd_out == 1)
 			dup2(fd[1], STDOUT_FILENO);
 		close_fds(fd);
-		//free(pid);
 		do_execution(cmd_line[info->index], info);
 	}
 	else
@@ -83,11 +82,10 @@ void	child_process(t_command_line *cmd_line, t_info *info, pid_t *pid)
 
 void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 {
-	pid_t	*pid;
+	pid_t	pid[20];
 	int		status;
 	int		i;
 
-	pid = ft_calloc(info->nb_of_pipe + 1, sizeof(pid_t));
 	while (info->index <= info->nb_of_pipe)
 	{
 		if (info->index == info->nb_of_pipe)
@@ -101,7 +99,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 	i = 0;
 	while (i <= info->nb_of_pipe)
 		waitpid(pid[i++], &status, 0);
-	free(pid);
 	info->exit_code = get_exit_code(status);
 }
 
