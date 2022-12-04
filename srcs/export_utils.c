@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/02 17:16:28 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/03 23:20:50 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void	little_main_routine(char *line, t_info *info)
 
 void	routine(t_info *info, char *line)
 {
+	char	*temp;
+
 	if (close_quote_checker(info, line))
 		;
 	else
@@ -126,6 +128,9 @@ void	routine(t_info *info, char *line)
 		free(line);
 		return ;
 	}
+	temp = line;
+	line = remove_matching_quote(line);
+	free(temp);
 	little_main_routine(line, info);
 	free_struct_command_line(info);
 	//free(line);

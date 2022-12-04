@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/28 17:29:26 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/03 23:16:15 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,66 @@ void	remove_inside_quote(t_info *info)
 		free(info->list_token->token);
 		info->list_token->token = str;
 	}
+}
+
+/* 
+	tant que ce n'est pas une quote copie 
+	quand c'est une quote skip et copie jusqu'à la prochaine du même type  
+
+	allo"a'll'o"allo
+
+
+	1- copie 
+	2- info.state = " skip
+	3- copie 
+	4- info.state = 32 skip
+
+
+
+*/
+
+char	*remove_matching_quote(char *str)
+{
+	char *new_str;
+	int	i;
+	char chr;
+
+	new_str = ft_calloc(ft_strlen(str), sizeof(char));
+	i = 0;
+
+	while (*str)
+	{
+		chr = simple_or_double(str);
+		if (chr == D_QUOTE)
+		{
+			str++;
+			while (*str && *str != D_QUOTE)
+			{
+				new_str[i] = *str;
+				i++;
+				str++;
+			}
+			if (*str)
+				str++;
+		}
+		else if (chr == S_QUOTE)
+		{
+			str++;
+			while (*str && *str != S_QUOTE)
+			{
+				new_str[i] = *str;
+				i++;
+				str++;
+			}
+			if (*str)
+				str++;
+		}
+		else
+		{
+			new_str[i] = *str;
+			i++;
+			str++;
+		}
+	}
+	return (new_str);
 }

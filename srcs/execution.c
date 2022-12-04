@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 13:20:54 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/03 23:21:37 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 // one_command_or_builtin && multiples_commands 
 void	execution(t_info *info, t_command_line *cmd_line)
 {
-	quote_remover(&cmd_line);
+	// quote_remover(&cmd_line);
 	if (cmd_line->argv)
 	{
 		if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)

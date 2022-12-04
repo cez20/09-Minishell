@@ -120,6 +120,8 @@ TODO:
 		[X] clean up minishell.h 
 		[X] changer les printf pour la sortie d'erreurs
 		[X] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
+		[] fix export avec un fontion qui regarde le début du premier arg et ajoute les autres tant qu'une autre quote n'est pas croiser
+		[] ajuster la fonction remove_inside quote pour gérer les quotes dans les tokens
 
 		[X] |
 		[X] ||||
@@ -200,14 +202,15 @@ FIXME:
 		[X] argument exit
 		[] export lol2="hello steven"
 		[] command 3 ne fontionne pas
-		[] vecho allo"allo2"
+		[] echo allo"allo2"
+		[] echo allo"allo"allo
 
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
-		[] echo "allo""allo2" skip parfois le premier caractère du deuxième token, probablement en lien avece un invalid read 
-		[] double free quote seule 
+		[X] echo "allo""allo2" skip parfois le premier caractère du deuxième token, probablement en lien avece un invalid read 
+		[X] double free quote seule 
 		[X] espace devant les fichier ex: > test.txt
-		[] expansion ne fontionne plus après un cas qui n'existe' pas 
+		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 
 LEAKS:
 		FIXME:
