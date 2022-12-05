@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/03 23:18:34 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/05 11:46:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info);
 void	syntax_error(t_info *info) ;
 void	no_file(t_info *info, char *str);
 void	command_not_found(t_info *info, char *str);
-void 	exit_fail (t_info *info);
+void	not_executable(t_info *info, char *str);
 
 // *** EXECUTION.C ***
 void	do_execution(t_command_line cmd_line, t_info *info);
