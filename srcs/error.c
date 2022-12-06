@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 16:35:40 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:37:03 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
 			not_executable(info, cmd_line.argv[0]);
 	}
-}
-
-void	syntax_error(t_info *info)
-{
-	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-	free_structs_and_exit(info, 258);
 }
 
 void	no_file(t_info *info, char *str)
