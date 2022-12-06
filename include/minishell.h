@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/05 11:46:17 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:08:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,8 @@ int		search_next_pipe(t_info *info);
 
 //*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);
-void	quote_remover(t_command_line **cmd_line);
+// void	quote_remover(t_command_line **cmd_line);
+void	quote_remover(t_info *info);
 void	del_empty_node(t_token **token);
 int		is_n(t_token *node);
 char	*until_chr(char *str, char c);

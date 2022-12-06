@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/02 16:09:46 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:14:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 		if ((ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0) && \
 		ft_strlen(delimiter) == ft_strlen(line))
 		{
+			close(fd[1]);
 			free(line);
 			free_structs_and_exit(info, EXIT_SUCCESS);
 		}

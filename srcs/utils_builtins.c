@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/28 17:28:55 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/05 18:59:48 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,55 @@ void	remove_quote(t_token *token_list)
 		token_list->flag_quote = chr;
 }
 
-void	quote_remover(t_command_line **cmd_line)
+void	quote_remover(t_info *info)
 {
-	t_token			*token;
-	t_token			**tmp;
-	char			*to_free;
-	t_command_line	*line;
+	t_command_line	token;
+	t_token			*start;
+	char	*to_free;
+	t_token *temp;
+	int		i;
 
-	line = *cmd_line;
-	token = line->list_token;
-	while (token)
+	i = 0;
+	while (info->command_lines[i].list_token)
 	{
-		remove_quote(token);
-		if (token->flag_quote == 32)
+		start = token.list_token;
+		token = info->command_lines[i++];
+		while (token.list_token)
 		{
-			to_free = token->token;
-			token->token = ft_strtrim(token->token, " \'\"");
+			to_free = token.list_token->token;
+			token.list_token->token = remove_matching_quote(token.list_token->token);
+			temp = token.list_token;
+			del_empty_node(&temp);
+			token.list_token = token.list_token->next;
 			free(to_free);
 		}
-		tmp = &token;
-		token = token->next;
-		del_empty_node(tmp);
+		token.list_token = start;
 	}
 }
+
+// void	quote_remover(t_command_line **cmd_line)
+// {
+// 	t_token			*token;
+// 	t_token			**tmp;
+// 	char			*to_free;
+// 	t_command_line	*line;
+
+// 	line = *cmd_line;
+// 	token = line->list_token;
+// 	while (token)
+// 	{
+// 		remove_quote(token);
+// 		if (token->flag_quote == 32)
+// 		{
+// 			to_free = token->token;
+// 			token->token = ft_strtrim(token->token, " \'\"");
+// 			free(to_free);
+// 		}
+// 		tmp = &token;
+// 		token = token->next;
+		
+// 	}
+// }
 
 void	del_empty_node(t_token **token)
 {

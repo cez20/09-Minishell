@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:35:47 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/11/30 17:50:49 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:36:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	parse_error(t_info *info)
 	if (info->err_chevron == 1)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token '<'\n", 2);
-		info->err_chevron = 1;
+		info->err_happen = 1;
 		return (0);
 	}
 	else if (info->err_chevron == 2)

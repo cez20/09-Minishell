@@ -122,6 +122,7 @@ TODO:
 		[X] gérer la premiere commande différamment, passer à éviter les erreurs avec les Heredocs si la commande n'est pas la première chose
 		[] fix export avec un fontion qui regarde le début du premier arg et ajoute les autres tant qu'une autre quote n'est pas croiser
 		[] ajuster la fonction remove_inside quote pour gérer les quotes dans les tokens
+		[] split au espace et gérer les quotes après
 
 		[X] |
 		[X] ||||
@@ -173,6 +174,7 @@ Cesar:
 - Gerer les bons exit_code. Si j'appelle 2 fois de suite echo $? cela va afficher 0 la deuxieme fois. 
 - Gestion des cas d'erreurs dans les builtin. 
 - cd <mauvais path>  = echo $? devrait afficher code 1
+<< >> g
 
 
 FIXME:
@@ -201,9 +203,10 @@ FIXME:
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
-		[] command 3 ne fontionne pas
-		[] echo allo"allo2"
-		[] echo allo"allo"allo
+		[X] command 3 ne fontionne pas
+		[X] echo allo"allo2"
+		[X] echo allo"allo"allo
+		[] problème avec les simples quotes, expand rien si gros token simple quote 
 
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
@@ -216,34 +219,38 @@ LEAKS:
 		FIXME:
 				reste beaucoup de FDS ouvert
 
- 
-				
-<< allo
-> asdf
-> gfds
-> fds
-> $USER
-> 
-				arriver dans un heredocs 
+				cat "Make"file
+				echo "he$USER"lo""
+				'l''s'
+				cat >>>sdf
 
-				==30221== Invalid read of size 1
-==30221==    at 0x100008937: if_exit_code (utils_expansion.c:64)
-==30221==    by 0x100008520: locate_expansion (var_expansion.c:49)
-==30221==    by 0x100006A0F: delimiter_finder (redirection.c:61)
-==30221==    by 0x100006AF6: heredoc_redirection (redirection.c:82)
-==30221==    by 0x100006C62: search_for_redirection (redirection.c:108)
-==30221==    by 0x1000041EA: routine (main.c:97)
-==30221==    by 0x100004315: main (main.c:129)
-==30221==  Address 0x10098a0c1 is 0 bytes after a block of size 1 alloc'd
-==30221==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==30221==    by 0x1000359E0: ft_calloc (ft_calloc.c:19)
-==30221==    by 0x100034965: ft_strjoin (ft_strjoin.c:21)
-==30221==    by 0x10000413B: take_input (main.c:77)
-==30221==    by 0x10000695A: delimiter_finder (redirection.c:48)
-==30221==    by 0x100006AF6: heredoc_redirection (redirection.c:82)
-==30221==    by 0x100006C62: search_for_redirection (redirection.c:108)
-==30221==    by 0x1000041EA: routine (main.c:97)
-==30221==    by 0x100004315: main (main.c:129)
+
+				Minishell$> rnv
+command_line[0]
+node[0] = rnv
+==60274== Syscall param execve(filename) points to unaddressable byte(s)
+==60274==    at 0x10066A41E: execve (in /usr/lib/system/libsystem_kernel.dylib)
+==60274==    by 0x100007625: exec_one_command (utils_execution.c:36)
+==60274==    by 0x100007885: one_command_or_builtin (utils_execution.c:83)
+==60274==    by 0x100004EB2: execution (execution.c:119)
+==60274==    by 0x100003DED: little_main_routine (export_utils.c:108)
+==60274==    by 0x100003E94: routine (export_utils.c:134)
+==60274==    by 0x1000038E5: main (main.c:102)
+==60274==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+==60274== 12 bytes in 3 blocks are definitely lost in loss record 8 of 116
+==60274==    at 0x100180545: malloc (in /Users/slavoie/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==60274==    by 0x100035930: ft_calloc (ft_calloc.c:19)
+==60274==    by 0x1000346A0: ft_substr (ft_substr.c:21)
+==60274==    by 0x100034855: ft_strtrim (ft_strtrim.c:27)
+==60274==    by 0x100003968: get_arg_export (export_utils.c:23)
+==60274==    by 0x100003A49: export_routine (export_utils.c:38)
+==60274==    by 0x100004810: export (builtins.c:92)
+==60274==    by 0x10000366E: token_manager (main.c:61)
+==60274==    by 0x100007834: one_command_or_builtin (utils_execution.c:79)
+==60274==    by 0x100004EB2: execution (execution.c:119)
+==60274==    by 0x100003DED: little_main_routine (export_utils.c:108)
+==60274==    by 0x100003E94: routine (export_utils.c:134)
 
 
 
@@ -388,64 +395,29 @@ Cas a regarder ensemble
 
 << Cesar cat | wc  (On met le mot Allo dans le heredoc)
 
-==39566== 3 bytes in 1 blocks are still reachable in loss record 1 of 124
-==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39566==    by 0x1000341C8: xmalloc (xmalloc.c:59)
-==39566==    by 0x100009018: readline (readline.c:344)
-==39566==    by 0x100003A54: take_input (main.c:75)
-==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
-==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
-==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
-==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
-==39566==    by 0x100003F3E: little_main_routine (export_utils.c:84)
-==39566==    by 0x100004006: routine (export_utils.c:110)
-==39566==    by 0x100003B95: main (main.c:102)
-==39566== 
-==39566== 3 bytes in 1 blocks are still reachable in loss record 2 of 124
-==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39566==    by 0x1000341C8: xmalloc (xmalloc.c:59)
-==39566==    by 0x10001E5DE: expand_prompt (display.c:410)
-==39566==    by 0x10001ED47: rl_expand_prompt (display.c:606)
-==39566==    by 0x10000905A: readline (readline.c:347)
-==39566==    by 0x100003A54: take_input (main.c:75)
-==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
-==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
-==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
-==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
-==39566==    by 0x100003F3E: little_main_routine (export_utils.
-
-
-==39566== 8 bytes in 1 blocks are still reachable in loss record 4 of 124
-==39566==    at 0x100180EE6: realloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39566==    by 0x10003421D: xrealloc (xmalloc.c:70)
-==39566==    by 0x10001E631: expand_prompt (display.c:415)
-==39566==    by 0x10001ED47: rl_expand_prompt (display.c:606)
-==39566==    by 0x10000905A: readline (readline.c:347)
-==39566==    by 0x100003A54: take_input (main.c:75)
-==39566==    by 0x1000082BA: delimiter_finder (utils_expansion.c:70)
-==39566==    by 0x100006301: heredoc_redirection (redirection.c:62)
-==39566==    by 0x1000064D4: routine_redirection (redirection.c:89)
-==39566==    by 0x100006623: search_for_redirection (redirection.c:112)
-==39566==    by 0x100003F3E: little_main_routine (export_utils.c:84)
-==39566==    by 0x100004006: routine (export_utils.c:110)
-
-==39566== 16 bytes in 4 blocks are still reachable in loss record 18 of 124
-==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39566==    by 0x100035930: ft_calloc (ft_calloc.c:19)
-==39566==    by 0x100034690: ft_substr (ft_substr.c:21)
-==39566==    by 0x100034845: ft_strtrim (ft_strtrim.c:27)
-==39566==    by 0x1000069B1: trim_space (utils_1.c:63)
-==39566==    by 0x100008DB6: routine_split_token (split_token.c:34)
-==39566==    by 0x100008DF8: little_split_token (split_token.c:42)
-==39566==    by 0x100008F1E: split_token (split_token.c:72)
-==39566==    by 0x100003F15: little_main_routine (export_utils.c:81)
-==39566==    by 0x100004006: routine (export_utils.c:110)
-==39566==    by 0x100003B95: main (main.c:102)
-
-==39566== 18 bytes in 1 blocks are still reachable in loss record 19 of 124
-==39566==    at 0x100180545: malloc (in /System/Volumes/Data/sgoinfre/Perso/cemenjiv/.brew/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==39566==    by 0x100035930: ft_calloc (ft_calloc.c:19)
-==39566==    by 0x100034690: ft_substr (ft_substr.c:21)
-==39566==    by 0x100034845: ft_strtrim (ft_strtrim.c:27)
-==39566==    by 0x100003A7B: take_input (main.c:78)
-==39566==    by 0x100003B32: main (main.c:94)
+==53329== Conditional jump or move depends on uninitialised value(s)
+==53329==    at 0x100008AE0: get_exit_code (exit.c:22)
+==53329==    by 0x100007668: exec_one_command (utils_execution.c:44)
+==53329==    by 0x100007885: one_command_or_builtin (utils_execution.c:86)
+==53329==    by 0x100004E62: execution (execution.c:119)
+==53329==    by 0x100003DBD: little_main_routine (export_utils.c:118)
+==53329==    by 0x100003E46: routine (export_utils.c:144)
+==53329==    by 0x1000039C5: main (main.c:102)
+==53329== 
+==53329== Conditional jump or move depends on uninitialised value(s)
+==53329==    at 0x100008B02: get_exit_code (exit.c:24)
+==53329==    by 0x100007668: exec_one_command (utils_execution.c:44)
+==53329==    by 0x100007885: one_command_or_builtin (utils_execution.c:86)
+==53329==    by 0x100004E62: execution (execution.c:119)
+==53329==    by 0x100003DBD: little_main_routine (export_utils.c:118)
+==53329==    by 0x100003E46: routine (export_utils.c:144)
+==53329==    by 0x1000039C5: main (main.c:102)
+==53329== 
+==53329== Conditional jump or move depends on uninitialised value(s)
+==53329==    at 0x100008B11: get_exit_code (exit.c:24)
+==53329==    by 0x100007668: exec_one_command (utils_execution.c:44)
+==53329==    by 0x100007885: one_command_or_builtin (utils_execution.c:86)
+==53329==    by 0x100004E62: execution (execution.c:119)
+==53329==    by 0x100003DBD: little_main_routine (export_utils.c:118)
+==53329==    by 0x100003E46: routine (export_utils.c:144)
+==53329==    by 0x1000039C5: main (main.c:102)
