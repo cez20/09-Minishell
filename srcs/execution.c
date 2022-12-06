@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/03 23:21:37 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/06 12:20:50 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	do_execution(t_command_line cmd_line, t_info *info)
 		else
 			exit(EXIT_FAILURE);
 	}
-	else if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
+	else if (cmd_line.path && execve(cmd_line.path, cmd_line.argv, info->envp) != -1)
+	;
+	else
 		command_not_found(info, cmd_line.argv[0]);
 }
 

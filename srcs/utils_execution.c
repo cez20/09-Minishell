@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/05 16:02:00 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/06 12:15:01 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	pid_t	pid;
 	int		status;
 
-	// printf("path = %s\n", cmd_line.path);
+	printf("path = %s\n", cmd_line.path);
 	pid = fork();
 	if (pid == -1)
 		return ;
@@ -34,10 +34,10 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	{
 		check_if_error(cmd_line, info);
 		do_redirection(cmd_line, info);
-		if (!cmd_line.path)
-			command_not_found(info, cmd_line.argv[0]);
+		if (cmd_line.path && execve(cmd_line.path, cmd_line.argv, info->envp) != -1)
+		;
 		else
-			execve(cmd_line.path, cmd_line.argv, info->envp);
+			command_not_found(info, cmd_line.argv[0]);
 	}
 	close_current_fds(&cmd_line, info);
 	waitpid(pid, &status, 0);

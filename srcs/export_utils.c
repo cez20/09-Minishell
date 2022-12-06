@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/05 19:02:11 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/06 11:57:54 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,15 @@ void	little_main_routine(char *line, t_info *info)
 
 
 
-		lst_print_token(info);
-		// quote_remover(&info->command_lines[i]);
 		// lst_print_token(info);
+		// quote_remover(&info->command_lines[i]);
 		
 		free(line);
 		if (info->command_lines->list_token && !info->err_happen)
 		{
 			if (search_for_redirection(info))
 			{
+
 				var_expansion(info->command_lines, info);
 				quote_remover(info);
 				fill_command_lines(info);
