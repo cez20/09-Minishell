@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 10:53:10 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:02:00 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	pid_t	pid;
 	int		status;
 
+	// printf("path = %s\n", cmd_line.path);
 	pid = fork();
 	if (pid == -1)
 		return ;
@@ -33,8 +34,10 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	{
 		check_if_error(cmd_line, info);
 		do_redirection(cmd_line, info);
-		if (execve(cmd_line.path, cmd_line.argv, info->envp) == -1)
+		if (!cmd_line.path)
 			command_not_found(info, cmd_line.argv[0]);
+		else
+			execve(cmd_line.path, cmd_line.argv, info->envp);
 	}
 	close_current_fds(&cmd_line, info);
 	waitpid(pid, &status, 0);

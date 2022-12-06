@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/03 23:18:34 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/05 18:52:37 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,8 @@ int		search_next_pipe(t_info *info);
 
 //*** UTILS_BUILTINS.C ***
 void	remove_quote(t_token *token_list);
-void	quote_remover(t_command_line **cmd_line);
+// void	quote_remover(t_command_line **cmd_line);
+void	quote_remover(t_info *info);
 void	del_empty_node(t_token **token);
 int		is_n(t_token *node);
 char	*until_chr(char *str, char c);

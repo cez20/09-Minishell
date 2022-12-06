@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/03 23:20:50 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/05 19:02:11 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_arg_export(char *str)
-{
-	char	*line;
-	char	*temp;
+// char	*get_arg_export(char *str)
+// {
+// 	char	*line;
+// 	char	*temp;
 
-	line =	ft_strdup(ft_strchr(str, '=') + 1);
-	printf("line = %s\n", line);
-	temp = line;
-	line = ft_strtrim(line, "\"\'");
-	free(temp);
+// 	line =	ft_strdup(ft_strchr(str, '=') + 1);
+// 	// printf("line = %s\n", line);
+// 	temp = line;
+// 	line = ft_strtrim(line, "\"\'");
+// 	free(temp);
 
-	return (line);
-}
+// 	return (line);
+// }
 
 void	export_routine(t_info *info, char *str, int i)
 {	
 	char	*line;
-	char	*temp;
+	// char	*temp;
 
 	str = until_chr(info->command_lines[info->index] \
 	.argv[i + 1], '=');
 	line = search_line(info->envp, str);
-	temp = info->command_lines[info->index].argv[i + 1];
-	info->command_lines[info->index].argv[i + 1] = ft_strjoin(str, get_arg_export(info->command_lines[info->index].argv[i + 1]));
+	// temp = info->command_lines[info->index].argv[i + 1];
+	// info->command_lines[info->index].argv[i + 1] = ft_strjoin(str, get_arg_export(info->command_lines[info->index].argv[i + 1]));
 	if (line)
 	{
 		info->envp = tab_trunc(info->envp, str, ft_strlen(str));
@@ -47,7 +47,7 @@ void	export_routine(t_info *info, char *str, int i)
 		info->envp = tab_join(info->envp, \
 		info->command_lines[info->index].argv[i + 1]);
 	}
-	free(temp);
+	// free(temp);
 	free(str);
 }
 
@@ -92,17 +92,27 @@ void	echo_routine(t_token *token_list)
 
 void	little_main_routine(char *line, t_info *info)
 {
+	int i;
+
+	i = 0;
 	if (*line != '|')
 	{
 		info->nb_of_pipe = how_many(info, line, '|');
 		split_token(line, info);
+
+
+
 		lst_print_token(info);
+		// quote_remover(&info->command_lines[i]);
+		// lst_print_token(info);
+		
 		free(line);
 		if (info->command_lines->list_token && !info->err_happen)
 		{
 			if (search_for_redirection(info))
 			{
 				var_expansion(info->command_lines, info);
+				quote_remover(info);
 				fill_command_lines(info);
 				prepare_data_for_execution(info);
 				execution(info, info->command_lines);
@@ -118,7 +128,7 @@ void	little_main_routine(char *line, t_info *info)
 
 void	routine(t_info *info, char *line)
 {
-	char	*temp;
+	// char	*temp;
 
 	if (close_quote_checker(info, line))
 		;
@@ -128,9 +138,9 @@ void	routine(t_info *info, char *line)
 		free(line);
 		return ;
 	}
-	temp = line;
-	line = remove_matching_quote(line);
-	free(temp);
+	// temp = line;
+	// line = remove_matching_quote(line);
+	// free(temp);
 	little_main_routine(line, info);
 	free_struct_command_line(info);
 	//free(line);

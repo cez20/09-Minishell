@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:20 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 14:03:06 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:44:25 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ void	find_path_of_command(t_command_line *cmd_line, char *path)
 	char	*temp_exe;
 	char	*temp_path;
 
-	if (access((*cmd_line).list_token->token, X_OK) != -1)
+	if (access((*cmd_line).list_token->token, X_OK | F_OK) != -1)
 		(*cmd_line).path = ft_strdup((*cmd_line).list_token->token);
 	else
 	{
 		temp_path = ft_strjoin(path, "/");
 		temp_exe = ft_strjoin(temp_path, (*cmd_line).list_token->token);
 		free(temp_path);
-		if (access(temp_exe, X_OK) != -1)
+		if (access(temp_exe, X_OK | F_OK) != -1)
 			(*cmd_line).path = temp_exe;
 		else
 			free(temp_exe);

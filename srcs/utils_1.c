@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/03 23:16:15 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/05 17:05:21 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,29 +94,13 @@ void	remove_inside_quote(t_info *info)
 	}
 }
 
-/* 
-	tant que ce n'est pas une quote copie 
-	quand c'est une quote skip et copie jusqu'à la prochaine du même type  
-
-	allo"a'll'o"allo
-
-
-	1- copie 
-	2- info.state = " skip
-	3- copie 
-	4- info.state = 32 skip
-
-
-
-*/
-
 char	*remove_matching_quote(char *str)
 {
 	char *new_str;
 	int	i;
 	char chr;
 
-	new_str = ft_calloc(ft_strlen(str), sizeof(char));
+	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
 
 	while (*str)
