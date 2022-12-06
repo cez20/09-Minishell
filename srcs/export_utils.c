@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 16:32:12 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:08:50 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,6 @@ void	little_main_routine(char *line, t_info *info)
 	{
 		info->nb_of_pipe = how_many(info, line, '|');
 		split_token(line, info);
-
-
-
-		//lst_print_token(info);
-		// quote_remover(&info->command_lines[i]);
-		// lst_print_token(info);
-		
 		free(line);
 		if (info->command_lines->list_token && !info->err_happen)
 		{

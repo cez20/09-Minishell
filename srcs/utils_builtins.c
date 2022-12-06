@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/05 18:59:48 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/06 17:04:57 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	quote_remover(t_info *info)
 {
 	t_command_line	token;
 	t_token			*start;
-	char	*to_free;
-	t_token *temp;
-	int		i;
+	char			*to_free;
+	t_token			*temp;
+	int				i;
 
 	i = 0;
 	while (info->command_lines[i].list_token)
@@ -45,7 +45,8 @@ void	quote_remover(t_info *info)
 		while (token.list_token)
 		{
 			to_free = token.list_token->token;
-			token.list_token->token = remove_matching_quote(token.list_token->token);
+			token.list_token->token = \
+			remove_matching_quote(token.list_token->token);
 			temp = token.list_token;
 			del_empty_node(&temp);
 			token.list_token = token.list_token->next;
@@ -75,7 +76,6 @@ void	quote_remover(t_info *info)
 // 		}
 // 		tmp = &token;
 // 		token = token->next;
-		
 // 	}
 // }
 

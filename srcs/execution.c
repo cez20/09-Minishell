@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:43:50 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 15:33:53 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:03:02 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	multiple_commands_or_builtins(t_command_line *cmd_line, t_info *info)
 // one_command_or_builtin && multiples_commands 
 void	execution(t_info *info, t_command_line *cmd_line)
 {
-	// quote_remover(&cmd_line);
 	if (cmd_line->argv)
 	{
 		if (ft_strncmp(cmd_line->argv[0], "./minishell", 11) == 0)
