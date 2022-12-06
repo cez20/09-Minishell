@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/11/30 15:48:10 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:28:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,18 @@ char	*output_chevron(t_info *info, int i)
 	return (NULL);
 }
 
+int	search_next_chevron(t_info *info, int i)
+{
+	i++;
+	if (info->last_position[i] == '<' && !info->last_position[i + 1])
+		return (1);
+	else if (info->last_position[i] == '>' && !info->last_position[i + 1])
+		return (1);
+	else if (!info->last_position[i])
+		return (1);
+	return (0);
+}
+
 char	*check_chevron(t_info *info)
 {
 	int	i;
@@ -109,6 +121,10 @@ char	*check_chevron(t_info *info)
 		info->err_chevron = 1;
 	else if (ft_strnstr(info->last_position, ">>>", 4))
 		info->err_chevron = 2;
+	else if (info->last_position[i] == '<' && search_next_chevron(info, i))
+		info->err_chevron = 1;
+	else if (info->last_position[i] == '>' && search_next_chevron(info, i))
+		info->err_chevron = 1;
 	else if (info->last_position[i] == '<' && search_next_pipe(info))
 		return (input_chevron(info, i));
 	else if (info->last_position[i] == '>' && search_next_pipe(info))

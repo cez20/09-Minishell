@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 15:40:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:32:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	little_main_routine(char *line, t_info *info)
 
 
 
-		lst_print_token(info);
+		//lst_print_token(info);
 		// quote_remover(&info->command_lines[i]);
 		// lst_print_token(info);
 		

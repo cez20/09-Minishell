@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 15:39:01 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:35:40 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		no_file(info, cmd_line.error_infile);
 	else if (cmd_line.error_outfile)
 		no_file(info, cmd_line.error_outfile);
-	else if (!cmd_line.list_token && cmd_line.file_after_chevron == 0)
-		syntax_error(info);
 	else if (!cmd_line.list_token && cmd_line.file_after_chevron == 1)
 		free_structs_and_exit(info, EXIT_SUCCESS);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
