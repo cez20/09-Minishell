@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 12:18:45 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:39:01 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,21 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		no_file(info, cmd_line.error_infile);
 	else if (cmd_line.error_outfile)
 		no_file(info, cmd_line.error_outfile);
-	else if (access(cmd_line.argv[0], F_OK) && \
-	ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
-		no_file(info, cmd_line.argv[0]);
 	else if (!cmd_line.list_token && cmd_line.file_after_chevron == 0)
 		syntax_error(info);
 	else if (!cmd_line.list_token && cmd_line.file_after_chevron == 1)
 		free_structs_and_exit(info, EXIT_SUCCESS);
 	else if (!cmd_line.argv && cmd_line.fd_in > 0)
 		free_structs_and_exit(info, EXIT_FAILURE);
-	else if(access(cmd_line.argv[0], X_OK) == -1 && \
-	ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
-		not_executable(info, cmd_line.argv[0]);
+	if (cmd_line.argv)
+	{
+		if (access(cmd_line.argv[0], F_OK) == -1 && \
+		ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
+			no_file(info, cmd_line.argv[0]);
+		else if(access(cmd_line.argv[0], X_OK) == -1 && \
+		ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
+			not_executable(info, cmd_line.argv[0]);
+	}
 }
 
 void	syntax_error(t_info *info)
