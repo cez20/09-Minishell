@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/02 17:43:59 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/06 16:44:12 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,16 @@ char	*search_another_one(char *str, char c, t_info *info)
 		info->last_position = str;
 	token = ft_substr(start, 0, info->len);
 	return (token);
+}
+
+int	search_next_chevron(t_info *info, int i)
+{
+	i++;
+	if (info->last_position[i] == '<' && !info->last_position[i + 1])
+		return (1);
+	else if (info->last_position[i] == '>' && !info->last_position[i + 1])
+		return (1);
+	else if (!info->last_position[i])
+		return (1);
+	return (0);
 }

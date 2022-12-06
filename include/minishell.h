@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 11:08:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:44:36 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,10 @@ void	ft_str_tolower(char *str);
 char	*get_command(t_token *list_token);
 
 //*** PARSING.C ***
-
 void	fill_command_lines(t_info *info);
 char	*set_start(t_info *info, char c, char **start, char *str);
 char	*search_another_one(char *str, char c, t_info *info);
+int		search_next_chevron(t_info *info, int i);
 
 //*** PREPARE_EXEC.C  ***
 void	is_builtin(t_info *info);
