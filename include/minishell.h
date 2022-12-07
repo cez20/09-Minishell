@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 11:08:30 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:36:14 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ void	manage_heredoc_fds(t_info *info, t_command_line *cmd_line, int *fd);
 //*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
 char	*env_variable(char *str, int *i);
-void	locate_expansion(char **str, char **env, t_info *info);
+void	locate_expansion(char **str, char **env, t_info *info, char *end);
 void	var_expansion(t_command_line *cmd_line, t_info	*info);
 
 char	*remove_matching_quote(char *str);
