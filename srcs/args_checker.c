@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/07 13:21:09 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:34:17 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ char	*check_chevron(t_info *info)
 		info->err_chevron = 1;
 	else if (ft_strnstr(info->last_position, ">>>", 4))
 		info->err_chevron = 2;
+	else if (info->last_position[i] == '<' && search_next_chevron(info, i))
+		info->err_chevron = 1;
+	else if (info->last_position[i] == '>' && search_next_chevron(info, i))
+		info->err_chevron = 1;
 	else if (info->last_position[i] == '<' && search_next_pipe(info))
 		return (input_chevron(info, i));
 	else if (info->last_position[i] == '>' && search_next_pipe(info))

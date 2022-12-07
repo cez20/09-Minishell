@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:35:47 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 13:21:09 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:34:34 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,21 @@ int	parse_error(t_info *info)
 	{
 		ft_putstr_fd("Minishell: syntax error near unexpected token '<'\n", 2);
 		info->err_happen = 1;
+		info->exit_code = 258;
 		return (0);
 	}
 	else if (info->err_chevron == 2)
 	{
 		ft_putstr_fd("Minishell: syntax error near unexpected token '>'\n", 2);
 		info->err_happen = 1;
+		info->exit_code = 258;
 		return (0);
 	}
 	else if (info->err_chevron == 3)
 	{
 		ft_putstr_fd("Minishell: syntax error near unexpected token '|'\n", 2);
 		info->err_happen = 1;
+		info->exit_code = 258;
 		return (0);
 	}
 	return (1);

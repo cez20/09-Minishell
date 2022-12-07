@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 12:06:24 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/07 12:42:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,10 @@ void	ft_str_tolower(char *str);
 char	*get_command(t_token *list_token);
 
 //*** PARSING.C ***
-
 void	fill_command_lines(t_info *info);
 char	*set_start(t_info *info, char c, char **start, char *str);
 char	*search_another_one(char *str, char c, t_info *info);
+int		search_next_chevron(t_info *info, int i);
 
 //*** PREPARE_EXEC.C  ***
 void	is_builtin(t_info *info);

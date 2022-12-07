@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 20:18:34 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 11:14:01 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:18:04 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	delimiter_finder(t_info *info, char *delimiter, int fd[])
 		else if (!line)
 		{
 			close(fd[1]);
+			printf("\033[1A> ");
 			free_structs_and_exit(info, EXIT_SUCCESS);
 		}
 		locate_expansion(&line, info->envp, info);
