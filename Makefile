@@ -28,8 +28,7 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 
 all: 			objs $(NAME)
 
-$(NAME): 		$(OBJS)
-				@git submodule update --init --recursive
+$(NAME): 		sub $(OBJS)
 				@$(MAKE) -C ./Libft
 				@cd ./readline && ./configure
 				@$(MAKE) -C ./readline everything
@@ -48,5 +47,8 @@ fclean: 		clean
 
 re: 			fclean all
 
+sub:
+				git submodule update --init --recursive
+
 objs:
-	@mkdir -p objs
+				@mkdir -p objs
