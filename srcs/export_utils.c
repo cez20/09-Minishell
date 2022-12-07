@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 20:04:50 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 00:11:48 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@
 void	export_routine(t_info *info, char *str, int i)
 {	
 	char	*line;
-	// char	*temp;
 
 	str = until_chr(info->command_lines[info->index] \
 	.argv[i + 1], '=');
 	line = search_line(info->envp, str);
-	// temp = info->command_lines[info->index].argv[i + 1];
-	// info->command_lines[info->index].argv[i + 1] = ft_strjoin(str, get_arg_export(info->command_lines[info->index].argv[i + 1]));
 	if (line)
 	{
 		info->envp = tab_trunc(info->envp, str, ft_strlen(str));
@@ -47,7 +44,6 @@ void	export_routine(t_info *info, char *str, int i)
 		info->envp = tab_join(info->envp, \
 		info->command_lines[info->index].argv[i + 1]);
 	}
-	// free(temp);
 	free(str);
 }
 
@@ -90,28 +86,51 @@ void	echo_routine(t_token *token_list)
 	}
 }
 
+void	put_token_toghther(t_info *info)
+{
+	int		i;
+	t_token	*token;
+	t_token	*temp;
+	char	*to_free;
+
+	i = 0;
+	while (i <= info->nb_of_pipe + 1)
+	{
+		token = ft_lstlast_token(info->command_lines[i].list_token);
+		while (token)
+		{
+			if (token->prev && !token->prev->space_flag)
+			{
+				to_free = token->prev->token;
+				token->prev->token = \
+				ft_strjoin(token->prev->token, token->token);
+				token->to_del = 1;
+				free(to_free);
+			}
+			temp = token;
+			token = token->prev;
+			del_empty_node(&temp);
+		}
+		i++;
+	}
+}
+
 void	little_main_routine(char *line, t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*line != '|')
 	{
 		info->nb_of_pipe = how_many(info, line, '|');
 		split_token(line, info);
-
-
-
-		// lst_print_token(info);
-		// quote_remover(&info->command_lines[i]);
-		
 		free(line);
 		if (info->command_lines->list_token && !info->err_happen)
 		{
 			if (search_for_redirection(info))
 			{
-
 				var_expansion(info->command_lines, info);
+				put_token_toghther(info);
 				quote_remover(info);
 				fill_command_lines(info);
 				prepare_data_for_execution(info);
@@ -128,8 +147,6 @@ void	little_main_routine(char *line, t_info *info)
 
 void	routine(t_info *info, char *line)
 {
-	// char	*temp;
-
 	if (close_quote_checker(info, line))
 		;
 	else
@@ -138,10 +155,6 @@ void	routine(t_info *info, char *line)
 		free(line);
 		return ;
 	}
-	// temp = line;
-	// line = remove_matching_quote(line);
-	// free(temp);
 	little_main_routine(line, info);
 	free_struct_command_line(info);
-	//free(line);
 }

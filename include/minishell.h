@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 15:36:14 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 00:13:43 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 	int				flag_quote;
 	int				space_flag;
 	int				redirection;
+	int				to_del;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
@@ -113,7 +114,7 @@ void	close_fds(int *fd);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
-void	syntax_error(t_info *info) ;
+void	syntax_error(t_info *info);
 void	no_file(t_info *info, char *str);
 void	command_not_found(t_info *info, char *str);
 void	not_executable(t_info *info, char *str);
@@ -189,7 +190,7 @@ void	signal_child(int signum);
 void	signal_parent(int signum);
 
 //*** SPLIT_TOKEN.C *** 
-int	little_split_token(t_info *info, int i);
+int		little_split_token(t_info *info, int i);
 void	routine_split_token(t_info *info);
 void	split_token(char *token, t_info *info);
 
@@ -248,7 +249,7 @@ void	manage_heredoc_fds(t_info *info, t_command_line *cmd_line, int *fd);
 //*** VAR_EXPANSION.C *** 
 char	*new_expanded_variable(int i, char *str, char **env);
 char	*env_variable(char *str, int *i);
-void	locate_expansion(char **str, char **env, t_info *info, char *end);
+void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info	*info);
 
 char	*remove_matching_quote(char *str);

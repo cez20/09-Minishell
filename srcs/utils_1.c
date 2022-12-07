@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/05 17:05:21 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 00:09:08 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,12 @@ void	remove_inside_quote(t_info *info)
 
 char	*remove_matching_quote(char *str)
 {
-	char *new_str;
-	int	i;
-	char chr;
+	char	*new_str;
+	int		i;
+	char	chr;
 
 	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
-
 	while (*str)
 	{
 		chr = simple_or_double(str);

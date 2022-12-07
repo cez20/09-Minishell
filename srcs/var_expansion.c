@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 16:16:13 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 00:07:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*env_variable(char *str, int *i)
 	str1 = ft_substr(str, j, *i - j);
 	return (str1);
 }
-
 
 void	locate_expansion(char **str, char **env, t_info *info)
 {

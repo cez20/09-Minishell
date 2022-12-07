@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 23:00:39 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/01 11:10:24 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:00:29 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	lst_print_token(t_info *info)
 
 	j = 0;
 	i = 0;
-	while (info->command_lines[j].list_token)
+	while (j <= info->nb_of_pipe + 1)
 	{
 		printf("command_line[%d]\n", j);
 		node = info->command_lines[j].list_token;

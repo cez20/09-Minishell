@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:59:53 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 15:31:23 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/06 23:01:02 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,10 @@ void	routine_split_token(t_info *info)
 	if (!(parse_error(info)))
 		return ;
 	type_quote = simple_or_double(info->last_position);
-	// if (info->nb_token < 1 && *info->last_position)
-	// 	type_quote = 32;
 	if (!token)
-		token = search_another_one(info->last_position, 32, info);
+		token = search_another_one(info->last_position, type_quote, info);
 	ft_lstaddback_token(&info->list_token, ft_lstnew_token(token));
 	ft_lstlast_token(info->list_token)->flag_quote = type_quote;
-	// if (info->nb_token < 1)
-	// 	remove_inside_quote(info);
 	skip_space(info);
 	trim_space(info, " \t\n\r\v|");
 	info->nb_token++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 15:39:01 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 00:12:46 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 		if (access(cmd_line.argv[0], F_OK) == -1 && \
 		ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
 			no_file(info, cmd_line.argv[0]);
-		else if(access(cmd_line.argv[0], X_OK) == -1 && \
+		else if (access(cmd_line.argv[0], X_OK) == -1 && \
 		ft_strncmp(cmd_line.argv[0], "./", 2) == 0)
 			not_executable(info, cmd_line.argv[0]);
 	}
