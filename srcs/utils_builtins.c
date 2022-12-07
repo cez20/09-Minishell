@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/07 12:06:44 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/07 13:24:20 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// void	remove_quote(t_token *token_list)
-// {
-// 	char	*temp;
-// 	char	chr;
-
-// 	chr = simple_or_double(token_list->token);
-// 	if (chr != 32)
-// 	{
-// 		temp = token_list->token;
-// 		token_list->token = ft_strtrim(token_list->token, &chr);
-// 		free(temp);
-// 		token_list->flag_quote = chr;
-// 	}
-// 	else
-// 		token_list->flag_quote = chr;
-// }
 
 void	quote_remover(t_info *info)
 {
@@ -55,29 +38,6 @@ void	quote_remover(t_info *info)
 		token.list_token = start;
 	}
 }
-
-// void	quote_remover(t_command_line **cmd_line)
-// {
-// 	t_token			*token;
-// 	t_token			**tmp;
-// 	char			*to_free;
-// 	t_command_line	*line;
-
-// 	line = *cmd_line;
-// 	token = line->list_token;
-// 	while (token)
-// 	{
-// 		remove_quote(token);
-// 		if (token->flag_quote == 32)
-// 		{
-// 			to_free = token->token;
-// 			token->token = ft_strtrim(token->token, " \'\"");
-// 			free(to_free);
-// 		}
-// 		tmp = &token;
-// 		token = token->next;	
-// 	}
-// }
 
 void	del_empty_node(t_token **token)
 {

@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/07 12:06:57 by stevenlavoi      ###   ########.fr       */
+/*   Updated: 2022/12/07 13:23:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// char	*get_arg_export(char *str)
-// {
-// 	char	*line;
-// 	char	*temp;
-
-// 	line =	ft_strdup(ft_strchr(str, '=') + 1);
-// 	// printf("line = %s\n", line);
-// 	temp = line;
-// 	line = ft_strtrim(line, "\"\'");
-// 	free(temp);
-
-// 	return (line);
-// }
 
 void	export_routine(t_info *info, char *str, int i)
 {	
@@ -108,7 +94,7 @@ void	little_main_routine(char *line, t_info *info)
 	}
 	else
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putstr_fd("Minishell: syntax error near unexpected token `|'\n", 2);
 		info->exit_code = 258;
 	}
 }

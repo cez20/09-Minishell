@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 16:48:24 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 00:12:46 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:30:26 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	check_if_error(t_command_line cmd_line, t_info *info)
 
 void	syntax_error(t_info *info)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+	ft_putstr_fd("Minishell: syntax error near unexpected token `newline'\n", 2);
 	free_structs_and_exit(info, 258);
 }
 
 void	no_file(t_info *info, char *str)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
 	if (info->command_lines[info->index].builtin == 0)
@@ -54,7 +54,7 @@ void	no_file(t_info *info, char *str)
 
 void	command_not_found(t_info *info, char *str)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	free_structs_and_exit(info, 127);
@@ -62,7 +62,7 @@ void	command_not_found(t_info *info, char *str)
 
 void	not_executable(t_info *info, char *str)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
 	free_structs_and_exit(info, 126);

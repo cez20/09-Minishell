@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 09:55:32 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/02 17:13:14 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:21:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ t_token *list, t_info *info)
 {
 	if ((ft_strncmp(list->token, "<<<", 4) == 0) && list->next)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token '<'", 2);
+		ft_putstr_fd("Minishell: syntax error near unexpected token '<'", 2);
 		return (0);
 	}
 	else if ((ft_strncmp(list->token, ">>>", 4) == 0) && list->next)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token '>'", 2);
+		ft_putstr_fd("Minishell: syntax error near unexpected token '>'", 2);
 		return (0);
 	}
 	else if ((ft_strncmp(list->token, "<", 2) == 0) && list->next)

@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:50:27 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 20:04:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:21:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	arg_exit(t_info *info)
 	if (ft_lstsize_token(info->command_lines[info->index].list_token) > 2)
 	{
 		printf("exit\n");
-		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+		ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
 		info->exit_code = 1;
 		return (-42);
 	}
@@ -26,7 +26,7 @@ int	arg_exit(t_info *info)
 		if (!(str_isnum(info->command_lines[info->index] \
 		.list_token->next->token)))
 		{
-			ft_putstr_fd("bash: exit: ", 2);
+			ft_putstr_fd("Minishell: exit: ", 2);
 			ft_putstr_fd(info->command_lines[info->index] \
 			.list_token->next->token, 2);
 			ft_putstr_fd(": numeric argument required\n", 2);

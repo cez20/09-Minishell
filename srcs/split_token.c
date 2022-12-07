@@ -6,7 +6,7 @@
 /*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:59:53 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 23:01:02 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:21:09 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	little_split_token(t_info *info, int i)
 		{
 			if (!(*info->list_token->token))
 			{
-				ft_putstr_fd("bash: syntax \
+				ft_putstr_fd("Minishell: syntax \
 				error near unexpected token `|'\n", 2);
 				info->err_happen = 1;
 				break ;
