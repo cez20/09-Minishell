@@ -11,7 +11,6 @@ SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 CC 				= @gcc
 CFLAGS 			= -Werror -Wall -Wextra -g
 READLINE 		=  -lcurses readline/libreadline.a  readline/libhistory.a
-# READLINE		= $(LDFLAGS) #$(CPPFLAGS)
 OBJS_DIR		= objs/
 OBJS 			= $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
 
@@ -31,7 +30,7 @@ all: 			objs $(NAME)
 
 $(NAME): 		$(OBJS)
 				@$(MAKE) -C ./Libft
-				# @cd ./readline && ./configure
+				@cd ./readline && ./configure
 				@$(MAKE) -C ./readline everything
 				@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
 				@echo "$(GREEN)Everything is top shape tiguidou 🐥$(RESET_COLOR)"
@@ -39,7 +38,7 @@ $(NAME): 		$(OBJS)
 clean:
 				@echo "Cleaning 🌪 🔥🌊"
 				@$(MAKE) -C ./Libft fclean
-				# @$(MAKE) -C ./readline clean
+				@$(MAKE) -C ./readline clean
 				@rm -rf $(OBJS)
 				@rm -rf $(OBJS_DIR)
 
@@ -47,51 +46,6 @@ fclean: 		clean
 				@rm -rf $(NAME)
 
 re: 			fclean all
-
-add: 			fclean
-				@git add *.c *.h Makefile TODO
-				@git status
-
-b:
-	@git branch
-
-
-update:
-	@git fetch
-	@git pull origin $(BRANCH)
-	@$(MAKE) sub
-
-cb:
-	@./clone_branch.sh
-sub:
-	@git submodule update --init --recursive
-
-add_sub:
-	@git submodule add $(PATH_SUBMODULE)
-
-del_sub:
-	@vim .gitmodules
-	@git add .gitmodules
-	@vim .git/config
-	@git rm --cached $(NAME_SUBMODULE)
-	@rm -rf .git/modules/$(NAME_SUBMODULE)
-	@git commit -m "Removed submodule"
-	@rm -rf $(NAME_SUBMODULE)
-
-# init:
-	# @git remote add origin https://github.com/Steven1659139/Minishell.git
-	# @git remote add intra git@vogsphere.42quebec.com:vogsphere/intra-uuid-76d7a526-3984-47ce-bf43-5082004a1aca-4391329-slavoie
-
-p: add
-	git commit -m $(COMMIT)
-	@git push origin $(BRANCH)
-
-merge:
-	@git checkout master
-	@git fetch
-	@git pull origin $(BRANCH)
-	@git merge $(BRANCH)
-
 
 objs:
 	@mkdir -p objs
