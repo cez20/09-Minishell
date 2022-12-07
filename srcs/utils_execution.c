@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 17:03:21 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:42:15 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	{
 		check_if_error(cmd_line, info);
 		do_redirection(cmd_line, info);
-		if (!cmd_line.path)
-			command_not_found(info, cmd_line.argv[0]);
+		if (cmd_line.path && execve(cmd_line.path, \
+		cmd_line.argv, info->envp) != -1)
+			;
 		else
-			execve(cmd_line.path, cmd_line.argv, info->envp);
+			command_not_found(info, cmd_line.argv[0]);
 	}
 	close_current_fds(&cmd_line, info);
 	waitpid(pid, &status, 0);

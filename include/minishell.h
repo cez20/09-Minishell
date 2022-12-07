@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:10:05 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/06 16:44:36 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:42:54 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 	int				flag_quote;
 	int				space_flag;
 	int				redirection;
+	int				to_del;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
@@ -113,7 +114,7 @@ void	close_fds(int *fd);
 
 //*** ERROR.C ***
 void	check_if_error(t_command_line cmd_line, t_info *info);
-void	syntax_error(t_info *info) ;
+void	syntax_error(t_info *info);
 void	no_file(t_info *info, char *str);
 void	command_not_found(t_info *info, char *str);
 void	not_executable(t_info *info, char *str);
@@ -189,7 +190,7 @@ void	signal_child(int signum);
 void	signal_parent(int signum);
 
 //*** SPLIT_TOKEN.C *** 
-int	little_split_token(t_info *info, int i);
+int		little_split_token(t_info *info, int i);
 void	routine_split_token(t_info *info);
 void	split_token(char *token, t_info *info);
 
@@ -252,5 +253,6 @@ void	locate_expansion(char **str, char **env, t_info *info);
 void	var_expansion(t_command_line *cmd_line, t_info	*info);
 
 char	*remove_matching_quote(char *str);
+void	put_token_toghther(t_info *info);
 
 #endif

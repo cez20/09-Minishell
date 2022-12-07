@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:07:47 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 17:01:56 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:41:49 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ char	*search_another_one(char *str, char c, t_info *info)
 	str = set_start(info, c, &start, str);
 	while (*str != c)
 	{
-		if ((*str == '\0' || *str == c || *str == '|'))
+		if ((*str == '\0' || *str == c) || \
+		(c == 32 && (*str == S_QUOTE || *str == D_QUOTE)))
 		{
 			info->last_position = str;
 			token = ft_substr(start, 0, info->len);

@@ -6,28 +6,28 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 17:04:57 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:42:30 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	remove_quote(t_token *token_list)
-{
-	char	*temp;
-	char	chr;
+// void	remove_quote(t_token *token_list)
+// {
+// 	char	*temp;
+// 	char	chr;
 
-	chr = simple_or_double(token_list->token);
-	if (chr != 32)
-	{
-		temp = token_list->token;
-		token_list->token = ft_strtrim(token_list->token, &chr);
-		free(temp);
-		token_list->flag_quote = chr;
-	}
-	else
-		token_list->flag_quote = chr;
-}
+// 	chr = simple_or_double(token_list->token);
+// 	if (chr != 32)
+// 	{
+// 		temp = token_list->token;
+// 		token_list->token = ft_strtrim(token_list->token, &chr);
+// 		free(temp);
+// 		token_list->flag_quote = chr;
+// 	}
+// 	else
+// 		token_list->flag_quote = chr;
+// }
 
 void	quote_remover(t_info *info)
 {
@@ -75,7 +75,7 @@ void	quote_remover(t_info *info)
 // 			free(to_free);
 // 		}
 // 		tmp = &token;
-// 		token = token->next;
+// 		token = token->next;	
 // 	}
 // }
 
@@ -88,7 +88,7 @@ void	del_empty_node(t_token **token)
 		return ;
 	prev_token = (*token)->prev;
 	next_token = (*token)->next;
-	if ((*token)->token && !((*token)->token))
+	if ((*token)->token && (!((*token)->token) || (*token)->to_del == 1))
 	{
 		ft_lstdelone_token(*token, free);
 		*token = NULL;
@@ -139,4 +139,33 @@ char	*until_chr(char *str, char c)
 		return (line);
 	}
 	return (line);
+}
+
+void	put_token_toghther(t_info *info)
+{
+	int		i;
+	t_token	*token;
+	t_token	*temp;
+	char	*to_free;
+
+	i = 0;
+	while (i <= info->nb_of_pipe + 1)
+	{
+		token = ft_lstlast_token(info->command_lines[i].list_token);
+		while (token)
+		{
+			if (token->prev && !token->prev->space_flag)
+			{
+				to_free = token->prev->token;
+				token->prev->token = \
+				ft_strjoin(token->prev->token, token->token);
+				token->to_del = 1;
+				free(to_free);
+			}
+			temp = token;
+			token = token->prev;
+			del_empty_node(&temp);
+		}
+		i++;
+	}
 }

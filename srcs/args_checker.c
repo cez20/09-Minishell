@@ -6,7 +6,7 @@
 /*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:42:30 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/06 16:44:07 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:41:23 by cemenjiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,13 @@ int	check_arg_export(char *arg, t_info *info)
 
 int	check_arg_unset(char *arg, t_info *info)
 {
-	int	i;
-
-	i = 0;
-	while (arg[i])
+	if (!ft_isalpha(*arg) && *arg != '_')
 	{
-		if (!ft_isalpha(arg[i]) && arg[i] != '_')
-		{
-			ft_putstr_fd("bash: unset: '", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			info->exit_code = 1;
-			return (0);
-		}
-		i++;
+		ft_putstr_fd("bash: unset: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		info->exit_code = 1;
+		return (0);
 	}
 	return (1);
 }

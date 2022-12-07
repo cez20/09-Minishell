@@ -132,9 +132,9 @@ TODO:
 		[X] >
 		[X] >>
 		[X] >>>
-		[] <|>
-		[] < a | >> gfdghd
-		[] < a | > gfdghd
+		[X] <|>
+		[X] < a | >> gfdghd
+		[X] < a | > gfdghd
 		[] < a | >>
 		[] < a | >
 
@@ -199,7 +199,7 @@ FIXME:
 		[X] remettre la static à zéro
 		[X] invalid read Heredocs
 		[X] expand après la condition
-		[] bash: syntax error near unexpected token `newline' si << sans rien comme argument
+		[X] bash: syntax error near unexpected token `newline' si << sans rien comme argument
 		[X] CTRL C heredoc
 		[X] argument exit
 		[] export lol2="hello steven"
@@ -207,7 +207,7 @@ FIXME:
 		[X] echo allo"allo2"
 		[X] echo allo"allo"allo
 		[] problème avec les simples quotes, expand rien si gros token simple quote 
-
+				echo 'allo$USER'allo$USER
 		[X] expansion ne fontionne plus après un cas qui n'existe' pas 
 		[X] builtins majuscule passe dans execve 
 		[X] echo "allo""allo2" skip parfois le premier caractère du deuxième token, probablement en lien avece un invalid read 
