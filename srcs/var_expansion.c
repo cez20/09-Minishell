@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:27:16 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 00:07:46 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 12:02:01 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ void	locate_expansion(char **str, char **env, t_info *info)
 {
 	char	**tab;
 	int		i;
-	int		count;
 
 	if_exit_code(str, info);
 	i = 0;
-	count = 0;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1])

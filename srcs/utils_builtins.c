@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:35:32 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/07 00:08:30 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 12:06:44 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	remove_quote(t_token *token_list)
-{
-	char	*temp;
-	char	chr;
+// void	remove_quote(t_token *token_list)
+// {
+// 	char	*temp;
+// 	char	chr;
 
-	chr = simple_or_double(token_list->token);
-	if (chr != 32)
-	{
-		temp = token_list->token;
-		token_list->token = ft_strtrim(token_list->token, &chr);
-		free(temp);
-		token_list->flag_quote = chr;
-	}
-	else
-		token_list->flag_quote = chr;
-}
+// 	chr = simple_or_double(token_list->token);
+// 	if (chr != 32)
+// 	{
+// 		temp = token_list->token;
+// 		token_list->token = ft_strtrim(token_list->token, &chr);
+// 		free(temp);
+// 		token_list->flag_quote = chr;
+// 	}
+// 	else
+// 		token_list->flag_quote = chr;
+// }
 
 void	quote_remover(t_info *info)
 {
@@ -139,4 +139,33 @@ char	*until_chr(char *str, char c)
 		return (line);
 	}
 	return (line);
+}
+
+void	put_token_toghther(t_info *info)
+{
+	int		i;
+	t_token	*token;
+	t_token	*temp;
+	char	*to_free;
+
+	i = 0;
+	while (i <= info->nb_of_pipe + 1)
+	{
+		token = ft_lstlast_token(info->command_lines[i].list_token);
+		while (token)
+		{
+			if (token->prev && !token->prev->space_flag)
+			{
+				to_free = token->prev->token;
+				token->prev->token = \
+				ft_strjoin(token->prev->token, token->token);
+				token->to_del = 1;
+				free(to_free);
+			}
+			temp = token;
+			token = token->prev;
+			del_empty_node(&temp);
+		}
+		i++;
+	}
 }

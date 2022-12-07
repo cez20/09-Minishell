@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:16:16 by slavoie           #+#    #+#             */
-/*   Updated: 2022/12/07 00:11:48 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 12:06:57 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,40 +86,8 @@ void	echo_routine(t_token *token_list)
 	}
 }
 
-void	put_token_toghther(t_info *info)
-{
-	int		i;
-	t_token	*token;
-	t_token	*temp;
-	char	*to_free;
-
-	i = 0;
-	while (i <= info->nb_of_pipe + 1)
-	{
-		token = ft_lstlast_token(info->command_lines[i].list_token);
-		while (token)
-		{
-			if (token->prev && !token->prev->space_flag)
-			{
-				to_free = token->prev->token;
-				token->prev->token = \
-				ft_strjoin(token->prev->token, token->token);
-				token->to_del = 1;
-				free(to_free);
-			}
-			temp = token;
-			token = token->prev;
-			del_empty_node(&temp);
-		}
-		i++;
-	}
-}
-
 void	little_main_routine(char *line, t_info *info)
 {
-	int	i;
-
-	i = 0;
 	if (*line != '|')
 	{
 		info->nb_of_pipe = how_many(info, line, '|');

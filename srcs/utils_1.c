@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stevenlavoie <stevenlavoie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:57:52 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 00:09:08 by slavoie          ###   ########.fr       */
+/*   Updated: 2022/12/07 12:16:56 by stevenlavoi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,75 +66,31 @@ void	trim_space(t_info *info, char *set)
 	}
 }
 
-void	remove_inside_quote(t_info *info)
-{
-	char	*str;
-	int		i;
-	int		str_index;
-	int		len;
-
-	len = ft_strlen(info->list_token->token);
-	str_index = 0;
-	i = 0;
-	if (info->list_token->flag_quote == 32)
-	{
-		str = ft_calloc(len + 1, sizeof(char));
-		while (info->list_token->token[i])
-		{
-			if (info->list_token->token[i] != D_QUOTE && \
-			info->list_token->token[i] != S_QUOTE)
-			{
-				str[str_index] = info->list_token->token[i];
-				str_index++;
-			}
-			i++;
-		}
-		free(info->list_token->token);
-		info->list_token->token = str;
-	}
-}
-
 char	*remove_matching_quote(char *str)
 {
 	char	*new_str;
 	int		i;
-	char	chr;
 
 	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
 	while (*str)
 	{
-		chr = simple_or_double(str);
-		if (chr == D_QUOTE)
+		if (simple_or_double(str) == D_QUOTE)
 		{
-			str++;
-			while (*str && *str != D_QUOTE)
-			{
-				new_str[i] = *str;
-				i++;
-				str++;
-			}
+			while (*str++ && *str != D_QUOTE)
+				new_str[i++] = *str;
 			if (*str)
 				str++;
 		}
-		else if (chr == S_QUOTE)
+		else if (simple_or_double(str) == S_QUOTE)
 		{
-			str++;
-			while (*str && *str != S_QUOTE)
-			{
-				new_str[i] = *str;
-				i++;
-				str++;
-			}
+			while (*str++ && *str != S_QUOTE)
+				new_str[i++] = *str;
 			if (*str)
 				str++;
 		}
 		else
-		{
-			new_str[i] = *str;
-			i++;
-			str++;
-		}
+			new_str[i++] = *str++;
 	}
 	return (new_str);
 }
