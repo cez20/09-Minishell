@@ -11,7 +11,6 @@ SRCS 			= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 CC 				= @gcc
 CFLAGS 			= -Werror -Wall -Wextra -g
 READLINE 		=  -lcurses readline/libreadline.a  readline/libhistory.a
-# READLINE		= $(LDFLAGS) #$(CPPFLAGS)
 OBJS_DIR		= objs/
 OBJS 			= $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
 
@@ -32,7 +31,7 @@ all: 			objs $(NAME)
 $(NAME): 		$(OBJS)
 				@git submodule update --init --recursive
 				@$(MAKE) -C ./Libft
-				# @cd ./readline && ./configure
+				@cd ./readline && ./configure
 				@$(MAKE) -C ./readline everything
 				@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
 				@echo "$(GREEN)Everything is top shape tiguidou 🐥$(RESET_COLOR)"
@@ -40,7 +39,7 @@ $(NAME): 		$(OBJS)
 clean:
 				@echo "Cleaning 🌪 🔥🌊"
 				@$(MAKE) -C ./Libft fclean
-				# @$(MAKE) -C ./readline clean
+				@$(MAKE) -C ./readline clean
 				@rm -rf $(OBJS)
 				@rm -rf $(OBJS_DIR)
 
