@@ -31,7 +31,7 @@ all: 			objs $(NAME)
 
 $(NAME): 		$(OBJS)
 				@$(MAKE) -C ./Libft
-				# @cd ./readline && ./configure
+				@cd ./readline && ./configure
 				@$(MAKE) -C ./readline everything
 				@$(CC) $(CFLAGS) $(OBJS) $(READLINE)   ./Libft/libft.a -o $(NAME)
 				@echo "$(GREEN)Everything is top shape tiguidou 🐥$(RESET_COLOR)"
