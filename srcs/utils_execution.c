@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cemenjiv <cemenjiv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slavoie <slavoie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:49:06 by cemenjiv          #+#    #+#             */
-/*   Updated: 2022/12/07 13:07:09 by cemenjiv         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:19:58 by slavoie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	exec_one_command(t_command_line cmd_line, t_info *info)
 	pid_t	pid;
 	int		status;
 
-	check_if_error(cmd_line, info);
 	pid = fork();
 	if (pid == -1)
 		return ;
