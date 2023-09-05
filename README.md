@@ -53,6 +53,3 @@ The shell must:
 ## Contribution
 
 This project was realized with [Steven1659139](https://github.com/Steven1659139)
-
-
-## Demo
